@@ -1,0 +1,50 @@
+language = "python"
+parent = "polars"
+name = "dataframe"
+title = "DataFrame"
+description = "The polars package provides a fast and powerful implementation of data frames"
+details = "Some more details here"
+code = "import polars as pl"
+
+[create]
+section = "Create"
+description = "Create a new DataFrame"
+
+[create.lists]
+what = "From lists"
+code = "pl.DataFrame('A': [1, 2], 'fruits': ['banana', 'apple'])"
+
+[create.nparray]
+what = "From numpy array"
+code = """
+data = np.array([[1, 2], [3, 4]])\n
+pl.DataFrame(data, schema = ['a', 'b'], orient = 'col')
+"""
+
+[create.file]
+section = "From file formats"
+
+[create.file.csv]
+what = "From CSV file"
+code = "pl.read_csv('file.csv')"
+
+[query]
+section = "Query"
+description = "Start a lazy query using a LazyFrame by `data.lazy()`. Operations on a LazyFrame are not executed until this is requested by either calling `collect()` or `fetch()`. Lazy operations are advised because they allow for query optimization and more parallelization."
+
+[query.columns]
+section = "Columns"
+description = "Querying columns"
+
+[query.columns.single]
+what = "Single column"
+code = "data['col1']"
+details = "Short, and works for literals and variables"
+
+[query.columns.single.attr]
+code = "data.col1"
+details = "Shortest"
+
+[query.columns.single.select]
+code = "data.select('col1')"
+details = "Verbose"
