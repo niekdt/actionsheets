@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "actionsheets"
+version = "0.1.0"
+description = "Quick-reference sheets defined in terms of a desired action and a code solution"
+authors = ["Niek Den Teuling <niekdt@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+polars = "^0.20.31"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
