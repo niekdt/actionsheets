@@ -1,0 +1,466 @@
+language = "python"
+parent = "collections"
+name = "list"
+title = "List"
+description = "An ordered collection of elements"
+details = """
+Tips:
+* Lists can be efficiently used as a stack through `append()` (for push) and `pop()`.
+* Sorting seems to be broken for numeric lists containing NaN
+"""
+
+[create]
+section = "Create list"
+
+[create.empty]
+what = "Empty"
+code = "x = []"
+
+[create.define]
+what = "Define"
+code = "x = [1, 3, 9]"
+
+[create.fill]
+what = "Define with _n_ repeated values _v_"
+code = "x = [v] * n"
+
+[create.tuple]
+what = "From tuple"
+code = """
+t = (1, 3, 9)
+x = [t]
+"""
+details = "Faster than `list(t)`"
+
+[create.iter]
+what = "From iterator (consumes)"
+code = "x = list(iter)"
+
+[create.zipped]
+what = "Lists from zipped list"
+code = """
+a = (1, 2); b = (-1, -2)
+ab = zip(a, b)
+a2, b2 = zip(*ab)
+"""
+
+[create.sample]
+what = "Sample _n_ random numbers between [ _a_, _b_ ) with replacement"
+code = "random.choices(range(a, b), k=n)"
+details = "Considerably faster than list comprehension"
+
+[create.sample.wo]
+what = "Sample _n_ random numbers between [ _a_, _b_ ) w/o replacement"
+code = "random.sample(range(a, b), n)"
+
+
+[test]
+section = "Test"
+
+[test.is]
+what = "Is list"
+code = "type(x) is list"
+
+[test.inherits]
+what = "Is list or subclass"
+code = "isinstance(x, list)"
+
+[test.empty]
+what = "Empty"
+code = "if x:"
+
+[test.nempty]
+what = "Not empty"
+code = "if not x:"
+
+[test.equal]
+what = "Pairwise equal"
+code = "x == y"
+
+[test.contains.none]
+what = "Contains `None`"
+code = "None in x"
+
+[test.contains.elem]
+what = "Contains element"
+code = "e in x"
+
+[test.missing.elem]
+what = "Does not contain element"
+code = "e not in x"
+
+[test.contains.elem.multi]
+what = "Contains elements"
+code = "{1, 2}.issubset(x)"
+
+[test.contains.elem.multi.dyn]
+what = "Contains elements _elems_"
+code = "set(elems).issubset(x)"
+
+[test.elem.type.all]
+what = "Elements are all of type"
+code = "all(isinstance(e, str) for e in x)"
+
+[test.elem.true.all]
+what = "All elements True"
+code = "all(x)"
+
+[test.elem.true.any]
+what = "Any element True"
+code = "any(x)"
+
+[test.elem.sorted]
+what = "Are elements sorted"
+code = "x == sorted(x)"
+
+[test.elem.duplicate.none]
+what = "No duplicate elements"
+code = "len(x) == len(set(x))"
+
+[test.elem.duplicate.any]
+what = "Has duplicate elements"
+code = "len(x) != len(set(x))"
+
+
+[get]
+section = "Get"
+
+[get.len]
+what = "Number of elements (length)"
+code = "len(x)"
+
+[get.elem.first]
+what = "First element"
+code = "x[0]"
+
+[get.elem.last]
+what = "Last element"
+code = "x[-1]"
+
+[get.elem.slice]
+what = "Slice"
+code = "x[1:3]"
+
+[get.elem.head]
+what = "First _n_ elements (head)"
+code = "x[:n]"
+
+[get.elem.tail]
+what = "Last _n_ elements"
+code = "x[-n:]"
+
+[get.elem.list.indices]
+what = "List of elements from a list of indices"
+code = "[x[i] for i in indices]"
+
+[get.elem.count]
+what = "Number of occurrences of element"
+code = "x.count(e)"
+
+[get.elem.index]
+what = "Index of element"
+code = "x.index(e)"
+details = "Throws error if not found"
+
+[get.elem.index.slice]
+what = "Index of element in slice [a,b]"
+code = "x.index(e, a, b)"
+details = "Throws error if not found"
+
+
+[aggregate]
+section = "Aggregation functions"
+
+[aggregate.min]
+what = "Min"
+code = "min(x)"
+
+[aggregate.max]
+what = "Max"
+code = "max(x)"
+
+[aggregate.sum]
+what = "Sum"
+code = "sum(x)"
+
+[aggregate.mean]
+what = "Mean"
+code = "sum(x) / len(x)" 
+details = "Faster than `fmean` and `mean` from `statistics`"
+
+[aggregate.mode]
+what = "Most frequent element (mode)"
+code = "statistics.mode(x)"
+
+
+[update]
+section = "Update"
+
+[update.elem.at]
+what = "Update element at index _i_"
+code = "x[i] = e2"
+
+[update.elem.slice]
+what = "Update slice with list"
+code = "x[2:3] = [5, 6]"
+
+[update.order.reverse]
+what = "Reverse elements"
+code = "x.reverse()"
+
+[update.order.sort]
+what = "Sort elements ascending"
+code = "x.sort()"
+
+[update.order.sort.desc]
+what = "Sort elements descending"
+code = "x.sort(reverse=True)"
+
+[update.order.sort.transform]
+what = "Sort on transformed elements, ascending"
+code = "x.sort(key=str.lower)"
+
+[update.order.shuffle]
+what = "Shuffle elements"
+code = "random.shuffle(x)"
+
+
+[shrink]
+section = "Remove elements"
+
+[shrink.clear]
+what = "Clear"
+code = "x.clear()"
+
+[shrink.clear.slice]
+code = "x[:] = []"
+details = "Probably slower"
+
+[shrink.remove.index]
+what = "Remove at index _i_"
+code = "del x[i]"
+
+[shrink.remove.index.empty]
+code = "x[i] = []"
+
+[shrink.pop.last]
+what = "Remove last index and return the element (pop)"
+code = "x.pop()"
+
+[shrink.pop.index]
+what = "Remove at index _i_ and return the element"
+code = "x.pop(e, i)"
+
+[shrink.remove.slice]
+what = "Remove slice"
+code = "del x[2:3]"
+
+[shrink.remove.slice.empty]
+code = "x[2:3] = []"
+
+[shrink.remove.elem.first]
+what = "Remove element (first occurrence)"
+code = "x.remove(e)"
+
+[shrink.remove.elem.all]
+what = "Remove all elements with value"
+code = "?"
+
+
+[grow]
+section = "Grow"
+
+[grow.append.elem]
+what = "Append element"
+code = "x.append(e)"
+
+[grow.append.list]
+what = "Append a list"
+code = "x += y"
+
+[grow.append.list.extend]
+code = "x.extend(y)"
+
+[grow.insert.index]
+what = "Insert at index _i_"
+code = "x.insert(i, e)"
+
+
+[derive]
+section = "Derive"
+
+
+[derive.map]
+section = "Map elements"
+description = "Derive a new one-to-one list"
+
+[derive.map.copy.shallow]
+what = "Shallow copy"
+code = "x.copy()"
+details = "Fastest for large lists"
+
+[derive.map.copy.shallow.unpack]
+code = "[*x]"
+details = "Fastest for small lists"
+
+[derive.map.copy.shallow.slice]
+code = "x[:]"
+details = "Probably very slow"
+
+[derive.map.copy.shallow.copy]
+code = "copy.copy(x)"
+details = "Not sure what the difference to `.copy()` is"
+
+[derive.map.copy.deep]
+what = "Deep copy (don't preserve refs)"
+code = "copy.deepcopy(x)"
+details = "Constructs a new compound object and then, recursively, inserts copies into it of the objects found in the original."
+
+[derive.map.reserve]
+what = "Reversed order"
+code = "reversed(x)"
+
+[derive.map.rank]
+what = "Rank ascendingly"
+code = "list(scipy.stats.rankdata(x))"
+details = "Uses scipy package"
+
+[derive.map.sorti]
+what = "Sort-index ascendingly"
+code = "list(np.argsort(x))"
+details = "Uses numpy package"
+
+[derive.map.sorti.sorted]
+code = "sorted(range(len(x)), key=x.__getitem__)"
+
+[derive.map.sorti.comprehension]
+code = "[e[0] for e in sorted(enumerate(x), key=lambda x: x[1])]"
+details = "Tedious"
+
+[derive.map.sort]
+what = "Sorted ascendingly"
+code = "sorted(x)"
+details = "Elements must be sortable!"
+
+[derive.map.sort.desc]
+what = "Sorted descendingly"
+code = "sorted(x, reverse=True)"
+details = "Elements must be sortable!"
+
+[derive.map.sort.order]
+what = "Sorted by reference order"
+code = "[x for _, x in sorted(zip(ref_order, x))]"
+
+[derive.map.comprehension]
+what = "Transform via comprehension"
+code = "[e + 1 for e in x]"
+
+[derive.map.fun]
+what = "Map function"
+code = "[fun(e) for e in x]"
+
+[derive.map.fun.map]
+code = "list(map(fun, x))"
+details = "Slow"
+
+[derive.map.cond]
+what = "Conditional update"
+code = "[e if e != 0 else -1 for e in x]"
+
+[derive.map.ternary]
+what = "Ternary map"
+code = "[e if e > 2 else 10 for e in x]"
+
+[derive.map.ternary.nested]
+what = "Nested ternary map"
+code = "[e if e > 2 else 10 if e < 3 else 5 for e in x]"
+details = "Good luck reading this"
+
+[derive.map.filter.cond]
+what = "Filter on condition"
+code = "[e for e in x if e > 0]"
+
+[derive.map.filter.predicate]
+what = "Filter on predicate function"
+code = "filter(fun, x)"
+
+[derive.map.str]
+what = "Elements to string"
+code = "[str(e) for e in x]"
+
+
+[derive.grow]
+section = "Grow"
+description = "Derive a larger list"
+
+[derive.grow.rep]
+what = "Replicate _n_ times"
+code = "x * n"
+
+[derive.grow.rep.len]
+what = "Replicate to ensure length _n_"
+code = "?"
+
+[derive.grow.list]
+what = "Append a list"
+code = "x + y"
+
+
+[iter]
+section = "Iterate"
+description = "Iterate over the elements of the list"
+
+[iter.for]
+what = "For-loop"
+code = "for e in x:"
+
+[iter.for.index]
+what = "For-loop with index"
+code = "for i, e in enumerate(x):"
+
+[iter.for.index.start]
+what = "Iterate with index starting from _s_"
+code = "for i, e in enumerate(x, s):"
+
+[iter.for.lists]
+what = "Iterate over multiple lists"
+code = "for a, b in zip(x, y):"
+
+[iter.for.lists.index]
+what = "Iterate over multiple lists with index"
+code = "for i, (a, b) in enumerate(zip(x, y)):"
+
+[iter.lists.nested]
+what = "Iterate over a list of lists for each nested element"
+code = "itertools.chain.from_iterable(x)"
+
+
+[convert]
+section = "Convert"
+
+[convert.assign]
+what = "Multiple assignment"
+code = """
+x = [1, 2]
+a, b = x
+"""
+
+[convert.hash]
+what = "Hash"
+code = "hash(tuple(x))"
+
+[convert.tuple]
+what = "Tuple"
+code = "tuple(x)"
+
+[convert.set]
+what = "Set"
+code = "set(x)"
+
+[convert.dict]
+what = "To dict (from keys and values)"
+code = "dict(zip(keys, values))"
+
+[convert.flatten]
+what = "Flatten a list of lists"
+code = "list(itertools.chain.from_iterable(x))"
