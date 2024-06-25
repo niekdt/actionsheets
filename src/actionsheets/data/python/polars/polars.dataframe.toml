@@ -10,9 +10,33 @@ code = "import polars as pl"
 section = "Create"
 description = "Create a new DataFrame"
 
+[create.dataframes.concat]
+what = "From dataframes (concatenate)"
+code = "pl.concat([df, df2, dfN])"
+
+[create.dataframes.concat.mix]
+what = "From dataframes with different columns"
+code = "pl.concat([df, df2, dfN], how = 'diagonal')"
+
 [create.lists]
-what = "From lists"
-code = "pl.DataFrame('A': [1, 2], 'fruits': ['banana', 'apple'])"
+what = "From column lists"
+code = "pl.DataFrame({'A': [1, 2], 'fruits': ['banana', 'apple']})"
+
+[create.list.lists]
+what = "From list of lists"
+code = "data = [[1, 2, 3], [4, 5, 6]]`<br>`pl.DataFrame(data, schema=['a', 'b', 'c'])"
+
+[create.dict]
+what = "From dict"
+code = "pl.DataFrame(dict)"
+
+[create.dict.schema]
+what = "From dict with schema"
+code = "pl.DataFrame(dict, schema = {'col1': pl.Float32, 'col2': pl.Int64, 'col3': pl.Date})"
+
+[create.pandas]
+what = "From `pandas.DataFrame`"
+code = "pl.from_pandas(data)"
 
 [create.nparray]
 what = "From numpy array"
@@ -28,23 +52,333 @@ section = "From file formats"
 what = "From CSV file"
 code = "pl.read_csv('file.csv')"
 
+[prop]
+section = "Properties"
+
+[prop.ncol]
+what = "Number of columns"
+code = "len(data.columns)"
+
+[prop.col.names]
+what = "Column names"
+code = "data.columns"
+
+[prop.col.types]
+what = "Column types"
+code = "data.dtypes"
+
+[prop.col.types.map]
+what = "Column-types mapping"
+code = "data.schema"
+
+[prop.col.which]
+what = "Find column index by name"
+code = "data.find_idx_by_name('age')"
+
+[prop.nrow]
+what = "Number of rows"
+code = "data.height"
+
+
+[test]
+section = "Test"
+
+[test.empty]
+what = "Empty (no rows)"
+code = "data.is_empty()"
+
+[test.col.contains]
+what = "Contains column"
+code = "'age' in data.columns"
+
+[test.col.contains.multi]
+what = "Contains columns"
+code = "{'age', 'sex'}.issubset(data.columns)"
+
+[test.col.contains.dyn]
+what = "Contains columns _cols_"
+code = "set(cols).issubset(data.columns)"
+
+[test.col.missing]
+what = "Column is missing"
+code = "'age' not in data.columns"
+
+[test.col.equals]
+what = "Columns are equal"
+code = "?"
+
+[test.col.equal.series]
+what = "Columns are equal series"
+code = "data['sex'].series_equal(data['sex2'].alias('sex'))"
+details = "Series names must match!"
+
+[test.col.missing.any]
+what = "Column has missing value"
+code = "data['sex'].is_null().any()"
+
+[test.col.missing.none]
+what = "Column has no missing values"
+code = "data['sex'].is_not_null().all()"
+
+[test.col.duplicate.none]
+what = "Column has no duplicate values"
+code = "?"
+
+[test.col.duplicate.any]
+what = "Column has duplicate values"
+code = "?"
+
+[test.col.type]
+what = "Column is of type"
+code = "data.schema['col1'] == dtype"
+
+[test.col.type.bool]
+what = "Column is bool type"
+code = "data.schema['alive'] == pl.Bool"
+
+[test.col.type.str]
+what = "Column is string type"
+code = "data.schema['sex'] == pl.Utf8"
+
+[test.col.type.number]
+what = "Columns is numeric"
+code = "?"
+
+[test.col.type.int]
+what = "Column is integer type"
+code = "data.schema['age'] in pl.datatypes.INTEGER_DTYPES"
+
+[test.col.type.int64]
+what = "Column is standard integer (64-bit)"
+code = "data.schema['age'] == pl.Int64"
+
+[test.col.type.float]
+what = "Columns is float"
+code = "?"
+
+[test.col.row.gt.all]
+what = "Column is consistently rowwise greater than another column"
+code = "(data['col1'] > data['col2']).all()"
+
+[test.col.row.gt.any]
+what = "Column is sometimes rowwise greater than another column"
+code = "(data['col1'] > data['col2']).any()"
+
+[test.rowmask]
+section = "Row masking"
+
+[test.rowmask.duplicate]
+what = "Duplicated"
+code = "data.is_duplicated()"
+
+[test.rowmask.unique]
+what = "Unique"
+code = "data.is_unique()"
+
+
 [query]
 section = "Query"
 description = "Start a lazy query using a LazyFrame by `data.lazy()`. Operations on a LazyFrame are not executed until this is requested by either calling `collect()` or `fetch()`. Lazy operations are advised because they allow for query optimization and more parallelization."
 
-[query.columns]
+[query.col]
 section = "Columns"
-description = "Querying columns"
+description = "Query the row(s) of one or more columns"
 
-[query.columns.single]
+[query.col.single]
 what = "Single column"
 code = "data['col1']"
 details = "Short, and works for literals and variables"
 
-[query.columns.single.attr]
+[query.col.single.attr]
 code = "data.col1"
 details = "Shortest"
 
-[query.columns.single.select]
+[query.col.single.select]
 code = "data.select('col1')"
 details = "Verbose"
+
+[query.col.multi]
+what = "Multiple columns"
+code = "data.select('col1', 'col2')"
+
+[query.col.multi.var]
+what = "Multiple columns, dynamically"
+code = "data.select(['col1', 'col2'])"
+
+[query.row]
+section = "Rows"
+
+[query.row.empty]
+what = "Empty row"
+code = "data.clear()"
+details = "?"
+
+[query.row.index]
+what = "_i_ th row"
+code = "data[i]"
+
+[query.row.index.end]
+what = "_i_ th row from end"
+code = "data[-i]"
+
+[query.row.head]
+what = "First _n_ rows (head)"
+code = "data.head(n)"
+
+[query.row.tail]
+what = "Last _n_ rows (tail)"
+code = "data.tail(n)"
+
+[query.row.slice]
+what = "Slice of rows from _a_ to _b_"
+code = "data[a:b]"
+
+[query.row.slice.fun]
+code = "data.slice(a, b)"
+
+[query.row.index.list]
+what = "By list of row numbers"
+code = "data[rows]"
+
+[query.row.exclude.index]
+what = "Exclude the given row numbers"
+code = "data.with_row_count().filter(pl.col('row_nr').is_in(rows).not_())"
+details = "Leftover row_nr column"
+
+[query.row.exclude.null]
+what = "Exclude rows that contain null values"
+code = "data.drop_nulls()"
+
+[query.row.exclude.null.col]
+what = "Exclude rows that contain null values in certain columns"
+code = "data.drop_nulls(['fruits', 'cars'])"
+
+[query.row.cond.col]
+what = "Conditionally on column"
+code = "data.filter(pl.col('age') >= 18)"
+
+[query.row.cond.cols]
+what = "From multiple column conditions"
+code = "data.filter((pl.col('age') >= 18) & (pl.col('sex') == 'male'))"
+
+[query.row.limit]
+what = "Limit query to first _n_ rows"
+code = "data.limit(n)"
+
+[query.row.limit.tail]
+what = "Limit query to last _n_ rows"
+code = "data.limit(-n)"
+
+[query.row.count.missing]
+what = "Number of missing values"
+code = "data.null_count()"
+
+[query.row.count.unique.col]
+what = "Number of unique values in a column"
+code = "data['col1'].n_unique()"
+
+[query.row.count.unique.col.multi]
+what = "Number of unique rows across columns"
+code = "?"
+
+[query.aggregate]
+section = "Aggregate"
+
+[query.aggregate.group]
+section = "By group"
+
+[query.aggregate.group.mean]
+what = "Mean of column by group"
+code = "data.group_by('sex').agg(pl.col('age').mean())"
+
+[query.aggregate.group.time]
+section = "Over time"
+
+[query.aggregate.group.time.moving.mean]
+what = "Moving average"
+code = "data.group_by_dynamic('ts', every='1d').agg(pl.col('value').mean())"
+details = "?"
+
+
+[update]
+section = "Update"
+
+[update.col.type]
+what = "Cast column type"
+code = "data.with_columns(pl.col('col1').cast(pl.Float32))"
+
+[update.cols.type]
+what = "Cast columns to types"
+code = "data.cast({'col1': pl.Float32, 'col2': pl.UInt8})"
+
+[update.col.rename]
+what = "Rename column"
+code = "data.rename({'old': 'new'})"
+
+[update.col.rename.multi]
+what = "Rename columns"
+code = "data.rename({'old1': 'new1', 'old2': 'new2'})"
+
+[update.col.values]
+what = "Update column values"
+code = "data.with_columns(pl.col('age') + 5)"
+
+[update.col.values.cond]
+what = "Update column values on condition"
+code = """
+df.with_columns(
+    pl.when(pl.col('age') >= 18).
+    then(pl.lit(1)).
+    otherwise(pl.lit(-1))
+)
+"""
+
+[update.col.values.conds]
+what = "Update column values on conditions"
+code = """
+df.with_columns(
+    pl.when(pl.col('age') >= 18).
+    then(pl.lit(1)).
+    when(pl.col('Sex') == 'M').
+    then(4).
+    otherwise(pl.lit(-1))
+)
+"""
+
+[update.col.values.rowindex]
+what = "Update column values for specific rows"
+code = """
+rows = [1, 3, 5]
+data.with_row_count().with_columns(
+    pl.when(pl.col('row_nr').is_in(rows)).
+    then(pl.lit(True)).
+    otherwise(pl.lit(False))
+)
+"""
+
+[update.fill.null.zero]
+what = "Fill nulls with zero"
+code = "data.fill_null(strategy = 'zero')"
+
+[update.fill.null.value]
+what = "Fill nulls with value"
+code = "data.fill_null(value)"
+
+[update.fill.null.locf]
+what = "Fill nulls with LOCF"
+code = "data.fill_null(strategy='forward')"
+details = "Wrong for grouped data"
+
+[update.nan.value]
+what = "Fill NaNs with value"
+code = "data.fill_nan(value)"
+
+[update.col.replace]
+what = "Replace column inplace with series"
+code = "data.replace('age', newAgeSeries)"
+
+[update.sort.col]
+what = "Sort table by column"
+code = "data.sort('col1')"
+
+
