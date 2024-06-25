@@ -1,0 +1,242 @@
+language = "python"
+parent = "scalars"
+name = "datetime"
+title = "Datetime"
+description = "Datetime representation"
+code = "import datetime"
+
+[create]
+section = "Create"
+
+[create.date]
+what = "Define date from ymd"
+code = "date(year, month, day)"
+
+[create.time]
+what = "Define time from hms"
+code = "time(hour, minute, second)"
+
+[create.datetime]
+what = "Define datetime from ymdhms"
+code = "datetime(year, month, day, hour, minute, second)"
+
+[create.current.date]
+what = "Current date"
+code = "datetime.now().date()"
+
+[create.current.time]
+what = "Current time"
+code = "datetime.now().time()"
+
+[create.current.datetime]
+what = "Current datetime"
+code = "datetime.now()"
+
+[create.current.datetime.utc]
+what = "Current datetime in UTC timezone"
+code = "datetime.now(timezone.utc)"
+
+[create.combine]
+what = "Combine date and time"
+code = "datetime.combine(date, time)"
+
+[create.str.date]
+what = "Date from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date string"
+code = "date.fromisoformat(date_string)"
+details = "e.g., `2023-01-30` or `20230130`"
+
+[create.str.time]
+what = "Time from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time string"
+code = "time.fromisoformat(time_str)"
+details = "e.g. `23:59:01`"
+
+[create.str.datetime]
+what = "Datetime from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime string"
+code = "datetime.fromisoformat(datetime_str)"
+details = "e.g. `2023-01-30 23:59`, `2023-01-30T23:59:01`"
+
+[create.str.date.ymd]
+what = "Date from YYYY-MM-DD string"
+code = "datetime.strptime(datetime_str, '%y-%m-%d')"
+
+[create.str.date.dmy]
+what = "Date from DD-MMM-YYYY string"
+code = "datetime.strptime(datetime_str, '%d-%b-%y')"
+
+[create.str.datetime.ymdhms]
+what = "Datetime from YYYY-MM-DD HH:mm:ss"
+code = "x.strptime('%y-%m-%d %H:%M:%S')"
+
+[create.str.datetime.unknown]
+what = "Datetime from string (unknown format)"
+code = "pandas.to_datetime('2023 Jan 5')"
+details = "uses the pandas package"
+
+[create.float.date]
+what = "Date from timestamp _f_ (float)"
+code = "date.fromtimestamp(f)"
+
+
+[test]
+section = "Test"
+
+[test.equal]
+what = "Same moment"
+code = "x == y"
+details = "Up to `x.resolution` precision (usually 1μs)"
+
+[test.before]
+what = "Happens before _y_"
+code = "x < y"
+
+[test.after]
+what = "Happens after _y_"
+code = "x > y"
+
+
+[extract]
+section = "Extract"
+
+[extract.year]
+what = "Year"
+code = "x.year"
+
+[extract.month]
+what = "Month"
+code = "x.month"
+
+[extract.day]
+what = "Day"
+code = "x.day"
+
+[extract.hour]
+what = "Hour"
+code = "x.hour"
+
+[extract.minute]
+what = "Minute"
+code = "x.minute"
+
+[extract.second]
+what = "Second"
+code = "x.second"
+
+[extract.microsecond]
+what = "Microsecond"
+code = "x.microsecond"
+
+[extract.weekday]
+what = "Weekday number"
+code = "x.isoweekday()"
+details = "Mon=1, Sun=7"
+
+[extract.weekday.zero]
+what = "Weekday number (zero-based)"
+code = "x.weekday()"
+details = "Mon=0, Sun=6"
+
+
+[diff]
+section = "Difference (timedelta or timespan)"
+description = "The functions return `timedelta` objects."
+
+[diff.date]
+what = "Difference between dates"
+code = "x - y"
+
+[diff.date.seconds]
+what = "Difference between dates, in seconds"
+code = "(x - y).total_seconds()"
+
+[diff.date.days]
+what = "Difference between dates, in whole days"
+code = "?"
+
+[diff.date.years]
+what = "Difference between dates, in years"
+code = "x.year - y.year - ((x.month, x.day) < (y.month, y.day))"
+details = "[Source](https://stackoverflow.com/a/9754466/22638740)"
+
+
+[derive]
+section = "Derive"
+
+[derive.firstday.year]
+what = "Change to first day of year"
+code = "x.replace(month=1, day=1)"
+
+[derive.firstday.month]
+what = "Change to first day of month"
+code = "x.replace(day=1)"
+
+[derive.year]
+what = "Change year to _y_"
+code = "x.replace(year=y)"
+
+[derive.utc]
+what = "In UTC timezone"
+code = "datetime.now(timezone.utc)"
+
+[derive.shift.days]
+what = "Shift forward by _n_ days"
+code = "x + timedelta(days=n)"
+
+[derive.shift.seconds]
+what = "Shift forward by _n_ seconds"
+code = "x + timedelta(seconds=n)"
+
+
+[convert]
+section = "Convert"
+
+[convert.float]
+what = "Timestamp (float)"
+code = "x.timestamp()"
+
+[convert.tuple]
+what = "Named tuple"
+code = "x.timetuple()"
+
+[convert.str.date]
+what = "Format date as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
+code = "x.isoformat()"
+details = "e.g., `2023-01-01`"
+
+[convert.str.time]
+what = "Format time as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
+code = "x.isoformat()"
+details = "e.g., `23:59:00`"
+
+[convert.str.datetime]
+what = "Format datetime as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
+code = "x.isoformat()"
+details = "e.g., `2023-01-01T23:59:00`"
+
+[convert.str.long]
+what = "Format readable datetime of consistent length"
+code = "x.ctime()"
+details = "e.g., `Sun Jan  1 23:59:00 2023`"
+
+[convert.str.ymd]
+what = "Format datetime as YYYY-MM-DD"
+code = "x.date().isoformat()"
+details = "e.g., 2024-01-31"
+
+[convert.str.dmy]
+what = "Format datetime as DD-MMM-YYYY"
+code = "x.strftime('%d-%b-%Y')"
+details = "e.g., `31-Jan-2023`"
+
+[convert.str.hm]
+what = "Format datetime as HH:mm"
+code = "x.strftime('%H:%M')"
+details = "e.g., `23:59`"
+
+[convert.str.hms]
+what = "Format datetime as HH:mm:ss"
+code = "x.strftime('%H:%M:%S')"
+details = "e.g., `23:59:00`"
+
+[convert.str.ymdhms]
+what = "Format datetime as YYYY-MM-DD HH:mm:ss"
+code = "x.strftime('%y-%m-%d %H:%M:%S')"
