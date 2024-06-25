@@ -27,9 +27,9 @@ class Topics:
         topic_headers = []
         topic_data_list = []
         for file in files:
-            print(f'- Parsing file {file}...')
+            print(f'Parsing file {file}...')
             topic_header, topic_data = parse_toml(file)
-            print(f'-> Parsed topic: {topic_header["name"]}')
+            print(f'Parsed topic: {topic_header["name"]}')
 
             topic_headers.append(topic_header)
             topic_data_list.append(topic_data)

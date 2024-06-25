@@ -1,5 +1,5 @@
 language = "python"
-parent = ""
+parent = "python"
 name = "collections"
 title = "Collections"
 code = "import collections"

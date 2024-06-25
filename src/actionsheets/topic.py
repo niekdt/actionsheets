@@ -6,13 +6,14 @@ section_keys = ('section', 'description', 'details', 'code')
 solution_keys = ('code', 'details')
 action_keys = tuple(['what', 'description'] + list(solution_keys))
 entry_keys = tuple(set(section_keys + action_keys + solution_keys))
+reserved_keys = ('name', 'id', 'depth')
 
 def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     with open(path) as file:
         file_content = file.read()
         content = tomllib.loads(file_content)
 
-    assert content, f'{path} yielded empty content (None)'
+    assert content, f'{path} has no content'
 
     # Process header content
     header_dict = _process_header(content, path)
@@ -20,7 +21,11 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     print(f'\tParse topic: {header_dict["name"]}')
 
     # Process sections & snippets
-    df = _process_body(content, name=content['name'], id=content['name'])
+    df = _process_body(content, name=content['name'], id='').select(
+        pl.lit(header_dict['name']).alias('topic'),
+        pl.lit(header_dict['parent']).alias('parent'),
+        pl.all()
+    )
 
     return header_dict, df
     
@@ -57,7 +62,7 @@ def _process_entries(content: dict, id: str, parent_entry: dict, depth: int) -> 
     
     entries = _get_entries(content)
     for entry_name in entries:
-        entry_id = id + '.' + entry_name
+        entry_id = id + '.' + entry_name if id else entry_name
         entry_dict = _process_entry(content[entry_name], name = entry_name, id = entry_id, parent_entry=parent_entry)
         entry_dict['depth'] = depth
 
@@ -74,9 +79,8 @@ def _get_entries(content: dict) -> list[str]:
     
 
 def _process_entry(content: dict, name: str, id: str, parent_entry: dict) -> dict:
-    assert 'name' not in content, f'reserved field "name" used in entry {id}'
-    assert 'id' not in content, f'reserved field "id" used in entry {id}'
-    assert 'depth' not in content, f'reserved field "depth" used in entry {id}'
+    for k in reserved_keys:
+        assert k not in content, f'reserved field "{k}" used in entry {id}'
 
     entry_dict = {k: content[k] for k in content.keys() if k in entry_keys}
 
@@ -85,10 +89,10 @@ def _process_entry(content: dict, name: str, id: str, parent_entry: dict) -> dic
     is_action = 'what' in entry_dict
     is_solution = not is_action and 'code' in entry_dict
 
-    assert sum([is_virtual, is_section, is_action, is_solution]) == 1, f'ambigious entry with multiple possible types for entry {id}'
+    assert sum([is_virtual, is_section, is_action, is_solution]) == 1, f'entry {id} is ambigious; invalid set of fields'
     assert is_solution ^ (is_section or is_action or is_virtual)
 
-    entry_dict['name'] = name
+    # entry_dict['name'] = name
     entry_dict['id'] = id
 
     if is_action:
