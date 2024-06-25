@@ -61,6 +61,10 @@ code = "k in x"
 what = "Contains value _v_"
 code = "v in x.values()"
 
+[test.contains.value.none]
+what = "Contains value `None`"
+code = "None in x.values()"
+
 [test.contains.keys]
 what = "Contains specific keys"
 code = "{k1, k2}.issubset(x)"
