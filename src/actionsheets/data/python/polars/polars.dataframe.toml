@@ -382,3 +382,276 @@ what = "Sort table by column"
 code = "data.sort('col1')"
 
 
+[grow]
+section = "Grow"
+
+[grow.append.col.constant]
+what = "Append constant numeric column"
+code = "data.with_columns(Intercept=pl.lit(1))"
+
+[grow.append.col.series]
+what = "Append column from series"
+code = """
+s = pl.Series("apple", [10, 20, 30])
+data.hstack([s])
+"""
+details = "Note the brackets"
+
+[grow.append.col.series.inplace]
+what = "Append column from series, inplace"
+code = "data.hstack(s, in_place = True)"
+
+[grow.insert.col.series.inplace]
+what = "Insert column from series, inplace"
+code = "data.insert_at_idx(1, s)"
+
+[grow.derive]
+section = "Derive columns"
+
+[grow.derive.transform]
+what = "Transform another column"
+code = "data.with_columns(AgeSq = pl.col('Age') ** 2)"
+
+[grow.derive.transform.multi]
+what = "Multiple transformations from another column"
+code = """
+data.with_columns(
+    Age2 = pl.col('Age') ** 2
+    Age3 = pl.col('Age') ** 3
+)
+"""
+
+[grow.derive.mask.pairwise]
+what = "Boolean mask based on pairwise comparison of another column"
+code = "data.with_columns(CanLive = pl.col('Income') * 3 > pl.col('Rent')"
+
+[grow.derive.values.cond]
+what = "Values conditional on another column"
+code = """
+data.with_columns(
+    pl.when(pl.col('age') >= 18).
+    then(pl.lit(1)).
+    otherwise(pl.lit(-1))
+)
+"""
+
+[grow.derive.map]
+what = "Map another column"
+code = """
+map = dict(1 = 'a', 2 = 'b', 3 = 'c')
+data.with_columns(
+    NumCat = pl.col('Num').map_dict(map).cast(pl.Categorical)
+)
+"""
+
+[grow.derive.str.datetime]
+what = "Parse string column to date"
+code = "data.with_columns(date=pl.col('datestring').str.to_date())"
+
+[grow.derive.str.datetime.format]
+what = "Parse string column to date with known format"
+code = "data.with_columns(date = pl.col('datestring').str.to_date('%Y-%m-%d'))"
+
+[grow.derive.datetime.weekday]
+what = "Weekday from date column"
+code = "?"
+
+[grow.derive.datetime.month]
+what = "Month from date column"
+code = "data.with_columns(month = pl.col('date').dt.month())"
+
+[grow.derive.datetime.year]
+what = "Year from date column"
+code = "data.with_columns(year = pl.col('Date').dt.year())"
+
+[grow.derive.datetime.epoch.seconds]
+what = "Integer seconds since Unix epoch to datetime"
+code = "data.with_columns(date=pl.from_epoch(pl.col('time')))"
+
+[grow.derive.datetime.epoch.days]
+what = "Integer daystamp since Unix epoch to date"
+code = "data.with_columns(date=pl.from_epoch(pl.col('time'), time_unit='d'))"
+
+[grow.derive.datetime.epoch.ms]
+what = "Integer milliseconds timestamp since Unix epoch to datetime"
+code = "data.with_columns(date=pl.from_epoch(pl.col('time'), time_unit='ms'))"
+
+[grow.derive.agg.group]
+what = "Group-wise from aggregate value"
+code = """
+data.with_columns(
+    DaysSinceStart = pl.col('Date') - pl.col('Date').min().over('Subject').cast(pl.Int) + 1
+)
+"""
+
+[grow.row]
+section = "Add rows"
+
+[grow.row.tuple]
+what = "Add row as tuple"
+code = "?"
+
+[grow.row.list.tuple]
+what = "Add list of tuples"
+code = "?"
+
+[grow.row.dataframe]
+what = "Add data frame"
+code = "pl.concat(data, df2)"
+
+[grow.row.dataframe.inplace]
+what = "Add data frame inplace"
+code = "data.extend(data2)"
+
+[grow.row.dataframes.inplace]
+what = "Add data frames inplace"
+code = """
+data.vstack(data2)
+data.vstack(dataN)
+data.rechunk()
+"""
+
+[shrink]
+section = "Shrink the data frame"
+
+
+[shrink.col]
+section = "Remove columns"
+
+[shrink.col.single]
+what = "Remove column"
+code = "data.drop('Age')"
+
+[shrink.col.multi]
+what = "Remove columns"
+code = "data.drop(['Age', 'Sex'])"
+
+[shrink.col.multi.inplace]
+what = "Remove column inplace"
+code = "data.drop_in_place('Age')"
+details = "Returns the dropped column"
+
+[shrink.col.numeric]
+what = "Remove all numeric columns"
+code = "data.drop(cs.numeric())"
+
+
+[shrink.row]
+section = "Remove rows"
+
+[reshape]
+section = "Reshape"
+
+[reshape.long]
+what = "From wide to long format"
+code = "data.melt(id_vars='sex', value_vars=['a', 'b'])"
+
+[reshape.narrow]
+what = "To narrow format"
+code = "data.explode(?)"
+details = "?"
+
+[merge]
+section = "Merge two data frames"
+
+[merge.sorted]
+what = "Merge two data frames on the sorted key"
+code = "data.merge(data2)"
+
+[merge.inner]
+what = "Inner join"
+code = "data.join(data2, on = ['sex', 'country'])"
+
+[merge.left]
+what = "Left join"
+code = "data.join(data2, on = ['sex', 'country'], how = 'left')"
+
+[merge.right]
+what = "Right join"
+code = "data.join(data2, on = ['sex', 'country'], how = 'right')"
+
+[merge.outer]
+what = "Outer join"
+code = "data.join(data2, on = ['sex', 'country'], how = 'outer')"
+
+[merge.cross]
+what = "Cross join"
+code = "data.join(data2, on = ['sex', 'country'], how = 'cross')"
+
+[merge.semi]
+what = "Semi join (one match per index)"
+code = "data.join(data2, on = ['sex', 'country'], how = 'semi')"
+
+[merge.anti]
+what = "Anti join (exclude matches from table 2)"
+code = "data.join(data2, on = ['sex', 'country'], how = 'anti')"
+
+
+[extract]
+section = "Extract"
+
+[extract.col.series]
+what = "Get column as series"
+code = "data['col1']"
+
+[extract.col.list]
+what = "Get column as list" 
+code = "list(data['col1'])"
+details = "?"
+
+[extract.row.tuple]
+what = "Get _i_ th row as tuple"
+code = "data.row(i)"
+
+[extract.rows.list.tuple]
+what = "Get rows as list of tuple"
+code = "data.rows(...)"
+details = "?"
+
+[extract.cell.first]
+what = "First item (cell)"
+code = "data.item(0, 0)"
+
+[extract.cell.at]
+what = "Item (cell) from row _i_ and column index _j_"
+code = "data.item(i, j)"
+
+[extract.cell.at.col]
+what = "Item (cell) from row _i_ and column name _name_"
+code = "data.item(i, name)"
+
+
+[convert]
+section = "Convert"
+
+[convert.pandas]
+what = "To `pandas.DataFrame`"
+code = "data.to_pandas()"
+
+[convert.list.series]
+what = "To list of series"
+code = "data.get_columns()"
+
+[convert.split.dataframes.list.col]
+what = "Split into list of data frames based on column"
+code = "data.partition_by('sex')"
+
+[convert.split.dataframes.list.cols]
+what = "Split into list of data frames based on column tuples"
+code = "data.partition_by('sex', 'country')"
+
+[convert.split.dataframes.dict]
+what = "Split into dict of data frames based on column(s)"
+code = "data.partition_by('sex', 'country', as_dict = True)"
+
+[convert.format.csv]
+what = "To CSV file"
+code = "data.write_csv('derp.csv')"
+
+[convert.format.parquet]
+what = "To Parquet file"
+code = "data.write_parquet('derp.parquet')"
+
+[convert.format.json]
+what = "To JSON"
+code = "?"
