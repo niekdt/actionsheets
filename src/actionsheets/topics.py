@@ -62,6 +62,11 @@ def _process_topics(topics: pl.DataFrame) -> pl.DataFrame:
     )
     assert missing_topics.is_empty(), f'missing definition for parent topic(s): {", ".join(missing_topics)}'
 
+    # Compute depth
+    topics = topics.with_columns(
+        depth=pl.col('id').str.count_match('\.')
+    )
+
     # Set column order
     col_order = ['topic', 'parent', 'id', 'language']
     topics = topics.select(pl.col(col_order), pl.exclude(col_order))

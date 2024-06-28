@@ -32,8 +32,7 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
 
 def _process_header(content: dict, path) -> dict:
     assert 'name' in content, f'{path}: no name defined'
-    assert isinstance(content['name'], str), f'{path}: name must be str'
-    assert content['name'], f'{path}: name is empty'
+    assert_name(content['name'], path)
 
     assert 'parent' in content, f'no parent defined'
     assert isinstance(content['parent'], str), f'parent must be str'
@@ -143,3 +142,9 @@ def _process_solution(entry: dict, name: str, id: str, parent_entry: dict) -> di
     entry['title'] = parent_entry['title']
     entry['type'] = 'action'
     return entry
+
+
+def assert_name(name: any, path: str):
+    assert isinstance(name, str), f'{path}: name must be str'
+    assert name, f'{path}: name is empty'
+    assert not '.' in name, f'{path}: name cannot contain "."'
