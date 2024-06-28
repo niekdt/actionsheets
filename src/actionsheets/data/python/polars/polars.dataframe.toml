@@ -291,14 +291,94 @@ section = "By group"
 what = "Mean of column by group"
 code = "data.group_by('sex').agg(pl.col('age').mean())"
 
-[query.aggregate.group.time]
+[query.aggregate.time]
 section = "Over time"
+description = "Aggregation is done at a fixed datetime interval (e.g., daily, hourly), based on an datetime index."
 
-[query.aggregate.group.time.moving.mean]
-what = "Moving average"
-code = "data.group_by_dynamic('ts', every='1d').agg(pl.col('value').mean())"
-details = "?"
+[query.aggregate.time.row]
+section = "Row-based"
+description = "Rolling computation for each row (i.e., observation in time)"
 
+[query.aggregate.time.row.right]
+what = "Daily rolling computation with right-aligned partial windows of max _n_ days"
+code = """
+new_data = data.rolling(
+    index_column='Date',
+    period=f'{n}d'
+).agg(
+    pl.mean('Obs)
+)
+"""
+
+[query.aggregate.time.row.right.keep]
+what = "Daily rolling computation with right-aligned partial windows of max _n_ days, keep other columns"
+code = """
+new_data = data.rolling(
+    index_column='Date',
+    period=f'{n}d'
+).agg(
+    pl.exclude(['Date', 'Obs']).last(),
+    pl.mean('Obs)
+)
+"""
+
+[query.aggregate.time.interval]
+section = "Interval-based"
+description = "Rolling computation for constant (not dynamic!) intervals. This may introduce additional moments in time."
+
+[query.aggregate.time.interval.right]
+what = "Daily rolling computation with right-aligned partial window of max _n_ days"
+code = """
+new_data = data.group_by_dynamic(
+    index_column='Date',
+    every='1d',
+    offset=f'-{n - 1}d',
+    period=f'{n - 1}d',
+    label='right',
+    closed='both',
+    start_by='window'
+).agg(
+    pl.mean('Obs')
+)
+"""
+details = "To be verified"
+
+[query.aggregate.time.interval.left]
+what = "Daily rolling computation with left-aligned partial window of max _n_ days"
+code = """
+new_data = data.group_by_dynamic(
+    index_column='Date',
+    every='1d',
+    offset=f'-{n - 1}d',
+    period=f'{n - 1}d',
+    label='left',
+    closed='both',
+    start_by='datapoint'
+).agg(
+    pl.mean('Obs')
+)
+"""
+details = "To be verified"
+
+[query.aggregate.time.interval.right.prop]
+what = "Dynamic daily rolling statistic proportional to number of window observations, with right-aligned partial window of max _n_ days"
+code = """
+new_data = data.group_by_dynamic(
+    index_column='Date',
+    every='1d',
+    offset=f'-{n - 1}d',
+    period=f'{n - 1}d',
+    label='right',
+    closed='both',
+    start_by='window'
+).agg(
+    pl.sum('Hospitalized').alias('DaysHospitalized'),
+    pl.count()
+).with_columns(
+    Proportion=pl.col('DaysHospitalized') / pl.col('count')
+)
+"""
+details = "To be verified"
 
 [update]
 section = "Update"
