@@ -651,6 +651,22 @@ code = "data.drop(cs.numeric())"
 [shrink.row]
 section = "Remove rows"
 
+[shrink.row.index]
+what = "Remove rows by row numbers"
+code = "data.filter(~pl.arange(0, pl.count()).is_in([1, 5, 7]))"
+
+[shrink.row.index.r]
+code = "data.with_row_index().filter(~pl.col('index').is_in([1, 5, 7]))"
+details = "Output contains additional column 'Index'"
+
+[shrink.row.index.except]
+what = "Remove all rows except the given row numbers"
+code = "data[[1, 6]]"
+
+[shrink.row.index.except.filter]
+code = "data.filter(pl.arange(0, pl.count()).is_in([1, 5, 7]))"
+
+
 [reshape]
 section = "Reshape"
 
