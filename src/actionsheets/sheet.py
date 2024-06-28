@@ -18,11 +18,12 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     # Process header content
     header_dict = _process_header(content, path)
 
-    print(f'\tParse topic: {header_dict["topic"]}')
+    sheet_name = header_dict['name']
+    print(f'\tParse sheet: {sheet_name}')
 
     # Process sections & snippets
-    df = _process_body(content, name=content['name'], id='').select(
-        pl.lit(header_dict['topic']).alias('topic'),
+    df = _process_body(content, name=sheet_name, id='').select(
+        pl.lit(header_dict['name']).alias('sheet_name'),
         pl.lit(header_dict['parent']).alias('parent'),
         pl.all()
     )
@@ -49,7 +50,6 @@ def _process_header(content: dict, path) -> dict:
     assert 'details' not in content or isinstance(content['details'], str), f'details must be str'
         
     header = {k: content[k] for k in content.keys() if k in header_keys}
-    header['topic'] = header.pop('name')
     return header
 
 
@@ -93,8 +93,7 @@ def _process_entry(content: dict, name: str, id: str, parent_entry: dict) -> dic
     assert sum([is_virtual, is_section, is_action, is_solution]) == 1, f'entry {id} is ambigious; invalid set of fields'
     assert is_solution ^ (is_section or is_action or is_virtual)
 
-    # entry_dict['name'] = name
-    entry_dict['id'] = id
+    entry_dict['snippet_id'] = id
 
     if is_action:
         return _process_action(entry_dict, name=name, id=id)
