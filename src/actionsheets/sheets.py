@@ -3,21 +3,23 @@ import polars as pl
 
 from actionsheets.sheet import parse_toml
 
+pl.Config.set_tbl_cols(20) # TMP
+
 class Actionsheets:
     def __init__(self, sheets: pl.DataFrame, snippets: pl.DataFrame):
         self.sheets_data = sheets
         self.snippets_data = snippets
 
     def sheet_ids(self, parent_id: str = '') -> list[str]:
-        return self.sheets_data.filter(pl.col('parent') == parent_id)['id'].to_list()
+        return self.sheets_data.filter(pl.col('parent') == parent_id)['sheet_id'].to_list()
     
     def sheet_info(self, id: str) -> dict:
-        assert id in self.sheet_data['id'], f'attempted to access data of undefined sheet "{id}"'
-        return self.sheet_data.row(by_predicate=pl.col('id') == id, named=True)
+        assert id in self.sheet_data['sheet_id'], f'attempted to access data of undefined sheet "{id}"'
+        return self.sheet_data.row(by_predicate=pl.col('sheet_id') == id, named=True)
 
     def sheet_snippets(self, id: str) -> pl.DataFrame:
         assert id in self.get_sheets_ids(), f'attempted to access snippets of undefined sheet "{id}"'
-        return self.snippets_data.filter(pl.col('id') == id)
+        return self.snippets_data.filter(pl.col('sheet_id') == id)
     
     def find_sheet(self, query: str) -> str:
         return ''
@@ -63,16 +65,18 @@ def _parse() -> Actionsheets:
 
 def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
     # Generate sheet IDs
-    sheets = sheets.with_columns(
-        id=pl.when(pl.col('parent') == '').
-            then(pl.col('name')).
-            otherwise(pl.col('parent') + '.' + pl.col('name'))
-    )
+    sheets = sheets. \
+        rename({'name': 'sheet_name', 'parent': 'sheet_parent'}). \
+        with_columns(
+            sheet_id=pl.when(pl.col('sheet_parent') == '').
+                then(pl.col('sheet_name')).
+                otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
+        )
 
     # Check for missing parent topics
     missing_sheet_names = (
-        sheets['parent'].
-            filter(sheets['parent'].is_in(sheets['id']).not_()).
+        sheets['sheet_parent'].
+            filter(sheets['sheet_parent'].is_in(sheets['sheet_id']).not_()).
             replace('', None).
             drop_nulls()
     )
@@ -80,26 +84,26 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
 
     # Compute depth
     sheets = sheets.with_columns(
-        depth=pl.col('id').str.count_match('\.')
+        depth=pl.col('sheet_id').str.count_match('\.')
     )
 
     # Set column order
-    col_order = ['id', 'parent', 'name', 'language']
+    col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'language']
     parsed_sheets = sheets.select(pl.col(col_order), pl.exclude(col_order))
 
     return parsed_sheets
 
 def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
-    col_order = ['id', 'parent', 'sheet_name', 'snippet_id']
+    col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'snippet_id']
 
     return snippets_data.with_columns(
-        id=pl.when(pl.col('parent') == '').
+        sheet_id=pl.when(pl.col('sheet_parent') == '').
             then(pl.col('sheet_name')).
-            otherwise(pl.col('parent') + '.' + pl.col('sheet_name'))
-    ).select(
-        pl.col(col_order),
-        pl.exclude(col_order)
-    )
+            otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
+        ).select(
+            pl.col(col_order),
+            pl.exclude(col_order)
+        )
 
 sheets = _parse()
 

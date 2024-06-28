@@ -16,19 +16,19 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     assert content, f'{path} has no content'
 
     # Process header content
-    header_dict = _process_header(content, path)
+    sheet_info = _process_header(content, path)
 
-    sheet_name = header_dict['name']
+    sheet_name = sheet_info['name']
     print(f'\tParse sheet: {sheet_name}')
 
     # Process sections & snippets
     df = _process_body(content, name=sheet_name, id='').select(
-        pl.lit(header_dict['name']).alias('sheet_name'),
-        pl.lit(header_dict['parent']).alias('parent'),
+        pl.lit(sheet_info['name']).alias('sheet_name'),
+        pl.lit(sheet_info['parent']).alias('sheet_parent'),
         pl.all()
     )
 
-    return header_dict, df
+    return sheet_info, df
     
 
 def _process_header(content: dict, path) -> dict:
@@ -49,25 +49,35 @@ def _process_header(content: dict, path) -> dict:
     assert 'description' not in content or isinstance(content['description'], str), f'description must be str'
     assert 'details' not in content or isinstance(content['details'], str), f'details must be str'
         
-    header = {k: content[k] for k in content.keys() if k in header_keys}
-    return header
+    sheet_info = {k: content[k] for k in content.keys() if k in header_keys}
+    return sheet_info
 
 
 def _process_body(content: dict, name: str, id: str) -> pl.DataFrame:
-    return _process_entries(content, id=id, parent_entry=dict(), depth=1)
+    return _process_entries(content, id=id, parent_entry=dict(), parent_section='')
 
 
-def _process_entries(content: dict, id: str, parent_entry: dict, depth: int) -> pl.DataFrame:
+def _process_entries(content: dict, id: str, parent_entry: dict, parent_section: str) -> pl.DataFrame:
     print(f'process_entries for id {id}')
     df = pl.DataFrame()
     
     entries = _get_entries(content)
     for entry_name in entries:
         entry_id = id + '.' + entry_name if id else entry_name
-        entry_dict = _process_entry(content[entry_name], name = entry_name, id = entry_id, parent_entry=parent_entry)
-        entry_dict['depth'] = depth
+        entry_dict = _process_entry(
+            content=content[entry_name], 
+            name = entry_name, 
+            id = entry_id, 
+            parent_entry=parent_entry,
+            parent_section=parent_section
+        )
 
-        df2 = _process_entries(content[entry_name], id=entry_id, parent_entry=entry_dict, depth=depth + 1)
+        df2 = _process_entries(
+            content=content[entry_name], 
+            id=entry_id, 
+            parent_entry=entry_dict, 
+            parent_section=entry_id if entry_dict['type'] == 'section' else parent_section
+        )
         
         df = pl.concat([df, pl.DataFrame(entry_dict), df2], how='diagonal_relaxed')
 
@@ -79,7 +89,7 @@ def _get_entries(content: dict) -> list[str]:
         return [k for k in content if isinstance(content[k], dict)]
     
 
-def _process_entry(content: dict, name: str, id: str, parent_entry: dict) -> dict:
+def _process_entry(content: dict, name: str, id: str, parent_entry: dict, parent_section: str) -> dict:
     for k in reserved_keys:
         assert k not in content, f'reserved field "{k}" used in entry {id}'
 
@@ -94,6 +104,7 @@ def _process_entry(content: dict, name: str, id: str, parent_entry: dict) -> dic
     assert is_solution ^ (is_section or is_action or is_virtual)
 
     entry_dict['snippet_id'] = id
+    entry_dict['parent_section'] = parent_section
 
     if is_action:
         return _process_action(entry_dict, name=name, id=id)
