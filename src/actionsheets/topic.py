@@ -18,11 +18,11 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     # Process header content
     header_dict = _process_header(content, path)
 
-    print(f'\tParse topic: {header_dict["name"]}')
+    print(f'\tParse topic: {header_dict["topic"]}')
 
     # Process sections & snippets
     df = _process_body(content, name=content['name'], id='').select(
-        pl.lit(header_dict['name']).alias('topic'),
+        pl.lit(header_dict['topic']).alias('topic'),
         pl.lit(header_dict['parent']).alias('parent'),
         pl.all()
     )
@@ -49,7 +49,9 @@ def _process_header(content: dict, path) -> dict:
     assert 'description' not in content or isinstance(content['description'], str), f'description must be str'
     assert 'details' not in content or isinstance(content['details'], str), f'details must be str'
         
-    return {k: content[k] for k in content.keys() if k in header_keys}
+    header = {k: content[k] for k in content.keys() if k in header_keys}
+    header['topic'] = header.pop('name')
+    return header
 
 
 def _process_body(content: dict, name: str, id: str) -> pl.DataFrame:

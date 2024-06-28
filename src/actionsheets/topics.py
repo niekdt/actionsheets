@@ -9,7 +9,7 @@ class Topics:
         self.data = data
 
     @staticmethod
-    def parse_topics():
+    def parse():
         data_root = resources.files('actionsheets.data')
 
         def gather_files(entries: resources.abc.Traversable) -> list[str]:
@@ -29,12 +29,12 @@ class Topics:
         for file in files:
             print(f'Parsing file {file}...')
             topic_header, topic_data = parse_toml(file)
-            print(f'Parsed topic: {topic_header["name"]}')
+            print(f'Parsed topic: {topic_header["topic"]}')
 
             topic_headers.append(topic_header)
             topic_data_list.append(topic_data)
 
-        topics = pl.DataFrame(topic_headers)
+        topics = _process_topics(pl.DataFrame(topic_headers))
         data = pl.concat(topic_data_list, how='diagonal')
 
         print('\n\nHEADERS:')
@@ -45,4 +45,28 @@ class Topics:
         return Topics(topics, data)
                 
         
-topics = Topics.parse_topics()
+def _process_topics(topics: pl.DataFrame) -> pl.DataFrame:
+    # Generate topic IDs
+    topics = topics.with_columns(
+        id=pl.when(pl.col('parent') == '').
+            then(pl.col('topic')).
+            otherwise(pl.col('parent') + '.' + pl.col('topic'))
+    )
+
+    # Check for missing parent topics
+    missing_topics = (
+        topics['parent'].
+            filter(topics['parent'].is_in(topics['id']).not_()).
+            replace('', None).
+            drop_nulls()
+    )
+    assert missing_topics.is_empty(), f'missing definition for parent topic(s): {", ".join(missing_topics)}'
+
+    # Set column order
+    col_order = ['topic', 'parent', 'id', 'language']
+    topics = topics.select(pl.col(col_order), pl.exclude(col_order))
+
+    return topics
+
+
+topics = Topics.parse()

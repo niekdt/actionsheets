@@ -1,5 +1,5 @@
 language = "python"
-parent = "collections"
+parent = "python.collections"
 name = "list"
 title = "List"
 description = "An ordered collection of elements"

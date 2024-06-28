@@ -1,5 +1,5 @@
 language = "python"
-parent = "polars"
+parent = "python.polars"
 name = "dataframe"
 title = "DataFrame"
 description = "The polars package provides a fast and powerful implementation of data frames"

@@ -1,5 +1,5 @@
 language = "python"
-parent = "pandas"
+parent = "python.pandas"
 name = "dataframe"
 title = "DataFrame"
 description = """
