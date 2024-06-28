@@ -299,8 +299,17 @@ description = "Aggregation is done at a fixed datetime interval (e.g., daily, ho
 section = "Row-based"
 description = "Rolling computation for each row (i.e., observation in time)"
 
+[query.aggregate.time.row.solo.right]
+what = "Rolling computation for a single column, with right-aligned partial window of max _n_ days and at least _i_ rows"
+code = """
+data.with_columns(
+    pl.col('Hospitalized').rolling_mean(by='Date', closed='both', window_size=f'{n - 1}d', min_periods=i)
+)
+"""
+details = "Currently only available for `rolling_mean()`, not any of the other `rolling_` functions."
+
 [query.aggregate.time.row.right]
-what = "Daily rolling computation with right-aligned partial windows of max _n_ days"
+what = "Rolling computation with right-aligned partial window of max _n_ days"
 code = """
 new_data = data.rolling(
     index_column='Date',
@@ -311,7 +320,7 @@ new_data = data.rolling(
 """
 
 [query.aggregate.time.row.right.keep]
-what = "Daily rolling computation with right-aligned partial windows of max _n_ days, keep other columns"
+what = "Rolling computation with right-aligned partial windows of max _n_ days, keep other columns"
 code = """
 new_data = data.rolling(
     index_column='Date',
