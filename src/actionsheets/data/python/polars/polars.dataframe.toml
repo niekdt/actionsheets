@@ -319,6 +319,18 @@ code = "data.rename({'old': 'new'})"
 what = "Rename columns"
 code = "data.rename({'old1': 'new1', 'old2': 'new2'})"
 
+[update.col.order]
+what = "Reorder all columns in a given order"
+code = "data.select(pl.col(['patient', 'sex', 'age']))"
+
+[update.col.order.some]
+what = "Reorder specific columns in a given order"
+code = """
+cols = ['topic', 'parent', 'language']
+data.select(pl.col(cols), pl.exclude(cols))
+"""
+details = "There doesn't seem to be a shorter way to do this"
+
 [update.col.values]
 what = "Update column values"
 code = "data.with_columns(pl.col('age') + 5)"
@@ -526,10 +538,21 @@ code = "data.drop('Age')"
 what = "Remove columns"
 code = "data.drop(['Age', 'Sex'])"
 
+[shrink.col.multi.select]
+code = "data.select(pl.exclude(['Age', 'Sex']))"
+
 [shrink.col.multi.inplace]
 what = "Remove column inplace"
 code = "data.drop_in_place('Age')"
 details = "Returns the dropped column"
+
+[shrink.col.keep.single]
+what = "Keep a single column"
+code = "data.select(pl.col('Age'))"
+
+[shrink.col.keep.multi]
+what = "Keep multiple columns (column subset)"
+code = "data.select(pl.col(['Age', 'Sex'])"
 
 [shrink.col.numeric]
 what = "Remove all numeric columns"
