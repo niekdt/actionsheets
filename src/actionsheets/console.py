@@ -91,7 +91,7 @@ def _render_snippets(data: pl.DataFrame) -> RenderResult:
         row_styles=['', f'on {_alternate_bg_color}']
     )
 
-    table.add_column('What', vertical='center', style='cyan', min_width=15)
+    table.add_column('What', style='cyan', min_width=15)
     table.add_column('Code', justify='left', style='magenta', no_wrap=True, overflow='fold', min_width=40, max_width=100)
     table.add_column('Details', style="green", min_width=10)
 
