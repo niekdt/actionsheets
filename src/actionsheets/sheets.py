@@ -1,7 +1,7 @@
 from importlib import resources
 import polars as pl
 
-from actionsheets.sheet import parse_toml
+from actionsheets.sheet import ActionsheetView, parse_toml
 
 pl.Config.set_tbl_cols(20) # TMP
 
@@ -10,16 +10,18 @@ class Actionsheets:
         self.sheets_data = sheets
         self.snippets_data = snippets
 
-    def sheet_ids(self, parent_id: str = '') -> list[str]:
-        return self.sheets_data.filter(pl.col('parent') == parent_id)['sheet_id'].to_list()
+    def ids(self, parent_id: str = '') -> list[str]:
+        return self.sheets_data.filter(
+            pl.col('sheet_parent') == parent_id
+        )['sheet_id'].to_list()
     
     def sheet_info(self, id: str) -> dict:
-        assert id in self.sheet_data['sheet_id'], f'attempted to access data of undefined sheet "{id}"'
-        return self.sheet_data.row(by_predicate=pl.col('sheet_id') == id, named=True)
-
-    def sheet_snippets(self, id: str) -> pl.DataFrame:
-        assert id in self.get_sheets_ids(), f'attempted to access snippets of undefined sheet "{id}"'
-        return self.snippets_data.filter(pl.col('sheet_id') == id)
+        assert id in self.sheets_data['sheet_id'], f'attempted to access data of undefined sheet "{id}"'
+        return self.sheets_data.row(by_predicate=pl.col('sheet_id') == id, named=True)
+    
+    def sheet_view(self, id: str) -> ActionsheetView:
+        assert id in self.snippets_data['sheet_id'], f'attempted to access snippets of undefined sheet "{id}"'
+        return ActionsheetView(data=self.snippets_data.filter(pl.col('sheet_id') == id))
     
     def find_sheet(self, query: str) -> str:
         return ''
@@ -28,7 +30,7 @@ class Actionsheets:
         return self.snippets_data
     
     def find_sheet_snippets(self, id: str, query: str) -> pl.DataFrame:
-        sheet_snippets_data = self.sheet_snippets(id=id)
+        sheet_snippets_data = self.sheet_view(id=id)
         return sheet_snippets_data
     
 
@@ -64,14 +66,15 @@ def _parse() -> Actionsheets:
         
 
 def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
-    # Generate sheet IDs
-    sheets = sheets. \
-        rename({'name': 'sheet_name', 'parent': 'sheet_parent'}). \
-        with_columns(
-            sheet_id=pl.when(pl.col('sheet_parent') == '').
-                then(pl.col('sheet_name')).
-                otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
-        )
+    # Rename columns
+    sheets = sheets.rename({'name': 'sheet_name', 'parent': 'sheet_parent'})
+
+    # Generate IDs
+    sheets = sheets.with_columns(
+        sheet_id=pl.when(pl.col('sheet_parent') == '').
+            then(pl.col('sheet_name')).
+            otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
+    )
 
     # Check for missing parent topics
     missing_sheet_names = (
@@ -82,28 +85,31 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
     )
     assert missing_sheet_names.is_empty(), f'missing definition for parent topic(s): {", ".join(missing_sheet_names)}'
 
-    # Compute depth
+    # Fill optional fields, compute depth
     sheets = sheets.with_columns(
+        pl.col('description').fill_null(''),
+        pl.col('details').fill_null(''),
         depth=pl.col('sheet_id').str.count_match('\.')
     )
 
     # Set column order
     col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'language']
-    parsed_sheets = sheets.select(pl.col(col_order), pl.exclude(col_order))
-
-    return parsed_sheets
+    return sheets.select(pl.col(col_order), pl.exclude(col_order))
 
 def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
     col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'snippet_id']
 
     return snippets_data.with_columns(
+        pl.col('title').fill_null(pl.col('snippet_id')),
+        pl.col('details').fill_null(''),
+        pl.col('description').fill_null(''),
         sheet_id=pl.when(pl.col('sheet_parent') == '').
             then(pl.col('sheet_name')).
             otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
-        ).select(
-            pl.col(col_order),
-            pl.exclude(col_order)
-        )
+    ).select(
+        pl.col(col_order),
+        pl.exclude(col_order)
+    )
 
 sheets = _parse()
 

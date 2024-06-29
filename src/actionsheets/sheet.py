@@ -8,6 +8,32 @@ action_keys = tuple(['what', 'description'] + list(solution_keys))
 entry_keys = tuple(set(section_keys + action_keys + solution_keys))
 reserved_keys = ('name', 'id', 'depth')
 
+class ActionsheetView:
+    def __init__(self, data: pl.DataFrame):
+        self.data = data
+
+    def child_ids(self, type: str, section: str = '') -> list[str]:
+        assert type in ['section', 'part', 'action']
+        return self.data.filter(
+            (pl.col('parent_section') == section) & (pl.col('type') == type)
+        )['snippet_id'].to_list()
+    
+    def section_info(self, section: str) -> dict:
+        return self.data.row(
+            by_predicate=(pl.col('type') == 'section') & (pl.col('snippet_id') == section), 
+            named=True
+        )
+    
+    def section_view(self, section: str):
+        return ActionsheetView(data=self.snippets_data.filter(pl.col('snippet_id').str.starts_with(section)))
+    
+    def section_snippets(self, section: str) -> pl.DataFrame:
+        return self.snippets().filter(pl.col('parent_section') == section)
+    
+    def snippets(self) -> pl.DataFrame:
+        return self.data.filter(pl.col('type') == 'action')
+
+
 def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     with open(path) as file:
         file_content = file.read()
@@ -22,10 +48,10 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     print(f'\tParse sheet: {sheet_name}')
 
     # Process sections & snippets
-    df = _process_body(content, name=sheet_name, id='').select(
+    df = _process_body(content, name=sheet_name, id='').with_columns(
         pl.lit(sheet_info['name']).alias('sheet_name'),
         pl.lit(sheet_info['parent']).alias('sheet_parent'),
-        pl.all()
+        pl.lit(sheet_info['language']).alias('language')
     )
 
     return sheet_info, df
