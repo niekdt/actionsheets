@@ -83,18 +83,19 @@ def _render_snippets(data: pl.DataFrame) -> RenderResult:
     table = Table(
         collapse_padding=True, 
         pad_edge=False,
-        show_lines=True
+        show_lines=True,
+        expand=True
     )
 
-    table.add_column('What', justify='left', max_width=30, vertical='center', style='cyan')
-    table.add_column('Code', justify='left', style='magenta', no_wrap=True)
-    table.add_column('Details', justify='left', max_width=30, style="green")
+    table.add_column('What', vertical='center', style='cyan', min_width=15)
+    table.add_column('Code', justify='left', style='magenta', no_wrap=True, overflow='fold', min_width=40, max_width=100)
+    table.add_column('Details', style="green", min_width=10)
 
     for snippet in data.iter_rows(named=True):
         table.add_row(
-            Markdown(snippet['title'], hyperlinks=True), 
-            Syntax(snippet['code'], snippet['language'], tab_size=2), 
-            snippet['details']
+            Markdown(snippet['title'], justify='right'), 
+            Syntax(snippet['code'], snippet['language'], code_width=120, tab_size=2), 
+            Markdown(snippet['details'])
         )
     
     return table
