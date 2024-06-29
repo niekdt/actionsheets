@@ -9,6 +9,8 @@ from rich.table import Table
 from rich.tree import Tree
 from rich import print
 
+_alternate_bg_color = '#222222'
+
 def print_sheets(sheets: Actionsheets, parent_id: str = ''):
     print(_render_sheets(sheets, parent_id=parent_id))
 
@@ -64,6 +66,7 @@ def _render_section(view: ActionsheetView, section: str, tree: Tree) -> None:
 
     md = Markdown(
         markup=markup,
+        justify='left',
         inline_code_lexer=info['language']
     )
     snippets_render = _render_section_snippets(view, section)
@@ -81,10 +84,11 @@ def _render_section_snippets(view: ActionsheetView, section: str) -> RenderResul
 
 def _render_snippets(data: pl.DataFrame) -> RenderResult:
     table = Table(
-        collapse_padding=True, 
+        collapse_padding=False, 
         pad_edge=False,
-        show_lines=True,
-        expand=True
+        show_lines=False,
+        expand=True,
+        row_styles=['', f'on {_alternate_bg_color}']
     )
 
     table.add_column('What', vertical='center', style='cyan', min_width=15)
@@ -94,8 +98,15 @@ def _render_snippets(data: pl.DataFrame) -> RenderResult:
     for snippet in data.iter_rows(named=True):
         table.add_row(
             Markdown(snippet['title'], justify='right'), 
-            Syntax(snippet['code'], snippet['language'], code_width=120, tab_size=2), 
-            Markdown(snippet['details'])
+            Syntax(
+                code=snippet['code'], 
+                lexer=snippet['language'], 
+                code_width=120, 
+                tab_size=2, 
+                background_color='default' if table.row_count % 2 == 0 else _alternate_bg_color
+            ), 
+            Markdown(snippet['details']),
+            style = '' if table.row_count % 2 == 0 else f'on {_alternate_bg_color}'
         )
     
     return table
