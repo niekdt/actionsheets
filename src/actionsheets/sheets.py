@@ -89,7 +89,7 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
     sheets = sheets.with_columns(
         pl.col('description').fill_null(''),
         pl.col('details').fill_null(''),
-        depth=pl.col('sheet_id').str.count_match('\.')
+        depth=pl.col('sheet_id').str.count_matches('\.')
     )
 
     # Set column order
