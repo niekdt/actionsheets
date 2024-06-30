@@ -1,7 +1,7 @@
 language = "python"
 parent = "python.pandas"
 name = "dataframe"
-title = "DataFrame"
+title = "Pandas DataFrame"
 description = """
 `pandas.DataFrame` seems to be the MS Excel of the Python data processing universe: Slow, write-once, inconsistent API, and many ways to achieve the same thing (the true pythonic way), but very handy for quick & dirty data manipulation and popular for that reason.
 

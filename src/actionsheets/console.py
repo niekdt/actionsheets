@@ -4,12 +4,18 @@ import polars as pl
 
 from rich.console import RenderResult, Group, group
 from rich.syntax import Syntax
+from rich.text import Text
 from rich.markdown import Markdown
 from rich.table import Table
-from rich.tree import Tree
-from rich import print
+from rich.panel import Panel
+from rich import print, box
 
-_alternate_bg_color = '#222222'
+_header_color = 'magenta'
+_path_color = 'grey50'
+_description_color = 'hot_pink'
+_details_color = 'cyan'
+_action_color = 'sea_green1'
+_bg_color2 = 'grey15'
 
 def print_sheets(sheets: Actionsheets, parent_id: str = ''):
     print(_render_sheets(sheets, parent_id=parent_id))
@@ -20,93 +26,115 @@ def print_sheet(sheets: Actionsheets, id: str):
 def print_snippets(snippets: pl.DataFrame, limit=10):
     print(_render_snippets(snippets.head(n=limit)))
 
+@group()
 def _render_sheets(sheets: Actionsheets, parent_id: str) -> RenderResult:
-    tree = Tree(label=parent_id, hide_root=True)
     for sheet_id in sheets.ids(parent_id=parent_id):
         sheet_render = _render_sheet(sheets, id=sheet_id)
-        assert sheet_render
-        sheet_tree = _render_sheets(sheets, parent_id=sheet_id)
-        assert sheet_tree
-        tree.add(Group(sheet_render, sheet_tree))
+        sheets_render = _render_sheets(sheets, parent_id=sheet_id)
+        yield Group(sheet_render, sheets_render)
 
-    return tree
-
+@group()
 def _render_sheet(sheets: Actionsheets, id: str) -> RenderResult:
     info = sheets.sheet_info(id=id)
     view = sheets.sheet_view(id=id)
 
-    markup = f"""# {info['title']}
-{info['description']}
-{info['details']}
-"""
+    sheet_path = ' > '.join([v.capitalize() for v in info['sheet_id'].split('.')])
 
-    md = Markdown(
-        markup=markup,
-        justify='left',
-        inline_code_lexer=info['language']
+    yield Panel(
+        Text.assemble(
+            (Text(info['title'])), 
+            (' Actionsheet', 'i'),
+            '    ',
+            (sheet_path, f'{_path_color}')
+        ), 
+        box=box.DOUBLE_EDGE, 
+        style=_header_color
     )
 
-    tree = Tree(id)
-    tree.add(md)
-    _render_sections(view, section='', tree=tree)
+    if info['description']:
+        yield Text('DESCRIPTION', style=f'{_description_color} bold')
+        yield Markdown(markup=info['description'], style=_description_color, inline_code_lexer=info['language'])
+        yield ''
+    
+    if info['details']:
+        yield Text('DETAILS', style=f'{_details_color} bold')
+        yield Markdown(markup=info['details'], style=_details_color, inline_code_lexer=info['language'])
+        yield ''
 
-    return tree
+    yield _render_sections(view, section='')
 
-def _render_sections(view: ActionsheetView, section: str, tree: Tree) -> None:
+@group()
+def _render_sections(view: ActionsheetView, section: str) -> RenderResult:
     for section_id in view.child_ids(section = section, type = 'section'):
-        _render_section(view, section=section_id, tree=tree)
+        yield _render_section(view, section=section_id)
 
-def _render_section(view: ActionsheetView, section: str, tree: Tree) -> None:
+@group()
+def _render_section(view: ActionsheetView, section: str) -> RenderResult:
     info = view.section_info(section=section)
 
-    # Render section info
-    markup = f"""## {info['title']}
-{info['description']}
-"""
+    sheet_path = ' > '.join([v.capitalize() for v in info['sheet_id'].split('.')])
+    parent_path = ' > '.join([v.capitalize() for v in info['parent_section'].split('.')])
+    has_snippets = view.section_snippets(section=section).height > 0
 
     md = Markdown(
-        markup=markup,
-        justify='left',
+        markup=info['description'],
+        style=_description_color,
         inline_code_lexer=info['language']
     )
-    snippets_render = _render_section_snippets(view, section)
-    assert snippets_render
-
-    section_group = Group(md, snippets_render)
-    section_tree = tree.add(section_group)
+    snippets_group = _render_section_snippets(view, section)
+    yield Panel(
+        Group(md, snippets_group), 
+        title=Text.assemble(
+            ('' if info['parent_section'] == '' else f' {parent_path} >', f'black on {_header_color} bold'),
+            (f' {info["title"]} ', f'white on {_header_color} bold'), 
+            ' ── ', 
+            (f'Section {section}', 'black on default')
+        ), 
+        title_align='left',
+        subtitle='' if not has_snippets else Text.assemble(
+            (f'Actionsheet {sheet_path} ', f'{_path_color} italic'), 
+            ('───', 'white'), 
+            (f' Section {section}', f'{_path_color} italic')
+        ),
+        subtitle_align='left'
+    )
 
     # Render subsections
-    _render_sections(view, section=section, tree=section_tree)
+    yield _render_sections(view, section=section)
 
 def _render_section_snippets(view: ActionsheetView, section: str) -> RenderResult:
     data = view.section_snippets(section=section)
-    return _render_snippets(data)
+    if data.height:
+        return _render_snippets(data)
+    else:
+        return Group()
 
 def _render_snippets(data: pl.DataFrame) -> RenderResult:
     table = Table(
         collapse_padding=False, 
         pad_edge=False,
+        show_edge=False,
         show_lines=False,
         expand=True,
-        row_styles=['', f'on {_alternate_bg_color}']
+        row_styles=['', f'on {_bg_color2}']
     )
 
-    table.add_column('What', style='cyan', min_width=15)
-    table.add_column('Code', justify='left', style='magenta', no_wrap=True, overflow='fold', min_width=40, max_width=100)
-    table.add_column('Details', style="green", min_width=10)
+    table.add_column('What', style=_action_color, min_width=15)
+    table.add_column('Code', no_wrap=True, overflow='fold', min_width=40, max_width=100)
+    table.add_column('Details', style=f'{_details_color} i', min_width=10)
 
     for snippet in data.iter_rows(named=True):
         table.add_row(
-            Markdown(snippet['title'], justify='right'), 
+            Markdown(snippet['title']), 
             Syntax(
                 code=snippet['code'], 
                 lexer=snippet['language'], 
                 code_width=120, 
                 tab_size=2, 
-                background_color='default' if table.row_count % 2 == 0 else _alternate_bg_color
+                background_color='default' if table.row_count % 2 == 0 else _bg_color2
             ), 
             Markdown(snippet['details']),
-            style = '' if table.row_count % 2 == 0 else f'on {_alternate_bg_color}'
+            style = '' if table.row_count % 2 == 0 else f'on {_bg_color2}'
         )
     
     return table
