@@ -1,7 +1,8 @@
 from importlib import resources
 import polars as pl
 
-from actionsheets.sheet import ActionsheetView, parse_toml
+from actionsheets.sheet import ActionsheetView
+from actionsheets import sheet
 
 pl.Config.set_tbl_cols(20) # TMP
 
@@ -32,38 +33,44 @@ class Actionsheets:
     def find_sheet_snippets(self, id: str, query: str) -> pl.DataFrame:
         sheet_snippets_data = self.sheet_view(id=id)
         return sheet_snippets_data
-    
 
-def _parse() -> Actionsheets:
+def _gather_default_files() -> list[str]:
     data_root = resources.files('actionsheets.data')
 
     def gather_files(entries: resources.abc.Traversable) -> list[str]:
-        files = []
-        for entry in entries:
-            if entry.is_dir():
-                files += gather_files(entry.iterdir())
-            elif entry.name.endswith('.toml'):
-                files += [entry]
-        return files
-
+            files = []
+            for entry in entries:
+                if entry.is_dir():
+                    files += gather_files(entry.iterdir())
+                elif entry.name.endswith('.toml'):
+                    files += [entry]
+            return files
+    
     files = gather_files(data_root.iterdir())
-    assert files, 'no TOML topic files found inside the data subpackage'
 
-    sheets_info = []
+    assert files, 'no TOML topic files found inside the data subpackage'
+    return files
+
+def parse_toml(files: list[str]) -> Actionsheets: 
+    sheet_info_list = []
     sheet_data_list = []
     for file in files:
         print(f'Parsing file {file}...')
-        sheet_info, snippets_data = parse_toml(file)
+        sheet_info, snippets_data = sheet.parse_toml(file)
         print(f'Parsed topic: {sheet_info["name"]}')
 
-        sheets_info.append(sheet_info)
+        sheet_info_list.append(sheet_info)
         sheet_data_list.append(snippets_data)
 
-    sheets_data = _process_sheets(pl.DataFrame(sheets_info))
+    return _process_sheet_list(sheet_info_list, sheet_data_list)
+
+
+def _process_sheet_list(sheet_info_list: list[dict], sheet_data_list: list[pl.DataFrame]) -> Actionsheets:
+    sheets_data = _process_sheets(pl.DataFrame(sheet_info_list))
     snippets_data = _process_snippets(pl.concat(sheet_data_list, how='diagonal'))
 
-    return Actionsheets(sheets_data, snippets_data)        
-        
+    return Actionsheets(sheets_data, snippets_data)   
+
 
 def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
     # Rename columns
@@ -111,4 +118,17 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
         pl.exclude(col_order)
     )
 
-sheets = _parse()
+
+_default_sheets: Actionsheets = None
+
+def default_sheets() -> Actionsheets:
+    global _default_sheets
+
+    if not _default_sheets:
+        files = _gather_default_files()
+        _default_sheets = parse_toml(files)
+
+    return _default_sheets
+
+if __name__ == '__main__':
+    default_sheets()

@@ -1,4 +1,4 @@
-from actionsheets.sheets import Actionsheets, sheets
+from actionsheets.sheets import Actionsheets, default_sheets
 from actionsheets.sheet import ActionsheetView
 import polars as pl
 
@@ -141,4 +141,4 @@ def _render_snippets(data: pl.DataFrame) -> RenderResult:
 
 if __name__ == '__main__':
     print('== Actionsheets.console package ==')
-    print_sheets(sheets)
+    print_sheets(default_sheets())
