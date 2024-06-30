@@ -112,8 +112,3 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
     )
 
 sheets = _parse()
-
-print('\n\nSHEETS:')
-print(sheets.sheets_data)
-print('\n\nSNIPPETS:')
-print(sheets.snippets_data)

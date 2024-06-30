@@ -45,7 +45,6 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     sheet_info = _process_header(content, path)
 
     sheet_name = sheet_info['name']
-    print(f'\tParse sheet: {sheet_name}')
 
     # Process sections & snippets
     df = _process_body(content, name=sheet_name, id='').with_columns(
@@ -84,7 +83,6 @@ def _process_body(content: dict, name: str, id: str) -> pl.DataFrame:
 
 
 def _process_entries(content: dict, id: str, parent_entry: dict, parent_section: str) -> pl.DataFrame:
-    print(f'process_entries for id {id}')
     df = pl.DataFrame()
     
     entries = _get_entries(content)
@@ -107,7 +105,6 @@ def _process_entries(content: dict, id: str, parent_entry: dict, parent_section:
         
         df = pl.concat([df, pl.DataFrame(entry_dict), df2], how='diagonal_relaxed')
 
-    print(f'done with id {id}')
     return df
 
 
