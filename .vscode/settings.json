@@ -1,13 +1,13 @@
 {
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
     "python.autoComplete.extraPaths": [],
     "python.analysis.extraPaths": [],
     "terminal.integrated.env.windows": {
         "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}/tests"
     },
-    "jupyter.notebookFileRoot": "${workspaceFolder}",
     "python.analysis.inlayHints.pytestParameters": true,
-    "python.testing.pytestArgs": [],
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
 }
