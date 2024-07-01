@@ -32,6 +32,26 @@ code = "datetime.now().time()"
 what = "Current datetime"
 code = "datetime.now()"
 
+[create.date.min]
+what = "Earliest representable date"
+code = "date.min"
+
+[create.date.max]
+what = "Latest representable date"
+code = "date.max"
+
+[create.time.max]
+what = "Latest representable time"
+code = "time.max"
+
+[create.datetime.min]
+what = "Earliest representable datetime"
+code = "datetime.min"
+
+[create.datetime.max]
+what = "Latest representable datetime"
+code = "datetime.max"
+
 [create.current.datetime.utc]
 what = "Current datetime in UTC timezone"
 code = "datetime.now(timezone.utc)"
