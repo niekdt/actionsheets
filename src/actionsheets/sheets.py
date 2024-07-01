@@ -1,5 +1,6 @@
 from importlib import resources
 import polars as pl
+import re
 
 from actionsheets.sheet import ActionsheetView
 from actionsheets import sheet
@@ -25,14 +26,38 @@ class Actionsheets:
         return ActionsheetView(data=self.snippets_data.filter(pl.col('sheet_id') == id))
     
     def find_sheet(self, query: str) -> str:
-        return ''
+        terms = re.split(r'\s+|,|\.|\|', query)
+
+        result = self.sheets_data.with_columns(
+            matches = pl.col('sheet_id').str.count_matches('|'.join(terms))
+        ).filter(pl.col('matches') > 0)
+
+        assert result.height > 0, f'no sheets found for query: "{query}"'
+
+        return result.sort('matches', descending=True).head(n=1)[0, 'sheet_id']
     
-    def find_snippets(self, query: str) -> pl.DataFrame:
-        return self.snippets_data
+    def find_snippets(self, query: str, limit: int = 10) -> pl.DataFrame:
+        terms = re.split(r'\s+|,|\.|\|', query)
+        search_pattern = '|'.join(terms)
+
+        result = self.snippets_data.with_columns(
+            matches = pl.col('snippet_id').str.count_matches(search_pattern) + pl.col('sheet_id').str.count_matches(search_pattern)
+        ).filter(pl.col('matches') > 0)
+
+        assert result.height > 0, f'no snippets found for query: "{query}"'
+
+        return result.sort('matches', descending=True).head(n=limit).select(pl.exclude('matches'))
     
-    def find_sheet_snippets(self, id: str, query: str) -> pl.DataFrame:
-        sheet_snippets_data = self.sheet_view(id=id)
-        return sheet_snippets_data
+    def find_sheet_snippets(self, id: str, query: str, limit: int = 10) -> pl.DataFrame:
+        terms = re.split(r'\s+|,|\.|\|', query)
+
+        result = self.sheet_view(id=id).data.with_columns(
+            matches = pl.col('snippet_id').str.count_matches('|'.join(terms))
+        ).filter(pl.col('matches') > 0)
+
+        assert result.height > 0, f'no snippets found for query: "{query}"'
+
+        return result.sort('matches', descending=True).head(n=limit).select(pl.exclude('matches'))
 
 def _gather_default_files() -> list[str]:
     data_root = resources.files('actionsheets.data')
