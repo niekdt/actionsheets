@@ -220,6 +220,14 @@ code = "x.sort(reverse=True)"
 what = "Sort on transformed elements, ascending"
 code = "x.sort(key=str.lower)"
 
+[update.order.sort.natural]
+what = "Naturally sort string elements"
+code = """
+from natsort import natsorted
+natsorted(x)
+"""
+details = "E.g., sort as ['abc1', 'abc2', 'abc10']. Uses the natsort package."
+
 [update.order.shuffle]
 what = "Shuffle elements"
 code = "random.shuffle(x)"
