@@ -105,7 +105,7 @@ section = "Test"
 
 [test.is]
 what = "Is str"
-code = "x is str"
+code = "type(x) is str"
 
 [test.inherits]
 what = "Is string (str or subclass)"
