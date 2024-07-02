@@ -123,7 +123,7 @@ def _process_entry(content: dict, name: str, id: str, parent_entry: dict, parent
     is_action = 'what' in entry_dict
     is_solution = not is_action and 'code' in entry_dict
 
-    assert sum([is_virtual, is_section, is_action, is_solution]) == 1, f'entry {id} is ambigious; invalid set of fields'
+    assert sum([is_virtual, is_section, is_action, is_solution]) == 1, f'entry {id} is ambigious; invalid set of fields: {", ".join(entry_dict)}'
     assert is_solution ^ (is_section or is_action or is_virtual)
 
     entry_dict['snippet_id'] = id
