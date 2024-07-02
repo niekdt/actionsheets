@@ -1,6 +1,15 @@
 name: Test
 
-on: [push]
+on:
+  push:
+    paths:
+      - '**/test.yml'
+      - 'src/**'
+      - 'tests/**'
+      - 'poetry.lock'
+      - 'pyproject.toml'
+  pull_request:
+    branches: main
 
 jobs:
   build:
