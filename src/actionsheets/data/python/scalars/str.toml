@@ -1,0 +1,349 @@
+language = "python"
+parent = "python.scalars"
+name = "str"
+title = "String"
+description = "String handling"
+
+[create]
+section = "Create"
+
+[create.empty]
+what = "Empty"
+code = "''"
+
+[create.literal]
+what = "Literal"
+code = "'hello world'"
+
+[create.random.lowercase]
+what = "Random lowercase string of length _n_"
+code = "''.join(random.choices(string.ascii_lowercase + string.digits, k=n))"
+
+[create.random.alphanum]
+what = "Random alphanumeric string of length _n_"
+code = "''.join(random.choices(string.ascii_lowercase + string.digits, k=n))"
+details = "[Source](https://stackoverflow.com/a/2257449/22638740)"
+
+[create.literal.multi]
+what = "Literals (concatenate)"
+code = "'a' 'b' 'c'"
+
+[create.concat]
+what = "Concatenate strings"
+code = "x + y"
+
+[create.list.sep]
+what = "From list, separated by comma"
+code = "','.join(['a', 'b'])"
+
+[create.object]
+what = "Object to string"
+code = "str(x)"
+
+[create.format.positional]
+what = "Positional formatting"
+code = "'First {0} then {1}'.format(1 + 1, 2 * 2)"
+
+[create.format.named]
+what = "Named formatting"
+code = "'First {sum} then {mult}'.format(sum = 1 + 1, mult = 2 * 2)"
+
+[create.format.named.element]
+what = "Named element formatting"
+code = "'a0 = {a[0]}'.format(a=[1,2])"
+
+[create.format.named.attr]
+what = "Named attribute formatting"
+code = "'Instance is of type: {p.type}'.format(p=Prop)"
+
+[create.format.dict]
+what = "Dynamic formatting based on dict"
+code = "'Value of a and b is {a} and {b}'.format_map(dict(a=1, b=2))"
+
+[create.format.number.whole]
+what = "Whole number"
+code = "'a = {:d}'.format(3)"
+
+[create.format.number.whole.thousand]
+what = "Whole number with thousands separator"
+code = "'a = {:,d}'.format(1000)"
+details = "Outputs '1,000'"
+
+[create.format.named.number.whole]
+what = "Named formatting of whole number"
+code = "'a = '{num:,}'.format(num = int_var)"
+
+[create.format.number.whole.pad]
+what = "Padded whole number"
+code = "'a = {:3d}'.format(3)"
+details = "Outputs '  3'"
+
+[create.format.number.whole.pad.zero]
+what = "Zero-padded whole number"
+code = "'a = {:03d}'.format(3)"
+details = "Outputs '003'"
+
+[create.format.float]
+what = "Float"
+code = "'a = {:f}'.format(3.14)"
+
+[create.format.float.whole]
+what = "Float as whole number"
+code = "'a = {:.0f}'.format(3.14)"
+details = "Outputs '3'"
+
+[create.format.float.pad]
+what = "Float with decimal-point padding"
+code = "'a = {:06.2f}'.format(3.1234)"
+
+[create.format.datetime]
+what = "Datetime with format"
+code = "'{:%Y-%m-%d %H:%M}'.format(datetime(2001, 2, 3, 4, 5))"
+
+[test]
+section = "Test"
+
+[test.is]
+what = "Is str"
+code = "x is str"
+
+[test.inherits]
+what = "Is string (str or subclass)"
+code = "isinstance(x, str)"
+
+[test.empty]
+what = "Empty"
+code = "not x"
+
+[test.nempty]
+what = "Not empty"
+code = "x"
+
+[test.equal]
+what = "Equal"
+code = "x == y"
+
+[test.contains.substring]
+what = "Contains substring"
+code = "substr in x"
+
+[test.missing.substring]
+what = "Does not contain substring"
+code = "substr not in x"
+
+[test.starts]
+what = "Starts with"
+code = "x.startswith(prefix)"
+
+[test.ends]
+what = "Ends with"
+code = "x.endswith(suffix)"
+
+[test.contains.letters.only]
+what = "Letters only"
+code = "x.isalpha()"
+
+[test.contains.digits.only]
+what = "Digits only"
+code = "x.isdigit()"
+
+[test.contains.alphanum.only]
+what = "Alphanumeric characters only"
+code = "x.isalnum()"
+
+[test.pattern]
+what = "Matches regex pattern"
+code = "bool(re.search('\\w', 'abc'))"
+
+[test.pattern.rep]
+what = "Contains _n_ regex substrings"
+code = "len(re.findall('\\w', 'a. a')) == n"
+
+
+[get]
+section = "Get"
+
+[get.length]
+what = "Length"
+code = "len(x)"
+
+[get.substring.index.first]
+what = "Find first index of substring"
+code = "x.index(substr)"
+details = "Raises error if not found"
+
+[get.substring.index.first.try]
+what = "Try find index of substring"
+code = "x.find(substr)"
+
+[get.substring.index.last.try]
+what = "Try find last index of substring"
+code = "x.rfind(substr)"
+
+[get.substring.count]
+what = "Count number of non-overlapping substring occurrences"
+code = "x.count(substr)"
+
+[get.substring.count.inrange]
+what = "Count number of non-overlapping substring occurrences in range [_n_, _m_]"
+code = "x.count(substr, n, m)"
+
+[derive]
+section = "Derive"
+
+[derive.map.dict]
+what = "Map from dict"
+code = "{'yes': 'ja', 'no': 'nee'}[x]"
+
+[derive.transform]
+section = "Transform the string whilst preserving length"
+
+[derive.transform.lower]
+what = "Lower case"
+code = "x.lower()"
+
+[derive.transform.upper]
+what = "Upper case"
+code = "x.upper()"
+
+[derive.transform.capitalize]
+what = "Capitalize"
+code = "x.capitalize()"
+
+[derive.transform.reverse]
+what = "Reverse"
+code = "x[::-1]"
+
+
+[derive.shrink]
+section = "Substring"
+
+[derive.shrink.first]
+what = "First character"
+code = "x[0]"
+
+[derive.shrink.index]
+what = "_i_th character"
+code = "x[i]"
+details = "Index beyond length will raise error"
+
+[derive.shrink.last]
+what = "Last character"
+code = "x[-1]"
+
+[derive.shrink.slice]
+what = "Substring (slice)"
+code = "x[2:3]"
+
+[derive.shrink.head]
+what = "First _n_ characters"
+code = "x[:n]"
+
+[derive.shrink.tail]
+what = "Last _n_ characters"
+code = "x[-n:]"
+
+[derive.shrink.remove.head.whitespace]
+what = "Strip leading whitespace"
+code = "x.strip()"
+
+[derive.shrink.remove.head.chars]
+what = "Strip leading characters"
+code = "x.strip('abc')"
+
+[derive.shrink.upto.pattern]
+what = "Substring up to first occurrence of _y_"
+code = "x.split(y)[0]"
+details = "_y_ is excluded"
+
+[derive.shrink.upto.line]
+what = "Substring up to first line break"
+code = "x.split('\n')[0]"
+details = "Line break is excluded"
+
+[derive.shrink.remove.prefix]
+what = "Remove prefix"
+code = "x.removeprefix(y)"
+
+[derive.shrink.remove.suffix]
+what = "Remove suffix"
+code = "x.removesuffix(y)"
+
+[derive.remove.substring]
+what = "Remove substring"
+code = "?"
+
+[derive.remove.pattern.group]
+what = "Remove regex group pattern"
+code = "?"
+
+[derive.grow]
+section = "Expand string"
+
+[derive.grow.pad.left]
+what = "Left-pad to length _n_"
+code = "x.ljust(n)"
+
+[derive.grow.pad.right]
+what = "Right-pad to length _n_"
+code = "x.rjust(n)"
+
+[derive.grow.pad.both]
+what = "Left-right padding to length _n_"
+code = "x.center(n)"
+
+[derive.grow.rep]
+what = "Replicate _n_ times"
+code = "x * n"
+
+[derive.grow.concat]
+what = "Concatenate"
+code = "x + y"
+
+[derive.grow.iter]
+what = "Join with iterable"
+code = "x.join(iter)"
+
+
+[convert]
+section = "Convert"
+
+[convert.hash]
+what = "Session hash"
+code = "hash(x)"
+
+[convert.bytes]
+what = "To bytes"
+code = "x.encode()"
+
+[convert.int]
+what = "Parse as integer"
+code = "int(x)"
+
+[convert.float]
+what = "Parse as float"
+code = "float(x)"
+
+[convert.date]
+what = "Parse date (unknown format)"
+code = "pandas.to_datetime('2023 Jan 5')"
+
+[convert.date.yymmdd]
+what = "To date from YY-MM-DD format"
+code = "datetime.strptime('2023-12-31', '%Y-%m-%d')"
+
+
+[convert.split]
+section = "Convert to list of substrings"
+
+[convert.split.triplet]
+what = "Split string into two parts by separator (as triplet)"
+code = "x.partition(sep)"
+
+[convert.split.list]
+what = "Split string into multiple parts by separator (as list)"
+code = "x.split(sep)"
+
+[convert.split.list.lines]
+what = "Split string into lines (as list)"
+code = "x.splitlines()"
