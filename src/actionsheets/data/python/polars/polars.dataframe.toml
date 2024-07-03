@@ -24,7 +24,10 @@ code = "pl.DataFrame({'A': [1, 2], 'fruits': ['banana', 'apple']})"
 
 [create.list.lists]
 what = "From list of lists"
-code = "data = [[1, 2, 3], [4, 5, 6]]`<br>`pl.DataFrame(data, schema=['a', 'b', 'c'])"
+code = """
+data = [[1, 2, 3], [4, 5, 6]]
+pl.DataFrame(data, schema=['a', 'b', 'c'])
+"""
 
 [create.dict]
 what = "From dict"
@@ -87,6 +90,10 @@ section = "Test"
 what = "Empty (no rows)"
 code = "data.is_empty()"
 
+[test.equal]
+what = "Data frames are equal"
+code = "data.equals(data2)"
+
 [test.col.contains]
 what = "Contains column"
 code = "'age' in data.columns"
@@ -109,7 +116,7 @@ code = "?"
 
 [test.col.equal.series]
 what = "Columns are equal series"
-code = "data['sex'].series_equal(data['sex2'].alias('sex'))"
+code = "data['sex'].equals(data['sex2'].alias('sex'))"
 details = "Series names must match!"
 
 [test.col.missing.any]
@@ -142,11 +149,11 @@ code = "data.schema['sex'] == pl.Utf8"
 
 [test.col.type.number]
 what = "Columns is numeric"
-code = "?"
+code = "data.schema['age'].is_numeric()"
 
 [test.col.type.int]
 what = "Column is integer type"
-code = "data.schema['age'] in pl.datatypes.INTEGER_DTYPES"
+code = "data.schema['age'].is_integer()"
 
 [test.col.type.int64]
 what = "Column is standard integer (64-bit)"
@@ -154,7 +161,7 @@ code = "data.schema['age'] == pl.Int64"
 
 [test.col.type.float]
 what = "Columns is float"
-code = "?"
+code = "data.schema['age'].is_float()"
 
 [test.col.row.gt.all]
 what = "Column is consistently rowwise greater than another column"
@@ -541,7 +548,7 @@ what = "Map another column"
 code = """
 map = dict(1 = 'a', 2 = 'b', 3 = 'c')
 data.with_columns(
-    NumCat = pl.col('Num').map_dict(map).cast(pl.Categorical)
+    NumCat = pl.col('Num').replace_strict(map).cast(pl.Categorical)
 )
 """
 
@@ -581,7 +588,7 @@ code = "data.with_columns(date=pl.from_epoch(pl.col('time'), time_unit='ms'))"
 what = "Group-wise from aggregate value"
 code = """
 data.with_columns(
-    DaysSinceStart = pl.col('Date') - pl.col('Date').min().over('Subject').cast(pl.Int) + 1
+    DaysSinceStart = (pl.col('Date') - pl.col('Date').min().over('Subject')).dt.total_days().add(1)
 )
 """
 
