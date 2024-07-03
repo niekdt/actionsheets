@@ -1,0 +1,4 @@
+language = "R"
+parent = "r"
+name = "basic"
+title = "Basic datatypes"

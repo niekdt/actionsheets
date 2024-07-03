@@ -1,0 +1,90 @@
+language = "R"
+parent = "r.basic"
+name = "factor"
+title = "factor"
+description = "For representing categorical data with a finite number of options (levels)"
+
+
+[create]
+section = "Create"
+
+[create.vector]
+what = "From vector"
+code = "factor(x)"
+
+[create.vector.map]
+what = "From vector, with renamed levels"
+code = "factor(x, levels=1:3, labels=LETTERS[1:3]"
+
+[create.pattern]
+what = "Generate by pattern"
+code = "gl(5, 2, labels=LETTERS[1:5])"
+
+[create.interaction]
+what = "Generate factor of interactions with another"
+code = "interaction(f1, f2)"
+
+[create.concat]
+what = "Combine factors"
+code = "factor(c(as.character(x), as.character(y)), union(levels(x), levels(y)))"
+
+[test]
+section = "Test"
+
+[test.is]
+what = "Is factor"
+code = "is.factor(x)"
+
+
+[get]
+section = "Get"
+
+[get.levels]
+what = "Levels"
+code = "levels(f)"
+
+[get.levels.count]
+what = "Number of levels"
+code = "nlevels(f)"
+
+[derive]
+section = "Derive"
+
+[derive.map]
+what = "Remap categories / values"
+code = """
+x = factor(c('a1', 'b1', 'a2', 'c1'))
+factor(x, levels=levels(x), labels=c('a', 'a', 'b', 'c'))
+"""
+
+
+[derive.levels]
+section = "Alter levels"
+
+[derive.levels.add.na]
+what = "Add NA as a factor level"
+code = "f = addNA(f)"
+
+[derive.levels.remove]
+what = "Drop specific factor levels"
+code = "droplevels(f, exclude=X)"
+
+[derive.levels.remove.except]
+what = "Drop factor levels except specific"
+code = "droplevels(f, except=X)"
+
+[derive.levels.remove.unused]
+what = "Drop unused factors levels"
+code = "factor(f)"
+
+
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.subset.droplevels]
+what = "Subset, drop unused levels"
+code = "f[1:2, drop=TRUE]"
+
+
+[derive.grow]
+section = "Grow"
