@@ -18,6 +18,10 @@ code = "x = {}"
 what = "Define with string keys"
 code = "x = {'color': 'blue', 'size': 'large'}"
 
+[create.int]
+what = "Define with integer keys"
+code = "x = {1: 'a', 2: 'b', 3: 'c'}"
+
 [create.iter.fill]
 what = "Define from keys iterator and constant value _v_"
 code = "dict.fromkeys(key_iter, v)"
@@ -33,6 +37,7 @@ code = "z = x | y"
 
 [create.merge.unpack]
 code = "z = {**x, **y}"
+
 
 [test]
 section = "Test"
