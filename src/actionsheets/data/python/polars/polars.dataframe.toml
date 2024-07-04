@@ -706,8 +706,8 @@ what = "Right join"
 code = "data.join(data2, on = ['sex', 'country'], how = 'right')"
 
 [merge.outer]
-what = "Outer join"
-code = "data.join(data2, on = ['sex', 'country'], how = 'outer')"
+what = "Outer (full) join"
+code = "data.join(data2, on = ['sex', 'country'], how = 'full')"
 
 [merge.cross]
 what = "Cross join"
