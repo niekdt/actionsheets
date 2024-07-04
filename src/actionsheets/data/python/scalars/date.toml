@@ -1,0 +1,166 @@
+language = "python"
+parent = "python.scalars"
+name = "date"
+title = "Date"
+description = "Date representation"
+code = "from datetime import date"
+
+[create]
+section = "Create"
+
+[create.ymd]
+what = "From ymd"
+code = "date(year, month, day)"
+
+[create.current]
+what = "Current date"
+code = "date.today()"
+
+[create.epoch]
+what = "Unix epoch date"
+code = "date.fromtimestamp(0)"
+
+[create.min]
+what = "Earliest representable date"
+code = "date.min"
+
+[create.max]
+what = "Latest representable date"
+code = "date.max"
+
+[create.str]
+what = "Date from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date string"
+code = "date.fromisoformat(date_string)"
+details = "e.g., `2023-01-30` or `20230130`"
+
+[create.str.ymd]
+what = "Date from YYYY-MM-DD string"
+code = "datetime.strptime(datetime_str, '%y-%m-%d')"
+
+[create.str.dmy]
+what = "Date from DD-MMM-YYYY string"
+code = "datetime.strptime(datetime_str, '%d-%b-%y')"
+
+[create.seconds.epoch]
+what = "From total seconds since Unix epoch"
+code = "date.fromtimestamp(n)"
+
+[create.days.epoch]
+what = "From total days since Unix epoch"
+code = "date.fromtimestamp(0) + timedelta(n)"
+
+[create.days.ref]
+what = "From total days since reference date"
+code = "ref_date + timedelta(n)"
+
+
+[test]
+section = "Test"
+
+[test.equal]
+what = "Same date"
+code = "x == y"
+
+[test.before]
+what = "Happens before _y_"
+code = "x < y"
+
+[test.after]
+what = "Happens after _y_"
+code = "x > y"
+
+
+[extract]
+section = "Extract"
+
+[extract.days.epoch]
+what = "Days from Unix epoch"
+code = "(x - date.fromtimestamp(0)).days"
+
+[extract.seconds.epoch]
+what = "Seconds from Unix epoch (timestamp)"
+code = "(x - date.fromtimestamp(0)).total_seconds()"
+
+[extract.year]
+what = "Year"
+code = "x.year"
+
+[extract.month]
+what = "Month"
+code = "x.month"
+
+[extract.day]
+what = "Day"
+code = "x.day"
+
+[extract.weekday]
+what = "Weekday number"
+code = "x.isoweekday()"
+details = "Mon=1, Sun=7"
+
+[extract.weekday.zero]
+what = "Weekday number (zero-based)"
+code = "x.weekday()"
+details = "Mon=0, Sun=6"
+
+
+[diff]
+what = "Difference between dates, as timedelta"
+code = "x - y"
+
+[diff.seconds]
+what = "Difference between dates, in seconds"
+code = "(x - y).total_seconds()"
+
+[diff.days]
+what = "Difference between dates, in whole days"
+code = "?"
+
+[diff.years]
+what = "Difference between dates, in years"
+code = "x.year - y.year - ((x.month, x.day) < (y.month, y.day))"
+details = "[Source](https://stackoverflow.com/a/9754466/22638740)"
+
+
+[derive]
+section = "Derive"
+
+[derive.shift.days]
+what = "Shift forward by _n_ days"
+code = "x + timedelta(days=n)"
+
+
+[convert]
+section = "Convert"
+
+[convert.datetime]
+what = "Datetime"
+code = "?"
+
+[convert.timestamp]
+what = "Timestamp (Unix epoch)"
+code = "(x - date.fromtimestamp(0)).total_seconds()"
+
+[convert.str]
+what = "Format date as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
+code = "x.isoformat()"
+details = "e.g., `2023-01-01`"
+
+[convert.str.ymd]
+what = "Format date as YYYY-MM-DD"
+code = "x.isoformat()"
+details = "e.g., 2024-01-31"
+
+[convert.str.dmy]
+what = "Format datetime as DD-MMM-YYYY"
+code = "x.strftime('%d-%b-%Y')"
+details = "e.g., `31-Jan-2023`"
+
+[convert.str.long]
+what = "Format readable datetime of consistent length"
+code = "x.ctime()"
+details = "e.g., `Sun Jan  1 23:59:00 2023`"
+
+[convert.tuple]
+what = "Named tuple"
+code = "x.timetuple()"
