@@ -1,5 +1,5 @@
 language = "python"
-parent = "python"
+parent = "python.filesystem"
 name = "path"
 title = "Path handling"
 description = "File system path handling"
@@ -28,13 +28,6 @@ code = "tempfile.mktemp(dir=dir_path)"
 [create.temp.file.ext]
 what = "Temporary file path with extension (suffix)"
 code = "tempfile.mktemp('.txt')"
-
-[create.open.temp.file.cleanup]
-what = "Open temporary file with clean-up"
-code = """
-with tempfile.NamedTemporaryFile() as file:
-    path = file.name
-"""
 
 [create.temp.dir]
 what = "Temporary directory path"

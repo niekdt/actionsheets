@@ -1,0 +1,118 @@
+language = "python"
+parent = "python"
+name = "filesystem"
+title = "File system"
+description = "File system operations"
+
+[test]
+section = "Test"
+
+[test.exists]
+what = "File/dir exists"
+code = "os.path.exists(path)"
+
+[test.is.file]
+what = "Is file"
+code = "os.path.isfile(path)"
+
+[test.is.file.empty]
+what = "Is empty file"
+code = "os.path.getsize(path) == 0"
+details = "Throws error if the file does not exist"
+
+[test.is.dir]
+what = "Is directory"
+code = "os.path.isdir(path)"
+
+[test.is.dir.empty]
+what = "Is empty directory"
+code = "not os.listdir(path)"
+
+
+[file]
+section = "File handling"
+
+[file.create.open.temp.file.cleanup]
+what = "Open temporary file with clean-up"
+code = """
+with tempfile.NamedTemporaryFile() as file:
+    path = file.name
+"""
+
+[file.info]
+section = "File info"
+
+[file.info._name]
+what = "Filename"
+code = "os.path.basename(r'C:\\Files\\derp.csv')"
+details = "Returns 'derp.csv'"
+
+[file.info._name.noext]
+what = "Filename without extension"
+code = "os.path.splitext(os.path.basename(r'C:\\Files\\derp.csv'))[0]"
+details = "Returns 'derp'"
+
+[file.info.ext]
+what = "File extension"
+code = "os.path.splitext(r'C:\\Files\\derp.csv')[1]"
+details = "Returns '.csv'"
+
+[file.info.parent]
+what = "Parent directory name"
+code = "os.path.basename(os.path.dirname((r'C:\\Files\\derp.csv'))"
+details = "Returns 'Files'"
+
+[file.info.size]
+what = "File size"
+code = "os.path.getsize(path)"
+
+
+[dir]
+section = "Directory handling"
+
+
+[dir.info]
+section = "Info"
+
+[dir.info.count]
+what = "Number of children"
+code = "?"
+
+[dir.info.files.count]
+what = "Number of files"
+code = "?"
+
+[dir.info.dir.count]
+what = "Number of child directories"
+code = "?"
+
+
+[dir.create]
+what = "Create directory"
+code = "os.mkdir(path)"
+details = "Error when directory already exists"
+
+[dir.create.try]
+what = "Create directory if missing"
+code = "Path(path).mkdir(exist_ok=True)"
+
+[dir.create.recursive]
+what = "Create directories, recursively"
+code = "os.makedirs(dest_dir)"
+
+[dir.create.recursive.try]
+what = "Create directories recursively if missing"
+code = "os.makedirs(dest_dir, exist_ok=True)"
+
+[dir.rename]
+what = "Rename a directory"
+code = "?"
+
+[dir.remove]
+what = "Delete directory and underlying files"
+code = "shutil.rmtree(path)"
+details = "Error if the path does not exist"
+
+[dir.remove.try]
+what = "Delete directory and underlying files, if needed"
+code = "shutil.rmtree(path, ignore_error = True)"
