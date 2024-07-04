@@ -18,6 +18,15 @@ code = "pl.concat([df, df2, dfN])"
 what = "From dataframes with different columns"
 code = "pl.concat([df, df2, dfN], how = 'diagonal')"
 
+[create.dataframe.arange]
+what = "Repeat each row with an index between a row-specific range, defined by min (inclusive) and max (exclusive) columns"
+code = """
+data.select(
+    pl.col('patient'),
+    pl.int_ranges(start='startDay', end='endDay').alias('day')
+).explode('day')
+"""
+
 [create.lists]
 what = "From column lists"
 code = "pl.DataFrame({'A': [1, 2], 'fruits': ['banana', 'apple']})"
@@ -93,6 +102,10 @@ code = "data.is_empty()"
 [test.equal]
 what = "Data frames are equal"
 code = "data.equals(data2)"
+
+
+[test.col]
+section = "Columns"
 
 [test.col.contains]
 what = "Contains column"
@@ -170,6 +183,7 @@ code = "(data['col1'] > data['col2']).all()"
 [test.col.row.gt.any]
 what = "Column is sometimes rowwise greater than another column"
 code = "(data['col1'] > data['col2']).any()"
+
 
 [test.rowmask]
 section = "Row masking"
@@ -396,30 +410,54 @@ new_data = data.group_by_dynamic(
 """
 details = "To be verified"
 
+
 [update]
 section = "Update"
+description = "Update the data frame in-place"
 
-[update.col.type]
-what = "Cast column type"
-code = "data.with_columns(pl.col('col1').cast(pl.Float32))"
+[update.col.replace]
+what = "Replace column with another series"
+code = "data.replace('age', newAgeSeries)"
 
-[update.cols.type]
-what = "Cast columns to types"
-code = "data.cast({'col1': pl.Float32, 'col2': pl.UInt8})"
+[update.append.col.series]
+what = "Append column from series"
+code = "data.hstack(s, in_place = True)"
 
-[update.col.rename]
-what = "Rename column"
-code = "data.rename({'old': 'new'})"
+[update.insert.col.series]
+what = "Insert column from series"
+code = "data.insert_at_idx(1, s)"
 
-[update.col.rename.multi]
-what = "Rename columns"
-code = "data.rename({'old1': 'new1', 'old2': 'new2'})"
+[update.row.dataframe]
+what = "Add a data frame"
+code = "data.extend(data2)"
 
-[update.col.order]
-what = "Reorder all columns in a given order"
+[update.row.dataframes]
+what = "Add data frames"
+code = """
+data.vstack(data2)
+data.vstack(dataN)
+data.rechunk()
+"""
+
+[update.col.remove]
+what = "Remove or pop column"
+code = "data.drop_in_place('Age')"
+details = "Returns the dropped column"
+
+
+[derive]
+section = "Derive"
+description = "Generate a modified/alterered/transformed data frame"
+
+[derive.map]
+section = "Map"
+description = "Transform the dataframe, preservering shape"
+
+[derive.map.col.order]
+what = "Reorder all columns in the given order"
 code = "data.select(pl.col(['patient', 'sex', 'age']))"
 
-[update.col.order.some]
+[derive.map.col.order.some]
 what = "Reorder specific columns in a given order"
 code = """
 cols = ['topic', 'parent', 'language']
@@ -427,11 +465,27 @@ data.select(pl.col(cols), pl.exclude(cols))
 """
 details = "There doesn't seem to be a shorter way to do this"
 
-[update.col.values]
+[derive.map.col.rename]
+what = "Rename column"
+code = "data.rename({'old': 'new'})"
+
+[derive.map.col.renames]
+what = "Rename columns"
+code = "data.rename({'old1': 'new1', 'old2': 'new2'})"
+
+[derive.map.col.type]
+what = "Cast column type"
+code = "data.with_columns(pl.col('col1').cast(pl.Float32))"
+
+[derive.map.col.types]
+what = "Cast columns to types"
+code = "data.cast({'col1': pl.Float32, 'col2': pl.UInt8})"
+
+[derive.map.col.values]
 what = "Update column values"
 code = "data.with_columns(pl.col('age') + 5)"
 
-[update.col.values.cond]
+[derive.map.col.values.cond]
 what = "Update column values on condition"
 code = """
 df.with_columns(
@@ -441,7 +495,7 @@ df.with_columns(
 )
 """
 
-[update.col.values.conds]
+[derive.map.col.values.conds]
 what = "Update column values on conditions"
 code = """
 df.with_columns(
@@ -453,7 +507,7 @@ df.with_columns(
 )
 """
 
-[update.col.values.rowindex]
+[derive.map.col.values.rows]
 what = "Update column values for specific rows"
 code = """
 rows = [1, 3, 5]
@@ -464,227 +518,286 @@ data.with_row_count().with_columns(
 )
 """
 
-[update.fill.null.zero]
+[derive.map.fill.null.zero]
 what = "Fill nulls with zero"
 code = "data.fill_null(strategy = 'zero')"
 
-[update.fill.null.value]
+[derive.map.fill.null.value]
 what = "Fill nulls with value"
 code = "data.fill_null(value)"
 
-[update.fill.null.locf]
+[derive.map.fill.null.locf]
 what = "Fill nulls with LOCF"
 code = "data.fill_null(strategy='forward')"
 details = "Wrong for grouped data"
 
-[update.nan.value]
+[derive.map.fill.'nan'.value]
 what = "Fill NaNs with value"
 code = "data.fill_nan(value)"
 
-[update.col.replace]
-what = "Replace column inplace with series"
-code = "data.replace('age', newAgeSeries)"
-
-[update.sort.col]
+[derive.map.sort.col]
 what = "Sort table by column"
 code = "data.sort('col1')"
 
 
-[grow]
+[derive.grow]
 section = "Grow"
+description = "Transformations which increase the shape of the data frame"
 
-[grow.append.col.constant]
+[derive.grow.append.col.constant]
 what = "Append constant numeric column"
 code = "data.with_columns(Intercept=pl.lit(1))"
 
-[grow.append.col.series]
-what = "Append column from series"
+[derive.grow.append.col.series]
+what = "Append series as new column"
 code = """
 s = pl.Series("apple", [10, 20, 30])
 data.hstack([s])
 """
 details = "Note the brackets"
 
-[grow.append.col.series.inplace]
-what = "Append column from series, inplace"
-code = "data.hstack(s, in_place = True)"
+[derive.grow.transform.col]
+section = "Add transformed column(s)"
 
-[grow.insert.col.series.inplace]
-what = "Insert column from series, inplace"
-code = "data.insert_at_idx(1, s)"
-
-[grow.derive]
-section = "Derive columns"
-
-[grow.derive.transform]
+[derive.grow.transform.col.single]
 what = "Transform another column"
 code = "data.with_columns(AgeSq = pl.col('Age') ** 2)"
 
-[grow.derive.transform.multi]
+[derive.grow.transform.col.single.alias]
+code = """
+data.with_columns(
+    (pl.col('Age') ** 2).alias('AgeSq')
+"""
+
+[derive.grow.transform.col.multi]
 what = "Multiple transformations from another column"
 code = """
 data.with_columns(
-    Age2 = pl.col('Age') ** 2
-    Age3 = pl.col('Age') ** 3
+    Age2=pl.col('Age') ** 2
+    Age3=pl.col('Age') ** 3
 )
 """
 
-[grow.derive.mask.pairwise]
-what = "Boolean mask based on pairwise comparison of another column"
-code = "data.with_columns(CanLive = pl.col('Income') * 3 > pl.col('Rent')"
-
-[grow.derive.values.cond]
-what = "Values conditional on another column"
+[derive.grow.transform.col.multi.alias]
 code = """
 data.with_columns(
-    pl.when(pl.col('age') >= 18).
-    then(pl.lit(1)).
-    otherwise(pl.lit(-1))
+    (pl.col('Age') ** 2).alias('Age2')
+    (pl.col('Age').alias('Age3') ** 3
+)
+"""
+details = "`alias()` can be called after `pl.col()`, may be more readable sometimes"
+
+[derive.grow.transform.mask.pairwise]
+what = "Boolean mask based on pairwise comparison of another column"
+code = """
+data.with_columns(
+    CanLive=pl.col('Income') * 3 > pl.col('Rent')
 )
 """
 
-[grow.derive.map]
+[derive.grow.transform.values.cond]
+what = "Constant values conditional on another column"
+code = """
+data.with_columns(
+    AdultScore=pl.when(pl.col('age') >= 18).
+        then(pl.lit(1)).
+        otherwise(pl.lit(-1))
+)
+"""
+
+[derive.grow.transform.map]
 what = "Map another column"
 code = """
-map = dict(1 = 'a', 2 = 'b', 3 = 'c')
+map = {1: 'a', 2: 'b', 3: 'c'}
 data.with_columns(
-    NumCat = pl.col('Num').replace_strict(map).cast(pl.Categorical)
+    NumCat=pl.col('Num').replace_strict(map).cast(pl.Categorical)
 )
 """
 
-[grow.derive.str.datetime]
+
+[derive.grow.transform.int]
+section = "Integer column transformations"
+
+[derive.grow.transform.int.datetime.epoch.seconds]
+what = "Timestamp (in seconds) since Unix epoch (1970-01-01), as datetime column"
+code = """
+data.with_columns(
+    date=pl.from_epoch('timestamp')
+)
+"""
+
+[derive.grow.transform.int.date.epoch.days]
+what = "Total days since Unix epoch, as date column"
+code = """
+data.with_columns(
+    date=pl.from_epoch('daystamp', time_unit='d')
+)
+"""
+
+[derive.grow.transform.int.date.epoch.days.cast]
+code = """
+data.with_columns(
+    date=pl.col('daystamp').cast(pl.Date)
+)
+"""
+
+[derive.grow.transform.int.datetime.epoch.ms]
+what = "Milliseconds timestamp since Unix epoch, as datetime column"
+code = """
+data.with_columns(
+    date=pl.from_epoch('timestamp_ms', time_unit='ms')
+)
+"""
+
+[derive.grow.transform.int.date.offset]
+what = "Number of days since reference date, as date column"
+code = """
+from datetime import date
+ref_days = (x - date.fromtimestamp(0)).days
+data.with_columns(
+    date=pl.col('day').cast(pl.Date) + pl.duration(days=ref_days)
+)
+"""
+
+[derive.grow.transform.int.date.offset.duration]
+code = """
+from datetime import date
+ref_days = (x - date.fromtimestamp(0)).days
+data.with_columns(
+    date=(pl.col('day') + ref_days).cast(pl.Date)
+)
+"""
+
+[derive.grow.transform.str]
+section = "String column transformations"
+
+[derive.grow.transform.str.date]
 what = "Parse string column to date"
-code = "data.with_columns(date=pl.col('datestring').str.to_date())"
+code = """
+data.with_columns(
+    date=pl.col('datestring').str.to_date()
+)
+"""
 
-[grow.derive.str.datetime.format]
+[derive.grow.transform.str.datetime.format]
 what = "Parse string column to date with known format"
-code = "data.with_columns(date = pl.col('datestring').str.to_date('%Y-%m-%d'))"
+code = """
+data.with_columns(
+    date = pl.col('datestring').str.to_date('%Y-%m-%d')
+)
+"""
 
-[grow.derive.datetime.weekday]
+
+[derive.grow.transform.datetime]
+section = "Datetime column transformations"
+
+[derive.grow.transform.datetime.weekday]
 what = "Weekday from date column"
 code = "?"
 
-[grow.derive.datetime.month]
+[derive.grow.transform.datetime.month]
 what = "Month from date column"
-code = "data.with_columns(month = pl.col('date').dt.month())"
-
-[grow.derive.datetime.year]
-what = "Year from date column"
-code = "data.with_columns(year = pl.col('Date').dt.year())"
-
-[grow.derive.datetime.epoch.seconds]
-what = "Integer seconds since Unix epoch to datetime"
-code = "data.with_columns(date=pl.from_epoch(pl.col('time')))"
-
-[grow.derive.datetime.epoch.days]
-what = "Integer daystamp since Unix epoch to date"
-code = "data.with_columns(date=pl.from_epoch(pl.col('time'), time_unit='d'))"
-
-[grow.derive.datetime.epoch.ms]
-what = "Integer milliseconds timestamp since Unix epoch to datetime"
-code = "data.with_columns(date=pl.from_epoch(pl.col('time'), time_unit='ms'))"
-
-[grow.derive.agg.group]
-what = "Group-wise from aggregate value"
 code = """
 data.with_columns(
-    DaysSinceStart = (pl.col('Date') - pl.col('Date').min().over('Subject')).dt.total_days().add(1)
+    month=pl.col('date').dt.month()
 )
 """
 
-[grow.row]
+[derive.grow.transform.datetime.year]
+what = "Year from date column"
+code = """
+data.with_columns(
+    year=pl.col('Date').dt.year()
+)
+"""
+
+[derive.grow.transform.agg.group]
+what = "Group-wise from aggregate value"
+code = """
+data.with_columns(
+    elapsedDays=(pl.col('Date') - pl.col('Date').min().over('Subject')).dt.total_days().add(1)
+)
+"""
+
+[derive.grow.row]
 section = "Add rows"
 
-[grow.row.tuple]
+[derive.grow.row.tuple]
 what = "Add row as tuple"
 code = "?"
 
-[grow.row.list.tuple]
+[derive.grow.row.list.tuple]
 what = "Add list of tuples"
 code = "?"
 
-[grow.row.dataframe]
+[derive.grow.row.dataframe]
 what = "Add data frame"
 code = "pl.concat(data, df2)"
 
-[grow.row.dataframe.inplace]
-what = "Add data frame inplace"
-code = "data.extend(data2)"
 
-[grow.row.dataframes.inplace]
-what = "Add data frames inplace"
-code = """
-data.vstack(data2)
-data.vstack(dataN)
-data.rechunk()
-"""
 
-[shrink]
+[derive.shrink]
 section = "Shrink the data frame"
 
 
-[shrink.col]
+[derive.shrink.col]
 section = "Remove columns"
 
-[shrink.col.single]
+[derive.shrink.col.single]
 what = "Remove column"
 code = "data.drop('Age')"
 
-[shrink.col.multi]
+[derive.shrink.col.multi]
 what = "Remove columns"
 code = "data.drop(['Age', 'Sex'])"
 
-[shrink.col.multi.select]
+[derive.shrink.col.multi.select]
 code = "data.select(pl.exclude(['Age', 'Sex']))"
 
-[shrink.col.multi.inplace]
-what = "Remove column inplace"
-code = "data.drop_in_place('Age')"
-details = "Returns the dropped column"
-
-[shrink.col.keep.single]
+[derive.shrink.col.keep.single]
 what = "Keep a single column"
 code = "data.select(pl.col('Age'))"
 
-[shrink.col.keep.multi]
+[derive.shrink.col.keep.multi]
 what = "Keep multiple columns (column subset)"
 code = "data.select(pl.col(['Age', 'Sex'])"
 
-[shrink.col.numeric]
+[derive.shrink.col.numeric]
 what = "Remove all numeric columns"
 code = "data.drop(cs.numeric())"
 
 
-[shrink.row]
+[derive.shrink.row]
 section = "Remove rows"
 
-[shrink.row.index]
+[derive.shrink.row.index]
 what = "Remove rows by row numbers"
 code = "data.filter(~pl.arange(0, pl.count()).is_in([1, 5, 7]))"
 
-[shrink.row.index.r]
+[derive.shrink.row.index.r]
 code = "data.with_row_index().filter(~pl.col('index').is_in([1, 5, 7]))"
 details = "Output contains additional column 'Index'"
 
-[shrink.row.index.except]
+[derive.shrink.row.index.except]
 what = "Remove all rows except the given row numbers"
 code = "data[[1, 6]]"
 
-[shrink.row.index.except.filter]
+[derive.shrink.row.index.except.filter]
 code = "data.filter(pl.arange(0, pl.count()).is_in([1, 5, 7]))"
 
 
-[reshape]
+[derive.reshape]
 section = "Reshape"
 
-[reshape.long]
+[derive.reshape.long]
 what = "From wide to long format"
 code = "data.melt(id_vars='sex', value_vars=['a', 'b'])"
 
-[reshape.narrow]
+[derive.reshape.narrow]
 what = "To narrow format"
 code = "data.explode(?)"
 details = "?"
+
 
 [merge]
 section = "Merge two data frames"
@@ -790,3 +903,12 @@ code = "data.write_parquet('derp.parquet')"
 [convert.format.json]
 what = "To JSON"
 code = "?"
+
+
+[print]
+section = "Print"
+
+[print.rows.more]
+what = "Print more rows"
+code = "with pl.Config(tbl_rows=100): data"
+details = "Consider persistent setting: `pl.Config().set_tbl_rows(100)`"
