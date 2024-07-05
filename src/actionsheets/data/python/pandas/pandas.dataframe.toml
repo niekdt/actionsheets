@@ -11,11 +11,7 @@ Words of caution:
 * MultiIndex versus multiple indices. Just don't. If you cared about speed you would not be using pandas anyway.
 * Complex queries will be a series of data variable updates, which is hard to read, and guaranteed to lead to bugs at a later stage during refactoring.
 """
-details = """
-Tips:
-* Lists can be efficiently used as a stack through `append()` (for push) and `pop()`.
-* Sorting seems to be broken for numeric lists containing NaN
-"""
+
 
 [create]
 section = "Create"
