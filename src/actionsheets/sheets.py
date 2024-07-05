@@ -156,4 +156,4 @@ def default_sheets() -> Actionsheets:
     return _default_sheets
 
 if __name__ == '__main__':
-    default_sheets()
+    sheets = default_sheets()
