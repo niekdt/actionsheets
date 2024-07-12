@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import glob
 import polars as pl
@@ -6,7 +8,7 @@ from actionsheets import sheet
 
 
 def find_toml_files() -> list[str]:
-    return glob.glob('src/**/*.toml', recursive=True)
+    return glob.glob('../src/**/*.toml', recursive=True)
 
 
 @pytest.mark.parametrize('file', find_toml_files())
