@@ -19,10 +19,13 @@ class ActionsheetView:
         )['snippet_id'].to_list()
     
     def section_info(self, section: str) -> dict:
-        return self.data.row(
+        info = self.data.row(
             by_predicate=(pl.col('type') == 'section') & (pl.col('snippet_id') == section), 
             named=True
         )
+
+        info['parents'] = section.split(sep='.')[:-1]
+        return info
     
     def section_view(self, section: str):
         return ActionsheetView(data=self.snippets_data.filter(pl.col('snippet_id').str.starts_with(section)))
@@ -71,7 +74,8 @@ def _process_header(content: dict, path) -> dict:
     assert isinstance(content['title'], str), f'title must be str'
     assert content['title'], f'title is empty'
 
-    assert 'description' not in content or isinstance(content['description'], str), f'description must be str'
+    assert 'description' not in content or isinstance(content['description'], str), \
+        f'description must be str'
     assert 'details' not in content or isinstance(content['details'], str), f'details must be str'
         
     sheet_info = {k: content[k] for k in content.keys() if k in header_keys}
@@ -82,7 +86,12 @@ def _process_body(content: dict, name: str, id: str) -> pl.DataFrame:
     return _process_entries(content, id=id, parent_entry=dict(), parent_section='')
 
 
-def _process_entries(content: dict, id: str, parent_entry: dict, parent_section: str) -> pl.DataFrame:
+def _process_entries(
+        content: dict,
+        id: str,
+        parent_entry: dict,
+        parent_section: str
+) -> pl.DataFrame:
     df = pl.DataFrame()
     
     entries = _get_entries(content)
@@ -112,7 +121,13 @@ def _get_entries(content: dict) -> list[str]:
         return [k for k in content if isinstance(content[k], dict)]
     
 
-def _process_entry(content: dict, name: str, id: str, parent_entry: dict, parent_section: str) -> dict:
+def _process_entry(
+        content: dict,
+        name: str,
+        id: str,
+        parent_entry: dict,
+        parent_section: str
+) -> dict:
     for k in reserved_keys:
         assert k not in content, f'reserved field "{k}" used in entry {id}'
 
@@ -123,7 +138,8 @@ def _process_entry(content: dict, name: str, id: str, parent_entry: dict, parent
     is_action = 'what' in entry_dict
     is_solution = not is_action and 'code' in entry_dict
 
-    assert sum([is_virtual, is_section, is_action, is_solution]) == 1, f'entry {id} is ambigious; invalid set of fields: {", ".join(entry_dict)}'
+    assert sum([is_virtual, is_section, is_action, is_solution]) == 1, \
+        f'entry {id} is ambigious; invalid set of fields: {", ".join(entry_dict)}'
     assert is_solution ^ (is_section or is_action or is_virtual)
 
     entry_dict['snippet_id'] = id
