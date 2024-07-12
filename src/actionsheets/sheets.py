@@ -156,8 +156,8 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
 
     return snippets_data.with_columns(
         pl.col('title').fill_null(pl.col('snippet_id')),
-        pl.col('details').fill_null('').str.rstrip(),
-        pl.col('description').fill_null('').str.rstrip(),
+        pl.col('details').fill_null('').str.strip_chars_end(),
+        pl.col('description').fill_null('').str.strip_chars_end(),
         depth=pl.col('snippet_id').str.count_matches('.', literal=True),
         sheet_id=pl.when(pl.col('sheet_parent') == '').
         then(pl.col('sheet_name')).
