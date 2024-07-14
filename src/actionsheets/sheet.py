@@ -8,6 +8,7 @@ action_keys = tuple(['what', 'description'] + list(solution_keys))
 entry_keys = tuple(set(section_keys + action_keys + solution_keys))
 reserved_keys = ('name', 'id', 'depth')
 
+
 class ActionsheetView:
     def __init__(self, data: pl.DataFrame):
         self.data = data
@@ -17,22 +18,23 @@ class ActionsheetView:
         return self.data.filter(
             (pl.col('parent_section') == section) & (pl.col('type') == type)
         )['snippet_id'].to_list()
-    
+
     def section_info(self, section: str) -> dict:
         info = self.data.row(
-            by_predicate=(pl.col('type') == 'section') & (pl.col('snippet_id') == section), 
+            by_predicate=(pl.col('type') == 'section') & (pl.col('snippet_id') == section),
             named=True
         )
 
         info['parents'] = section.split(sep='.')[:-1]
         return info
-    
+
     def section_view(self, section: str):
-        return ActionsheetView(data=self.snippets_data.filter(pl.col('snippet_id').str.starts_with(section)))
-    
+        return ActionsheetView(
+            data=self.snippets_data.filter(pl.col('snippet_id').str.starts_with(section)))
+
     def section_snippets(self, section: str) -> pl.DataFrame:
         return self.snippets().filter(pl.col('parent_section') == section)
-    
+
     def snippets(self) -> pl.DataFrame:
         return self.data.filter(pl.col('type') == 'action')
 
@@ -57,7 +59,7 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     )
 
     return sheet_info, df
-    
+
 
 def _process_header(content: dict, path) -> dict:
     assert 'name' in content, f'{path}: no name defined'
@@ -77,7 +79,7 @@ def _process_header(content: dict, path) -> dict:
     assert 'description' not in content or isinstance(content['description'], str), \
         f'description must be str'
     assert 'details' not in content or isinstance(content['details'], str), f'details must be str'
-        
+
     sheet_info = {k: content[k] for k in content.keys() if k in header_keys}
     return sheet_info
 
@@ -93,33 +95,33 @@ def _process_entries(
         parent_section: str
 ) -> pl.DataFrame:
     df = pl.DataFrame()
-    
+
     entries = _get_entries(content)
     for entry_name in entries:
         entry_id = id + '.' + entry_name if id else entry_name
         entry_dict = _process_entry(
-            content=content[entry_name], 
-            name = entry_name, 
-            id = entry_id, 
+            content=content[entry_name],
+            name=entry_name,
+            id=entry_id,
             parent_entry=parent_entry,
             parent_section=parent_section
         )
 
         df2 = _process_entries(
-            content=content[entry_name], 
-            id=entry_id, 
-            parent_entry=entry_dict, 
+            content=content[entry_name],
+            id=entry_id,
+            parent_entry=entry_dict,
             parent_section=entry_id if entry_dict['type'] == 'section' else parent_section
         )
-        
+
         df = pl.concat([df, pl.DataFrame(entry_dict), df2], how='diagonal_relaxed')
 
     return df
 
 
 def _get_entries(content: dict) -> list[str]:
-        return [k for k in content if isinstance(content[k], dict)]
-    
+    return [k for k in content if isinstance(content[k], dict)]
+
 
 def _process_entry(
         content: dict,
@@ -139,7 +141,7 @@ def _process_entry(
     is_solution = not is_action and 'code' in entry_dict
 
     assert sum([is_virtual, is_section, is_action, is_solution]) == 1, \
-        f'entry {id} is ambigious; invalid set of fields: {", ".join(entry_dict)}'
+        f'entry {id} is ambiguous; invalid set of fields: {", ".join(entry_dict)}'
     assert is_solution ^ (is_section or is_action or is_virtual)
 
     entry_dict['snippet_id'] = id
@@ -196,4 +198,4 @@ def _process_solution(entry: dict, name: str, id: str, parent_entry: dict) -> di
 def assert_name(name: any, path: str):
     assert isinstance(name, str), f'{path}: name must be str'
     assert name, f'{path}: name is empty'
-    assert not '.' in name, f'{path}: name cannot contain "."'
+    assert '.' not in name, f'{path}: name cannot contain "."'

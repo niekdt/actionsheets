@@ -1,5 +1,6 @@
 from importlib import resources
 from importlib.resources.abc import Traversable
+from typing import Iterator
 
 import polars as pl
 import re
@@ -79,14 +80,14 @@ class Actionsheets:
 def _gather_default_files() -> list[str]:
     data_root = resources.files('actionsheets.data')
 
-    def gather_files(entries: Traversable) -> list[str]:
-        files = []
+    def gather_files(entries: Iterator[Traversable]) -> list[str]:
+        files_list = []
         for entry in entries:
             if entry.is_dir():
-                files += gather_files(entry.iterdir())
+                files_list += gather_files(entry.iterdir())
             elif entry.name.endswith('.toml'):
-                files += [entry]
-        return files
+                files_list += [entry]
+        return files_list
 
     files = gather_files(data_root.iterdir())
 
