@@ -44,7 +44,12 @@ code = "pl.DataFrame(dict)"
 
 [create.dict.schema]
 what = "From dict with schema"
-code = "pl.DataFrame(dict, schema = {'col1': pl.Float32, 'col2': pl.Int64, 'col3': pl.Date})"
+code = """
+pl.DataFrame(
+    dict,
+    schema = {'col1': pl.Float32, 'col2': pl.Int64, 'col3': pl.Date}
+)
+"""
 
 [create.pandas]
 what = "From `pandas.DataFrame`"
@@ -324,7 +329,12 @@ description = "Rolling computation for each row (i.e., observation in time)"
 what = "Rolling computation for a single column, with right-aligned partial window of max _n_ days and at least _i_ rows"
 code = """
 data.with_columns(
-    pl.col('Hospitalized').rolling_mean(by='Date', closed='both', window_size=f'{n - 1}d', min_periods=i)
+    pl.col('Hospitalized').rolling_mean(
+        by='Date',
+        closed='both',
+        window_size=f'{n - 1}d',
+        min_periods=i
+    )
 )
 """
 details = "Currently only available for `rolling_mean()`, not any of the other `rolling_` functions."
@@ -715,7 +725,9 @@ data.with_columns(
 what = "Group-wise from aggregate value"
 code = """
 data.with_columns(
-    elapsedDays=(pl.col('Date') - pl.col('Date').min().over('Subject')).dt.total_days().add(1)
+    elapsedDays=(
+        pl.col('Date') - pl.col('Date').min().over('Subject')
+    ).dt.total_days().add(1)
 )
 """
 

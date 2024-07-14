@@ -176,7 +176,10 @@ code = "glob.glob(os.path.join(path, '*.csv'))"
 
 [extract.files.path.filter.regex]
 what = "File paths that match regex pattern"
-code = "[os.path.join(dir_path, f) for f in os.listdir(dir_path) if re.match(r'.+\\.csv$', f)]"
+code = """
+[os.path.join(dir_path, f)
+    for f in os.listdir(dir_path) if re.match(r'.+\\.csv$', f)]
+"""
 
 [extract.files.path.filter.unix.recursive]
 what = "File paths that match Unix filter, including nested entries (recursive)"
