@@ -1,3 +1,4 @@
+import warnings
 from importlib import resources
 from importlib.resources.abc import Traversable
 from typing import Iterator
@@ -153,9 +154,8 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
 
 
 def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
-    col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'snippet_id']
-
-    return snippets_data.with_columns(
+    # compute derived columns
+    snippets_data = snippets_data.with_columns(
         pl.col('title').fill_null(pl.col('snippet_id')),
         pl.col('details').fill_null('').str.strip_chars_end(),
         pl.col('description').fill_null('').str.strip_chars_end(),
@@ -163,10 +163,34 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
         sheet_id=pl.when(pl.col('sheet_parent') == '').
         then(pl.col('sheet_name')).
         otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
-    ).select(
-        pl.col(col_order),
-        pl.exclude(col_order)
     )
+
+    # check for code exceeding 80 chars
+    long_snippets = (
+        snippets_data.
+        select(
+            pl.col('sheet_id'),
+            pl.col('snippet_id'),
+            pl.col('code').str.split(by='\n').alias('code_lines')
+        ).
+        drop_nulls(subset='code_lines').
+        explode(columns='code_lines').
+        filter(
+            pl.col('code_lines').str.len_chars() > 80
+        ).
+        select(pl.exclude('code_lines'))
+    )
+
+    if long_snippets.height > 0:
+        with pl.Config() as cfg:
+            cfg.set_tbl_hide_dataframe_shape(True)
+            cfg.set_tbl_hide_column_data_types(True)
+            cfg.set_fmt_str_lengths(100)
+            warnings.warn(f'{long_snippets.height} code snippet(s) exceed max width of 80 chars:\n{long_snippets}')
+
+    # ensure column order
+    col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'snippet_id']
+    return snippets_data.select(pl.col(col_order), pl.exclude(col_order))
 
 
 _default_sheets: Actionsheets = None
