@@ -1,0 +1,179 @@
+language = "python"
+parent = "python.devtools"
+name = "pytest"
+title = "Pytest"
+description = "Testing framework"
+
+
+[assert]
+section = "Assertions"
+
+[assert.warn]
+what = "Assert warning"
+code = "with pytest.warns(UserWarning):"
+
+[assert.error]
+what = "Assert any error"
+code = "with pytest.raises(Exception) as excinfo:"
+
+[assert.error.specific]
+what = "Assert specific exception _e_"
+code = "with pytest.raises(e) as excinfo:"
+
+[assert.error.either]
+what = "Assert either exception _e1_ or _e2_"
+code = "with pytest.raises((e1, e2)):"
+
+
+[test]
+section = "Test control flow"
+
+
+[test.skip]
+section = "Skip tests"
+
+[test.skip.always]
+what = "Skip test"
+code = "@pytest.mark.skip(reason='no way to currently test this')"
+
+[test.skip.if]
+what = "Conditional skip"
+code = "@pytest.mark.skipif(cond, reason)"
+
+[test.skip.py]
+what = "Skip for Python version below _x.y_"
+code = "@pytest.mark.skipif(sys.version_info < (x, y))"
+
+[test.skip.windows]
+what = "Skip if on Windows"
+code = "@pytest.mark.skipif(sys.platform == 'win32')"
+
+[test.skip.module]
+what = "Skip if module is missing"
+code = "@pytest.importorskip('pandas')"
+
+[test.skip.within.module]
+what = "Skip rest of the test if module is missing"
+code = "docutils = pytest.importorskip('docutils')"
+
+
+[test.expect]
+section = "Test expectations"
+description = "Alternative definitions of success"
+
+[test.expect.fail]
+what = "Expect test to fail"
+code = "@pytest.mark.xfail()"
+
+[test.expect.fail.exception]
+what = "Expect test to fail with exception _e_"
+code = "@pytest.mark.xfail(raises=e)"
+
+[test.expect.fail.time]
+what = "Fail test if not completed within _n_ seconds"
+code = "@pytest.mark.timeout(n)"
+
+[test.expect.fail.windows]
+what = "Fail test on Windows"
+code = "@pytest.mark.xfail(sys.platform == 'win32')"
+
+
+[test.param]
+section = "Parameterized tests"
+
+[test.param.arg]
+what = "Parameterize test for argument _x_ with list of options"
+code = "@pytest.mark.parametrize('x', [1, 2, 3])"
+
+[test.param.args]
+what = "Parameterize test for multiple arguments"
+code = """
+@pytest.mark.parametrize('length', [1, 2, 3])
+@pytest.mark.parametrize('value', [0, 1])
+"""
+
+[test.param.argcomb]
+what = "Parameterize for combination of arguments"
+code = "@pytest.mark.parametrize('length,value', [(1, 0), (2, 1), (3, 1)])"
+
+[test.param.fixture]
+what = "Parameterize using parameterized fixture"
+code = """
+@pytest.mark.parametrize('large_dynamic_data_file',
+    ['big.csv', 'big2.csv'], indirect=True)
+"""
+
+
+[fixture]
+section = "Fixtures"
+details = "Pytest caches fixtures within the defined scope (for the given parameters)."
+
+[fixture.create]
+what = "Define fixture"
+code = """
+@pytest.fixture
+def first_entry():
+    return 'a'
+"""
+
+[fixture.create.scope.module]
+what = "Define fixture with module scope"
+code = "@pytest.fixture(scope='module')"
+
+[fixture.create.cleanup]
+what = "Define fixture with cleanup"
+code = """
+# fixture code
+yield 'a'
+# cleanup code
+"""
+
+[fixture.create.new]
+what = "Define fixture for use in every test"
+code = "@pytest.fixture(autouse=True)"
+
+[fixture.create.param]
+what = "Define parameterized fixture, resulting in multiple tests"
+code = """
+@pytest.fixture(params=[1, 2, 3, 4, 5])
+def number(request):
+    return request.param
+"""
+details = "Function signature must match the example"
+
+[fixture.gc]
+what = "Disable GC for every test, collect in-between"
+code = """
+@pytest.fixture(autouse=True)
+def cleanup():
+    gc.collect()
+    gc.disable()
+"""
+
+[fixture.fs.paths]
+what = "Parameterize tests with a dynamic list of file paths"
+code = """
+@fixture(params = glob.glob(r'data\\*.csv')
+def file_paths(request)
+    return request.param
+"""
+
+[fixture.fs.fnames]
+what = "Parameterize tests with a dynamic list of file names"
+code = """
+@fixture(params = fnmatch.filter(os.listdir('data'), '*.csv')
+def file_names(request)
+    return request.param
+"""
+
+[fixture.param]
+what = "Parameterized test using a parameterizable fixture"
+code = """
+@pytest.fixture
+def tester(request):
+    return MyTester(request.param)
+
+@pytest.mark.parametrize('tester', [['var1', 'var2']], indirect=True)
+def test_tc1(self, tester):
+    tester.dothis()
+"""
