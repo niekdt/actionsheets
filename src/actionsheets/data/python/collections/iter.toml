@@ -1,5 +1,5 @@
 language = "python"
-parent = "python"
+parent = "python.collections"
 name = "iter"
 title = "Iterators"
 
