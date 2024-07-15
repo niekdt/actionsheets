@@ -1,0 +1,79 @@
+language = "python"
+parent = "python.numpy"
+name = "ndarray"
+title = "ND-arrays"
+description = "ND-array operations"
+details = "This sheet is highly incomplete."
+
+
+[create]
+section = "Create"
+
+[create.1d]
+what = "Ensure at least 1D array (vector)"
+code = "np.atleast_1d(x)"
+
+[create.2d]
+what = "Ensure at least 2D array (matrix)"
+code = "np.atleast_2d(x)"
+
+[create.3d]
+what = "Ensure at least 3D array"
+code = "np.atleast_3d(x)"
+
+
+[prop]
+section = "Properties"
+
+[prop.ndim]
+what = "Number of dimensions"
+code = "x.ndim"
+
+[prop.dim]
+what = "Dimension sizes"
+code = "x.shape"
+
+[prop.nelems]
+what = "Number of elements"
+code = "x.size"
+
+[prop.len0]
+what = "Size of the first dimension"
+code = "len(x)"
+
+
+
+[derive]
+section = "Derive"
+
+
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.drop.dim.singular]
+what = "Drop singular dimensions"
+code = "a.squeeze()"
+
+[derive.shrink.drop.dim.singular.2]
+code = "np.squeeze(a)"
+
+
+[derive.reshape]
+section = "Reshape"
+
+[derive.reshape.dims]
+what = "Reshape to dimensions _d_"
+code = "x.reshape(d)"
+
+
+[convert]
+section = "Convert"
+
+[convert.bytes]
+what = "Bytes"
+code = "x.tobytes()"
+details = "Not sure what difference with `data.tobytes()` is"
+
+[convert.hash]
+what = "Hash"
+code = "hash(x.data.tobytes())"

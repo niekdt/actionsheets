@@ -1,0 +1,50 @@
+language = "python"
+parent = "python.numpy"
+name = "scalar"
+title = "Scalars"
+description = "0D-array operations"
+details = "This sheet is highly incomplete."
+
+
+[create]
+section = "Create"
+
+[create.bool]
+what = "Boolean scalar"
+code = "np.array(True)"
+
+[create.float]
+what = "Floating point scalar"
+code = "np.array(0)"
+
+[create.int]
+what = "Int scalar"
+code = "np.array(0, dtype=np.int64)"
+
+
+[test]
+section = "Test"
+
+[test.'nan']
+what = "Is NaN"
+code = "np.isnan(x)"
+
+[test.'inf']
+what = "Is infinite"
+code = "np.isinf(x)"
+
+[test.ninf]
+what = "Is finite"
+code = "np.isfinite(x)"
+
+
+[derive]
+section = "Derive"
+
+[derive.log]
+what = "Log transform"
+code = "np.log(x)"
+
+[derive.log10]
+what = "Log-10 transform"
+code = "np.log10(x)"
