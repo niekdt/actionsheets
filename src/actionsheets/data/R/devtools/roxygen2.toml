@@ -1,0 +1,440 @@
+language = "R"
+parent = "r.devtools"
+name = "roxygen2"
+title = "roxygen2"
+
+
+[basic]
+section = "Basic documentation"
+
+[basic.title]
+what = "Title"
+code = "@title Title here"
+
+[basic._description]
+what = "Description"
+code = "@description Description here"
+
+[basic.param]
+what = "Parameter"
+code = "@param data The dataset"
+
+[basic.dotparam]
+what = "Dot parameters"
+code = "@param ... Additional arguments"
+
+[basic.return]
+what = "Return"
+code = "@return Return value description here"
+
+[basic.slot]
+what = "Class slot"
+code = "@slot slotName Description here"
+
+[basic.details]
+what = "Details"
+code = "@details Details here"
+
+[basic.note]
+what = "Note"
+code = "@note Notes here"
+
+[basic.format]
+what = "Data format"
+code = "@format Format description here"
+
+
+[format]
+section = "Text formatting"
+
+[format.md]
+what = "Enable markdown"
+code = "@md"
+
+[format.emph]
+what = "Emphasis"
+code = "_wow_"
+
+[format.bold]
+what = "Bold"
+code = "*wow*"
+
+[format.eq]
+what = "In-line equation"
+code = "\\eqn{a + b}"
+
+[format.deq]
+what = "Display equation"
+code = "\\deqn{a + b}"
+
+[format._code]
+what = "Code"
+code = "`mu <- mean(data)`"
+
+[format._code.2]
+code = "\\code{mu <- mean(data)}"
+
+[format.codeblock]
+what = "Code block"
+code = """
+```
+mu <- mean(data)
+```
+"""
+
+[format.monospace]
+what = "Monospace font (looks like code)"
+code = """
+\\preformatted{
+    text
+}
+"""
+
+[format.pkg]
+what = "Package name"
+code = "\\pkg{stats}"
+
+[format.list.unordered]
+what = "Unordered list"
+code = """
+\\itemize{
+    \\item Option A
+    \\item Option B
+}
+"""
+
+[format.list.ordered]
+what = "Ordered list"
+code = """
+\\enumerate{
+    \\item First item
+    \\item Second item
+}
+"""
+
+[format.list.named]
+what = "Named list"
+code = """
+\\describe{
+    \\item{Opt A}{Describe option A}<
+    \\item{Opt B}{Describe option B}
+}
+"""
+
+[format.table]
+what = "Table"
+code = "?"
+details = "Use markdown?"
+
+[format.details._section]
+what = "Sections"
+code = """
+@details First part
+@details Second part (will be a new section)
+"""
+
+[format._section]
+what = "Arbitrary sections"
+code = """
+@section Title:
+Text here
+"""
+
+[format.subsection]
+what = "Subsections"
+code = """
+@details
+## This is a subsection
+With text
+#### Subsubsection here
+With text
+"""
+
+
+[format.link]
+section = "Link"
+
+[format.link.url]
+what = "Website"
+code = "<https://r-project.org>"
+
+[format.link.url.label]
+what = "With different text"
+code = "[text](link)"
+
+[format.link.internal.topic]
+what = "To internal topic defined by @name _name_"
+code = "[name]"
+
+[format.link.pkg.topic]
+what = "To external package"
+code = "[stats][stats-package]"
+
+[format.link.pkg.fun]
+what = "To external package function"
+code = "[stats::predict]"
+
+[format.link.fun]
+what = "To internal or global function"
+code = "[predict()]"
+
+[format.link.fun.pkg]
+what = "To package function"
+code = "[stats::predict()]"
+
+[format.link.fun.pkg.label]
+what = "To function with different text"
+code = "[fancyName()][stats::predict()]"
+
+[format.link.class]
+what = "To class"
+code = "[Time]"
+
+[format.link.class.ext]
+what = "To external class"
+code = "[stats::Time]"
+
+[format.link.s4]
+what = "To S4 class"
+code = "\\linkS4class{lcModel}"
+
+[format.link.special]
+what = "With special characters"
+code = "\\code{\\link[magrittr]{\\%>\\%}}"
+
+[format.link.seealso]
+what = "See-also"
+code = "@seealso [mean] [stats::median]"
+
+[format.link.seealso.vignette]
+what = "See-also vignette"
+code = "@seealso browseVignettes('roxygen2')"
+
+[format.link.family]
+what = "Family"
+code = "@family sharedNames"
+
+[format.link.source]
+what = "Specify source"
+code = "@source This dataset was generated using [generateData]"
+
+[format.link.refs]
+what = "References"
+code = """
+@references
+\\insertRef{benaglia2009mixtools}{latrend}
+"""
+
+[format.link.email]
+what = "E-mail"
+code = "\\email{example@@example.com}"
+
+
+[examples]
+section = "Examples"
+description = "Documenting code examples"
+
+[examples._code]
+what = "Examples"
+code = """
+@examples
+1 + 1
+mean(1:9)
+"""
+
+[examples.dontrun]
+what = "Examples that should not be run"
+code = """
+@examples
+1 + 1
+\\dontrun{
+    stop('oops')
+}
+"""
+
+[examples.donttest]
+what = "Examples that should not be tested"
+code = """
+@examples
+\\donttest{
+    stop('oops')
+}
+"""
+
+[examples.interactive]
+what = "Examples for interactive usage only"
+code = """
+@examples
+if interactive()
+    browseURL("https://roxygen2.r-lib.org")
+"""
+
+
+[dynamic]
+section = "Dynamic content"
+
+[dynamic._code]
+what = "In-line code evaluation"
+code = "`r getRversion()`"
+details = "Evaluated during every roxygenize call"
+
+[dynamic.codeblock]
+what = "Code block evaluation"
+code = """
+```{r}
+1 + 1
+```
+details = "Code blocks cannot refer to each other
+"""
+
+[dynamic.figure]
+what = "Generate figure"
+code = """
+```{r iris-pairs-plot}
+pairs(iris[1:4])[unclass(iris$Species)])
+```
+"""
+
+[dynamic.doc]
+what = "Dynamic documentation"
+code = "![image](https://example.com)"
+
+
+[generate]
+section = "Generating documentation"
+
+
+
+[topic]
+section = "Topics"
+
+[topic.skip]
+what = "Don't generate topic"
+code = "@noRd"
+
+[topic.new]
+what = "Create stand-alone topic"
+code = """
+@name docname
+@title Topic title
+NULL
+"""
+
+[topic.pkg]
+what = "Package topic"
+code = """
+@details
+Package documentation here.
+@keywords internal
+"_PACKAGE"
+"""
+
+[topic._name]
+what = "Topic name"
+code = "@name simpleName"
+
+[topic.file]
+what = "Topic file name"
+code = "@rdname simpleName"
+
+[topic.order]
+what = "Specify doc inclusion order"
+code = "@order 1"
+details = "Then @order 2 for the second doc"
+
+[topic.alias]
+what = "Define alias"
+code = "@aliases shortName"
+
+[topic.s4.alias]
+what = "Define alias for S4 method"
+code = "@aliases predictForCluster,lcModel-method"
+
+[topic.inherit]
+what = "Inherit doc"
+code = "@inherit docName"
+
+[topic.inherit.com]
+what = "Inherit doc components"
+code = "@inherit docName details return"
+
+[topic.inherit._section]
+what = "Inherit section"
+code = "@inheritSection docName Section title"
+
+[topic.inherit.param]
+what = "Inherit param descriptions from another internal function"
+code = "@inheritParams internalFun"
+
+[topic.inherit.param.pkg]
+what = "Inherit param descriptions from an external function"
+code = "@inheritParams stats::predict"
+
+[topic.inherit.dotparam]
+what = "Inherit dot parameters"
+code = "@inheritDotParams"
+
+[topic.hide]
+what = "Hide documentation"
+code = "@keywords internal"
+
+
+[namespace]
+section = "Namespace generation"
+
+[namespace.import.pkg]
+what = "Import package"
+code = "@import stats"
+
+[namespace.import.pkgs]
+what = "Import packages"
+code = "@import stats splines"
+
+[namespace.import.funs]
+what = "Import function(s) from package"
+code = "@importFrom stats predict fitted"
+
+[namespace.import.s3]
+what = "Import S3 generic"
+code = "@importFrom pkg generic"
+
+[namespace.import.s4]
+what = "Import S4 classes from package"
+code = "@importClassesFrom stats Time"
+
+[namespace.import.s4.methods]
+what = "Import S4 methods from package"
+code = "@importMethodsFrom stats time time2"
+
+[namespace.collate]
+what = "Collate / ensure other R files are loaded first"
+code = "@include first.R second.R"
+
+[namespace.export.fun]
+what = "Export function"
+code = "@export"
+
+[namespace.export.s4]
+what = "Export class and methods"
+code = """
+@export
+setClass(…)
+"""
+
+[namespace.export.class]
+what = "Export class"
+code = "@exportClass lcModel"
+
+[namespace.export.method]
+what = "Export class method"
+code = "@exportMethod evaluate"
+
+
+[generate.docs]
+what = "Generate docs"
+code = "roxygen2::roxygenise()"
+details = "Ctrl+Shift+D"
+
+[generate.clean]
+what = "Clean files, then generate docs"
+code = "roxygen2::roxygenise(clean = TRUE)"
