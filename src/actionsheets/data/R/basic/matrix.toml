@@ -1,0 +1,72 @@
+language = "R"
+parent = "r.basic"
+name = "matrix"
+title = "matrix"
+details = "This sheet is incomplete."
+
+
+[create]
+section = "Create"
+
+[create.vector]
+what = "From vector, as column vector"
+code = "matrix(x)"
+
+[create.vector.2]
+code = "cbind(x)"
+
+[create.diag]
+what = "Diagonal matrix from vector"
+code = "diag(x)"
+
+[create.vecmat]
+what = "Create vector or matrix, depending on the number of columns"
+code = "mat.or.vec(x, nc=2)"
+
+
+[test]
+section = "Test"
+
+[test.is]
+what = "Is matrix"
+code = "is.matrix(x)"
+
+[test.vector]
+what = "Is vector (has singleton dimension)"
+code = "?"
+
+[test.square]
+what = "Is square matrix"
+code = "nrow(x) == ncol(x)"
+
+[test.cols.equal.each]
+what = "Each column contains at most 1 unique value (i.e. all equal)"
+code = "apply(x, 2, uniqueN) == 1"
+
+[test.rows.allequal]
+what = "Check if all rows are equal"
+code = "all(mat[1,] == t(mat))"
+
+
+[get]
+section = "Get"
+
+[get.pairs]
+what = "Elements by (row,col) pairs"
+code = "mat[matrix(c(2,3), c(4,5)), ncol=2)]"
+
+
+[convert]
+section = "Convert"
+
+[convert.list.rowvectors]
+what = "To list of row vectors"
+code = "split(mat, row(mat))"
+
+[convert.list.colvectors]
+what = "To list of column vectors"
+code = "split(mat, col(mat))"
+
+[convert.list.matrix.grouped]
+what = "To list of submatrices grouped by row"
+code = "lapply(split(mat, rowFactor), matrix, ncol = ncol(mat))"
