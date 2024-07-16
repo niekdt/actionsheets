@@ -190,6 +190,7 @@ def _process_action(entry: dict, name: str, id: str) -> dict:
 
 def _process_solution(entry: dict, name: str, id: str, parent_entry: dict) -> dict:
     assert parent_entry, f'empty parent action entry for solution {id}'
+    assert 'title' in parent_entry, f'missing title for parent of solution {id}'
     entry['title'] = parent_entry['title']
     entry['type'] = 'action'
     return entry
