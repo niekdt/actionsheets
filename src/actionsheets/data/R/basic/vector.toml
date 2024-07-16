@@ -32,7 +32,8 @@ section = "Test"
 
 [test.is]
 what = "Is vector"
-code = "?"
+code = "is.vector(x) && is.atomic(x)"
+details = "`is.vector()` returns true for lists as well!"
 
 [test.empty]
 what = "Is empty"
