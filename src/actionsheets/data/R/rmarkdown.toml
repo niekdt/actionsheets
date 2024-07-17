@@ -1,0 +1,249 @@
+language = "md"
+parent = "r"
+name = "rmarkdown"
+title = "Rmarkdown"
+details = "This sheet is not organized well"
+
+[info]
+section = "Page info"
+
+[info.title]
+what = "Title"
+code = "title: my title"
+
+[info.author]
+what = "Author"
+code = "author: John Smith"
+
+[info.author.email]
+what = "Author with e-mail as footnote"
+code = "author: John Smith^[example@example.com]"
+
+[info.authors]
+what = "Authors"
+code = """
+author:
+  - Bert
+  - Ernie
+"""
+
+[info.date]
+what = "Date"
+code = "date: 2024-07-17"
+
+[info.date.current]
+what = "Current date (dynamically)"
+code = """
+date: "r format(Sys.time(), '%d %B %Y')"
+"""
+
+[info.keywords]
+what = "Keywords"
+code = "tags: [analysis, ai]"
+
+
+[format]
+section = "Text formatting"
+
+[format.bold]
+what = "Bold"
+code = "**text**"
+
+[format.italic]
+what = "Italic"
+code = "*text*"
+
+[format.link]
+what = "Hyperlink with label"
+code = "[Text](url)"
+
+[format._code]
+what = "Code"
+code = "`code`"
+
+[format.eq]
+what = "Equation"
+code = "$\\mu$"
+
+
+[struct]
+section = "Document structuring"
+
+[struct.sec]
+section = "Sectioning"
+
+[struct.sec._section]
+what = "Section"
+code = "# Section title"
+
+[struct.sec._section.unnumbered]
+what = "Unnumbered section"
+code = "# Section title {-}"
+
+[struct.sec.subsection]
+what = "Subsection"
+code = "## Subsection title"
+
+[struct.sec.subsubsection]
+what = "Subsubsection"
+code = "### Subsubsection title"
+
+[struct.sec.paragraph]
+what = "Paragraph"
+code = "#### Paragraph title"
+
+[struct.sec._section.ntoc]
+what = "Hide section from ToC"
+code = "# Section title {.toc-ignore}"
+
+[struct.sec._section.tabbed]
+what = "Tabbed section"
+code = """
+## title {.tabset .tabset-fade}
+content above tabbed region.
+
+### tab 1
+tab content 1
+
+### tab 2
+tab content 2
+
+##
+content below tabbed region
+"""
+details = "[Source](https://stackoverflow.com/questions/38062706/rmarkdown-how-to-end-tabbed-content). The newlines are crucial!"
+
+[struct.sec.paragraph.collapse]
+what = "Collapsible paragraph"
+code = """
+<details>
+<summary>Show details…</summary>
+<p>Derp</p>
+</details>
+"""
+
+[struct.sec.line]
+what = "Horizontal line"
+code = "***"
+
+
+[struct.list]
+section = "Lists"
+
+[struct.list.unordered]
+what = "Define unordered list"
+code = """
+* a
+* b
+"""
+
+[struct.list.nested]
+what = "Define nested list"
+code = """
+* a
+  + b
+* c
+"""
+
+[struct.list.dyn]
+what = "Dynamic list from code section"
+code = """
+```{r, results='asis'}
+paste0('* ', items, collapse='\n') %>% cat
+```
+"""
+
+[figs]
+section = "Figures"
+
+[figs.r]
+what = "Captioned dynamic figure from R code"
+code = """
+```{r, fig.align="center", fig.width=6, fig.height=6,
+    fig.cap="Figure: Your caption here."}
+R CODE HERE
+```
+"""
+details = "[Source](https://holtzy.github.io/Pimp-my-rmd/)"
+
+[figs.r.sub]
+what = "Dynamic subfigures from R code"
+code = """
+```{r out.width=c('50%', '50%'), fig.show='hold'}
+boxplot(1:10)
+plot(rnorm(10))
+```
+"""
+details = "[Source](https://holtzy.github.io/Pimp-my-rmd/)"
+
+[figs.r.interactive]
+what = "Interactive ggplot"
+code = """
+```{r}
+p = ggplot(data, aes(x=x, y=y, color=z)) +
+    geom_point()
+plotly::ggplotly(p)
+```
+"""
+
+[tabs]
+section = "Tables"
+
+[tabs.simple]
+what = "Dataframe as table"
+code = "kable(df)"
+
+[tabs.sortable]
+what = "Dynamic sortable table from dataframe"
+code = "DT::datatable(…)"
+
+[tabs.scrollable]
+what = "Scrollable table from dataframe"
+code = """
+DT::datatable(mtcars, rownames = FALSE,
+    filter="top", options = list(pageLength = 5, scrollX=T) )
+"""
+
+[tabs.list]
+what = "Named list as table"
+code = """
+`r unlist(mylist) %>% as.data.frame %>% kable(col.names='Value')`
+"""
+
+[tabs.knitr]
+what = "Knitr params list as table"
+code = """
+`r unlist(params) %>% as.data.frame %>%
+    kable(col.names='Value', caption='Parameters')`
+"""
+
+
+[codeblocks]
+section = "Code block options"
+description = """
+To hide code blocks by default, set code_folding: "hide" in the output document parameters.
+"""
+
+[codeblocks.runonly]
+what = "Run, show output only"
+code = "echo=F"
+
+[codeblocks.codeonly]
+what = "Run, show code only"
+code = "echo=T, results='hide'"
+
+[codeblocks.dontrun]
+what = "Show code, don't run"
+code = "eval=F"
+
+[codeblocks.asis]
+what = "Interpret output as markdown code"
+code = "results='asis'"
+
+[codeblocks.hide.msg]
+what = "Hide messages"
+code = "message=F"
+
+[codeblocks.hide.warnings]
+what = "Hide warnings"
+code = "warning=F"
