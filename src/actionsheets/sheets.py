@@ -15,10 +15,24 @@ class Actionsheets:
         self.sheets_data = sheets
         self.snippets_data = snippets
 
-    def ids(self, parent_id: str = '') -> list[str]:
+    def ids(self, parent_id: str = '', nested: bool = True) -> list[str]:
+        if nested:
+            return self._all_sheet_ids(parent_id=parent_id)
+        else:
+            return self._child_sheet_ids(parent_id=parent_id)
+
+    def _all_sheet_ids(self, parent_id: str = '') -> list[str]:
+        return self.sheets_data.filter(
+            pl.col('sheet_id').str.starts_with(parent_id)
+        )['sheet_id'].to_list()
+
+    def _child_sheet_ids(self, parent_id: str = '') -> list[str]:
         return self.sheets_data.filter(
             pl.col('sheet_parent') == parent_id
         )['sheet_id'].to_list()
+
+    def has_sheet(self, id: str, parent_id: str = '', nested: bool = True):
+        return id in self.ids(parent_id=parent_id, nested=nested)
 
     def sheet_info(self, id: str) -> dict:
         assert id in self.sheets_data['sheet_id'], \

@@ -28,7 +28,7 @@ def print_snippets(snippets: pl.DataFrame, limit=10):
 
 @group()
 def _render_sheets(sheets: Actionsheets, parent_id: str) -> RenderResult:
-    for sheet_id in sheets.ids(parent_id=parent_id):
+    for sheet_id in sheets.ids(parent_id=parent_id, nested=False):
         sheet_render = _render_sheet(sheets, id=sheet_id)
         sheets_render = _render_sheets(sheets, parent_id=sheet_id)
         yield Group(sheet_render, sheets_render)
