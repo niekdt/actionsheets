@@ -17,14 +17,18 @@ _details_color = 'cyan'
 _action_color = 'sea_green1'
 _bg_color2 = 'grey15'
 
+
 def print_sheets(sheets: Actionsheets, parent_id: str = ''):
     print(_render_sheets(sheets, parent_id=parent_id))
+
 
 def print_sheet(sheets: Actionsheets, id: str):
     print(_render_sheet(sheets, id))
 
+
 def print_snippets(snippets: pl.DataFrame, limit=10):
     print(_render_snippets(snippets.head(n=limit)))
+
 
 @group()
 def _render_sheets(sheets: Actionsheets, parent_id: str) -> RenderResult:
@@ -32,6 +36,7 @@ def _render_sheets(sheets: Actionsheets, parent_id: str) -> RenderResult:
         sheet_render = _render_sheet(sheets, id=sheet_id)
         sheets_render = _render_sheets(sheets, parent_id=sheet_id)
         yield Group(sheet_render, sheets_render)
+
 
 @group()
 def _render_sheet(sheets: Actionsheets, id: str) -> RenderResult:
@@ -42,31 +47,35 @@ def _render_sheet(sheets: Actionsheets, id: str) -> RenderResult:
 
     yield Panel(
         Text.assemble(
-            (Text(info['title'])), 
+            (Text(info['title'])),
             (' Actionsheet', 'i'),
             '    ',
             (sheet_path, f'{_path_color}')
-        ), 
-        box=box.DOUBLE_EDGE, 
+        ),
+        box=box.DOUBLE_EDGE,
         style=_header_color
     )
 
     if info['description']:
         yield Text('DESCRIPTION', style=f'{_description_color} bold')
-        yield Markdown(markup=info['description'], style=_description_color, inline_code_lexer=info['language'])
+        yield Markdown(markup=info['description'], style=_description_color,
+                       inline_code_lexer=info['language'])
         yield ''
-    
+
     if info['details']:
         yield Text('DETAILS', style=f'{_details_color} bold')
-        yield Markdown(markup=info['details'], style=_details_color, inline_code_lexer=info['language'])
+        yield Markdown(markup=info['details'], style=_details_color,
+                       inline_code_lexer=info['language'])
         yield ''
 
     yield _render_sections(view, section='')
 
+
 @group()
 def _render_sections(view: ActionsheetView, section: str) -> RenderResult:
-    for section_id in view.child_ids(section = section, type = 'section'):
+    for section_id in view.child_ids(section=section, type='section'):
         yield _render_section(view, section=section_id)
+
 
 @group()
 def _render_section(view: ActionsheetView, section: str) -> RenderResult:
@@ -83,17 +92,18 @@ def _render_section(view: ActionsheetView, section: str) -> RenderResult:
     )
     snippets_group = _render_section_snippets(view, section)
     yield Panel(
-        Group(md, snippets_group), 
+        Group(md, snippets_group),
         title=Text.assemble(
-            ('' if info['parent_section'] == '' else f' {parent_path} >', f'black on {_header_color} bold'),
-            (f' {info["title"]} ', f'white on {_header_color} bold'), 
-            ' ── ', 
+            ('' if info['parent_section'] == '' else f' {parent_path} >',
+             f'black on {_header_color} bold'),
+            (f' {info["title"]} ', f'white on {_header_color} bold'),
+            ' ── ',
             (f'Section {section}', 'black on default')
-        ), 
+        ),
         title_align='left',
         subtitle='' if not has_snippets else Text.assemble(
-            (f'Actionsheet {sheet_path} ', f'{_path_color} italic'), 
-            ('───', 'white'), 
+            (f'Actionsheet {sheet_path} ', f'{_path_color} italic'),
+            ('───', 'white'),
             (f' Section {section}', f'{_path_color} italic')
         ),
         subtitle_align='left'
@@ -102,6 +112,7 @@ def _render_section(view: ActionsheetView, section: str) -> RenderResult:
     # Render subsections
     yield _render_sections(view, section=section)
 
+
 def _render_section_snippets(view: ActionsheetView, section: str) -> RenderResult:
     data = view.section_snippets(section=section)
     if data.height:
@@ -109,9 +120,10 @@ def _render_section_snippets(view: ActionsheetView, section: str) -> RenderResul
     else:
         return Group()
 
+
 def _render_snippets(data: pl.DataFrame) -> RenderResult:
     table = Table(
-        collapse_padding=False, 
+        collapse_padding=False,
         pad_edge=False,
         show_edge=False,
         show_lines=False,
@@ -125,19 +137,20 @@ def _render_snippets(data: pl.DataFrame) -> RenderResult:
 
     for snippet in data.iter_rows(named=True):
         table.add_row(
-            Markdown(snippet['title']), 
+            Markdown(snippet['title']),
             Syntax(
-                code=snippet['code'], 
-                lexer=snippet['language'], 
-                code_width=120, 
-                tab_size=2, 
+                code=snippet['code'],
+                lexer=snippet['language'],
+                code_width=120,
+                tab_size=2,
                 background_color='default' if table.row_count % 2 == 0 else _bg_color2
-            ), 
+            ),
             Markdown(snippet['details']),
-            style = '' if table.row_count % 2 == 0 else f'on {_bg_color2}'
+            style='' if table.row_count % 2 == 0 else f'on {_bg_color2}'
         )
-    
+
     return table
+
 
 if __name__ == '__main__':
     print('== Actionsheets.console package ==')
