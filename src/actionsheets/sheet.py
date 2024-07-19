@@ -1,4 +1,6 @@
 import tomllib
+from typing import Literal
+
 import polars as pl
 
 header_keys = ('name', 'language', 'parent', 'title', 'description', 'details', 'code')
@@ -13,11 +15,16 @@ class ActionsheetView:
     def __init__(self, data: pl.DataFrame):
         self.data = data
 
-    def child_ids(self, type: str, section: str = '') -> list[str]:
-        assert type in ['section', 'part', 'action']
+    def child_ids(self, type: Literal['section', 'part', 'action'], section: str = '') -> list[str]:
         return self.data.filter(
             (pl.col('parent_section') == section) & (pl.col('type') == type)
         )['snippet_id'].to_list()
+
+    def has_section(self, section: str) -> bool:
+        return section in self.snippets_data.filter(pl.col('type') == 'section')['snippet_id']
+
+    def has_snippet(self, snippet: str) -> bool:
+        return snippet in self.snippets_data.filter(pl.col('type') == 'action')['snippet_id']
 
     def section_info(self, section: str) -> dict:
         info = self.data.row(
@@ -30,7 +37,8 @@ class ActionsheetView:
 
     def section_view(self, section: str):
         return ActionsheetView(
-            data=self.snippets_data.filter(pl.col('snippet_id').str.starts_with(section)))
+            data=self.snippets_data.filter(pl.col('snippet_id').str.starts_with(section))
+        )
 
     def section_snippets(self, section: str) -> pl.DataFrame:
         return self.snippets().filter(pl.col('parent_section') == section)
