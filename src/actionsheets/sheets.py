@@ -55,9 +55,10 @@ class Actionsheets:
             matches=pl.col('sheet_id').str.count_matches('|'.join(terms))
         ).filter(pl.col('matches') > 0)
 
-        assert result.height > 0, f'no sheets found for query: "{query}"'
-
-        return result.sort('matches', descending=True).head(n=1)[0, 'sheet_id']
+        if result.height:
+            return result.sort('matches', descending=True).head(n=1)[0, 'sheet_id']
+        else:
+            return ''
 
     def find_snippets(self, query: str, limit: int = 10) -> pl.DataFrame:
         terms = re.split(r'\s+|,|\.|\|', query)
@@ -67,8 +68,6 @@ class Actionsheets:
             matches=pl.col('snippet_id').str.count_matches(search_pattern) + pl.col(
                 'sheet_id').str.count_matches(search_pattern)
         ).filter(pl.col('matches') > 0)
-
-        assert result.height > 0, f'no snippets found for query: "{query}"'
 
         return (
             result.sort('matches', descending=True).
@@ -82,8 +81,6 @@ class Actionsheets:
         result = self.sheet_view(id=id).data.with_columns(
             matches=pl.col('snippet_id').str.count_matches('|'.join(terms))
         ).filter(pl.col('matches') > 0)
-
-        assert result.height > 0, f'no snippets found for query: "{query}"'
 
         return (
             result.sort('matches', descending=True).
