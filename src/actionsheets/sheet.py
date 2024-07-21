@@ -1,5 +1,5 @@
 import tomllib
-from typing import Literal
+from typing import Literal, Self
 
 import polars as pl
 
@@ -16,20 +16,45 @@ class ActionsheetView:
         self.data = data
 
     def __len__(self) -> int:
+        """
+        Get the number of snippets contained in this view
+        :return: Number of snippets
+        """
         return self.snippets().height
 
     def child_ids(self, type: Literal['section', 'part', 'action'], section: str = '') -> list[str]:
+        """
+        Get the IDs of all regions belonging to the given section
+        :param type: Child type
+        :param section: Parent section (optional)
+        :return: List of IDs
+        """
         return self.data.filter(
             (pl.col('parent_section') == section) & (pl.col('type') == type)
         )['snippet_id'].to_list()
 
     def has_section(self, section: str) -> bool:
+        """
+        Check whether the section is defined in the view
+        :param section: Section ID
+        :return: Whether the section exists
+        """
         return section in self.data.filter(pl.col('type') == 'section')['snippet_id']
 
     def has_snippet(self, snippet: str) -> bool:
+        """
+        Check whether the snippet is defined in the view
+        :param snippet: Snippet ID
+        :return: Whether the snippet exists in the view
+        """
         return snippet in self.data.filter(pl.col('type') == 'action')['snippet_id']
 
     def section_info(self, section: str) -> dict:
+        """
+        Get meta data about a section
+        :param section: Section ID
+        :return: Dictionary with info
+        """
         info = self.data.row(
             by_predicate=(pl.col('type') == 'section') & (pl.col('snippet_id') == section),
             named=True
@@ -38,19 +63,38 @@ class ActionsheetView:
         info['parents'] = section.split(sep='.')[:-1]
         return info
 
-    def section_view(self, section: str):
+    def section_view(self, section: str) -> Self:
+        """
+        Get a view for the children of a section
+        :param section: Section ID
+        :return: The filtered view
+        """
         return ActionsheetView(
             data=self.data.filter(pl.col('snippet_id').str.starts_with(section))
         )
 
     def section_snippets(self, section: str) -> pl.DataFrame:
+        """
+        Get the snippets data of a section
+        :param section: Section ID
+        :return: Snippets data
+        """
         return self.snippets().filter(pl.col('parent_section') == section)
 
     def snippets(self) -> pl.DataFrame:
+        """
+        Get all snippets data
+        :return: Snippets data
+        """
         return self.data.filter(pl.col('type') == 'action')
 
 
 def parse_toml(path) -> tuple[dict, pl.DataFrame]:
+    """
+    Parse an actionsheet TOML file
+    :param path: The path to open
+    :return: Processed action sheet info and data
+    """
     with open(path) as file:
         file_content = file.read()
         content = tomllib.loads(file_content)

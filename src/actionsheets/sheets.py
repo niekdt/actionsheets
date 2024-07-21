@@ -1,7 +1,7 @@
 import warnings
 from importlib import resources
 from importlib.resources.abc import Traversable
-from typing import Iterator
+from typing import Iterator, Self
 
 import polars as pl
 import re
@@ -16,12 +16,22 @@ class Actionsheets:
         self.snippets_data = snippets
 
     def ids(self, parent_id: str = '', nested: bool = True) -> list[str]:
+        """
+        Get the defined sheets for the given parent (or root)
+        :param parent_id: Sheet ID
+        :param nested: Whether to include nested children in the list
+        :return: List of sheet IDs
+        """
         if nested:
             return self._all_sheet_ids(parent_id=parent_id)
         else:
             return self._child_sheet_ids(parent_id=parent_id)
 
     def __len__(self) -> int:
+        """
+        Get the total number of sheets
+        :return: Number of sheets
+        """
         return len(self.ids())
 
     def _all_sheet_ids(self, parent_id: str = '') -> list[str]:
@@ -35,9 +45,21 @@ class Actionsheets:
         )['sheet_id'].to_list()
 
     def has_sheet(self, id: str, parent_id: str = '', nested: bool = True):
+        """
+        Check whether the sheet is defined
+        :param id: Sheet ID
+        :param parent_id: Parent sheet ID (optional)
+        :param nested: Whether to search for nested sheets
+        :return: Whether the sheet is defined
+        """
         return id in self.ids(parent_id=parent_id, nested=nested)
 
     def sheet_info(self, id: str) -> dict:
+        """
+        Get info about a sheet
+        :param id: Sheet ID
+        :return: Dictionary with sheet info
+        """
         assert id in self.sheets_data['sheet_id'], \
             f'attempted to access data of undefined sheet "{id}"'
         info = self.sheets_data.row(by_predicate=pl.col('sheet_id') == id, named=True)
@@ -47,11 +69,20 @@ class Actionsheets:
         return info
 
     def sheet_view(self, id: str) -> ActionsheetView:
+        """
+        Create a snippet view for the given sheet
+        :return: View restricted to this sheet
+        """
         assert id in self.snippets_data['sheet_id'], \
             f'attempted to access snippets of undefined sheet "{id}"'
         return ActionsheetView(data=self.snippets_data.filter(pl.col('sheet_id') == id))
 
     def find_sheet(self, query: str) -> str:
+        """
+        Find the best-matching sheet ID for the given query
+        :param query: Search query
+        :return: Sheet ID, or empty string if no matches
+        """
         terms = re.split(r'\s+|,|\.|\|', query)
 
         result = self.sheets_data.with_columns(
@@ -64,6 +95,12 @@ class Actionsheets:
             return ''
 
     def find_snippets(self, query: str, limit: int = 10) -> pl.DataFrame:
+        """
+        Find snippets across sheets
+        :param query: Search query
+        :param limit: Max number of snippets in the result
+        :return: Actionsheets collection of matches. May be empty in case of no matches.
+        """
         terms = re.split(r'\s+|,|\.|\|', query)
         search_pattern = '|'.join(terms)
 
