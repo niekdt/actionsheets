@@ -19,7 +19,7 @@ def test_find_sheet(query: str, result: str):
 @pytest.mark.parametrize('limit', [1, 2, 5, 10])
 def test_find_snippets(limit):
     result = sheets.find_snippets('create', limit=limit)
-    assert result.height == limit
+    assert result.count_snippets() == limit
 
 
 @pytest.mark.parametrize('sheet', ['python.collections.dict', 'python.scalars.datetime'])

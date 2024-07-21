@@ -32,7 +32,27 @@ class Actionsheets:
         Get the total number of sheets
         :return: Number of sheets
         """
-        return len(self.ids())
+        return self.count_sheets()
+
+    def count_sheets(self, parent_id: str = '', nested: bool = True) -> int:
+        """
+        Count the number of sheets under the given parent sheet
+        :param parent_id: Parent sheet ID (optional)
+        :param nested: Whether to count nested sheets
+        :return: Number of sheets
+        """
+        return len(self.ids(parent_id=parent_id, nested=nested))
+
+    def count_snippets(self, parent_id: str = '', nested: bool = True) -> int:
+        """
+        Count the number of snippets under the given parent sheet
+        :param parent_id: Parent sheet ID (optional)
+        :param nested: Whether to count snippets from nested sheets
+        :return: Number of snippets
+        """
+        sheet_ids = self.ids(parent_id=parent_id, nested=nested)
+
+        return self.snippets_data.filter(pl.col('sheet_id').is_in(sheet_ids)).height
 
     def _all_sheet_ids(self, parent_id: str = '') -> list[str]:
         return self.sheets_data.filter(
