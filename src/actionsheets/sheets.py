@@ -114,7 +114,7 @@ class Actionsheets:
         else:
             return ''
 
-    def find_snippets(self, query: str, limit: int = 10) -> pl.DataFrame:
+    def find_snippets(self, query: str, limit: int = 10) -> Self:
         """
         Find snippets across sheets
         :param query: Search query
@@ -125,15 +125,17 @@ class Actionsheets:
         search_pattern = '|'.join(terms)
 
         result = self.snippets_data.with_columns(
-            matches=pl.col('snippet_id').str.count_matches(search_pattern) + pl.col(
-                'sheet_id').str.count_matches(search_pattern)
+            matches=pl.col('snippet_id').str.count_matches(search_pattern) +
+                    pl.col('sheet_id').str.count_matches(search_pattern)
         ).filter(pl.col('matches') > 0)
 
-        return (
+        filtered_data = (
             result.sort('matches', descending=True).
             head(n=limit).
             select(pl.exclude('matches'))
         )
+
+        return Actionsheets(self.sheets_data, filtered_data)
 
     def find_sheet_snippets(self, id: str, query: str, limit: int = 10) -> pl.DataFrame:
         terms = re.split(r'\s+|,|\.|\|', query)
