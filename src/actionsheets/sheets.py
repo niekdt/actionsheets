@@ -11,9 +11,9 @@ from actionsheets import sheet
 
 
 class Actionsheets:
-    def __init__(self, sheets: pl.DataFrame, snippets: pl.DataFrame):
-        self.sheets_data = sheets
-        self.snippets_data = snippets
+    def __init__(self, sheets_data: pl.DataFrame, snippets_data: pl.DataFrame):
+        self.sheets_data = sheets_data
+        self.snippets_data = snippets_data
 
     def ids(self, parent_id: str = '', nested: bool = True) -> list[str]:
         """
@@ -259,7 +259,9 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
             cfg.set_tbl_hide_dataframe_shape(True)
             cfg.set_tbl_hide_column_data_types(True)
             cfg.set_fmt_str_lengths(100)
-            warnings.warn(f'{long_snippets.height} code snippet(s) exceed max width of 80 chars:\n{long_snippets}')
+            warnings.warn(
+                f'{long_snippets.height} code snippet(s) exceed max width of 80 chars:\n{long_snippets}'
+            )
 
     # ensure column order
     col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'snippet_id']
