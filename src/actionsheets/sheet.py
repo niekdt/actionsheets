@@ -21,10 +21,10 @@ class ActionsheetView:
         )['snippet_id'].to_list()
 
     def has_section(self, section: str) -> bool:
-        return section in self.snippets_data.filter(pl.col('type') == 'section')['snippet_id']
+        return section in self.data.filter(pl.col('type') == 'section')['snippet_id']
 
     def has_snippet(self, snippet: str) -> bool:
-        return snippet in self.snippets_data.filter(pl.col('type') == 'action')['snippet_id']
+        return snippet in self.data.filter(pl.col('type') == 'action')['snippet_id']
 
     def section_info(self, section: str) -> dict:
         info = self.data.row(
@@ -37,7 +37,7 @@ class ActionsheetView:
 
     def section_view(self, section: str):
         return ActionsheetView(
-            data=self.snippets_data.filter(pl.col('snippet_id').str.starts_with(section))
+            data=self.data.filter(pl.col('snippet_id').str.starts_with(section))
         )
 
     def section_snippets(self, section: str) -> pl.DataFrame:
