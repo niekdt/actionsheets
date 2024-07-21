@@ -21,6 +21,9 @@ class Actionsheets:
         else:
             return self._child_sheet_ids(parent_id=parent_id)
 
+    def __len__(self) -> int:
+        return len(self.ids())
+
     def _all_sheet_ids(self, parent_id: str = '') -> list[str]:
         return self.sheets_data.filter(
             pl.col('sheet_id').str.starts_with(parent_id)

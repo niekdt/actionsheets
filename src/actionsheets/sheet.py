@@ -15,6 +15,9 @@ class ActionsheetView:
     def __init__(self, data: pl.DataFrame):
         self.data = data
 
+    def __len__(self) -> int:
+        return self.snippets().height
+
     def child_ids(self, type: Literal['section', 'part', 'action'], section: str = '') -> list[str]:
         return self.data.filter(
             (pl.col('parent_section') == section) & (pl.col('type') == type)
