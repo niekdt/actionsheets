@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "actionsheets"
-version = "0.0.5"
+version = "0.0.6"
 description = "Quick-reference sheets defined in terms of a desired action and a code solution"
 authors = ["Niek Den Teuling <niekdt@users.noreply.github.com>"]
 license = "MIT"
@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 polars = "^1.0"
-rich = "^13.7.1"
+rich = "^13.7"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
