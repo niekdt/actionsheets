@@ -24,5 +24,5 @@ def test_find_snippets(limit):
 
 @pytest.mark.parametrize('sheet', ['python.collections.dict', 'python.scalars.datetime'])
 def test_find_sheet_snippets(sheet):
-    result = sheets.find_sheet_snippets(sheet=sheet, query='create')
+    result = sheets.sheet_view(sheet).find_snippets(query='create')
     assert (result['sheet'] == sheet).all()

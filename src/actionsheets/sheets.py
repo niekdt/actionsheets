@@ -141,19 +141,6 @@ class Actionsheets:
 
         return Actionsheets(self.sheets_data, filtered_data)
 
-    def find_sheet_snippets(self, sheet: str, query: str, limit: int = 10) -> pl.DataFrame:
-        terms = re.split(r'\s+|,|\.|\|', query)
-
-        result = self.sheet_view(sheet=sheet).data.with_columns(
-            pl.col('entry').str.count_matches('|'.join(terms)).alias('matches')
-        ).filter(pl.col('matches') > 0)
-
-        return (
-            result.sort('matches', descending=True).
-            head(n=limit).
-            select(pl.exclude('matches'))
-        )
-
 
 def _gather_default_files() -> list[str]:
     data_root = resources.files('actionsheets.data')

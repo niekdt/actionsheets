@@ -1,3 +1,4 @@
+import re
 import tomllib
 from typing import Literal, Self
 
@@ -107,6 +108,25 @@ class ActionsheetView:
         :return: Snippets data
         """
         return self.data.filter(pl.col('type') == 'action')
+
+    def find_snippets(self, query: str, limit: int = 10) -> pl.DataFrame:
+        """
+        Search for snippets
+        :param query: Search query
+        :param limit: Max number of snippets in the result
+        :return: Snippets data for matching snippets. May be empty in case of no matches.
+        """
+        terms = re.split(r'\s+|,|\.|\|', query)
+
+        result = self.data.with_columns(
+            pl.col('entry').str.count_matches('|'.join(terms)).alias('matches')
+        ).filter(pl.col('matches') > 0)
+
+        return (
+            result.sort('matches', descending=True).
+            head(n=limit).
+            select(pl.exclude('matches'))
+        )
 
 
 def parse_toml_file(path) -> tuple[dict, pl.DataFrame]:
