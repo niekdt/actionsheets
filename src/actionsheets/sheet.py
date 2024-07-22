@@ -22,16 +22,16 @@ class ActionsheetView:
         """
         return self.snippets().height
 
-    def child_ids(self, type: Literal['section', 'part', 'action'], section: str = '') -> list[str]:
+    def entries(self, type: Literal['section', 'part', 'action'], section: str = '') -> list[str]:
         """
-        Get the IDs of all regions belonging to the given section
-        :param type: Child type
+        Get the IDs of all entries belonging to the given section
+        :param type: Entry type
         :param section: Parent section (optional)
         :return: List of IDs
         """
         return self.data.filter(
-            (pl.col('parent_section') == section) & (pl.col('type') == type)
-        )['snippet_id'].to_list()
+            (pl.col('parent_entry') == section) & (pl.col('type') == type)
+        )['entry'].to_list()
 
     def has_section(self, section: str) -> bool:
         """
@@ -39,7 +39,7 @@ class ActionsheetView:
         :param section: Section ID
         :return: Whether the section exists
         """
-        return section in self.data.filter(pl.col('type') == 'section')['snippet_id']
+        return section in self.data.filter(pl.col('type') == 'section')['entry']
 
     def has_snippet(self, snippet: str) -> bool:
         """
@@ -47,7 +47,7 @@ class ActionsheetView:
         :param snippet: Snippet ID
         :return: Whether the snippet exists in the view
         """
-        return snippet in self.data.filter(pl.col('type') == 'action')['snippet_id']
+        return snippet in self.data.filter(pl.col('type') == 'action')['entry']
 
     def section_info(self, section: str) -> dict:
         """
@@ -56,7 +56,7 @@ class ActionsheetView:
         :return: Dictionary with info
         """
         info = self.data.row(
-            by_predicate=(pl.col('type') == 'section') & (pl.col('snippet_id') == section),
+            by_predicate=(pl.col('type') == 'section') & (pl.col('entry') == section),
             named=True
         )
 
@@ -70,7 +70,7 @@ class ActionsheetView:
         :return: The filtered view
         """
         return ActionsheetView(
-            data=self.data.filter(pl.col('snippet_id').str.starts_with(section))
+            data=self.data.filter(pl.col('entry').str.starts_with(section))
         )
 
     def section_snippets(self, section: str) -> pl.DataFrame:
@@ -79,7 +79,7 @@ class ActionsheetView:
         :param section: Section ID
         :return: Snippets data
         """
-        return self.snippets().filter(pl.col('parent_section') == section)
+        return self.snippets().filter(pl.col('parent_entry') == section)
 
     def snippets(self) -> pl.DataFrame:
         """
@@ -163,11 +163,11 @@ def _process_entries(
     for entry_name in entries:
         entry_id = id + '.' + entry_name if id else entry_name
         entry_dict = _process_entry(
-            content=content[entry_name],
+            data=content[entry_name],
             name=entry_name,
             id=entry_id,
-            parent_entry=parent_entry,
-            parent_section=parent_section
+            parent_data=parent_entry,
+            parent_entry=parent_section
         )
 
         df2 = _process_entries(
@@ -187,16 +187,16 @@ def _get_entries(content: dict) -> list[str]:
 
 
 def _process_entry(
-        content: dict,
+        data: dict,
         name: str,
         id: str,
-        parent_entry: dict,
-        parent_section: str
+        parent_data: dict,
+        parent_entry: str
 ) -> dict:
     for k in reserved_keys:
-        assert k not in content, f'reserved field "{k}" used in entry {id}'
+        assert k not in data, f'reserved field "{k}" used in entry {id}'
 
-    entry_dict = {k: content[k] for k in content.keys() if k in entry_keys}
+    entry_dict = {k: data[k] for k in data.keys() if k in entry_keys}
 
     is_virtual = len(entry_dict) == 0
     is_section = 'section' in entry_dict
@@ -207,13 +207,13 @@ def _process_entry(
         f'entry {id} is ambiguous; invalid set of fields: {", ".join(entry_dict)}'
     assert is_solution ^ (is_section or is_action or is_virtual)
 
-    entry_dict['snippet_id'] = id
-    entry_dict['parent_section'] = parent_section
+    entry_dict['entry'] = id
+    entry_dict['parent_entry'] = parent_entry
 
     if is_action:
         return _process_action(entry_dict, name=name, id=id)
     elif is_solution:
-        return _process_solution(entry_dict, name=name, id=id, parent_entry=parent_entry)
+        return _process_solution(entry_dict, name=name, id=id, parent_entry=parent_data)
     elif is_section:
         return _process_section(entry_dict, name=name, id=id)
     elif is_virtual:

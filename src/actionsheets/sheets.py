@@ -15,17 +15,17 @@ class Actionsheets:
         self.sheets_data = sheets_data
         self.snippets_data = snippets_data
 
-    def ids(self, parent_id: str = '', nested: bool = True) -> list[str]:
+    def sheets(self, parent: str = '', nested: bool = True) -> list[str]:
         """
-        Get the defined sheets for the given parent (or root)
-        :param parent_id: Sheet ID
+        Get the sheet IDs belonging to the given parent sheet (or root)
+        :param parent: Sheet ID
         :param nested: Whether to include nested children in the list
         :return: List of sheet IDs
         """
         if nested:
-            return self._all_sheet_ids(parent_id=parent_id)
+            return self._all_sheet_ids(parent=parent)
         else:
-            return self._child_sheet_ids(parent_id=parent_id)
+            return self._child_sheet_ids(parent=parent)
 
     def __len__(self) -> int:
         """
@@ -34,68 +34,70 @@ class Actionsheets:
         """
         return self.count_sheets()
 
-    def count_sheets(self, parent_id: str = '', nested: bool = True) -> int:
+    def count_sheets(self, parent: str = '', nested: bool = True) -> int:
         """
         Count the number of sheets under the given parent sheet
-        :param parent_id: Parent sheet ID (optional)
+        :param parent: Parent sheet ID (optional)
         :param nested: Whether to count nested sheets
         :return: Number of sheets
         """
-        return len(self.ids(parent_id=parent_id, nested=nested))
+        return len(self.sheets(parent=parent, nested=nested))
 
-    def count_snippets(self, parent_id: str = '', nested: bool = True) -> int:
+    def count_snippets(self, parent: str = '', nested: bool = True) -> int:
         """
         Count the number of snippets under the given parent sheet
-        :param parent_id: Parent sheet ID (optional)
+        :param parent: Parent sheet ID (optional)
         :param nested: Whether to count snippets from nested sheets
         :return: Number of snippets
         """
-        sheet_ids = self.ids(parent_id=parent_id, nested=nested)
+        sheet_ids = self.sheets(parent=parent, nested=nested)
 
-        return self.snippets_data.filter(pl.col('sheet_id').is_in(sheet_ids)).height
+        return self.snippets_data.filter(
+            pl.col('sheet').is_in(sheet_ids)
+        ).height
 
-    def _all_sheet_ids(self, parent_id: str = '') -> list[str]:
+    def _all_sheet_ids(self, parent: str = '') -> list[str]:
         return self.sheets_data.filter(
-            pl.col('sheet_id').str.starts_with(parent_id)
-        )['sheet_id'].to_list()
+            pl.col('sheet').str.starts_with(parent)
+        )['sheet'].to_list()
 
-    def _child_sheet_ids(self, parent_id: str = '') -> list[str]:
+    def _child_sheet_ids(self, parent: str = '') -> list[str]:
         return self.sheets_data.filter(
-            pl.col('sheet_parent') == parent_id
-        )['sheet_id'].to_list()
+            pl.col('sheet_parent') == parent
+        )['sheet'].to_list()
 
-    def has_sheet(self, id: str, parent_id: str = '', nested: bool = True):
+    def has_sheet(self, sheet: str, parent: str = '', nested: bool = True):
         """
         Check whether the sheet is defined
-        :param id: Sheet ID
-        :param parent_id: Parent sheet ID (optional)
+        :param sheet: Sheet ID
+        :param parent: Parent sheet ID (optional)
         :param nested: Whether to search for nested sheets
         :return: Whether the sheet is defined
         """
-        return id in self.ids(parent_id=parent_id, nested=nested)
+        return sheet in self.sheets(parent=parent, nested=nested)
 
-    def sheet_info(self, id: str) -> dict:
+    def sheet_info(self, sheet: str) -> dict:
         """
         Get info about a sheet
-        :param id: Sheet ID
+        :param sheet: Sheet ID
         :return: Dictionary with sheet info
         """
-        assert id in self.sheets_data['sheet_id'], \
-            f'attempted to access data of undefined sheet "{id}"'
-        info = self.sheets_data.row(by_predicate=pl.col('sheet_id') == id, named=True)
+        assert sheet in self.sheets_data['sheet'], \
+            f'attempted to access data of undefined sheet "{sheet}"'
+        info = self.sheets_data.row(by_predicate=pl.col('sheet') == sheet, named=True)
 
-        info['parents'] = id.split(sep='.')[:-1]
+        info['parents'] = sheet.split(sep='.')[:-1]
 
         return info
 
-    def sheet_view(self, id: str) -> ActionsheetView:
+    def sheet_view(self, sheet: str) -> ActionsheetView:
         """
         Create a snippet view for the given sheet
         :return: View restricted to this sheet
         """
-        assert id in self.snippets_data['sheet_id'], \
-            f'attempted to access snippets of undefined sheet "{id}"'
-        return ActionsheetView(data=self.snippets_data.filter(pl.col('sheet_id') == id))
+        assert sheet in self.snippets_data['sheet'], \
+            f'attempted to access snippets of undefined sheet "{sheet}"'
+        return ActionsheetView(data=self.snippets_data.filter(pl.col('sheet') == sheet))
 
     def find_sheet(self, query: str) -> str:
         """
@@ -106,11 +108,11 @@ class Actionsheets:
         terms = re.split(r'\s+|,|\.|\|', query)
 
         result = self.sheets_data.with_columns(
-            matches=pl.col('sheet_id').str.count_matches('|'.join(terms))
+            pl.col('sheet').str.count_matches('|'.join(terms)).alias('matches')
         ).filter(pl.col('matches') > 0)
 
         if result.height:
-            return result.sort('matches', descending=True).head(n=1)[0, 'sheet_id']
+            return result.sort('matches', descending=True).head(n=1)[0, 'sheet']
         else:
             return ''
 
@@ -125,8 +127,10 @@ class Actionsheets:
         search_pattern = '|'.join(terms)
 
         result = self.snippets_data.with_columns(
-            matches=pl.col('snippet_id').str.count_matches(search_pattern) +
-                    pl.col('sheet_id').str.count_matches(search_pattern)
+            (
+                    pl.col('entry').str.count_matches(search_pattern) +
+                    pl.col('sheet').str.count_matches(search_pattern)
+            ).alias('matches')
         ).filter(pl.col('matches') > 0)
 
         filtered_data = (
@@ -137,11 +141,11 @@ class Actionsheets:
 
         return Actionsheets(self.sheets_data, filtered_data)
 
-    def find_sheet_snippets(self, id: str, query: str, limit: int = 10) -> pl.DataFrame:
+    def find_sheet_snippets(self, sheet: str, query: str, limit: int = 10) -> pl.DataFrame:
         terms = re.split(r'\s+|,|\.|\|', query)
 
-        result = self.sheet_view(id=id).data.with_columns(
-            matches=pl.col('snippet_id').str.count_matches('|'.join(terms))
+        result = self.sheet_view(sheet=sheet).data.with_columns(
+            pl.col('entry').str.count_matches('|'.join(terms)).alias('matches')
         ).filter(pl.col('matches') > 0)
 
         return (
@@ -199,15 +203,16 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
 
     # Generate IDs
     sheets = sheets.with_columns(
-        sheet_id=pl.when(pl.col('sheet_parent') == '').
+        pl.when(pl.col('sheet_parent') == '').
         then(pl.col('sheet_name')).
-        otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
+        otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name')).
+        alias('sheet')
     )
 
     # Check for missing parent topics
     missing_sheet_names = (
         sheets['sheet_parent'].
-        filter(sheets['sheet_parent'].is_in(sheets['sheet_id']).not_()).
+        filter(sheets['sheet_parent'].is_in(sheets['sheet']).not_()).
         replace('', None).
         drop_nulls()
     )
@@ -218,32 +223,34 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
     sheets = sheets.with_columns(
         pl.col('description').fill_null(''),
         pl.col('details').fill_null(''),
-        depth=pl.col('sheet_id').str.count_matches('\.')
+        pl.col('sheet').str.count_matches(r'\.').alias('depth')
     )
 
     # Set column order
-    col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'language']
+    col_order = ['sheet', 'sheet_parent', 'sheet_name', 'language']
     return sheets.select(pl.col(col_order), pl.exclude(col_order))
 
 
 def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
     # compute derived columns
     snippets_data = snippets_data.with_columns(
-        pl.col('title').fill_null(pl.col('snippet_id')),
+        pl.col('title').fill_null(pl.col('entry')),
         pl.col('details').fill_null('').str.strip_chars_end(),
         pl.col('description').fill_null('').str.strip_chars_end(),
-        depth=pl.col('snippet_id').str.count_matches('.', literal=True),
-        sheet_id=pl.when(pl.col('sheet_parent') == '').
-        then(pl.col('sheet_name')).
-        otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
+        pl.col('entry').str.count_matches('.', literal=True).alias('depth'),
+        (
+            pl.when(pl.col('sheet_parent') == '').
+            then(pl.col('sheet_name')).
+            otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
+        ).alias('sheet')
     )
 
     # check for code exceeding 80 chars
     long_snippets = (
         snippets_data.
         select(
-            pl.col('sheet_id'),
-            pl.col('snippet_id'),
+            pl.col('sheet'),
+            pl.col('entry'),
             pl.col('code').str.split(by='\n').alias('code_lines')
         ).
         drop_nulls(subset='code_lines').
@@ -264,7 +271,7 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
             )
 
     # ensure column order
-    col_order = ['sheet_id', 'sheet_parent', 'sheet_name', 'snippet_id']
+    col_order = ['sheet', 'sheet_parent', 'sheet_name', 'entry']
     return snippets_data.select(pl.col(col_order), pl.exclude(col_order))
 
 

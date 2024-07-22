@@ -32,7 +32,7 @@ def print_snippets(snippets: pl.DataFrame, limit=10):
 
 @group()
 def _render_sheets(sheets: Actionsheets, parent_id: str) -> RenderResult:
-    for sheet_id in sheets.ids(parent_id=parent_id, nested=False):
+    for sheet_id in sheets.sheets(parent=parent_id, nested=False):
         sheet_render = _render_sheet(sheets, id=sheet_id)
         sheets_render = _render_sheets(sheets, parent_id=sheet_id)
         yield Group(sheet_render, sheets_render)
@@ -40,8 +40,8 @@ def _render_sheets(sheets: Actionsheets, parent_id: str) -> RenderResult:
 
 @group()
 def _render_sheet(sheets: Actionsheets, id: str) -> RenderResult:
-    info = sheets.sheet_info(id=id)
-    view = sheets.sheet_view(id=id)
+    info = sheets.sheet_info(sheet=id)
+    view = sheets.sheet_view(sheet=id)
 
     sheet_path = ' > '.join([v.capitalize() for v in info['sheet_id'].split('.')])
 
@@ -73,7 +73,7 @@ def _render_sheet(sheets: Actionsheets, id: str) -> RenderResult:
 
 @group()
 def _render_sections(view: ActionsheetView, section: str) -> RenderResult:
-    for section_id in view.child_ids(section=section, type='section'):
+    for section_id in view.entries(section=section, type='section'):
         yield _render_section(view, section=section_id)
 
 
