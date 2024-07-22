@@ -73,7 +73,7 @@ def _render_sheet(sheets: Actionsheets, id: str) -> RenderResult:
 
 @group()
 def _render_sections(view: ActionsheetView, section: str) -> RenderResult:
-    for section_id in view.entries(section=section, type='section'):
+    for section_id in view.entries(parent=section, type='section'):
         yield _render_section(view, section=section_id)
 
 

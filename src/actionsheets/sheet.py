@@ -22,16 +22,36 @@ class ActionsheetView:
         """
         return self.snippets().height
 
-    def entries(self, type: Literal['section', 'part', 'action'], section: str = '') -> list[str]:
+    def entries(
+            self,
+            type: Literal['section', 'part', 'action'],
+            parent: str = '',
+            nested: bool = True
+    ) -> list[str]:
         """
         Get the IDs of all entries belonging to the given section
         :param type: Entry type
-        :param section: Parent section (optional)
+        :param parent: Parent entry (optional)
+        :param nested: Whether to include nested entries
         :return: List of IDs
         """
-        return self.data.filter(
-            (pl.col('parent_entry') == section) & (pl.col('type') == type)
-        )['entry'].to_list()
+        if nested:
+            return self.data.filter(
+                (pl.col('parent_entry').str.starts_with(parent)) & (pl.col('type') == type)
+            )['entry'].to_list()
+        else:
+            return self.data.filter(
+                (pl.col('parent_entry') == parent) & (pl.col('type') == type)
+            )['entry'].to_list()
+
+    def count_snippets(self, parent: str = '', nested: bool = True) -> int:
+        """
+        Count the number of snippets under the given parent entry
+        :param parent: Parent entry ID (optional)
+        :param nested: Whether to count snippets of nested entries
+        :return: Number of snippets
+        """
+        return len(self.entries(type='action', parent=parent, nested=nested))
 
     def has_section(self, section: str) -> bool:
         """
