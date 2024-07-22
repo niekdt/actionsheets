@@ -79,6 +79,11 @@ code = "poetry self update"
 what = "Update all packages"
 code = "poetry update"
 
+[update.pkg.all.ssh]
+what = "Update all packages, including packages from (private) Git-SSH repositories with passphrase"
+code = "poetry update -vv"
+details = "Without the `-vv` option, poetry runs forever if a password is required for the SSH key"
+
 [update.pkg]
 what = "Update specific package(s)"
 code = "poetry update $pkg1 $pkg2"
