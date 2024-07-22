@@ -53,7 +53,7 @@ class Actionsheets:
         sheet_ids = self.sheets(parent=parent, nested=nested)
 
         return self.snippets_data.filter(
-            pl.col('sheet').is_in(sheet_ids)
+            (pl.col('sheet').is_in(sheet_ids)) & (pl.col('type') == 'action')
         ).height
 
     def _all_sheet_ids(self, parent: str = '') -> list[str]:
@@ -126,7 +126,7 @@ class Actionsheets:
         terms = re.split(r'\s+|,|\.|\|', query)
         search_pattern = '|'.join(terms)
 
-        result = self.snippets_data.with_columns(
+        result = self.snippets_data.filter(pl.col('type') == 'action').with_columns(
             (
                     pl.col('entry').str.count_matches(search_pattern) +
                     pl.col('sheet').str.count_matches(search_pattern)
