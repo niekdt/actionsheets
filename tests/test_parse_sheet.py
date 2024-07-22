@@ -11,7 +11,7 @@ def find_toml_files() -> list[str]:
 
 @pytest.mark.parametrize('file', find_toml_files())
 def test_parse_toml_file(file: str):
-    sheet_info, snippets_data = sheet.parse_toml(file)
+    sheet_info, snippets_data = sheet.parse_toml_file(file)
 
     assert type(sheet_info) is dict
     assert 'name' in sheet_info

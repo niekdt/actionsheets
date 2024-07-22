@@ -174,7 +174,7 @@ def parse_toml(files: list[str]) -> Actionsheets:
     sheet_data_list = []
     for file in files:
         print(f'Parsing file {file}...')
-        sheet_info, snippets_data = sheet.parse_toml(file)
+        sheet_info, snippets_data = sheet.parse_toml_file(file)
         print(f'Parsed topic: {sheet_info["name"]}')
 
         sheet_info_list.append(sheet_info)

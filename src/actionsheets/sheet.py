@@ -51,7 +51,7 @@ class ActionsheetView:
 
     def section_info(self, section: str) -> dict:
         """
-        Get meta data about a section
+        Get metadata about a section
         :param section: Section ID
         :return: Dictionary with info
         """
@@ -89,7 +89,7 @@ class ActionsheetView:
         return self.data.filter(pl.col('type') == 'action')
 
 
-def parse_toml(path) -> tuple[dict, pl.DataFrame]:
+def parse_toml_file(path) -> tuple[dict, pl.DataFrame]:
     """
     Parse an actionsheet TOML file
     :param path: The path to open
@@ -97,45 +97,53 @@ def parse_toml(path) -> tuple[dict, pl.DataFrame]:
     """
     with open(path) as file:
         file_content = file.read()
-        content = tomllib.loads(file_content)
+        return parse_toml(content=file_content, content_id=path)
 
-    assert content, f'{path} has no content'
+
+def parse_toml(content: str, content_id: str) -> tuple[dict, pl.DataFrame]:
+    """
+    Parse an actionsheet TOML string
+    :param content: The TOML content to parse
+    :param content_id: Identifier for this content in source reporting
+    :return: Processed action sheet info and data
+    """
+    data = tomllib.loads(content)
+
+    assert data, f'{content_id} has no TOML content'
 
     # Process header content
-    sheet_info = _process_header(content, path)
-
-    sheet_name = sheet_info['name']
+    sheet_info = _process_header(data=data, content_id=content_id)
 
     # Process sections & snippets
-    df = _process_body(content, name=sheet_name, id='').with_columns(
+    sheet_data = _process_body(data, name=sheet_info['name'], id='').with_columns(
         pl.lit(sheet_info['name']).alias('sheet_name'),
         pl.lit(sheet_info['parent']).alias('sheet_parent'),
         pl.lit(sheet_info['language']).alias('language')
     )
 
-    return sheet_info, df
+    return sheet_info, sheet_data
 
 
-def _process_header(content: dict, path) -> dict:
-    assert 'name' in content, f'{path}: no name defined'
-    assert_name(content['name'], path)
+def _process_header(data: dict, content_id: str) -> dict:
+    assert 'name' in data, f'{content_id}: no name defined'
+    assert_name(data['name'], content_id)
 
-    assert 'parent' in content, f'no parent defined'
-    assert isinstance(content['parent'], str), f'parent must be str'
+    assert 'parent' in data, f'no parent defined'
+    assert isinstance(data['parent'], str), f'parent must be str'
 
-    assert 'language' in content, f'no language defined'
-    assert isinstance(content['language'], str), f'language must be str'
-    assert content['language'], f'language is empty'
+    assert 'language' in data, f'no language defined'
+    assert isinstance(data['language'], str), f'language must be str'
+    assert data['language'], f'language is empty'
 
-    assert 'title' in content, f'no title defined'
-    assert isinstance(content['title'], str), f'title must be str'
-    assert content['title'], f'title is empty'
+    assert 'title' in data, f'no title defined'
+    assert isinstance(data['title'], str), f'title must be str'
+    assert data['title'], f'title is empty'
 
-    assert 'description' not in content or isinstance(content['description'], str), \
+    assert 'description' not in data or isinstance(data['description'], str), \
         f'description must be str'
-    assert 'details' not in content or isinstance(content['details'], str), f'details must be str'
+    assert 'details' not in data or isinstance(data['details'], str), f'details must be str'
 
-    sheet_info = {k: content[k] for k in content.keys() if k in header_keys}
+    sheet_info = {k: data[k] for k in data.keys() if k in header_keys}
     return sheet_info
 
 
