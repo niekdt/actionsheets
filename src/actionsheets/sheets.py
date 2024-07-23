@@ -99,6 +99,14 @@ class Actionsheets:
             data=self.snippets_data.filter(pl.col('sheet') == sheet)
         )
 
+    def filter(self, sheet: str) -> Self:
+        sheets = self.sheets(parent=sheet) + [sheet]
+
+        return Actionsheets(
+            sheets_data=self.sheets_data.filter(pl.col('sheet').is_in(sheets)),
+            snippets_data=self.snippets_data.filter(pl.col('sheet').is_in(sheets))
+        )
+
     def find_sheet(self, query: str) -> str:
         """
         Find the best-matching sheet ID for the given query

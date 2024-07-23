@@ -4,6 +4,23 @@ from actionsheets.sheets import default_sheets
 sheets = default_sheets()
 
 
+def test_filter():
+    py_sheets = sheets.filter('python')
+    assert not py_sheets.has_sheet('r')
+    assert py_sheets.has_sheet('python')
+    assert py_sheets.has_sheet('python.collections')
+
+    py_sheets = sheets.filter('python.collections')
+    assert py_sheets.has_sheet('python.collections')
+    assert py_sheets.has_sheet('python.collections.dict')
+    assert not py_sheets.has_sheet('python')
+    assert not py_sheets.has_sheet('r')
+
+    r_sheets = sheets.filter('r')
+    assert not r_sheets.has_sheet('python')
+    assert r_sheets.has_sheet('r')
+
+
 @pytest.mark.parametrize('query,result', [
     ('datetime', 'python.scalars.datetime'),
     ('dataframe', 'python.pandas.dataframe'),
