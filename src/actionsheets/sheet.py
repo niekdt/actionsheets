@@ -157,6 +157,16 @@ class ActionsheetView:
         )
 
     @staticmethod
+    def get_parent(entry: str) -> str:
+        """
+        Get the parent ID for the given entry
+        :param entry: Entry ID
+        :return: Parent entry ID, or '' if no parent
+        """
+        parent_names = entry.split(sep='.')[:-1]
+        return '.'.join(parent_names)
+
+    @staticmethod
     def get_parents(entry: str) -> list[str]:
         """
         Get a list of parent IDs for the given entry, up to the root
