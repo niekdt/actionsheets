@@ -65,7 +65,7 @@ class Actionsheets:
             pl.col('sheet_parent') == parent
         )['sheet'].to_list()
 
-    def has_sheet(self, sheet: str, parent: str = '', nested: bool = True):
+    def has_sheet(self, sheet: str, parent: str = '', nested: bool = True) -> bool:
         """
         Check whether the sheet is defined
         :param sheet: Sheet ID
@@ -94,9 +94,6 @@ class Actionsheets:
         Create an actionsheet view for the given sheet
         :return: View restricted to this sheet
         """
-        assert sheet in self.snippets_data['sheet'], \
-            f'attempted to access snippets of undefined sheet "{sheet}"'
-
         return ActionsheetView(
             info=self.sheet_info(sheet),
             data=self.snippets_data.filter(pl.col('sheet') == sheet)
