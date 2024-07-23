@@ -53,6 +53,13 @@ details = "Considerably faster than list comprehension"
 what = "Sample _n_ random numbers between [ _a_, _b_ ) w/o replacement"
 code = "random.sample(range(a, b), n)"
 
+[create.lists.iter]
+what = "From different lists, generated dynamically by iterating over a list-generating function"
+code = """
+list(itertools.chain.from_iterable(
+    [generate_my_list(e) for e in entries]
+))
+"""
 
 [test]
 section = "Test"
