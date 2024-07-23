@@ -1,4 +1,18 @@
-from actionsheets.sheet import parse_toml
+import pytest
+
+from actionsheets.sheet import parse_toml, ActionsheetView
+
+
+@pytest.mark.parametrize('entry,result', [
+    ('a', set()),
+    ('a.b', {'a'}),
+    ('a.b.c', {'a', 'a.b'}),
+    ('a.b.c.d', {'a', 'a.b', 'a.b.c'}),
+    ('create.list.join.str', {'create', 'create.list', 'create.list.join'}),
+])
+def test_get_parents(entry: str, result: set[str]):
+    assert set(ActionsheetView.get_parents(entry)) == result
+
 
 header = """
 language = "python"
@@ -173,16 +187,28 @@ def test_alt_sheet():
     assert sheet.count_snippets() == 8
 
 
+main_sheet = parse_toml(alt_sheet)
+
+
+@pytest.mark.parametrize('entries,result', [
+    (['create'], {'create'}),
+    (['create.empty'], {'create', 'create.empty'}),
+    (['create', 'create.empty'], {'create', 'create.empty'}),
+    (['create.empty', 'create.string'], {'create', 'create.empty', 'create.string'}),
+    (['create.empty', 'test.empty'], {'create', 'create.empty', 'test', 'test.empty'}),
+])
+def test_filter_view(entries: list[str], result: set[str]):
+    assert set(main_sheet.filter_view(entries=entries).data['entry'].to_list()) == result
+
+
 def test_find_snippets():
-    sheet = parse_toml(alt_sheet)
+    assert main_sheet.find_snippets(query='antidisestablishmentarianism').height == 0
 
-    assert sheet.find_snippets(query='antidisestablishmentarianism').height == 0
-
-    assert sheet.find_snippets(query='create')['entry'].to_list() == [
+    assert main_sheet.find_snippets(query='create')['entry'].to_list() == [
         'create.empty', 'create.string', 'create.int'
     ]
 
-    assert sheet.find_snippets(query='empty')['entry'].to_list() == [
+    assert main_sheet.find_snippets(query='empty')['entry'].to_list() == [
         'create.empty', 'test.empty'
     ]
 

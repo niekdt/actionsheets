@@ -1,3 +1,4 @@
+import itertools
 import re
 import tomllib
 from functools import reduce
@@ -86,6 +87,30 @@ class ActionsheetView:
         info['parents'] = section.split(sep='.')[:-1]
         return info
 
+    def filter_view(self, entries: list[str]) -> Self:
+        """
+        Get a filtered view comprising the given entries, and all of their parents
+        :param entries: List of entry IDs to include in the reduced view
+        :return: The filtered view
+        """
+        all_parents = set(itertools.chain.from_iterable(
+            [self.get_parents(e) for e in entries]
+        ))
+        print(all_parents)
+
+        df_parents = self.data.filter(
+            pl.col('entry').is_in(all_parents)
+        )
+        df_entries = self.data.filter(
+            pl.col('entry').is_in(entries)
+        )
+        filtered_data = pl.DataFrame.vstack(
+            df_parents,
+            df_entries
+        ).unique(subset='entry')
+
+        return ActionsheetView(info=self.info, data=filtered_data)
+
     def section_view(self, section: str) -> Self:
         """
         Get a filtered view comprising only the children of a given section
@@ -93,6 +118,7 @@ class ActionsheetView:
         :return: The filtered view
         """
         return ActionsheetView(
+            info=self.info,
             data=self.data.filter(pl.col('entry').str.starts_with(section))
         )
 
@@ -128,6 +154,20 @@ class ActionsheetView:
             result.sort('matches', descending=True).
             head(n=limit).
             select(pl.exclude('matches'))
+        )
+
+    @staticmethod
+    def get_parents(entry: str) -> list[str]:
+        """
+        Get a list of parent IDs for the given entry, up to the root
+        :param entry: Entry ID
+        :return: List of parent entry IDs
+        """
+        parent_names = entry.split(sep='.')[:-1]
+        return reduce(
+            lambda path, p: path + [path[-1] + '.' + p] if path else [p],
+            parent_names,
+            []
         )
 
 
