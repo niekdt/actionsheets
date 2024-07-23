@@ -1,5 +1,6 @@
 import re
 import tomllib
+from functools import reduce
 from typing import Literal, Self
 
 import polars as pl
@@ -13,7 +14,8 @@ reserved_keys = ('name', 'id', 'depth')
 
 
 class ActionsheetView:
-    def __init__(self, data: pl.DataFrame):
+    def __init__(self, info: dict, data: pl.DataFrame):
+        self.info = info
         self.data = data
 
     def __len__(self) -> int:
@@ -86,7 +88,7 @@ class ActionsheetView:
 
     def section_view(self, section: str) -> Self:
         """
-        Get a view for the children of a section
+        Get a filtered view comprising only the children of a given section
         :param section: Section ID
         :return: The filtered view
         """
@@ -129,7 +131,7 @@ class ActionsheetView:
         )
 
 
-def parse_toml_file(path) -> tuple[dict, pl.DataFrame]:
+def parse_toml_file(path) -> ActionsheetView:
     """
     Parse an actionsheet TOML file
     :param path: The path to open
@@ -140,7 +142,7 @@ def parse_toml_file(path) -> tuple[dict, pl.DataFrame]:
         return parse_toml(content=file_content, content_id=path)
 
 
-def parse_toml(content: str, content_id: str) -> tuple[dict, pl.DataFrame]:
+def parse_toml(content: str, content_id: str = 'undefined') -> ActionsheetView:
     """
     Parse an actionsheet TOML string
     :param content: The TOML content to parse
@@ -161,7 +163,7 @@ def parse_toml(content: str, content_id: str) -> tuple[dict, pl.DataFrame]:
         pl.lit(sheet_info['language']).alias('language')
     )
 
-    return sheet_info, sheet_data
+    return ActionsheetView(info=sheet_info, data=sheet_data)
 
 
 def _process_header(data: dict, content_id: str) -> dict:

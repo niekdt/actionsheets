@@ -2,7 +2,7 @@ import pytest
 import glob
 import polars as pl
 
-from actionsheets import sheet
+from actionsheets.sheet import parse_toml_file
 
 
 def find_toml_files() -> list[str]:
@@ -11,12 +11,12 @@ def find_toml_files() -> list[str]:
 
 @pytest.mark.parametrize('file', find_toml_files())
 def test_parse_toml_file(file: str):
-    sheet_info, snippets_data = sheet.parse_toml_file(file)
+    sheet = parse_toml_file(file)
 
-    assert type(sheet_info) is dict
-    assert 'name' in sheet_info
-    assert 'title' in sheet_info
-    assert 'language' in sheet_info
+    assert type(sheet.info) is dict
+    assert 'name' in sheet.info
+    assert 'title' in sheet.info
+    assert 'language' in sheet.info
 
-    assert type(snippets_data) is pl.DataFrame
-    assert snippets_data.height > 0
+    assert type(sheet.data) is pl.DataFrame
+    assert sheet.data.height > 0

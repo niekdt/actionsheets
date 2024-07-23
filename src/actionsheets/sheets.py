@@ -6,8 +6,7 @@ from typing import Iterator, Self
 import polars as pl
 import re
 
-from actionsheets.sheet import ActionsheetView
-from actionsheets import sheet
+from actionsheets.sheet import ActionsheetView, parse_toml_file
 
 
 class Actionsheets:
@@ -92,12 +91,16 @@ class Actionsheets:
 
     def sheet_view(self, sheet: str) -> ActionsheetView:
         """
-        Create a snippet view for the given sheet
+        Create an actionsheet view for the given sheet
         :return: View restricted to this sheet
         """
         assert sheet in self.snippets_data['sheet'], \
             f'attempted to access snippets of undefined sheet "{sheet}"'
-        return ActionsheetView(data=self.snippets_data.filter(pl.col('sheet') == sheet))
+
+        return ActionsheetView(
+            info=self.sheet_info(sheet),
+            data=self.snippets_data.filter(pl.col('sheet') == sheet)
+        )
 
     def find_sheet(self, query: str) -> str:
         """
@@ -160,16 +163,16 @@ def _gather_default_files() -> list[str]:
     return files
 
 
-def parse_toml(files: list[str]) -> Actionsheets:
+def parse_toml_files(files: list[str]) -> Actionsheets:
     sheet_info_list = []
     sheet_data_list = []
     for file in files:
         print(f'Parsing file {file}...')
-        sheet_info, snippets_data = sheet.parse_toml_file(file)
-        print(f'Parsed topic: {sheet_info["name"]}')
+        sheet = parse_toml_file(file)
+        print(f'Parsed topic: {sheet.info["name"]}')
 
-        sheet_info_list.append(sheet_info)
-        sheet_data_list.append(snippets_data)
+        sheet_info_list.append(sheet.info)
+        sheet_data_list.append(sheet.data)
 
     return _process_sheet_list(sheet_info_list, sheet_data_list)
 
@@ -270,7 +273,7 @@ def default_sheets() -> Actionsheets:
 
     if _default_sheets is None:
         files = _gather_default_files()
-        _default_sheets = parse_toml(files)
+        _default_sheets = parse_toml_files(files)
 
     return _default_sheets
 
