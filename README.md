@@ -27,7 +27,7 @@ This makes it very easy to define a hierarchy of code snippets in a readable way
 Defining a code snippet belonging to the _Create_ section of the respective actionsheet file is as simple as:
 ```toml
 [create.list]
-what = "Define a list"
+action = "Define a list"
 code = "x = ['apple', 'pear', 'banana']"
 details = "You can define as many items as you like"
 ```
