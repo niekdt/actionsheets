@@ -9,16 +9,16 @@ section = "Sourcing"
 description = "Running an R script"
 
 [source.file]
-what = "Run R script file"
+action = "Run R script file"
 code = "source('file.R')"
 
 [source.file.path]
-what = "Get sourced file from within script"
+action = "Get sourced file from within script"
 code = "as.character(sys.call(1))[2]"
 details = "Does not work during start-up!"
 
 [source.file.dir]
-what = "Get sourced directory from within script"
+action = "Get sourced directory from within script"
 code = "dirname(as.character(sys.call(1))[2])"
 
 
@@ -26,19 +26,19 @@ code = "dirname(as.character(sys.call(1))[2])"
 section = "Options"
 
 [options.error.debug]
-what = "Enable debug (browse) on error"
+action = "Enable debug (browse) on error"
 code = "options(error=recover)"
 
 [options.warn.error]
-what = "Treat warnings as errors"
+action = "Treat warnings as errors"
 code = "options(warn=2)"
 
 [options.traceback]
-what = "More concise (readable) traceback"
+action = "More concise (readable) traceback"
 code = "options(error=function() traceback(max.lines=3))"
 
 [options.scipen]
-what = "Disable scientific notation"
+action = "Disable scientific notation"
 code = "options(scipen=999)"
 
 
@@ -46,7 +46,7 @@ code = "options(scipen=999)"
 section = "Version checks"
 
 [version.gte]
-what = "Run code conditional on R version being later or equal than the given version number"
+action = "Run code conditional on R version being later or equal than the given version number"
 code = "if (compareVersion(paste(version$major, version$minor, sep='.'), '3.6.0') >= 0)"
 
 
@@ -54,7 +54,7 @@ code = "if (compareVersion(paste(version$major, version$minor, sep='.'), '3.6.0'
 section = "Random number generation"
 
 [rng.legacy]
-what = "Use legacy RNG (R<3.6) for newer R versions"
+action = "Use legacy RNG (R<3.6) for newer R versions"
 code = """
 if (compareVersion(
     paste(version$major, version$minor, sep='.'),
@@ -70,52 +70,52 @@ details = "A fix to reproduce RNG of R 3.5.0, for reproducing old results"
 section = "Output"
 
 [output.cat]
-what = "Output object"
+action = "Output object"
 code = "cat(x)"
 
 [output.cat.str]
-what = "Output string"
+action = "Output string"
 code = "cat('hello')"
 
 [output.print]
-what = "Print object"
+action = "Print object"
 code = "print(x)"
 
 [output.print.string]
-what = "Print string"
+action = "Print string"
 code = "print('hello')"
 
 [output.msg]
-what = "Show message"
+action = "Show message"
 code = "message('msg')"
 
 [output.warning]
-what = "Show warning"
+action = "Show warning"
 code = "warning('warning')"
 
 [output.warning.now]
-what = "Show warning right now"
+action = "Show warning right now"
 code = "warning('warning', .immediate=TRUE)"
 
 [output.error]
-what = "Trigger and show error"
+action = "Trigger and show error"
 code = "stop('this is serious')"
 
 [output.redirect.file]
-what = "Redirect output to file"
+action = "Redirect output to file"
 code = "sink('log.txt')"
 details = "Use sink() to restore"
 
 [output.capture.str]
-what = "Capture any output as string"
+action = "Capture any output as string"
 code = "txt = capture.output({...})"
 
 [output.suppress.object]
-what = "Suppress automatic printing of object in interactive mode"
+action = "Suppress automatic printing of object in interactive mode"
 code = "invisible(x)"
 
 [output.suppress]
-what = "Suppress all output"
+action = "Suppress all output"
 code = "capture.output({...})"
 
 [output.suppress.sink]
@@ -123,13 +123,13 @@ code = "sink('nul:')"
 details = "'/dev/null' on linux?"
 
 [output.suppress.msg]
-what = "Suppress messages"
+action = "Suppress messages"
 code = "suppressMessages({...})"
 
 [output.suppress.msg.onload]
-what = "Suppress package messages on load"
+action = "Suppress package messages on load"
 code = "suppressPackageStartupMessages({...})"
 
 [output.suppress.warnings]
-what = "Suppress warnings"
+action = "Suppress warnings"
 code = "suppressWarnings({...})"

@@ -8,19 +8,19 @@ details = "This sheet is not organized well"
 section = "Page info"
 
 [info.title]
-what = "Title"
+action = "Title"
 code = "title: my title"
 
 [info.author]
-what = "Author"
+action = "Author"
 code = "author: John Smith"
 
 [info.author.email]
-what = "Author with e-mail as footnote"
+action = "Author with e-mail as footnote"
 code = "author: John Smith^[example@example.com]"
 
 [info.authors]
-what = "Authors"
+action = "Authors"
 code = """
 author:
   - Bert
@@ -28,17 +28,17 @@ author:
 """
 
 [info.date]
-what = "Date"
+action = "Date"
 code = "date: 2024-07-17"
 
 [info.date.current]
-what = "Current date (dynamically)"
+action = "Current date (dynamically)"
 code = """
 date: "r format(Sys.time(), '%d %B %Y')"
 """
 
 [info.keywords]
-what = "Keywords"
+action = "Keywords"
 code = "tags: [analysis, ai]"
 
 
@@ -46,23 +46,23 @@ code = "tags: [analysis, ai]"
 section = "Text formatting"
 
 [format.bold]
-what = "Bold"
+action = "Bold"
 code = "**text**"
 
 [format.italic]
-what = "Italic"
+action = "Italic"
 code = "*text*"
 
 [format.link]
-what = "Hyperlink with label"
+action = "Hyperlink with label"
 code = "[Text](url)"
 
 [format._code]
-what = "Code"
+action = "Code"
 code = "`code`"
 
 [format.eq]
-what = "Equation"
+action = "Equation"
 code = "$\\mu$"
 
 
@@ -73,31 +73,31 @@ section = "Document structuring"
 section = "Sectioning"
 
 [struct.sec._section]
-what = "Section"
+action = "Section"
 code = "# Section title"
 
 [struct.sec._section.unnumbered]
-what = "Unnumbered section"
+action = "Unnumbered section"
 code = "# Section title {-}"
 
 [struct.sec.subsection]
-what = "Subsection"
+action = "Subsection"
 code = "## Subsection title"
 
 [struct.sec.subsubsection]
-what = "Subsubsection"
+action = "Subsubsection"
 code = "### Subsubsection title"
 
 [struct.sec.paragraph]
-what = "Paragraph"
+action = "Paragraph"
 code = "#### Paragraph title"
 
 [struct.sec._section.ntoc]
-what = "Hide section from ToC"
+action = "Hide section from ToC"
 code = "# Section title {.toc-ignore}"
 
 [struct.sec._section.tabbed]
-what = "Tabbed section"
+action = "Tabbed section"
 code = """
 ## title {.tabset .tabset-fade}
 content above tabbed region.
@@ -114,7 +114,7 @@ content below tabbed region
 details = "[Source](https://stackoverflow.com/questions/38062706/rmarkdown-how-to-end-tabbed-content). The newlines are crucial!"
 
 [struct.sec.paragraph.collapse]
-what = "Collapsible paragraph"
+action = "Collapsible paragraph"
 code = """
 <details>
 <summary>Show details…</summary>
@@ -123,7 +123,7 @@ code = """
 """
 
 [struct.sec.line]
-what = "Horizontal line"
+action = "Horizontal line"
 code = "***"
 
 
@@ -131,14 +131,14 @@ code = "***"
 section = "Lists"
 
 [struct.list.unordered]
-what = "Define unordered list"
+action = "Define unordered list"
 code = """
 * a
 * b
 """
 
 [struct.list.nested]
-what = "Define nested list"
+action = "Define nested list"
 code = """
 * a
   + b
@@ -146,7 +146,7 @@ code = """
 """
 
 [struct.list.dyn]
-what = "Dynamic list from code section"
+action = "Dynamic list from code section"
 code = """
 ```{r, results='asis'}
 paste0('* ', items, collapse='\n') %>% cat
@@ -157,7 +157,7 @@ paste0('* ', items, collapse='\n') %>% cat
 section = "Figures"
 
 [figs.r]
-what = "Captioned dynamic figure from R code"
+action = "Captioned dynamic figure from R code"
 code = """
 ```{r, fig.align="center", fig.width=6, fig.height=6,
     fig.cap="Figure: Your caption here."}
@@ -167,7 +167,7 @@ R CODE HERE
 details = "[Source](https://holtzy.github.io/Pimp-my-rmd/)"
 
 [figs.r.sub]
-what = "Dynamic subfigures from R code"
+action = "Dynamic subfigures from R code"
 code = """
 ```{r out.width=c('50%', '50%'), fig.show='hold'}
 boxplot(1:10)
@@ -177,7 +177,7 @@ plot(rnorm(10))
 details = "[Source](https://holtzy.github.io/Pimp-my-rmd/)"
 
 [figs.r.interactive]
-what = "Interactive ggplot"
+action = "Interactive ggplot"
 code = """
 ```{r}
 p = ggplot(data, aes(x=x, y=y, color=z)) +
@@ -190,28 +190,28 @@ plotly::ggplotly(p)
 section = "Tables"
 
 [tabs.simple]
-what = "Dataframe as table"
+action = "Dataframe as table"
 code = "kable(df)"
 
 [tabs.sortable]
-what = "Dynamic sortable table from dataframe"
+action = "Dynamic sortable table from dataframe"
 code = "DT::datatable(…)"
 
 [tabs.scrollable]
-what = "Scrollable table from dataframe"
+action = "Scrollable table from dataframe"
 code = """
 DT::datatable(mtcars, rownames = FALSE,
     filter="top", options = list(pageLength = 5, scrollX=T) )
 """
 
 [tabs.list]
-what = "Named list as table"
+action = "Named list as table"
 code = """
 `r unlist(mylist) %>% as.data.frame %>% kable(col.names='Value')`
 """
 
 [tabs.knitr]
-what = "Knitr params list as table"
+action = "Knitr params list as table"
 code = """
 `r unlist(params) %>% as.data.frame %>%
     kable(col.names='Value', caption='Parameters')`
@@ -225,25 +225,25 @@ To hide code blocks by default, set code_folding: "hide" in the output document 
 """
 
 [codeblocks.runonly]
-what = "Run, show output only"
+action = "Run, show output only"
 code = "echo=F"
 
 [codeblocks.codeonly]
-what = "Run, show code only"
+action = "Run, show code only"
 code = "echo=T, results='hide'"
 
 [codeblocks.dontrun]
-what = "Show code, don't run"
+action = "Show code, don't run"
 code = "eval=F"
 
 [codeblocks.asis]
-what = "Interpret output as markdown code"
+action = "Interpret output as markdown code"
 code = "results='asis'"
 
 [codeblocks.hide.msg]
-what = "Hide messages"
+action = "Hide messages"
 code = "message=F"
 
 [codeblocks.hide.warnings]
-what = "Hide warnings"
+action = "Hide warnings"
 code = "warning=F"

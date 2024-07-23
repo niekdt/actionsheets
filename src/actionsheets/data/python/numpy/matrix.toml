@@ -8,40 +8,40 @@ description = "2D-array operations"
 section = "Create"
 
 [create.undefined]
-what = "Undefined (size _n_ x _m_)"
+action = "Undefined (size _n_ x _m_)"
 code = "np.empty((n, m))"
 details = "Warning: don't use the initial values!"
 
 [create.constant.zero]
-what = "Zeros (size _n_ x _m_)"
+action = "Zeros (size _n_ x _m_)"
 code = "np.zeros((n, m))"
 
 [create.constant.one]
-what = "Ones (size _n_ x _m_)"
+action = "Ones (size _n_ x _m_)"
 code = "np.ones((n, m))"
 
 [create.constant.'true']
-what = "True values (size _n_ x _m_)"
+action = "True values (size _n_ x _m_)"
 code = "np.full((n, m), fill_value=True)"
 
 [create.constant.'false']
-what = "False values (size _n_ x _m_)"
+action = "False values (size _n_ x _m_)"
 code = "np.full((n, m), fill_value=False)"
 
 [create.constant.value]
-what = "Fill with value _v_ (size _n_ x _m_)"
+action = "Fill with value _v_ (size _n_ x _m_)"
 code = "np.full((n, m), fill_value=v)"
 
 [create.identity]
-what = "Identity matrix of size _n_ x _m_"
+action = "Identity matrix of size _n_ x _m_"
 code = "np.eye(n, m)"
 
 [create.diag]
-what = "Diagonal matrix from vector"
+action = "Diagonal matrix from vector"
 code = "np.diag(v)"
 
 [create.vectors.row]
-what = "From vectors as rows"
+action = "From vectors as rows"
 code = "np.row_stack((v1, v2))"
 
 [create.vectors.row.stack]
@@ -51,7 +51,7 @@ code = "np.vstack((v1, v2))"
 code = "np.array([v1, v2])"
 
 [create.vectors.col]
-what = "From vectors as columns"
+action = "From vectors as columns"
 code = "np.column_stack((v1, v2))"
 
 [create.vectors.col.stack]
@@ -65,7 +65,7 @@ code = "np.vstack((v1, v2)).transpose()"
 section = "Get"
 
 [get.elem]
-what = "Element at row _i_, column _j_"
+action = "Element at row _i_, column _j_"
 code = "m[i,j]"
 
 
@@ -74,27 +74,27 @@ section = "Update"
 description = "All operations are in-place"
 
 [update.elem]
-what = "Update element at row _i_, column _j_"
+action = "Update element at row _i_, column _j_"
 code = "m[i,j] = v"
 
 [update.fill.scalar]
-what = "Fill with scalar value"
+action = "Fill with scalar value"
 code = "m.fill(v)"
 
 [update.fill.array]
-what = "Fill with array values"
+action = "Fill with array values"
 code = "m[...] = np.array(3)"
 
 [update.fill.row.scalar]
-what = "Fill row _i_ with scalar value"
+action = "Fill row _i_ with scalar value"
 code = "m[i] = v"
 
 [update.fill.col.scalar]
-what = "Fill column _j_ with scalar value"
+action = "Fill column _j_ with scalar value"
 code = "m[:,j] = v"
 
 [update.resize.fill.zero]
-what = "Resize to shape, fill with zeros"
+action = "Resize to shape, fill with zeros"
 code = "m.resize(m, d)"
 
 
@@ -108,24 +108,24 @@ section = "Map"
 description = "Operations are element-wise and preserve the shape of the matrix."
 
 [derive.map.increment.scalar]
-what = "Increment all elements with scalar value"
+action = "Increment all elements with scalar value"
 code = "m + v"
 
 [derive.map.increment.matrix]
-what = "Increment elements by the respective element of another matrix"
+action = "Increment elements by the respective element of another matrix"
 code = "m + m2"
 details = "Must have same shape"
 
 [derive.map.min.matrix]
-what = "Find min between two matrices"
+action = "Find min between two matrices"
 code = "np.fmin(m, m2)"
 
 [derive.map.max.matrix]
-what = "Find max between two matrices"
+action = "Find max between two matrices"
 code = "np.fmax(m, m2)"
 
 [derive.map.clip]
-what = "Clip (truncate) between [_a_, _b_]"
+action = "Clip (truncate) between [_a_, _b_]"
 code = "np.clip(m, a_min=a, a_max=b)"
 details = "a_min < a_max is not checked"
 
@@ -135,29 +135,29 @@ section = "Reorder"
 description = "Operations preserve the shape of the matrix."
 
 [derive.order.rev]
-what = "Reverse elements"
+action = "Reverse elements"
 code = "np.flip(m)"
 details = "Flattened view in reverse order"
 
 [derive.order.sort.desc]
-what = "Sort elements descending"
+action = "Sort elements descending"
 code = "np.sort(m)"
 details = "NaNs are last"
 
 [derive.order.col.rev]
-what = "Reverse column order"
+action = "Reverse column order"
 code = "np.fliplr(m)"
 
 [derive.order.row.rev]
-what = "Reverse row order"
+action = "Reverse row order"
 code = "np.flipud(m)"
 
 [derive.order.sort.col.desc]
-what = "Sort elements by column descending"
+action = "Sort elements by column descending"
 code = "np.sort(m, axis=0)"
 
 [derive.order.sort.row.desc]
-what = "Sort elements per row descending"
+action = "Sort elements per row descending"
 code = "np.sort(m, axis=1)"
 
 
@@ -166,7 +166,7 @@ section = "Shrink"
 description = "Operations that reduce the shape of the matrix"
 
 [derive.shrink.diag]
-what = "Diagonal vector"
+action = "Diagonal vector"
 code = "np.diag(m)"
 
 
@@ -175,31 +175,31 @@ section = "Aggregate"
 description = "Summarize along an axis. Set `axis=1` for per-row operation."
 
 [derive.shrink.aggregate.min]
-what = "Min per column"
+action = "Min per column"
 code = "np.min(m, axis=0)"
 details = "Use nanmin() to ignore NaNs"
 
 [derive.shrink.aggregate.max]
-what = "Max per column"
+action = "Max per column"
 code = "np.max(m, axis=0)"
 details = "Use nanmax() to ignore NaNs"
 
 [derive.shrink.aggregate.amplitude]
-what = "Max - min, per column"
+action = "Max - min, per column"
 code = "np.ptp(m, axis=0)"
 
 [derive.shrink.aggregate.sum]
-what = "Sum per column"
+action = "Sum per column"
 code = "np.sum(m, axis=0)"
 details = "Use nansum() to ignore NaNs"
 
 [derive.shrink.aggregate.mean]
-what = "Mean per column"
+action = "Mean per column"
 code = "np.mean(m, axis=0)"
 details = "Use nanmean() to ignore NaNs"
 
 [derive.shrink.aggregate.median]
-what = "Median per column"
+action = "Median per column"
 code = "np.median(m, axis=0)"
 details = "Use nanmedian() to ignore NaNs"
 
@@ -208,11 +208,11 @@ details = "Use nanmedian() to ignore NaNs"
 section = "Operations that increase the size of the matrix"
 
 [derive.grow.pad.scalar]
-what = "Pad with sclar value"
+action = "Pad with sclar value"
 code = "np.pad(m, pad_width=1, constant_values=v)"
 
 [derive.grow.pad.edge]
-what = "Pad with edge element"
+action = "Pad with edge element"
 code = "np.pad(m, pad_width=1, mode='edge')"
 
 
@@ -220,18 +220,18 @@ code = "np.pad(m, pad_width=1, mode='edge')"
 section = "Reshape"
 
 [derive.reshape.transpose]
-what = "Transpose"
+action = "Transpose"
 code = "m.T"
 
 [derive.reshape.transpose.2]
 code = "m.transpose()"
 
 [derive.reshape.rotate]
-what = "Rotate"
+action = "Rotate"
 code = "np.rot90(m)"
 
 [derive.reshape.dim]
-what = "Reshape to specified dimensions"
+action = "Reshape to specified dimensions"
 code = "m.reshape(d)"
 
 
@@ -239,11 +239,11 @@ code = "m.reshape(d)"
 section = "Convert"
 
 [convert.vector.rows]
-what = "1D array (concat rows)"
+action = "1D array (concat rows)"
 code = "m.flatten()"
 
 [convert.vector.cols]
-what = "1D array (concat columns)"
+action = "1D array (concat columns)"
 code = "m.T.flatten()"
 details = "More intuitive than specifying mode"
 
@@ -251,5 +251,5 @@ details = "More intuitive than specifying mode"
 code = "m.flatten(mode='F')"
 
 [convert.list.rows]
-what = "List of rows"
+action = "List of rows"
 code = "m.tolist()"

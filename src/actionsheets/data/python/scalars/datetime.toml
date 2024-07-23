@@ -9,61 +9,61 @@ code = "import datetime"
 section = "Create"
 
 [create.ymdhms]
-what = "From ymdhms"
+action = "From ymdhms"
 code = "datetime(year, month, day, hour, minute, second)"
 
 [create.current]
-what = "Current datetime"
+action = "Current datetime"
 code = "datetime.now()"
 
 [create.current.utc]
-what = "Current datetime in UTC timezone"
+action = "Current datetime in UTC timezone"
 code = "datetime.utcnow()"
 
 [create.epoch]
-what = "Unix epoch"
+action = "Unix epoch"
 code = "datetime.fromtimestamp(0)"
 
 [create.min]
-what = "Earliest representable datetime"
+action = "Earliest representable datetime"
 code = "datetime.min"
 
 [create.max]
-what = "Latest representable datetime"
+action = "Latest representable datetime"
 code = "datetime.max"
 
 [create.combine]
-what = "From date and time"
+action = "From date and time"
 code = "datetime.combine(date, time)"
 
 [create.str]
-what = "Datetime from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime string"
+action = "Datetime from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) datetime string"
 code = "datetime.fromisoformat(datetime_str)"
 details = "e.g. `2023-01-30 23:59`, `2023-01-30T23:59:01`"
 
 [create.str.ymdhms]
-what = "Datetime from YYYY-MM-DD HH:mm:ss"
+action = "Datetime from YYYY-MM-DD HH:mm:ss"
 code = "x.strptime('%y-%m-%d %H:%M:%S')"
 
 [create.str.unknown]
-what = "Datetime from string (unknown format)"
+action = "Datetime from string (unknown format)"
 code = "pandas.to_datetime('2023 Jan 5')"
 details = "uses the pandas package"
 
 [create.seconds.epoch]
-what = "From total seconds since Unix epoch"
+action = "From total seconds since Unix epoch"
 code = "datetime.fromtimestamp(n)"
 
 [create.days.epoch]
-what = "From total days since Unix epoch"
+action = "From total days since Unix epoch"
 code = "datetime.fromtimestamp(0) + timedelta(n)"
 
 [create.seconds.datetime]
-what = "From total seconds since reference datetime"
+action = "From total seconds since reference datetime"
 code = "ref_datetime + timedelta(seconds=n)"
 
 [create.days.datetime]
-what = "From total days since reference datetime"
+action = "From total days since reference datetime"
 code = "ref_datetime + timedelta(n)"
 
 
@@ -71,16 +71,16 @@ code = "ref_datetime + timedelta(n)"
 section = "Test"
 
 [test.equal]
-what = "Same moment"
+action = "Same moment"
 code = "x == y"
 details = "Up to `x.resolution` precision (usually 1μs)"
 
 [test.before]
-what = "Happens before _y_"
+action = "Happens before _y_"
 code = "x < y"
 
 [test.after]
-what = "Happens after _y_"
+action = "Happens after _y_"
 code = "x > y"
 
 
@@ -88,40 +88,40 @@ code = "x > y"
 section = "Extract"
 
 [extract.year]
-what = "Year"
+action = "Year"
 code = "x.year"
 
 [extract.month]
-what = "Month"
+action = "Month"
 code = "x.month"
 
 [extract.day]
-what = "Day"
+action = "Day"
 code = "x.day"
 
 [extract.hour]
-what = "Hour"
+action = "Hour"
 code = "x.hour"
 
 [extract.minute]
-what = "Minute"
+action = "Minute"
 code = "x.minute"
 
 [extract.second]
-what = "Second"
+action = "Second"
 code = "x.second"
 
 [extract.microsecond]
-what = "Microsecond"
+action = "Microsecond"
 code = "x.microsecond"
 
 [extract.weekday]
-what = "Weekday number"
+action = "Weekday number"
 code = "x.isoweekday()"
 details = "Mon=1, Sun=7"
 
 [extract.weekday.zero]
-what = "Weekday number (zero-based)"
+action = "Weekday number (zero-based)"
 code = "x.weekday()"
 details = "Mon=0, Sun=6"
 
@@ -130,27 +130,27 @@ details = "Mon=0, Sun=6"
 section = "Derive"
 
 [derive.firstday.year]
-what = "Change to first day of year"
+action = "Change to first day of year"
 code = "x.replace(month=1, day=1)"
 
 [derive.firstday.month]
-what = "Change to first day of month"
+action = "Change to first day of month"
 code = "x.replace(day=1)"
 
 [derive.year]
-what = "Change year to _y_"
+action = "Change year to _y_"
 code = "x.replace(year=y)"
 
 [derive.utc]
-what = "In UTC timezone"
+action = "In UTC timezone"
 code = "?"
 
 [derive.shift.days]
-what = "Shift forward by _n_ days"
+action = "Shift forward by _n_ days"
 code = "x + timedelta(days=n)"
 
 [derive.shift.seconds]
-what = "Shift forward by _n_ seconds"
+action = "Shift forward by _n_ seconds"
 code = "x + timedelta(seconds=n)"
 
 
@@ -158,51 +158,51 @@ code = "x + timedelta(seconds=n)"
 section = "Convert"
 
 [convert.date]
-what = "Date component"
+action = "Date component"
 code = "x.date()"
 
 [convert.time]
-what = "Time component"
+action = "Time component"
 code = "x.time()"
 
 [convert.float]
-what = "Timestamp (seconds from Unix epoch), as float"
+action = "Timestamp (seconds from Unix epoch), as float"
 code = "x.timestamp()"
 
 [convert.str]
-what = "Format datetime as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
+action = "Format datetime as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
 code = "x.isoformat()"
 details = "e.g., `2023-01-01T23:59:00`"
 
 [convert.str.long]
-what = "Format readable datetime of consistent length"
+action = "Format readable datetime of consistent length"
 code = "x.ctime()"
 details = "e.g., `Sun Jan  1 23:59:00 2023`"
 
 [convert.str.ymd]
-what = "Format datetime as YYYY-MM-DD"
+action = "Format datetime as YYYY-MM-DD"
 code = "x.date().isoformat()"
 details = "e.g., 2024-01-31"
 
 [convert.str.dmy]
-what = "Format datetime as DD-MMM-YYYY"
+action = "Format datetime as DD-MMM-YYYY"
 code = "x.strftime('%d-%b-%Y')"
 details = "e.g., `31-Jan-2023`"
 
 [convert.str.hm]
-what = "Format datetime as HH:mm"
+action = "Format datetime as HH:mm"
 code = "x.strftime('%H:%M')"
 details = "e.g., `23:59`"
 
 [convert.str.hms]
-what = "Format datetime as HH:mm:ss"
+action = "Format datetime as HH:mm:ss"
 code = "x.strftime('%H:%M:%S')"
 details = "e.g., `23:59:00`"
 
 [convert.str.ymdhms]
-what = "Format datetime as YYYY-MM-DD HH:mm:ss"
+action = "Format datetime as YYYY-MM-DD HH:mm:ss"
 code = "x.strftime('%y-%m-%d %H:%M:%S')"
 
 [convert.tuple]
-what = "Named tuple"
+action = "Named tuple"
 code = "x.timetuple()"

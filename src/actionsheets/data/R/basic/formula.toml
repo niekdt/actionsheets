@@ -8,27 +8,27 @@ details = "This sheet is incomplete."
 section = "Create"
 
 [create.intercept]
-what = "Intercept only"
+action = "Intercept only"
 code = "y ~ 1"
 
 [create.abline]
-what = "With intercept and single variable"
+action = "With intercept and single variable"
 code = "y ~ x"
 
 [create.slope]
-what = "Without intercept, and single variable"
+action = "Without intercept, and single variable"
 code = "y ~ -1 + x"
 
 [create.allvar]
-what = "With all variables"
+action = "With all variables"
 code = "y ~ ."
 
 [create.nresp]
-what = "No response variable"
+action = "No response variable"
 code = "~ 1"
 
 [create.str]
-what = "From string"
+action = "From string"
 code = "as.formula(str)"
 
 [create.str.eval]
@@ -40,26 +40,26 @@ details = "Not recommended"
 section = "Test"
 
 [test.is]
-what = "Is formula"
+action = "Is formula"
 code = "is(f, 'formula')"
 
 [test.inherits]
-what = "Is formula or subclass"
+action = "Is formula or subclass"
 code = "inherits(f, 'formula')"
 
 [test.equal]
-what = "Formulas are equal"
+action = "Formulas are equal"
 code = "f1 == f2"
 
 [test.equal.2]
 code = "isTRUE(all.equal(f1, f2))"
 
 [test.response]
-what = "Has response"
+action = "Has response"
 code = "attr(terms(f), 'response') != 0"
 
 [test.intercept]
-what = "Has intercept"
+action = "Has intercept"
 code = "attr(terms(f), 'intercept') != 0"
 details = "Surely there is an easier way"
 
@@ -68,19 +68,19 @@ details = "Surely there is an easier way"
 section = "Extract"
 
 [extract.vars]
-what = "Variable names"
+action = "Variable names"
 code = "all.vars(f)"
 
 [extract.vars.lhs]
-what = "Left-hand side variable names"
+action = "Left-hand side variable names"
 code = "all.vars(update(f,  ~ 1))"
 
 [extract.vars.rhs]
-what = "Right-hand side variable names"
+action = "Right-hand side variable names"
 code = "all.vars(update(f,  1 ~ .))"
 
 [extract.env]
-what = "Environment"
+action = "Environment"
 code = "environment(f)"
 
 
@@ -88,34 +88,34 @@ code = "environment(f)"
 section = "Derive"
 
 [derive.add.term]
-what = "Add a term"
+action = "Add a term"
 code = "update(f, ~ . + w)"
 
 [derive.add.terms]
-what = "Add terms"
+action = "Add terms"
 code = "update(f, ~ . + w + z)"
 
 [derive.set.response]
-what = "Set response"
+action = "Set response"
 code = "update(f, y ~ .)"
 
 [derive.set.terms]
-what = "Set terms"
+action = "Set terms"
 code = "update(f, ~ w + z)"
 
 [derive.remove.response]
-what = "Remove response"
+action = "Remove response"
 code = "update(f, NULL ~ .)"
 
 [derive.remove.response.terms]
 code = "formula(delete.response(terms(f)))"
 
 [derive.remove.intercept]
-what = "Remove intercept"
+action = "Remove intercept"
 code = "update(f, ~ . + -1)"
 
 [derive.remove.env]
-what = "Remove environment"
+action = "Remove environment"
 code = "environment(f) = NULL"
 details = "Useful for formula serialization to prevent the entire workspace from being serialized along with it"
 
@@ -124,7 +124,7 @@ details = "Useful for formula serialization to prevent the entire workspace from
 section = "Evaluate"
 
 [evaluate.coef]
-what = "Evaluate a formula with known coefficients"
+action = "Evaluate a formula with known coefficients"
 code = """
 mm = model.matrix( ~ a + poly(b, 2, raw=TRUE), data.frame(a=1, b=2:4))
 pred = coef %*% t(mm)
@@ -135,9 +135,9 @@ pred = coef %*% t(mm)
 section = "Convert"
 
 [convert.str]
-what = "String"
+action = "String"
 code = "deparse(f)"
 
 [convert.array.str]
-what = "String array"
+action = "String array"
 code = "as.character(f)"

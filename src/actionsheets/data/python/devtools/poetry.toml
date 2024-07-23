@@ -12,11 +12,11 @@ Poetry isolates the virtualenv from the project.
 section = "New"
 
 [new.project]
-what = "Start a new Python project"
+action = "Start a new Python project"
 code = "poetry new --src $pkg"
 
 [new.env]
-what = "Initialize poetry for pre-existing project"
+action = "Initialize poetry for pre-existing project"
 code = "poetry init"
 
 
@@ -24,7 +24,7 @@ code = "poetry init"
 section = "Info"
 
 [info.pkg.list]
-what = "List available packages"
+action = "List available packages"
 code = "poetry show"
 
 
@@ -32,39 +32,39 @@ code = "poetry show"
 section = "Add packages"
 
 [add.pkg]
-what = "Add specific package(s)"
+action = "Add specific package(s)"
 code = "poetry add $pkg1 $pkg2"
 
 [add.pkg.latest]
-what = "Add package(s), force install latest"
+action = "Add package(s), force install latest"
 code = "poetry add $pkg1@latest"
 
 [add.pkg.version]
-what = "Add a package for a specific version"
+action = "Add a package for a specific version"
 code = "poetry add $pkg==1.0.1"
 
 [add.dev.pkg]
-what = "Add a dev package"
+action = "Add a dev package"
 code = "poetry add -D $pkg"
 
 [add.pkg.git]
-what = "Add git dependency"
+action = "Add git dependency"
 code = "poetry add git+https://github.com/niekdt/actionsheets.git"
 
 [add.pkg.git.release]
-what = "Add git dependency with version"
+action = "Add git dependency with version"
 code = "poetry add git+https://github.com/niekdt/actionsheets.git#0.1.0"
 
 [add.pkg.git.branch]
-what = "Add git dependency on branch"
+action = "Add git dependency on branch"
 code = "poetry add git+https://github.com/niekdt/actionsheets.git#main"
 
 [add.pkg.local]
-what = "Add local dependency"
+action = "Add local dependency"
 code = "poetry add ./my-package/"
 
 [add.pkg.local.archive]
-what = "Add local dependency archive"
+action = "Add local dependency archive"
 code = "poetry add ../my-package/dist/my-package-0.1.0.tar.gz"
 
 
@@ -72,20 +72,20 @@ code = "poetry add ../my-package/dist/my-package-0.1.0.tar.gz"
 section = "Update packages"
 
 [update.poetry]
-what = "Update poetry"
+action = "Update poetry"
 code = "poetry self update"
 
 [update.pkg.all]
-what = "Update all packages"
+action = "Update all packages"
 code = "poetry update"
 
 [update.pkg.all.ssh]
-what = "Update all packages, including packages from (private) Git-SSH repositories with passphrase"
+action = "Update all packages, including packages from (private) Git-SSH repositories with passphrase"
 code = "poetry update -vv"
 details = "Without the `-vv` option, poetry runs forever if a password is required for the SSH key"
 
 [update.pkg]
-what = "Update specific package(s)"
+action = "Update specific package(s)"
 code = "poetry update $pkg1 $pkg2"
 
 
@@ -93,11 +93,11 @@ code = "poetry update $pkg1 $pkg2"
 section = "Remove packages"
 
 [remove.pkg]
-what = "Remove package(s)"
+action = "Remove package(s)"
 code = "poetry remove $pkg1 $pkg2"
 
 [remove.lock]
-what = "Remove dependencies not specified in lock file"
+action = "Remove dependencies not specified in lock file"
 code = "poetry install --sync"
 
 
@@ -105,11 +105,11 @@ code = "poetry install --sync"
 section = "Save state"
 
 [save.lock]
-what = "Generate lock file"
+action = "Generate lock file"
 code = "poetry lock"
 
 [save.reqs]
-what = "Export environment as *requirements.txt*"
+action = "Export environment as *requirements.txt*"
 code = "poetry export -f requirements.txt --output requirements.txt"
 
 
@@ -117,13 +117,13 @@ code = "poetry export -f requirements.txt --output requirements.txt"
 section = "Restore state"
 
 [restore.project]
-what = "Install all dependencies defined in the lock or project file"
+action = "Install all dependencies defined in the lock or project file"
 code = "poetry install"
 
 [restore.project.sync]
-what = "Install all required dependencies, and remove unused dependencies (sync)"
+action = "Install all required dependencies, and remove unused dependencies (sync)"
 code = "poetry install --sync"
 
 [restore.project.group]
-what = "Install all dependencies, including optional dep group(s)"
+action = "Install all dependencies, including optional dep group(s)"
 code = "poetry install --with docs,tests"

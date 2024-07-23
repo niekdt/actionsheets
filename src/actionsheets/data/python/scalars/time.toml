@@ -9,24 +9,24 @@ code = "from datetime import time"
 section = "Create"
 
 [create.time]
-what = "From hms"
+action = "From hms"
 code = "time(hour, minute, second)"
 
 [create.current]
-what = "Current time"
+action = "Current time"
 code = "datetime.now().time()"
 
 [create.time.max]
-what = "Latest representable time"
+action = "Latest representable time"
 code = "time.max"
 
 [create.str.time]
-what = "Time from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time string"
+action = "Time from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time string"
 code = "time.fromisoformat(time_str)"
 details = "e.g. `23:59:01`"
 
 [create.seconds.start]
-what = "From total seconds since start of day"
+action = "From total seconds since start of day"
 code = "(datetime.min + timedelta(seconds=7321.5)).time()"
 
 
@@ -34,39 +34,39 @@ code = "(datetime.min + timedelta(seconds=7321.5)).time()"
 section = "Test"
 
 [test.equal]
-what = "Same moment in time"
+action = "Same moment in time"
 code = "x == y"
 details = "Up to `x.resolution` precision (usually 1μs)"
 
 [test.before]
-what = "Happens before _y_"
+action = "Happens before _y_"
 code = "x < y"
 
 [test.after]
-what = "Happens after _y_"
+action = "Happens after _y_"
 code = "x > y"
 
 [extract]
 section = "Extract"
 
 [extract.hour]
-what = "Hour"
+action = "Hour"
 code = "x.hour"
 
 [extract.minute]
-what = "Minute"
+action = "Minute"
 code = "x.minute"
 
 [extract.second]
-what = "Second"
+action = "Second"
 code = "x.second"
 
 [extract.microsecond]
-what = "Microsecond"
+action = "Microsecond"
 code = "x.microsecond"
 
 [extract.eps]
-what = "Smallest representable time difference"
+action = "Smallest representable time difference"
 code = "time.resolution"
 
 
@@ -74,29 +74,29 @@ code = "time.resolution"
 section = "Convert"
 
 [convert.float]
-what = "Total seconds"
+action = "Total seconds"
 code = "?"
 
 [convert.str]
-what = "Format time as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
+action = "Format time as [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)"
 code = "x.isoformat()"
 details = "e.g., `23:59:00`"
 
 [convert.str.hm]
-what = "Format datetime as HH:mm"
+action = "Format datetime as HH:mm"
 code = "x.strftime('%H:%M')"
 details = "e.g., `23:59`"
 
 [convert.str.hms]
-what = "Format datetime as HH:mm:ss"
+action = "Format datetime as HH:mm:ss"
 code = "x.strftime('%H:%M:%S')"
 details = "e.g., `23:59:00`"
 
 [convert.str.long]
-what = "Format readable datetime of consistent length"
+action = "Format readable datetime of consistent length"
 code = "x.ctime()"
 details = "e.g., `Sun Jan  1 23:59:00 2023`"
 
 [convert.tuple]
-what = "Named tuple"
+action = "Named tuple"
 code = "x.timetuple()"

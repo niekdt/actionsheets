@@ -9,19 +9,19 @@ description = "Testing framework"
 section = "Assertions"
 
 [assert.warn]
-what = "Assert warning"
+action = "Assert warning"
 code = "with pytest.warns(UserWarning):"
 
 [assert.error]
-what = "Assert any error"
+action = "Assert any error"
 code = "with pytest.raises(Exception) as excinfo:"
 
 [assert.error.specific]
-what = "Assert specific exception _e_"
+action = "Assert specific exception _e_"
 code = "with pytest.raises(e) as excinfo:"
 
 [assert.error.either]
-what = "Assert either exception _e1_ or _e2_"
+action = "Assert either exception _e1_ or _e2_"
 code = "with pytest.raises((e1, e2)):"
 
 
@@ -33,27 +33,27 @@ section = "Test control flow"
 section = "Skip tests"
 
 [test.skip.always]
-what = "Skip test"
+action = "Skip test"
 code = "@pytest.mark.skip(reason='no way to currently test this')"
 
 [test.skip.if]
-what = "Conditional skip"
+action = "Conditional skip"
 code = "@pytest.mark.skipif(cond, reason)"
 
 [test.skip.py]
-what = "Skip for Python version below _x.y_"
+action = "Skip for Python version below _x.y_"
 code = "@pytest.mark.skipif(sys.version_info < (x, y))"
 
 [test.skip.windows]
-what = "Skip if on Windows"
+action = "Skip if on Windows"
 code = "@pytest.mark.skipif(sys.platform == 'win32')"
 
 [test.skip.module]
-what = "Skip if module is missing"
+action = "Skip if module is missing"
 code = "@pytest.importorskip('pandas')"
 
 [test.skip.within.module]
-what = "Skip rest of the test if module is missing"
+action = "Skip rest of the test if module is missing"
 code = "docutils = pytest.importorskip('docutils')"
 
 
@@ -62,19 +62,19 @@ section = "Test expectations"
 description = "Alternative definitions of success"
 
 [test.expect.fail]
-what = "Expect test to fail"
+action = "Expect test to fail"
 code = "@pytest.mark.xfail()"
 
 [test.expect.fail.exception]
-what = "Expect test to fail with exception _e_"
+action = "Expect test to fail with exception _e_"
 code = "@pytest.mark.xfail(raises=e)"
 
 [test.expect.fail.time]
-what = "Fail test if not completed within _n_ seconds"
+action = "Fail test if not completed within _n_ seconds"
 code = "@pytest.mark.timeout(n)"
 
 [test.expect.fail.windows]
-what = "Fail test on Windows"
+action = "Fail test on Windows"
 code = "@pytest.mark.xfail(sys.platform == 'win32')"
 
 
@@ -82,22 +82,22 @@ code = "@pytest.mark.xfail(sys.platform == 'win32')"
 section = "Parameterized tests"
 
 [test.param.arg]
-what = "Parameterize test for argument _x_ with list of options"
+action = "Parameterize test for argument _x_ with list of options"
 code = "@pytest.mark.parametrize('x', [1, 2, 3])"
 
 [test.param.args]
-what = "Parameterize test for multiple arguments"
+action = "Parameterize test for multiple arguments"
 code = """
 @pytest.mark.parametrize('length', [1, 2, 3])
 @pytest.mark.parametrize('value', [0, 1])
 """
 
 [test.param.argcomb]
-what = "Parameterize for combination of arguments"
+action = "Parameterize for combination of arguments"
 code = "@pytest.mark.parametrize('length,value', [(1, 0), (2, 1), (3, 1)])"
 
 [test.param.fixture]
-what = "Parameterize using parameterized fixture"
+action = "Parameterize using parameterized fixture"
 code = """
 @pytest.mark.parametrize('large_dynamic_data_file',
     ['big.csv', 'big2.csv'], indirect=True)
@@ -109,7 +109,7 @@ section = "Fixtures"
 details = "Pytest caches fixtures within the defined scope (for the given parameters)."
 
 [fixture.create]
-what = "Define fixture"
+action = "Define fixture"
 code = """
 @pytest.fixture
 def first_entry():
@@ -117,11 +117,11 @@ def first_entry():
 """
 
 [fixture.create.scope.module]
-what = "Define fixture with module scope"
+action = "Define fixture with module scope"
 code = "@pytest.fixture(scope='module')"
 
 [fixture.create.cleanup]
-what = "Define fixture with cleanup"
+action = "Define fixture with cleanup"
 code = """
 # fixture code
 yield 'a'
@@ -129,11 +129,11 @@ yield 'a'
 """
 
 [fixture.create.new]
-what = "Define fixture for use in every test"
+action = "Define fixture for use in every test"
 code = "@pytest.fixture(autouse=True)"
 
 [fixture.create.param]
-what = "Define parameterized fixture, resulting in multiple tests"
+action = "Define parameterized fixture, resulting in multiple tests"
 code = """
 @pytest.fixture(params=[1, 2, 3, 4, 5])
 def number(request):
@@ -142,7 +142,7 @@ def number(request):
 details = "Function signature must match the example"
 
 [fixture.gc]
-what = "Disable GC for every test, collect in-between"
+action = "Disable GC for every test, collect in-between"
 code = """
 @pytest.fixture(autouse=True)
 def cleanup():
@@ -151,7 +151,7 @@ def cleanup():
 """
 
 [fixture.fs.paths]
-what = "Parameterize tests with a dynamic list of file paths"
+action = "Parameterize tests with a dynamic list of file paths"
 code = """
 @fixture(params = glob.glob(r'data\\*.csv')
 def file_paths(request)
@@ -159,7 +159,7 @@ def file_paths(request)
 """
 
 [fixture.fs.fnames]
-what = "Parameterize tests with a dynamic list of file names"
+action = "Parameterize tests with a dynamic list of file names"
 code = """
 @fixture(params = fnmatch.filter(os.listdir('data'), '*.csv')
 def file_names(request)
@@ -167,7 +167,7 @@ def file_names(request)
 """
 
 [fixture.param]
-what = "Parameterized test using a parameterizable fixture"
+action = "Parameterized test using a parameterizable fixture"
 code = """
 @pytest.fixture
 def tester(request):

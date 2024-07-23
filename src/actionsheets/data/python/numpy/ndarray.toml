@@ -10,15 +10,15 @@ details = "This sheet is highly incomplete."
 section = "Create"
 
 [create.1d]
-what = "Ensure at least 1D array (vector)"
+action = "Ensure at least 1D array (vector)"
 code = "np.atleast_1d(x)"
 
 [create.2d]
-what = "Ensure at least 2D array (matrix)"
+action = "Ensure at least 2D array (matrix)"
 code = "np.atleast_2d(x)"
 
 [create.3d]
-what = "Ensure at least 3D array"
+action = "Ensure at least 3D array"
 code = "np.atleast_3d(x)"
 
 
@@ -26,19 +26,19 @@ code = "np.atleast_3d(x)"
 section = "Properties"
 
 [prop.ndim]
-what = "Number of dimensions"
+action = "Number of dimensions"
 code = "x.ndim"
 
 [prop.dim]
-what = "Dimension sizes"
+action = "Dimension sizes"
 code = "x.shape"
 
 [prop.nelems]
-what = "Number of elements"
+action = "Number of elements"
 code = "x.size"
 
 [prop.len0]
-what = "Size of the first dimension"
+action = "Size of the first dimension"
 code = "len(x)"
 
 
@@ -51,7 +51,7 @@ section = "Derive"
 section = "Shrink"
 
 [derive.shrink.drop.dim.singular]
-what = "Drop singular dimensions"
+action = "Drop singular dimensions"
 code = "a.squeeze()"
 
 [derive.shrink.drop.dim.singular.2]
@@ -62,7 +62,7 @@ code = "np.squeeze(a)"
 section = "Reshape"
 
 [derive.reshape.dims]
-what = "Reshape to dimensions _d_"
+action = "Reshape to dimensions _d_"
 code = "x.reshape(d)"
 
 
@@ -70,10 +70,10 @@ code = "x.reshape(d)"
 section = "Convert"
 
 [convert.bytes]
-what = "Bytes"
+action = "Bytes"
 code = "x.tobytes()"
 details = "Not sure what difference with `data.tobytes()` is"
 
 [convert.hash]
-what = "Hash"
+action = "Hash"
 code = "hash(x.data.tobytes())"

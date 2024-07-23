@@ -12,7 +12,7 @@ section = "Create"
 description = "Create an command-line arguments parser"
 
 [create.argparse]
-what = "Define an argument parser"
+action = "Define an argument parser"
 code = """
 import argparse
 parser = argparse.ArgumentParser(
@@ -26,63 +26,63 @@ parser = argparse.ArgumentParser(
 section = "Add argument to the parser"
 
 [create.argparse.add.pos]
-what = "Define positional argument"
+action = "Define positional argument"
 code = "parser.add_argument('file')"
 
 [create.argparse.add.pos.optional]
-what = "Define optional positional argument"
+action = "Define optional positional argument"
 code = "parser.add_argument('dest', nargs='?')"
 
 [create.argparse.add.pos.list]
-what = "Define positional argument accepting multiple values"
+action = "Define positional argument accepting multiple values"
 code = "parser.add_argument('files', type = str, nargs='+')"
 
 [create.argparse.add.flag.enable]
-what = "Define flag to enable a feature (default is False)"
+action = "Define flag to enable a feature (default is False)"
 code = "parser.add_argument('-f', '--force', action = 'store_true')"
 
 [create.argparse.add.flag.disable]
-what = "Define flag to disable a feature (default is True)"
+action = "Define flag to disable a feature (default is True)"
 code = "parser.add_argument('--disable', action = 'store_false')"
 
 [create.argparse.add.option.str]
-what = "Define string option"
+action = "Define string option"
 code = "parser.add_argument('-s', '--source', type = str)"
 
 [create.argparse.add.option.int]
-what = "Define int option"
+action = "Define int option"
 code = "parser.add_argument('--seed', type = int)"
 
 [create.argparse.add.option.float]
-what = "Define float option"
+action = "Define float option"
 code = "parser.add_argument('value', type = float)"
 
 [create.argparse.add.option.cat]
-what = "Define categorical option"
+action = "Define categorical option"
 code = "parser.add_argument('answer', choices = ['a', 'b', 'c'])"
 
 [create.argparse.add.option.path]
-what = "Define valid path option"
+action = "Define valid path option"
 code = "parser.add_argument('path', type = pathlib.Path)"
 
 [create.argparse.add.option.file.open]
-what = "Define openable file option"
+action = "Define openable file option"
 code = "parser.add_argument('file', type = open)"
 
 [create.argparse.add.option.file.write]
-what = "Define writable file option"
+action = "Define writable file option"
 code = "parser.add_argument('dest', type = argparse.FileType('w'))"
 
 [create.argparse.add.option.value]
-what = "Define option that takes a value"
+action = "Define option that takes a value"
 code = "parser.add_argument('--seed')"
 
 [create.argparse.add.option.value.optional]
-what = "Define option that optionally takes a value"
+action = "Define option that optionally takes a value"
 code = "parser.add_argument('--seed', nargs = '?')"
 
 [create.argparse.add.option.required]
-what = "Define required option"
+action = "Define required option"
 code = "parser.add_argument('--seed', required = True)"
 details = "Required options are considered bad form. Use positional arguments instead."
 
@@ -91,7 +91,7 @@ details = "Required options are considered bad form. Use positional arguments in
 section = "Parse"
 
 [parse.sysargs]
-what = "Parse system arguments using the created argparse instance"
+action = "Parse system arguments using the created argparse instance"
 code = "args = parser.parse_args()"
 
 
@@ -99,7 +99,7 @@ code = "args = parser.parse_args()"
 section = "Test"
 
 [test.narg]
-what = "Test if no arguments were provided"
+action = "Test if no arguments were provided"
 code = "len(sys.argv) <= 1"
 
 
@@ -107,9 +107,9 @@ code = "len(sys.argv) <= 1"
 section = "Get"
 
 [get.invoke]
-what = "Get program or script that invoked the process"
+action = "Get program or script that invoked the process"
 code = "sys.argv[0]"
 
 [get.nargs]
-what = "Number of arguments"
+action = "Number of arguments"
 code = "len(sys.argv)"

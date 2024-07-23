@@ -9,36 +9,36 @@ description = "An ordered immutable collection of data elements"
 section = "Create"
 
 [create.empty]
-what = "Empty"
+action = "Empty"
 code = "()"
 
 [create.scalar]
-what = "Single element"
+action = "Single element"
 code = "(1,)"
 details = "Comma is important"
 
 [create.multiple]
-what = "Multiple elements"
+action = "Multiple elements"
 code = "(1, 2, 3)"
 
 [create.assign]
-what = "Via multiple assignment"
+action = "Via multiple assignment"
 code = "x = 1, 2, 3"
 
 [create.concat]
-what = "From multiple tuples"
+action = "From multiple tuples"
 code = "a + b + c"
 
 [create.iter]
-what = "From iterator"
+action = "From iterator"
 code = "tuple(a)"
 
 [create.iter.unpack]
-what = "From iterator by unpacking"
+action = "From iterator by unpacking"
 code = "(*a,)"
 
 [create.comprehension]
-what = "From comprehension"
+action = "From comprehension"
 code = "tuple(v * 2 for v in a)"
 
 
@@ -46,35 +46,35 @@ code = "tuple(v * 2 for v in a)"
 section = "Test"
 
 [test.empty]
-what = "Empty"
+action = "Empty"
 code = "if not x:"
 
 [test.nempty]
-what = "Not empty"
+action = "Not empty"
 code = "if x:"
 
 [test.contains.value]
-what = "Contains value _v_"
+action = "Contains value _v_"
 code = "v in x"
 
 [test.ncontains.value]
-what = "Does not contain value _v_"
+action = "Does not contain value _v_"
 code = "v not in x"
 
 [test.contains.duplicate]
-what = "Contains duplicate values"
+action = "Contains duplicate values"
 code = "len(v) != len(set(v))"
 
 [test.true.all]
-what = "All elements are `True`"
+action = "All elements are `True`"
 code = "all(x)"
 
 [test.true.any]
-what = "Any element is `True`"
+action = "Any element is `True`"
 code = "any(x)"
 
 [test.true.none]
-what = "No elements are `True`"
+action = "No elements are `True`"
 code = "not any(x)"
 
 
@@ -82,41 +82,41 @@ code = "not any(x)"
 section = "Get"
 
 [get.length]
-what = "Length"
+action = "Length"
 code = "len(x)"
 
 [get.value.index]
-what = "Value at index _i_ (_i_th value)"
+action = "Value at index _i_ (_i_th value)"
 code = "x[i]"
 
 [get.value.endindex]
-what = "Value from end index _j_" 
+action = "Value from end index _j_" 
 code = "x[-j]"
 
 [get.value.count]
-what = "Count occurrences of value _v_"
+action = "Count occurrences of value _v_"
 code = "x.count(v)"
 
 [get.index.value.first]
-what = "First index of value _v_"
+action = "First index of value _v_"
 code = "x.index(v)"
 details = "Error if missing"
 
 [get.index.value.inrange.first]
-what = "First index of value _v_ between index range [ _n_, _m_ ]"
+action = "First index of value _v_ between index range [ _n_, _m_ ]"
 code = "x.index(v, n, m)"
 details = "Error if missing in range"
 
 [get.sum]
-what = "Sum elements"
+action = "Sum elements"
 code = "sum(x)"
 
 [get.min]
-what = "Min of elements"
+action = "Min of elements"
 code = "min(x)"
 
 [get.max]
-what = "Max of elements"
+action = "Max of elements"
 code = "max(x)"
 
 
@@ -125,27 +125,27 @@ section = "Derive"
 details = "Creates a new immutable copy"
 
 [derive.slice]
-what = "Slice between [ _n_, _m_ ] (subset)"
+action = "Slice between [ _n_, _m_ ] (subset)"
 code = "x[n:m]"
 
 [derive.head]
-what = "First _n_ elements"
+action = "First _n_ elements"
 code = "x[:n]"
 
 [derive.tail]
-what = "Last _n_ elements"
+action = "Last _n_ elements"
 code = "x[-n:]"
 
 [derive.append.value]
-what = "Append element"
+action = "Append element"
 code = "x += (1,)"
 
 [derive.append.tuple]
-what = "Append tuple"
+action = "Append tuple"
 code = "x += y"
 
 [derive.reverse]
-what = "Reverse"
+action = "Reverse"
 code = "x[::-1]"
 
 [derive.reverse.reversed]
@@ -153,15 +153,15 @@ code = "tuple(reversed(x))"
 details = "Much slower in all cases"
 
 [derive.sort]
-what = "Sort"
+action = "Sort"
 code = "tuple(sorted(x))"
 
 [derive.shuffle]
-what = "Shuffle"
+action = "Shuffle"
 code = "tuple(random.sample(x, k=len(x)))"
 
 [derive.repeat]
-what = "Replicate elements _n_ times"
+action = "Replicate elements _n_ times"
 code = "x * n"
 
 
@@ -169,27 +169,27 @@ code = "x * n"
 section = "Convert"
 
 [convert.assign]
-what = "Multiple assignment"
+action = "Multiple assignment"
 code = "a, b = x"
 details = "Number of variables must match tuple length"
 
 [convert.hash]
-what = "Hash"
+action = "Hash"
 code = "hash(x)"
 
 [convert.string]
-what = "Comma-separated string"
+action = "Comma-separated string"
 code = "str(x)"
 
 [convert.list]
-what = "List"
+action = "List"
 code = "list(x)"
 
 [convert.list.unpack]
 code = "[*x]"
 
 [convert.set]
-what = "Set"
+action = "Set"
 code = "set(x)"
 
 [convert.set.unpack]

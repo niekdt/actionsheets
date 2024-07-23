@@ -9,11 +9,11 @@ description = "Package installer for Python (pip)"
 section = "Info"
 
 [info.pip]
-what = "Pip version"
+action = "Pip version"
 code = "python -m pip --version"
 
 [info.pkg.outdated]
-what = "List of outdated packages"
+action = "List of outdated packages"
 code = "pip list --outdated"
 
 
@@ -21,51 +21,51 @@ code = "pip list --outdated"
 section = "Add packages"
 
 [add.pypi]
-what = "Install package from PyPI"
+action = "Install package from PyPI"
 code = "pip install SomeProject"
 
 [add.pypi.multi]
-what = "Install multiple packages from PyPI"
+action = "Install multiple packages from PyPI"
 code = "pip install SomePackage1 SomePackage2"
 
 [add.pypi.force]
-what = "Reinstall package from PyPI"
+action = "Reinstall package from PyPI"
 code = "pip install --force-reinstall SomeProject"
 
 [add.pypi.version]
-what = "Install package with specific version"
+action = "Install package with specific version"
 code = "pip install 'SomeProject==1.4'"
 
 [add.pypi.pre]
-what = "Install pre-release version of package"
+action = "Install pre-release version of package"
 code = "pip install --pre SomeProject"
 
 [add.pypi.version.minor]
-what = "Install package with specific version or "
+action = "Install package with specific version or "
 code = "pip install 'SomeProject~=1.4.2'"
 
 [add.pypi.nodeps]
-what = "Install package, without dependencies"
+action = "Install package, without dependencies"
 code = "pip install --no-deps SomeProject"
 
 [add.pypi.extra]
-what = "Install package with optional variant (functionality)"
+action = "Install package with optional variant (functionality)"
 code = "pip install 'SomePackage[PDF]'"
 
 [add.pypi.extras]
-what = "Install package with optional variants"
+action = "Install package with optional variants"
 code = "pip install 'SomePackage[PDF,EPUB]'"
 
 [add.local]
-what = "Install from local archive file"
+action = "Install from local archive file"
 code = "pip install ./downloads/SomeProject-1.0.4.tar.gz"
 
 [add.git]
-what = "Install from Git repository"
+action = "Install from Git repository"
 code = "pip install git+https://github.com/pypa/sampleproject.git"
 
 [add.git.branch]
-what = "Install from Git repository on branch"
+action = "Install from Git repository on branch"
 code = "pip install git+https://github.com/pypa/sampleproject.git@main"
 
 
@@ -77,16 +77,16 @@ section = "Update packages"
 section = "Upgrade packages"
 
 [upgrade.pip]
-what = "Upgrade pip"
+action = "Upgrade pip"
 code = "python -m pip install --upgrade pip"
 
 [upgrade.pkg]
-what = "Upgrade package and dependencies"
+action = "Upgrade package and dependencies"
 code = "pip install -U SomeProject"
 details = "The handling of dependencies depends on the upgrade-strategy used."
 
 [upgrade.pkg.nodep]
-what = "Upgrade package, and dependencies if needed"
+action = "Upgrade package, and dependencies if needed"
 code = "pip install -U --upgrade-strategy=only-if-needed SomeProject"
 
 
@@ -94,23 +94,23 @@ code = "pip install -U --upgrade-strategy=only-if-needed SomeProject"
 section = "Remove packages"
 
 [remove.pkg]
-what = "Uninstall a package"
+action = "Uninstall a package"
 code = "pip uninstall SomeProject"
 
 [remove.requirements]
-what = "Uninstall packages listed in *requirements.txt*"
+action = "Uninstall packages listed in *requirements.txt*"
 code = "pip uninstall -r requirements.txt"
 
 [save]
 section = "Save state"
 
 [save.all]
-what = "Generate *requirements.txt* from **all** installed packages"
+action = "Generate *requirements.txt* from **all** installed packages"
 code = "pip freeze > requirements.txt"
 details = "Great way to bloat your deps list..."
 
 [save.imported]
-what = "Generate *requirements.txt* from used imports only"
+action = "Generate *requirements.txt* from used imports only"
 code = "pigar generate"
 details = "Preferred over pipreqs, as that fails for misnamed modules"
 
@@ -119,7 +119,7 @@ details = "Preferred over pipreqs, as that fails for misnamed modules"
 section = "Restore state"
 
 [restore.requirements]
-what = "Install packages from *requirements.txt*"
+action = "Install packages from *requirements.txt*"
 code = "pip install -r requirements.txt"
 
 

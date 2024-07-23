@@ -7,7 +7,7 @@ title = "Numeric"
 section = "Constants"
 
 [constants.'nan']
-what = "NaN"
+action = "NaN"
 code = "math.nan"
 
 [constants.'nan'.float]
@@ -17,7 +17,7 @@ code = "float('nan')"
 code = "numpy.nan"
 
 [constants.'inf']
-what = "Infinity"
+action = "Infinity"
 code = "math.inf"
 
 [constants.'inf'.float]
@@ -27,7 +27,7 @@ code = "float('inf')"
 code = "numpy.inf"
 
 [constants.ninf]
-what = "Negative infinity"
+action = "Negative infinity"
 code = "-math.inf"
 
 [constants.ninf.float]
@@ -37,31 +37,31 @@ code = "float('-inf')"
 code = "numpy.NINF"
 
 [constants.pi]
-what = "Pi"
+action = "Pi"
 code = "math.pi"
 
 [constants.e]
-what = "e"
+action = "e"
 code = "math.e"
 
 [constants.int.min]
-what = "Min int"
+action = "Min int"
 code = "-sys.maxsize"
 
 [constants.int.max]
-what = "Max int"
+action = "Max int"
 code = "sys.maxsize"
 
 [constants.float.eps]
-what = "Float epsilon (smallest representable difference)"
+action = "Float epsilon (smallest representable difference)"
 code = "sys.float_info.epsilon"
 
 [constants.float.min]
-what = "Min float"
+action = "Min float"
 code = "sys.float_info.min"
 
 [constants.float.max]
-what = "Max float"
+action = "Max float"
 code = "sys.float_info.max"
 
 
@@ -70,60 +70,60 @@ section = "Create"
 description = "int() and float() throw ValueError if the input cannot be parsed"
 
 [create.int.binary]
-what = "Binary integer"
+action = "Binary integer"
 code = "[sign]0b[b2int]"
 details = "-0b10 (-2)"
 
 [create.int.hex]
-what = "Hex integer"
+action = "Hex integer"
 code = "[sign]0x[b16int]"
 details = "e.g., -0xF (-16)"
 
 [create.int.str]
-what = "Integer from string"
+action = "Integer from string"
 code = "int(x)"
 
 [create.int.str.hex]
-what = "Integer from hex string (base 16)"
+action = "Integer from hex string (base 16)"
 code = "int(x, 16)"
 details = "e.g., DEADBEEF"
 
 [create.int.str.prefix]
-what = "Integer from string with base determined by prefix"
+action = "Integer from string with base determined by prefix"
 code = "int(x, 0)"
 details = "Base 10 by default, base-16 for 0x, base-2 for 0b"
 
 [create.int.str.locale]
-what = "Integer from string according to locale"
+action = "Integer from string according to locale"
 code = "locale.atoi(x)"
 
 [create.uint.bytes]
-what = "Unsigned integer from bytes"
+action = "Unsigned integer from bytes"
 code = "int.from_bytes(x, byteorder='big')"
 
 [create.int.bytes]
-what = "Signed integer from bytes"
+action = "Signed integer from bytes"
 code = "int.from_bytes(x, byteorder='big', signed=True)"
 
 [create.float.str]
-what = "Float from string"
+action = "Float from string"
 code = "float(x)"
 details = "Throws ValueError if string cannot be parsed"
 
 [create.float.bytes]
-what = "Float from packed struct bytes"
+action = "Float from packed struct bytes"
 code = "struct.unpack('f', x)[0] | e.g., b'x00x00 @'"
 
 [create.float.str.hex]
-what = "Float from hex string representation"
+action = "Float from hex string representation"
 code = "float.fromhex(x)"
 
 [create.float.str.locale]
-what = "Float from string for locale"
+action = "Float from string for locale"
 code = "locale.atof(x)"
 
 [create.float.str.locale.tmp]
-what = "Float from string for temporary locale"
+action = "Float from string for temporary locale"
 code = "Babel.parse_decimal('1,25', locale='nl_NL.utf8')"
 details = "No way to do this cleanly and thread-safe in standard Python..."
 
@@ -139,46 +139,46 @@ locale.setlocale(locale.LC_NUMERIC, loc)
 section = "Test"
 
 [test.int]
-what = "Integer"
+action = "Integer"
 code = "type(x) is int"
 
 [test.number.whole]
-what = "Whole number"
+action = "Whole number"
 code = "float.is_integer(x)"
 details = "e.g., True for 5.0"
 
 [test.equal.approx.prop]
-what = "Approximately equal"
+action = "Approximately equal"
 code = "math.isclose(x, y)"
 details = "Uses proportional tolerance"
 
 [test.equal.approx.tol]
-what = "Approximately equal with absolute tolerance _tol_"
+action = "Approximately equal with absolute tolerance _tol_"
 code = "math.isclose(x, y, abs_tol=tol)"
 
 [test.equal.approx.prop.tol]
-what = "Approximately equal with proportional tolerance _tol_%"
+action = "Approximately equal with proportional tolerance _tol_%"
 code = "math.isclose(x, y, rel_tol=tol)"
 
 [test.'nan']
-what = "NaN"
+action = "NaN"
 code = "math.isnan(x)"
 details = "Does not work for complex numbers (?)"
 
 [test.finite]
-what = "Finite"
+action = "Finite"
 code= "math.isfinite(x)"
 
 [test.'inf']
-what = "Infinite"
+action = "Infinite"
 code = "math.isinf(x)"
 
 [test.pinf]
-what = "Positive infinity"
+action = "Positive infinity"
 code = "math.isinf(x) and x > 0"
 
 [test.ninf]
-what = "Negative infinity"
+action = "Negative infinity"
 code = "math.isinf(x) and x < 0"
 
 
@@ -186,7 +186,7 @@ code = "math.isinf(x) and x < 0"
 section = "Extract"
 
 [extact.bits]
-what = "Number of bits needed to represent the integer (ignoring sign)"
+action = "Number of bits needed to represent the integer (ignoring sign)"
 code = "x.bit_length()"
 details = "Same as `floor(log2(|x|))`"
 
@@ -195,19 +195,19 @@ details = "Same as `floor(log2(|x|))`"
 section = "Convert"
 
 [convert.str]
-what = "String"
+action = "String"
 code = "str(x)"
 
 [convert.float.str.locale]
-what = "Float to string according to locale"
+action = "Float to string according to locale"
 code = "locale.str(float)"
 
 [convert.hash]
-what = "Hash"
+action = "Hash"
 code = "hash(x)"
 
 [convert.int.bytes]
-what = "Int to bytes"
+action = "Int to bytes"
 code = "x.to_bytes(8, byteorder='big')"
 details = "`OverflowError` is raised if the integer is not representable with the given number of bytes"
 
@@ -215,19 +215,19 @@ details = "`OverflowError` is raised if the integer is not representable with th
 code = "x.to_bytes(8, byteorder='big', signed=True)"
 
 [convert.int.bytes.array]
-what = "Count to byte array (mutable)"
+action = "Count to byte array (mutable)"
 code = "bytearray(x)"
 
 [convert.float.bytes]
-what = "Float to bytes"
+action = "Float to bytes"
 code = "struct.pack('f', x)"
 
 [convert.int.str.hex]
-what = "Int to hex string"
+action = "Int to hex string"
 code = "hex(x)"
 details = "Format: `[sign] ['0x'] integer"
 
 [convert.float.str.hex]
-what = "Float to hex string representation"
+action = "Float to hex string representation"
 code = "x.hex()"
 details = "Format: `[sign] ['0x'] integer ['.' fraction] ['p' exponent]`, e.g., `0x1.400000p+1`"

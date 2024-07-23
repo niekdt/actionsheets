@@ -11,9 +11,9 @@ section = "Run"
 section = "Script"
 
 [run.script.wait]
-what = "Start Python script, wait for completion"
+action = "Start Python script, wait for completion"
 code = "os.system('python script.py')"
 
 [run.script.args]
-what = "Start Python script with arguments, wait for completion"
+action = "Start Python script with arguments, wait for completion"
 code = "os.system('python script.py -file 'hello.csv'')"

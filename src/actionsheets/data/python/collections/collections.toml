@@ -8,16 +8,16 @@ code = "import collections"
 section = "Test"
 
 [test.is.collection]
-what = "Is collection"
+action = "Is collection"
 code = "isinstance(x, collections.abc.Collection)"
 details = "e.g., `str`, `tuple`, `list`, `set`, `dict`"
 
 [test.is.seq]
-what = "Is sequence (defined ordering of elements)"
+action = "Is sequence (defined ordering of elements)"
 code = "isinstance(x, collections.abc.Sequence)"
 details = "e.g., `str`, `tuple`, `list`"
 
 [test.is.mapping]
-what = "Is mapping"
+action = "Is mapping"
 code = "isinstance(x, collections.abc.Mapping)"
 details = "e.g., `dict`"

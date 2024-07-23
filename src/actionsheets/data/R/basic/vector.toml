@@ -7,23 +7,23 @@ title = "vector"
 section = "Create"
 
 [create.define]
-what = "Define vector"
+action = "Define vector"
 code = "c(1, 2, 3)"
 
 [create.constant.zero]
-what = "Zeros, length _n_"
+action = "Zeros, length _n_"
 code = "numeric(n)"
 
 [create.constant.'nan']
-what = "NaNs, length _n_"
+action = "NaNs, length _n_"
 code = "NaN[1:n]"
 
 [create.seq.ab]
-what = "Sequence from _a_ to _b_"
+action = "Sequence from _a_ to _b_"
 code = "seq(a, b)"
 
 [create.seq.linspace]
-what = "Sequence between _a_ to _b_ of length _n_"
+action = "Sequence between _a_ to _b_ of length _n_"
 code = "seq(a, b, length.out=n)"
 
 
@@ -31,28 +31,28 @@ code = "seq(a, b, length.out=n)"
 section = "Test"
 
 [test.is]
-what = "Is vector"
+action = "Is vector"
 code = "is.vector(x) && is.atomic(x)"
 details = "`is.vector()` returns true for lists as well!"
 
 [test.empty]
-what = "Is empty"
+action = "Is empty"
 code = "length(x) == 0"
 
 [test.contains.value]
-what = "Contains value _v_"
+action = "Contains value _v_"
 code = "v %in% x"
 
 [test.contains.na]
-what = "Contains NA value(s)"
+action = "Contains NA value(s)"
 code = "anyNA(x)"
 
 [test.contains.values]
-what = "Contains each of the values in vector _v_"
+action = "Contains each of the values in vector _v_"
 code = "all(v %in% x)"
 
 [test.missing]
-what = "Does not contain value _v_"
+action = "Does not contain value _v_"
 code = "!(v %in% x)"
 
 
@@ -60,19 +60,19 @@ code = "!(v %in% x)"
 section = "Extract"
 
 [extract.length]
-what = "Length"
+action = "Length"
 code = "length(x)"
 
 [extact.names]
-what = "Element names"
+action = "Element names"
 code = "names(x)"
 
 [extract.first]
-what = "First element"
+action = "First element"
 code = "x[1]"
 
 [extract.last]
-what = "Last element"
+action = "Last element"
 code = "data.table::last(x)"
 
 [extract.last.tail]
@@ -83,23 +83,23 @@ code = "tail(x, 1)"
 section = "Aggregate"
 
 [aggregate.sum]
-what = "Sum elements"
+action = "Sum elements"
 code = "sum(x)"
 
 [aggregate.mean]
-what = "Mean of elements"
+action = "Mean of elements"
 code = "mean(x)"
 
 [aggregate.mode]
-what = "Mode"
+action = "Mode"
 code = "table(x) %>% sort() %>% names() %>% last()"
 
 [aggregate.mode.posint]
-what = "Mode of positive integers 1:K"
+action = "Mode of positive integers 1:K"
 code = "tabulate(x) %>% which.max()"
 
 [aggregate.fun.grouped]
-what = "Compute function per group, as list"
+action = "Compute function per group, as list"
 code = "tapply(x, INDEX = rep_len(1:2, length(x)), mean)"
 details = "Outputs a list with the results per group"
 
@@ -108,19 +108,19 @@ details = "Outputs a list with the results per group"
 section = "Indexing"
 
 [index.'true']
-what = "TRUE values"
+action = "TRUE values"
 code = "which(x)"
 
 [index.'false']
-what = "FALSE values"
+action = "FALSE values"
 code = "which(!x)"
 
 [index.min]
-what = "Index of smallest value"
+action = "Index of smallest value"
 code = "which.min(x)"
 
 [index.max]
-what = "Index of largest value"
+action = "Index of largest value"
 code = "which.max(x)"
 
 
@@ -132,15 +132,15 @@ section = "Derive"
 section = "Order"
 
 [derive.reorder.sort.desc]
-what = "Sort descending"
+action = "Sort descending"
 code = "sort(x)"
 
 [derive.reorder.rev]
-what = "Reverse"
+action = "Reverse"
 code = "rev(x)"
 
 [derive.reorder.shuffle]
-what = "Shuffle"
+action = "Shuffle"
 code = "sample(x)"
 
 
@@ -149,71 +149,71 @@ section = "Map"
 description = "Element-wise operations"
 
 [derive.map.ifelse]
-what = "If-else with constant results"
+action = "If-else with constant results"
 code = "ifelse(x == TRUE, 1, 0)"
 
 [derive.map.ifelse.vector]
-what = "If-else with element-specific results"
+action = "If-else with element-specific results"
 code = "ifelse(x, seq(-1, -100, by=-1), 1:100)"
 
 [derive.map.replace.na.zero]
-what = "Replace NAs by zeros"
+action = "Replace NAs by zeros"
 code = "ifelse(is.na(x), 0, x)"
 
 [derive.map.replace.values.zero]
-what = "Replace specific values by zeros"
+action = "Replace specific values by zeros"
 code = "ifelse(x %in% values, 0, x)"
 
 [derive.map.replace.index.values]
-what = "Replace elements at index with given values"
+action = "Replace elements at index with given values"
 code = "replace(x, c(2, 4), c(NA, Inf))"
 
 [derive.map.order]
-what = "Order by value, breaking ties with further args"
+action = "Order by value, breaking ties with further args"
 code = "order(x)"
 
 [derive.map.rank]
-what = "Ranking, with ties option"
+action = "Ranking, with ties option"
 code = "rank(x, ties='first')"
 
 [derive.map.clip.lb]
-what = "Clip values below _a_"
+action = "Clip values below _a_"
 code = "pmin(x, a)"
 
 [derive.map.clip.ub]
-what = "Clip values above _b_"
+action = "Clip values above _b_"
 code = "pmax(x, b)"
 
 [derive.map.min]
-what = "Find pairwise min between two vectors"
+action = "Find pairwise min between two vectors"
 code = "pmin(x, y)"
 
 [derive.map.max]
-what = "Find pairwise max between two vectors"
+action = "Find pairwise max between two vectors"
 code = "pmax(x, y)"
 
 [derive.map.discretize.bin]
-what = "Discretize values into bin number"
+action = "Discretize values into bin number"
 code = "findInterval(1:4, c(0, 2, 4))"
 
 [derive.map.discretize.levels]
-what = "Discretize values into _n_ levels"
+action = "Discretize values into _n_ levels"
 code = "cut(x, n)"
 
 [derive.map.discretize.intervals]
-what = "Discretize values in specified intervals"
+action = "Discretize values in specified intervals"
 code = "cut(x, breaks)"
 
 [derive.map.interpolate.linear]
-what = "Linear interpolation"
+action = "Linear interpolation"
 code = "approxfun(x, method='linear')(x2)"
 
 [derive.map.interpolate.spline]
-what = "Spline interpolation"
+action = "Spline interpolation"
 code = "splinefun(x)(x2)"
 
 [derive.map.interpolate.sspline]
-what = "Smoothing spline interpolation"
+action = "Smoothing spline interpolation"
 code = "smooth.spline(x) %>% predict(x2)"
 
 
@@ -221,11 +221,11 @@ code = "smooth.spline(x) %>% predict(x2)"
 section = "Grow"
 
 [derive.grow.rep]
-what = "Repeat vector _n_ times"
+action = "Repeat vector _n_ times"
 code = "rep(x, n)"
 
 [derive.grow.replen]
-what = "Repeat vector up to length _n_"
+action = "Repeat vector up to length _n_"
 code = "rep_len(x, n)"
 
 
@@ -233,7 +233,7 @@ code = "rep_len(x, n)"
 section = "Shrink"
 
 [derive.shrink.remove.na]
-what = "Exclude NA"
+action = "Exclude NA"
 code = "na.exclude(x)"
 
 [derive.shrink.remove.na.2]
@@ -243,18 +243,18 @@ code = "x[!is.na(x)]"
 code = "Filter(Negate(is.na), x)"
 
 [derive.shrink.remove.nonfinite]
-what = "Exclude non-finite values"
+action = "Exclude non-finite values"
 code = "x[is.finite(x)]"
 
 [derive.shrink.remove.nonfinite.filter]
 code = "Filter(is.finite, x)"
 
 [derive.shrink.diff]
-what = "Lagged difference"
+action = "Lagged difference"
 code = "diff(x)"
 
 [derive.shrink.sample]
-what = "Sample _n_ elements"
+action = "Sample _n_ elements"
 code = "sample(x, n)"
 
 
@@ -262,10 +262,10 @@ code = "sample(x, n)"
 section = "Convert"
 
 [convert.list.vectors]
-what = "Split into a list of vectors, according to a grouping vector"
+action = "Split into a list of vectors, according to a grouping vector"
 code = "split(x, g)"
 details = "Can be undone by unsplit(y, g)"
 
 [convert.rle]
-what = "Running-length encoding"
+action = "Running-length encoding"
 code = "rle(x)"

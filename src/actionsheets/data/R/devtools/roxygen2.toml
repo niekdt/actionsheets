@@ -8,39 +8,39 @@ title = "roxygen2"
 section = "Basic documentation"
 
 [basic.title]
-what = "Title"
+action = "Title"
 code = "@title Title here"
 
 [basic._description]
-what = "Description"
+action = "Description"
 code = "@description Description here"
 
 [basic.param]
-what = "Parameter"
+action = "Parameter"
 code = "@param data The dataset"
 
 [basic.dotparam]
-what = "Dot parameters"
+action = "Dot parameters"
 code = "@param ... Additional arguments"
 
 [basic.return]
-what = "Return"
+action = "Return"
 code = "@return Return value description here"
 
 [basic.slot]
-what = "Class slot"
+action = "Class slot"
 code = "@slot slotName Description here"
 
 [basic.details]
-what = "Details"
+action = "Details"
 code = "@details Details here"
 
 [basic.note]
-what = "Note"
+action = "Note"
 code = "@note Notes here"
 
 [basic.format]
-what = "Data format"
+action = "Data format"
 code = "@format Format description here"
 
 
@@ -48,34 +48,34 @@ code = "@format Format description here"
 section = "Text formatting"
 
 [format.md]
-what = "Enable markdown"
+action = "Enable markdown"
 code = "@md"
 
 [format.emph]
-what = "Emphasis"
+action = "Emphasis"
 code = "_wow_"
 
 [format.bold]
-what = "Bold"
+action = "Bold"
 code = "*wow*"
 
 [format.eq]
-what = "In-line equation"
+action = "In-line equation"
 code = "\\eqn{a + b}"
 
 [format.deq]
-what = "Display equation"
+action = "Display equation"
 code = "\\deqn{a + b}"
 
 [format._code]
-what = "Code"
+action = "Code"
 code = "`mu <- mean(data)`"
 
 [format._code.2]
 code = "\\code{mu <- mean(data)}"
 
 [format.codeblock]
-what = "Code block"
+action = "Code block"
 code = """
 ```
 mu <- mean(data)
@@ -83,7 +83,7 @@ mu <- mean(data)
 """
 
 [format.monospace]
-what = "Monospace font (looks like code)"
+action = "Monospace font (looks like code)"
 code = """
 \\preformatted{
     text
@@ -91,11 +91,11 @@ code = """
 """
 
 [format.pkg]
-what = "Package name"
+action = "Package name"
 code = "\\pkg{stats}"
 
 [format.list.unordered]
-what = "Unordered list"
+action = "Unordered list"
 code = """
 \\itemize{
     \\item Option A
@@ -104,7 +104,7 @@ code = """
 """
 
 [format.list.ordered]
-what = "Ordered list"
+action = "Ordered list"
 code = """
 \\enumerate{
     \\item First item
@@ -113,7 +113,7 @@ code = """
 """
 
 [format.list.named]
-what = "Named list"
+action = "Named list"
 code = """
 \\describe{
     \\item{Opt A}{Describe option A}<
@@ -122,26 +122,26 @@ code = """
 """
 
 [format.table]
-what = "Table"
+action = "Table"
 code = "?"
 details = "Use markdown?"
 
 [format.details._section]
-what = "Sections"
+action = "Sections"
 code = """
 @details First part
 @details Second part (will be a new section)
 """
 
 [format._section]
-what = "Arbitrary sections"
+action = "Arbitrary sections"
 code = """
 @section Title:
 Text here
 """
 
 [format.subsection]
-what = "Subsections"
+action = "Subsections"
 code = """
 @details
 ## This is a subsection
@@ -155,78 +155,78 @@ With text
 section = "Link"
 
 [format.link.url]
-what = "Website"
+action = "Website"
 code = "<https://r-project.org>"
 
 [format.link.url.label]
-what = "With different text"
+action = "With different text"
 code = "[text](link)"
 
 [format.link.internal.topic]
-what = "To internal topic defined by @name _name_"
+action = "To internal topic defined by @name _name_"
 code = "[name]"
 
 [format.link.pkg.topic]
-what = "To external package"
+action = "To external package"
 code = "[stats][stats-package]"
 
 [format.link.pkg.fun]
-what = "To external package function"
+action = "To external package function"
 code = "[stats::predict]"
 
 [format.link.fun]
-what = "To internal or global function"
+action = "To internal or global function"
 code = "[predict()]"
 
 [format.link.fun.pkg]
-what = "To package function"
+action = "To package function"
 code = "[stats::predict()]"
 
 [format.link.fun.pkg.label]
-what = "To function with different text"
+action = "To function with different text"
 code = "[fancyName()][stats::predict()]"
 
 [format.link.class]
-what = "To class"
+action = "To class"
 code = "[Time]"
 
 [format.link.class.ext]
-what = "To external class"
+action = "To external class"
 code = "[stats::Time]"
 
 [format.link.s4]
-what = "To S4 class"
+action = "To S4 class"
 code = "\\linkS4class{lcModel}"
 
 [format.link.special]
-what = "With special characters"
+action = "With special characters"
 code = "\\code{\\link[magrittr]{\\%>\\%}}"
 
 [format.link.seealso]
-what = "See-also"
+action = "See-also"
 code = "@seealso [mean] [stats::median]"
 
 [format.link.seealso.vignette]
-what = "See-also vignette"
+action = "See-also vignette"
 code = "@seealso browseVignettes('roxygen2')"
 
 [format.link.family]
-what = "Family"
+action = "Family"
 code = "@family sharedNames"
 
 [format.link.source]
-what = "Specify source"
+action = "Specify source"
 code = "@source This dataset was generated using [generateData]"
 
 [format.link.refs]
-what = "References"
+action = "References"
 code = """
 @references
 \\insertRef{benaglia2009mixtools}{latrend}
 """
 
 [format.link.email]
-what = "E-mail"
+action = "E-mail"
 code = "\\email{example@@example.com}"
 
 
@@ -235,7 +235,7 @@ section = "Examples"
 description = "Documenting code examples"
 
 [examples._code]
-what = "Examples"
+action = "Examples"
 code = """
 @examples
 1 + 1
@@ -243,7 +243,7 @@ mean(1:9)
 """
 
 [examples.dontrun]
-what = "Examples that should not be run"
+action = "Examples that should not be run"
 code = """
 @examples
 1 + 1
@@ -253,7 +253,7 @@ code = """
 """
 
 [examples.donttest]
-what = "Examples that should not be tested"
+action = "Examples that should not be tested"
 code = """
 @examples
 \\donttest{
@@ -262,7 +262,7 @@ code = """
 """
 
 [examples.interactive]
-what = "Examples for interactive usage only"
+action = "Examples for interactive usage only"
 code = """
 @examples
 if interactive()
@@ -274,12 +274,12 @@ if interactive()
 section = "Dynamic content"
 
 [dynamic._code]
-what = "In-line code evaluation"
+action = "In-line code evaluation"
 code = "`r getRversion()`"
 details = "Evaluated during every roxygenize call"
 
 [dynamic.codeblock]
-what = "Code block evaluation"
+action = "Code block evaluation"
 code = """
 ```{r}
 1 + 1
@@ -288,7 +288,7 @@ details = "Code blocks cannot refer to each other
 """
 
 [dynamic.figure]
-what = "Generate figure"
+action = "Generate figure"
 code = """
 ```{r iris-pairs-plot}
 pairs(iris[1:4])[unclass(iris$Species)])
@@ -296,7 +296,7 @@ pairs(iris[1:4])[unclass(iris$Species)])
 """
 
 [dynamic.doc]
-what = "Dynamic documentation"
+action = "Dynamic documentation"
 code = "![image](https://example.com)"
 
 
@@ -309,11 +309,11 @@ section = "Generating documentation"
 section = "Topics"
 
 [topic.skip]
-what = "Don't generate topic"
+action = "Don't generate topic"
 code = "@noRd"
 
 [topic.new]
-what = "Create stand-alone topic"
+action = "Create stand-alone topic"
 code = """
 @name docname
 @title Topic title
@@ -321,7 +321,7 @@ NULL
 """
 
 [topic.pkg]
-what = "Package topic"
+action = "Package topic"
 code = """
 @details
 Package documentation here.
@@ -330,52 +330,52 @@ Package documentation here.
 """
 
 [topic._name]
-what = "Topic name"
+action = "Topic name"
 code = "@name simpleName"
 
 [topic.file]
-what = "Topic file name"
+action = "Topic file name"
 code = "@rdname simpleName"
 
 [topic.order]
-what = "Specify doc inclusion order"
+action = "Specify doc inclusion order"
 code = "@order 1"
 details = "Then @order 2 for the second doc"
 
 [topic.alias]
-what = "Define alias"
+action = "Define alias"
 code = "@aliases shortName"
 
 [topic.s4.alias]
-what = "Define alias for S4 method"
+action = "Define alias for S4 method"
 code = "@aliases predictForCluster,lcModel-method"
 
 [topic.inherit]
-what = "Inherit doc"
+action = "Inherit doc"
 code = "@inherit docName"
 
 [topic.inherit.com]
-what = "Inherit doc components"
+action = "Inherit doc components"
 code = "@inherit docName details return"
 
 [topic.inherit._section]
-what = "Inherit section"
+action = "Inherit section"
 code = "@inheritSection docName Section title"
 
 [topic.inherit.param]
-what = "Inherit param descriptions from another internal function"
+action = "Inherit param descriptions from another internal function"
 code = "@inheritParams internalFun"
 
 [topic.inherit.param.pkg]
-what = "Inherit param descriptions from an external function"
+action = "Inherit param descriptions from an external function"
 code = "@inheritParams stats::predict"
 
 [topic.inherit.dotparam]
-what = "Inherit dot parameters"
+action = "Inherit dot parameters"
 code = "@inheritDotParams"
 
 [topic.hide]
-what = "Hide documentation"
+action = "Hide documentation"
 code = "@keywords internal"
 
 
@@ -383,58 +383,58 @@ code = "@keywords internal"
 section = "Namespace generation"
 
 [namespace.import.pkg]
-what = "Import package"
+action = "Import package"
 code = "@import stats"
 
 [namespace.import.pkgs]
-what = "Import packages"
+action = "Import packages"
 code = "@import stats splines"
 
 [namespace.import.funs]
-what = "Import function(s) from package"
+action = "Import function(s) from package"
 code = "@importFrom stats predict fitted"
 
 [namespace.import.s3]
-what = "Import S3 generic"
+action = "Import S3 generic"
 code = "@importFrom pkg generic"
 
 [namespace.import.s4]
-what = "Import S4 classes from package"
+action = "Import S4 classes from package"
 code = "@importClassesFrom stats Time"
 
 [namespace.import.s4.methods]
-what = "Import S4 methods from package"
+action = "Import S4 methods from package"
 code = "@importMethodsFrom stats time time2"
 
 [namespace.collate]
-what = "Collate / ensure other R files are loaded first"
+action = "Collate / ensure other R files are loaded first"
 code = "@include first.R second.R"
 
 [namespace.export.fun]
-what = "Export function"
+action = "Export function"
 code = "@export"
 
 [namespace.export.s4]
-what = "Export class and methods"
+action = "Export class and methods"
 code = """
 @export
 setClass(…)
 """
 
 [namespace.export.class]
-what = "Export class"
+action = "Export class"
 code = "@exportClass lcModel"
 
 [namespace.export.method]
-what = "Export class method"
+action = "Export class method"
 code = "@exportMethod evaluate"
 
 
 [generate.docs]
-what = "Generate docs"
+action = "Generate docs"
 code = "roxygen2::roxygenise()"
 details = "Ctrl+Shift+D"
 
 [generate.clean]
-what = "Clean files, then generate docs"
+action = "Clean files, then generate docs"
 code = "roxygen2::roxygenise(clean = TRUE)"

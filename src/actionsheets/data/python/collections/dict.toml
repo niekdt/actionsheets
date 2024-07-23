@@ -11,28 +11,28 @@ section = "Create"
 description = "Define a dictionary"
 
 [create.empty]
-what = "Empty"
+action = "Empty"
 code = "x = {}"
 
 [create.string]
-what = "Define with string keys"
+action = "Define with string keys"
 code = "x = {'color': 'blue', 'size': 'large'}"
 
 [create.int]
-what = "Define with integer keys"
+action = "Define with integer keys"
 code = "x = {1: 'a', 2: 'b', 3: 'c'}"
 
 [create.iter.fill]
-what = "Define from keys iterator and constant value _v_"
+action = "Define from keys iterator and constant value _v_"
 code = "dict.fromkeys(key_iter, v)"
 keywords = "fill"
 
 [create.iter.kv]
-what = "Define dynamically from iterators for keys and values"
+action = "Define dynamically from iterators for keys and values"
 code = "x = dict(zip(key_iter, value_iter))"
 
 [create.merge]
-what = "Merge dictionaries"
+action = "Merge dictionaries"
 code = "z = x | y"
 
 [create.merge.unpack]
@@ -43,51 +43,51 @@ code = "z = {**x, **y}"
 section = "Test"
 
 [test.is]
-what = "Is dict"
+action = "Is dict"
 code = "x is dict"
 
 [test.inherits]
-what = "Is dict or subclass"
+action = "Is dict or subclass"
 code = "isinstance(x, dict)"
 
 [test.empty]
-what = "Empty"
+action = "Empty"
 code = "if x:"
 
 [test.nempty]
-what = "Not empty"
+action = "Not empty"
 code = "if not x:"
 
 [test.contains.key]
-what = "Contains key _k_"
+action = "Contains key _k_"
 code = "k in x"
 
 [test.contains.value]
-what = "Contains value _v_"
+action = "Contains value _v_"
 code = "v in x.values()"
 
 [test.contains.value.none]
-what = "Contains value `None`"
+action = "Contains value `None`"
 code = "None in x.values()"
 
 [test.contains.keys]
-what = "Contains specific keys"
+action = "Contains specific keys"
 code = "{k1, k2}.issubset(x)"
 
 [test.contains.keys.dyn]
-what = "Contains keys _keys_"
+action = "Contains keys _keys_"
 code = "set(keys).issubset(x)"
 
 [test.contains.values]
-what = "Contains specific values"
+action = "Contains specific values"
 code = "{v1, v2}.issubset(x.values())"
 
 [test.contains.values.dyn]
-what = "Contains values _values_"
+action = "Contains values _values_"
 code = "set(values).issubset(x.values())"
 
 [test.contains.duplicate]
-what = "Contains duplicate values"
+action = "Contains duplicate values"
 code = "len(x) != len(set(x.values()))"
 
 
@@ -95,59 +95,59 @@ code = "len(x) != len(set(x.values()))"
 section = "Get"
 
 [get.value]
-what = "Value"
+action = "Value"
 code = "x['color']"
 details = "Throws an error if missing"
 
 [get.value.try]
-what = "Try get value"
+action = "Try get value"
 code = "x.get('color')"
 details = "Returns `None` if missing"
 
 [get.value.try.default]
-what = "Try get value with default _v_"
+action = "Try get value with default _v_"
 code = "x.get('color', v)"
 
 [get.values.keys.list]
-what = "Values from list of keys"
+action = "Values from list of keys"
 code = "[x[k] for k in keys_list]"
 
 [get.keys]
-what = "Keys"
+action = "Keys"
 code = "x.keys()"
 details = "As `dict_keys`"
 
 [get.keys.list]
-what = "Keys as list"
+action = "Keys as list"
 code = "list(x)"
 
 [get.keys.list.sorted]
-what = "Keys as sorted list"
+action = "Keys as sorted list"
 code = "sorted(x)"
 
 [get.values]
-what = "Values"
+action = "Values"
 code = "x.values()"
 details = "As `dict_values`"
 
 [get.values.list]
-what = "Values as list"
+action = "Values as list"
 code = "list(x.values())"
 
 [get.values.sorted]
-what = "Values sorted by keys"
+action = "Values sorted by keys"
 code = "[x[k] for k in sorted(x)]"
 
 [get.entries]
-what = "Entries (as list of tuples)"
+action = "Entries (as list of tuples)"
 code = "x.items()"
 
 [get.key.value.first]
-what = "First key with value _v_"
+action = "First key with value _v_"
 code = "next(k for k in x if x[k] == v)"
 
 [get.keys.value.all]
-what = "All keys with value _v_"
+action = "All keys with value _v_"
 code = "[k for k in x if x[k] == v]"
 
 
@@ -155,20 +155,20 @@ code = "[k for k in x if x[k] == v]"
 section = "Update"
 
 [update.default]
-what = "Set default entry value for missing key"
+action = "Set default entry value for missing key"
 code = "x.setdefault('size', 'medium')"
 
 [update.entry]
-what = "Update entry value"
+action = "Update entry value"
 code = "x['size'] = 'small'"
 
 [update.entry.ifexists]
-what = "Update entry, error if missing"
+action = "Update entry, error if missing"
 code = "?"
 details = "?"
 
 [update.rename]
-what = "Rename entry"
+action = "Rename entry"
 code = "x['new'] = x.pop('old')"
 
 
@@ -176,11 +176,11 @@ code = "x['new'] = x.pop('old')"
 section = "Grow"
 
 [update.grow.add]
-what = "Add/update entry"
+action = "Add/update entry"
 code = "x['size'] = 'small'"
 
 [update.grow.merge]
-what = "Merge with another dictionary"
+action = "Merge with another dictionary"
 code = "x |= y"
 
 [update.grow.merge.fun]
@@ -191,27 +191,27 @@ code = "x.update(y)"
 section = "Shrink"
 
 [update.shrink.remove.entry]
-what = "Remove entry by key"
+action = "Remove entry by key"
 code = "del x['size']"
 
 [update.shrink.remove.entries]
-what = "Remove entries by keys"
+action = "Remove entries by keys"
 code = "for k in keys: del x[k]"
 
 [update.shrink.pop.entry]
-what = "Remove entry by key, get value"
+action = "Remove entry by key, get value"
 code = "x.pop('size')"
 
 [update.shrink.pop.entries]
-what = "Remove keys, get values"
+action = "Remove keys, get values"
 code = "[x.pop(k) for k in keys]"
 
 [update.shrink.pop.last]
-what = "Remove last entry, get value"
+action = "Remove last entry, get value"
 code = "x.popitem()"
 
 [update.shrink.clear]
-what = "Clear (remove all entries)"
+action = "Clear (remove all entries)"
 code = "x.clear()"
 
 
@@ -219,28 +219,28 @@ code = "x.clear()"
 section = "Derive"
 
 [derive.copy]
-what = "Copy"
+action = "Copy"
 code = "x.copy()"
 
 [derive.copy.new]
 code = "dict(x)"
 
 [derive.subset.keys]
-what = "Subset for keys"
+action = "Subset for keys"
 code = "{k: x[k] for k in keys}"
 details = "Error if a key is missing"
 
 [derive.subset.keys.default]
-what = "Subset for keys with default _v_"
+action = "Subset for keys with default _v_"
 code = "{k: x.get(k, default=v) for k in keys}"
 
 [derive.subset.keys.intersect]
-what = "Subset (intersection) for keys"
+action = "Subset (intersection) for keys"
 code = "{k: x[k] for k in x.keys() if k in keys}"
 details = "Returns empty dict if all keys are missing"
 
 [derive.subset.keys.diff]
-what = "Subset except for keys"
+action = "Subset except for keys"
 code = "{k: x[k] for k in x.keys() if k not in keys}"
 
 
@@ -248,17 +248,17 @@ code = "{k: x[k] for k in x.keys() if k not in keys}"
 section = "Convert"
 
 [convert.pretty]
-what = "Pretty print"
+action = "Pretty print"
 code = "pprint.pprint(x)"
 
 [convert.list]
-what = "List of key-value tuples"
+action = "List of key-value tuples"
 code = "x.items()"
 
 [convert.json]
-what = "JSON string"
+action = "JSON string"
 code = "json.dumps(x)"
 
 [convert.json.robust]
-what = "JSON string, handle non-string entries"
+action = "JSON string, handle non-string entries"
 code = "json.dumps(x, default = str)"

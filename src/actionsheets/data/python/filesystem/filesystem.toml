@@ -8,24 +8,24 @@ description = "File system operations"
 section = "Test"
 
 [test.exists]
-what = "File/dir exists"
+action = "File/dir exists"
 code = "os.path.exists(path)"
 
 [test.is.file]
-what = "Is file"
+action = "Is file"
 code = "os.path.isfile(path)"
 
 [test.is.file.empty]
-what = "Is empty file"
+action = "Is empty file"
 code = "os.path.getsize(path) == 0"
 details = "Throws error if the file does not exist"
 
 [test.is.dir]
-what = "Is directory"
+action = "Is directory"
 code = "os.path.isdir(path)"
 
 [test.is.dir.empty]
-what = "Is empty directory"
+action = "Is empty directory"
 code = "not os.listdir(path)"
 
 
@@ -33,7 +33,7 @@ code = "not os.listdir(path)"
 section = "File handling"
 
 [file.create.open.temp.file.cleanup]
-what = "Open temporary file with clean-up"
+action = "Open temporary file with clean-up"
 code = """
 with tempfile.NamedTemporaryFile() as file:
     path = file.name
@@ -43,27 +43,27 @@ with tempfile.NamedTemporaryFile() as file:
 section = "File info"
 
 [file.info._name]
-what = "Filename"
+action = "Filename"
 code = "os.path.basename(r'C:\\Files\\derp.csv')"
 details = "Returns 'derp.csv'"
 
 [file.info._name.noext]
-what = "Filename without extension"
+action = "Filename without extension"
 code = "os.path.splitext(os.path.basename(r'C:\\Files\\derp.csv'))[0]"
 details = "Returns 'derp'"
 
 [file.info.ext]
-what = "File extension"
+action = "File extension"
 code = "os.path.splitext(r'C:\\Files\\derp.csv')[1]"
 details = "Returns '.csv'"
 
 [file.info.parent]
-what = "Parent directory name"
+action = "Parent directory name"
 code = "os.path.basename(os.path.dirname((r'C:\\Files\\derp.csv'))"
 details = "Returns 'Files'"
 
 [file.info.size]
-what = "File size"
+action = "File size"
 code = "os.path.getsize(path)"
 
 
@@ -75,44 +75,44 @@ section = "Directory handling"
 section = "Info"
 
 [dir.info.count]
-what = "Number of children"
+action = "Number of children"
 code = "?"
 
 [dir.info.files.count]
-what = "Number of files"
+action = "Number of files"
 code = "?"
 
 [dir.info.dir.count]
-what = "Number of child directories"
+action = "Number of child directories"
 code = "?"
 
 
 [dir.create]
-what = "Create directory"
+action = "Create directory"
 code = "os.mkdir(path)"
 details = "Error when directory already exists"
 
 [dir.create.try]
-what = "Create directory if missing"
+action = "Create directory if missing"
 code = "Path(path).mkdir(exist_ok=True)"
 
 [dir.create.recursive]
-what = "Create directories, recursively"
+action = "Create directories, recursively"
 code = "os.makedirs(dest_dir)"
 
 [dir.create.recursive.try]
-what = "Create directories recursively if missing"
+action = "Create directories recursively if missing"
 code = "os.makedirs(dest_dir, exist_ok=True)"
 
 [dir.rename]
-what = "Rename a directory"
+action = "Rename a directory"
 code = "?"
 
 [dir.remove]
-what = "Delete directory and underlying files"
+action = "Delete directory and underlying files"
 code = "shutil.rmtree(path)"
 details = "Error if the path does not exist"
 
 [dir.remove.try]
-what = "Delete directory and underlying files, if needed"
+action = "Delete directory and underlying files, if needed"
 code = "shutil.rmtree(path, ignore_error = True)"

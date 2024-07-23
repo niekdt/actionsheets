@@ -9,7 +9,7 @@ import polars as pl
 header_keys = ('name', 'language', 'parent', 'title', 'description', 'details', 'code')
 section_keys = ('section', 'description', 'details', 'code')
 solution_keys = ('code', 'details')
-action_keys = tuple(['what', 'description'] + list(solution_keys))
+action_keys = tuple(['action', 'description'] + list(solution_keys))
 entry_keys = tuple(set(section_keys + action_keys + solution_keys))
 reserved_keys = ('name', 'id', 'depth')
 
@@ -292,7 +292,7 @@ def _process_entry(
 
     is_virtual = len(entry_dict) == 0
     is_section = 'section' in entry_dict
-    is_action = 'what' in entry_dict
+    is_action = 'action' in entry_dict
     is_solution = not is_action and 'code' in entry_dict
 
     assert sum([is_virtual, is_section, is_action, is_solution]) == 1, \
@@ -330,16 +330,16 @@ def _process_virtual_section(entry: dict, name: str, id: str) -> dict:
 
 
 def _process_action(entry: dict, name: str, id: str) -> dict:
-    assert 'what' in entry, f'no "what" defined for entry {id}'
-    assert isinstance(entry['what'], str), f'"what" must be str for entry {id}'
-    assert entry['what'], f'no text for "what" defined for entry {id}'
+    assert 'action' in entry, f'no "action" defined for entry {id}'
+    assert isinstance(entry['action'], str), f'"action" must be str for entry {id}'
+    assert entry['action'], f'no text for "action" defined for entry {id}'
 
     assert 'code' in entry, f'no "code" defined for entry {id}'
     assert isinstance(entry['code'], str), f'"code" must be str for entry {id}'
     assert entry['code'], f'no text for "code" defined for entry {id}'
 
     entry['type'] = 'action'
-    entry['title'] = entry.pop('what')
+    entry['title'] = entry.pop('action')
     return entry
 
 

@@ -12,24 +12,24 @@ section = "Create"
 description = "Define a set"
 
 [create.empty]
-what = "Empty"
+action = "Empty"
 code = "set()"
 details = "`{}` defines a dictionary!"
 
 [create.define]
-what = "Define"
+action = "Define"
 code = "{'apple', 'banana', 'pear'}"
 
 [create.tuple]
-what = "From tuple"
+action = "From tuple"
 code = "set(x)"
 
 [create.list]
-what = "From list"
+action = "From list"
 code = "set(x)"
 
 [create.iter]
-what = "From iterable (consumes)"
+action = "From iterable (consumes)"
 code = "set(x)"
 
 
@@ -37,42 +37,42 @@ code = "set(x)"
 section = "Test"
 
 [test.is]
-what = "Is set"
+action = "Is set"
 code = "x is set"
 
 [test.inherits]
-what = "Is set or subclass"
+action = "Is set or subclass"
 code = "isinstance(x, set)"
 
 [test.empty]
-what = "Empty"
+action = "Empty"
 code = "not x"
 
 [test.nempty]
-what = "Not empty"
+action = "Not empty"
 code = "x"
 
 [test.contains.value]
-what = "Contains value _v_"
+action = "Contains value _v_"
 code = "v in x"
 
 [test.contains.none]
-what = "Contains `None`"
+action = "Contains `None`"
 code = "None in x"
 
 [test.contains.values.all]
-what = "Contains all of the given values"
+action = "Contains all of the given values"
 code = "{v1, v2}.issubset(x)"
 
 [test.contains.values.all.list]
 code = "x.issuperset([v1, v2])"
 
 [test.contains.values.any]
-what = "Contains any of the given values"
+action = "Contains any of the given values"
 code = "not x.isdisjoint([v1, v2])"
 
 [test.contains.values.none]
-what = "Contains none of the given values"
+action = "Contains none of the given values"
 code = "x.isdisjoint([v1, v2])"
 
 
@@ -80,15 +80,15 @@ code = "x.isdisjoint([v1, v2])"
 section = "Compare with another set"
 
 [test.set.disjoint]
-what = "Sets share no values"
+action = "Sets share no values"
 code = "x.isdisjoint(y)"
 
 [test.set.sub]
-what = "Set is a subset of the other: all values of x are in y"
+action = "Set is a subset of the other: all values of x are in y"
 code = "x.issubset(y)"
 
 [test.set.super]
-what = "Set is a superset of the other: all values of y are in x"
+action = "Set is a superset of the other: all values of y are in x"
 code = "x.issuperset(y)"
 
 [update]
@@ -102,11 +102,11 @@ section = "Map"
 section = "Grow"
 
 [update.grow.add]
-what = "Add value if needed"
+action = "Add value if needed"
 code = "x.add('strawberry')"
 
 [update.grow.add.list]
-what = "Add multiple values if needed"
+action = "Add multiple values if needed"
 code = "x.update(['strawberry', 'kiwi'])"
 
 
@@ -114,16 +114,16 @@ code = "x.update(['strawberry', 'kiwi'])"
 section = "Shrink"
 
 [update.shrink.clear]
-what = "Remove all values (clear)"
+action = "Remove all values (clear)"
 code = "x.clear()"
 
 [update.shrink.remove]
-what = "Remove value"
+action = "Remove value"
 code = "x.remove('strawberry')"
 details = "Throws error if value is missing"
 
 [update.shrink.remove.try]
-what = "Remove value if needed"
+action = "Remove value if needed"
 code = "x.discard('strawberry')"
 
 
@@ -135,28 +135,28 @@ section = "Join"
 description = "Join with another set"
 
 [derive.join.union]
-what = "Union with another set"
+action = "Union with another set"
 code = "x | y"
 
 [derive.join.union.fun]
 code = "x.union(y)"
 
 [derive.join.intersect]
-what = "Intersection with another set: get values which are present in both sets"
+action = "Intersection with another set: get values which are present in both sets"
 code = "x & y"
 
 [derive.join.intersect.fun]
 code = "x.intersect(y)"
 
 [derive.join.diff]
-what = "Difference to another set: get values which are not present in the other set"
+action = "Difference to another set: get values which are not present in the other set"
 code = "x - y"
 
 [derive.join.diff.fun]
 code = "x.difference(y)"
 
 [derive.join.symdiff]
-what = "Symmetric difference with another set: get values that are not present in both sets"
+action = "Symmetric difference with another set: get values that are not present in both sets"
 code = "x ^ y"
 
 [derive.join.symdiff.fun]
@@ -168,11 +168,11 @@ section = "Convert"
 description = "The order of the values in the output should not be relied on"
 
 [convert.tuple]
-what = "Tuple of values"
+action = "Tuple of values"
 code = "tuple(x)"
 
 [convert.list]
-what = "List of values"
+action = "List of values"
 code = "list(x)"
 
 

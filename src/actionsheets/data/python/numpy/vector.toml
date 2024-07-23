@@ -8,68 +8,68 @@ description = "1D-array operations"
 section = "Create"
 
 [create.undefined]
-what = "Undefined, length _n_"
+action = "Undefined, length _n_"
 code = "np.empty(n)"
 details = "Warning: don't use the initial values"
 
 [create.constant.zero.float]
-what = "Float zeros, length _n_"
+action = "Float zeros, length _n_"
 code = "np.zeros(n)"
 
 [create.constant.zero.int]
-what = "Int zeros, length _n_"
+action = "Int zeros, length _n_"
 code = "np.zeros(n, dtype=np.int64)"
 
 [create.constant.one]
-what = "Ones, length _n_"
+action = "Ones, length _n_"
 code = "np.ones(n)"
 
 [create.constant.'true']
-what = "True values, length _n_"
+action = "True values, length _n_"
 code = "np.full(n, fill_value=True)"
 
 [create.constant.'false']
-what = "False values, length _n_"
+action = "False values, length _n_"
 code = "np.full(n, fill_value=False)"
 
 [create.constant.value]
-what = "Fill with value _v_"
+action = "Fill with value _v_"
 code = "np.full(n, fill_value=v)"
 
 [create.counter.end]
-what = "Increasing numbers [0, _b_-1]"
+action = "Increasing numbers [0, _b_-1]"
 code = "np.arrange(b)"
 
 [create.counter.range]
-what = "Increasing numbers [_a_, _b_]"
+action = "Increasing numbers [_a_, _b_]"
 code = "np.arrange(a, b)"
 
 [create.counter.step]
-what = "Numbers from _a_ to _b_ with step size _s_"
+action = "Numbers from _a_ to _b_ with step size _s_"
 code = "np.arrange(a, b, s)"
 
 [create.linspace.range]
-what = "Linear range from _a_ to _b_ of length _n_"
+action = "Linear range from _a_ to _b_ of length _n_"
 code = "np.linspace(a, b, num=n)"
 
 [create.tuple]
-what = "From tuple"
+action = "From tuple"
 code = "np.array(tuple)"
 
 [create.list]
-what = "From list"
+action = "From list"
 code = "np.array(list)"
 
 [create.iter]
-what = "From iter"
+action = "From iter"
 code= "np.fromiter(iter)"
 
 [create.iter.n]
-what = "From iter (max length _n_)"
+action = "From iter (max length _n_)"
 code = "np.fromiter(iter, count=n)"
 
 [create.concat]
-what = "From two vectors"
+action = "From two vectors"
 code = "np.append(v1, v2)"
 
 [create.concat.2]
@@ -80,58 +80,58 @@ code = "np.concatenate((v1, v2))"
 section = "Test"
 
 [test.is]
-what = "Numpy array is vector"
+action = "Numpy array is vector"
 code = "v.ndim == 1"
 
 [test.equal]
-what = "Vectors are equal"
+action = "Vectors are equal"
 code = "np.array_equal(v, v2)"
 
 [test.type.bool]
-what = "Logical type"
+action = "Logical type"
 code = "v.dtype == np.bool_"
 
 [test.type.float]
-what = "Float type"
+action = "Float type"
 code = "v.dtype == np.float_"
 
 [test.type.int]
-what = "Integer type"
+action = "Integer type"
 code = "v.dtype == np.int_"
 
 [test.contains.'nan']
-what = "Contains nan"
+action = "Contains nan"
 code = "np.isnan(v).any()"
 
 [test.contains.'inf']
-what = "Contains inf"
+action = "Contains inf"
 code = "np.isinf(v).any()"
 
 [test.contains.value]
-what = "Contains value"
+action = "Contains value"
 code = "value in v"
 
 [test.missing.value]
-what = "Does not contain value"
+action = "Does not contain value"
 code = "value not in v"
 
 [test.finite.all]
-what = "All finite"
+action = "All finite"
 code = "np.isfinite(v).all()"
 
 [test.value.all]
-what = "All elements are equal to value"
+action = "All elements are equal to value"
 code = "np.all(v == value)"
 
 [test.value.all.2]
 code = "(v == value).all()"
 
 [test.close.all]
-what = "All numerical elements are close to value"
+action = "All numerical elements are close to value"
 code = "np.all(np.isclose(v, value))"
 
 [test.equal.all]
-what = "All numerical elements are equal"
+action = "All numerical elements are equal"
 code = "np.ptp(v) == 0"
 
 
@@ -140,32 +140,32 @@ section = "Update"
 description = "All operations are in-place"
 
 [update.elem.first]
-what = "Set first element"
+action = "Set first element"
 code = "v[0] = value"
 
 [update.elem.last]
-what = "Set last element"
+action = "Set last element"
 code = "v[-1] = value"
 
 [update.elem.index]
-what = "Set value of the _i_th element"
+action = "Set value of the _i_th element"
 code = "v[i] = value"
 
 [update.fill]
-what = "Fill with constant value"
+action = "Fill with constant value"
 code = "v[:] = value"
 
 [update.fill.head]
-what = "Fill first _n_ values"
+action = "Fill first _n_ values"
 code = "v[:n] = value"
 
 [update.sort.asc]
-what = "Sort elements ascending"
+action = "Sort elements ascending"
 code = "v.sort()"
 details = "NaNs are put last"
 
 [update.sort.desc]
-what = "Sort elements descending"
+action = "Sort elements descending"
 code = "v[::-1].sort()"
 details = "Note that this puts NaNs first!"
 
@@ -174,36 +174,36 @@ details = "Note that this puts NaNs first!"
 section = "Get"
 
 [get.values.unique]
-what = "Unique values"
+action = "Unique values"
 code = "numpy.unique(v)"
 
 [get.values.unique.set]
 code = "set(v)"
 
 [get.values.unique.count]
-what = "Number of unique values"
+action = "Number of unique values"
 code = "len(numpy.unique(v))"
 
 [get.values.unique.counts]
-what = "Count per unique value"
+action = "Count per unique value"
 code = "np.unique(v, return_counts=True)"
 
 [get.values.nonzero.count]
-what = "Count non-zero values"
+action = "Count non-zero values"
 code = "np.count_nonzero(v)"
 
 [get.bincount]
-what = "Count per positive integer from [0, max(v)]"
+action = "Count per positive integer from [0, max(v)]"
 code = "np.bincount(v)"
 details = "Elements must be nonnegative ints"
 
 [get.index.max]
-what = "Index of first max element"
+action = "Index of first max element"
 code = "np.argmax(v)"
 details = "Returns index of NaN if present!"
 
 [get.index.min]
-what = "Index of first min element"
+action = "Index of first min element"
 code = "np.argmin(v)"
 details = "Returns index of NaN if present!"
 
@@ -220,20 +220,20 @@ section = "Derive"
 section = "Map"
 
 [derive.map.truncate]
-what = "Clip (truncate) between [_a_, _b_ ]"
+action = "Clip (truncate) between [_a_, _b_ ]"
 code = "np.clip(v, a_min=a, a_max=b)"
 
 [derive.map.bin]
-what = "Bin index"
+action = "Bin index"
 code = "np.digitize(v, bins)"
 
 [derive.map.interp]
-what = "Piecewise-linear interpolation of coordinate mapping xp -> yp"
+action = "Piecewise-linear interpolation of coordinate mapping xp -> yp"
 code = "np.interp(v, xp, yp)"
 details = "No option for extrapolation!"
 
 [derive.map.interp.extra]
-what = "Piecewise-linear interpolation with extrapolation"
+action = "Piecewise-linear interpolation with extrapolation"
 code = """
 f = scipy.interpolate.interp1d(xp, yp, fill_value = 'extrapolate')
 f(v)
@@ -241,11 +241,11 @@ f(v)
 details = "Deprecated without replacement, lol"
 
 [derive.map.order.asc]
-what = "Ascending order (indices) of elements"
+action = "Ascending order (indices) of elements"
 code = "np.argsort(v)"
 
 [derive.map.order.desc]
-what = "Descending order (indices) of elements"
+action = "Descending order (indices) of elements"
 code = "np.argsort(-v)"
 
 
@@ -253,27 +253,27 @@ code = "np.argsort(-v)"
 section = "Reorder elements"
 
 [derive.order.reverse]
-what = "Reverse elements"
+action = "Reverse elements"
 code = "v[::-1]"
 
 [derive.order.reverse.flip]
 code = "np.flip(v)"
 
 [derive.order.shift]
-what = "Shift elements forwards, with roll-over"
+action = "Shift elements forwards, with roll-over"
 code = "np.roll(v, 1)"
 
 [derive.order.shift.back]
-what = "Shift elements backwards, with roll-over"
+action = "Shift elements backwards, with roll-over"
 code = "np.roll(v, -1)"
 
 [derive.order.sort]
-what = "Sort ascending"
+action = "Sort ascending"
 code = "np.sort(v)"
 details = "NaNs are last"
 
 [derive.order.sort.desc]
-what = "Sort descending"
+action = "Sort descending"
 code = "v[np.argsort(-v)]"
 details = "NaNs are last"
 
@@ -282,12 +282,12 @@ details = "NaNs are last"
 section = "Shrink"
 
 [derive.shrink.diff]
-what = "Pairwise difference to next element"
+action = "Pairwise difference to next element"
 code = "np.diff(v)"
 details = "_n-1_ elements"
 
 [derive.shrink.diff.lag]
-what = "Pairwise difference between elements with given lag"
+action = "Pairwise difference between elements with given lag"
 code = "np.diff(v, n=lag)"
 
 
@@ -295,23 +295,23 @@ code = "np.diff(v, n=lag)"
 section = "Grow"
 
 [derive.grow.pad]
-what = "Pad with value"
+action = "Pad with value"
 code = "np.pad(v, pad_width=1, constant_values=v)"
 
 [derive.grow.pad.outer]
-what = "Pad with outer elements"
+action = "Pad with outer elements"
 code = "np.pad(v, pad_width=1, mode='edge')"
 
 [derive.grow.rep]
-what = "Replicate _n_ times"
+action = "Replicate _n_ times"
 code = "np.repeat(v, n)"
 
 [derive.grow.append]
-what = "Append vector"
+action = "Append vector"
 code = "np.append(v1, v2)"
 
 [derive.grow.concat]
-what = "Append vectors"
+action = "Append vectors"
 code = "np.concatenate((v1, v2, v3))"
 
 
@@ -319,17 +319,17 @@ code = "np.concatenate((v1, v2, v3))"
 section = "Convert"
 
 [convert.bytes]
-what = "Bytes"
+action = "Bytes"
 code = "v.tobytes()"
 
 [convert.tuple]
-what = "Tuple"
+action = "Tuple"
 code = "tuple(v)"
 
 [convert.list]
-what = "List"
+action = "List"
 code = "v.tolist()"
 
 [convert.set]
-what = "Set"
+action = "Set"
 code = "set(v)"

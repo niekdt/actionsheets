@@ -10,15 +10,15 @@ details = "This sheet is highly incomplete."
 section = "Create"
 
 [create.bool]
-what = "Boolean scalar"
+action = "Boolean scalar"
 code = "np.array(True)"
 
 [create.float]
-what = "Floating point scalar"
+action = "Floating point scalar"
 code = "np.array(0)"
 
 [create.int]
-what = "Int scalar"
+action = "Int scalar"
 code = "np.array(0, dtype=np.int64)"
 
 
@@ -26,15 +26,15 @@ code = "np.array(0, dtype=np.int64)"
 section = "Test"
 
 [test.'nan']
-what = "Is NaN"
+action = "Is NaN"
 code = "np.isnan(x)"
 
 [test.'inf']
-what = "Is infinite"
+action = "Is infinite"
 code = "np.isinf(x)"
 
 [test.ninf]
-what = "Is finite"
+action = "Is finite"
 code = "np.isfinite(x)"
 
 
@@ -42,9 +42,9 @@ code = "np.isfinite(x)"
 section = "Derive"
 
 [derive.log]
-what = "Log transform"
+action = "Log transform"
 code = "np.log(x)"
 
 [derive.log10]
-what = "Log-10 transform"
+action = "Log-10 transform"
 code = "np.log10(x)"

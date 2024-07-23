@@ -12,7 +12,7 @@ details = "This sheet is incomplete."
 section = "Create"
 
 [create.lme.intercept]
-what = "Random intercept model with _subject_ as grouping factor"
+action = "Random intercept model with _subject_ as grouping factor"
 code = "lme(fixed = y ~ 1, random = ~ 1 | subject)"
 
 [create.specify]
@@ -20,22 +20,22 @@ section = "Specify"
 description = "Further specification options for `lme()`"
 
 [create.specify.intercept]
-what = "Random intercept per group"
+action = "Random intercept per group"
 code = "random = ~ 1 | subject"
 
 [create.specify.intercept.list]
 code = "random = list(subject = pdSymm(form = ~ 1))"
 
 [create.specify.intercept.sdb.factor]
-what = "Random intercept, with different between-subject SD per secondary grouping"
+action = "Random intercept, with different between-subject SD per secondary grouping"
 code = "random = list(subject = pdDiag(form = ~ diagnosis))"
 
 [create.specify.intercept.sdw.factor]
-what = "Within-subject error per secondary grouping"
+action = "Within-subject error per secondary grouping"
 code = "weights = varIdent(form = ~ 1 | diagnosis)"
 
 [create.specify.ar1]
-what = "With AR-1 correlation structure"
+action = "With AR-1 correlation structure"
 code = "correlation = corAR1(form = ~ 1 | subject)"
 
 
@@ -44,40 +44,40 @@ code = "correlation = corAR1(form = ~ 1 | subject)"
 section = "Model fit"
 
 [assess.loglik]
-what = "Log-likelihood"
+action = "Log-likelihood"
 code = "logLik(model)"
 
 [assess.aic]
-what = "AIC"
+action = "AIC"
 code = "AIC(model)"
 
 [assess.bic]
-what = "BIC"
+action = "BIC"
 code = "BIC(model)"
 
 [assess.icc]
-what = "ICC"
+action = "ICC"
 code = "performance::icc(model)"
 details = "Proportion of the total variance explained by the between-cluster variance. Higher is better. 0.1 is considered a meaningful threshold."
 
 [assess.rsq.marginal]
-what = "Marginal pseudo R-squared"
+action = "Marginal pseudo R-squared"
 code = "r.squaredGLMM(model)[1, 'R2m']"
 
 [assess.rsq.conditional]
-what = "Conditional pseudo R-squared"
+action = "Conditional pseudo R-squared"
 code = "r.squaredGLMM(model)[1, 'R2c']"
 
 [assess.plot.residuals]
-what = "Plot residuals against predicted"
+action = "Plot residuals against predicted"
 code = "plot(model)"
 
 [assess.plot.re]
-what = "Plot random effects"
+action = "Plot random effects"
 code = "plot(ranef(model))"
 
 [assess.plot.qq]
-what = "Q-Q plot"
+action = "Q-Q plot"
 code = "car::qqPlot(residuals(model))"
 
 
@@ -85,31 +85,31 @@ code = "car::qqPlot(residuals(model))"
 section = "Extract info from a fitted model."
 
 [extract.fixef.coefs]
-what = "Fixed effects coefficients"
+action = "Fixed effects coefficients"
 code = "fixef(model)"
 
 [extract.fixef.coefs.interval]
-what = "Fixed effects coefficient intervals"
+action = "Fixed effects coefficient intervals"
 code = "intervals(model)"
 
 [extract.varsummary]
-what = "Variance and SD summary"
+action = "Variance and SD summary"
 code = "VarCorr(model)"
 
 [extract.vcov]
-what = "Variance-covariance matrix"
+action = "Variance-covariance matrix"
 code = "vcov(model)"
 
 [extract.varw]
-what = "Within-group variance"
+action = "Within-group variance"
 code = "sigma(model)^2"
 
 [extract.sdw]
-what = "Within-group SD"
+action = "Within-group SD"
 code = "sigma(model)"
 
 [extract.sdw.factor]
-what = "Within-subject SD for group _$GROUP_ (when using `weights=varIdent`)"
+action = "Within-subject SD for group _$GROUP_ (when using `weights=varIdent`)"
 code = """
 sigma(model) * coef(
     model$modelStruct$varStruct,
@@ -119,11 +119,11 @@ sigma(model) * coef(
 """
 
 [extract.varb]
-what = "Between-group variance"
+action = "Between-group variance"
 code = "VarCorr(model)['Residual', 'Variance']"
 
 [extract.sdb]
-what = "Between-group SD"
+action = "Between-group SD"
 code = "VarCorr(model)['Residual', 'StdDev']"
 
 
@@ -131,16 +131,16 @@ code = "VarCorr(model)['Residual', 'StdDev']"
 section = "Extract effect size"
 
 [extract.effect.cohensd]
-what = "Cohen's _d_ for main effects"
+action = "Cohen's _d_ for main effects"
 code = "EMAtools::lme.dscore(model, type = 'nlme')"
 
 [extract.effect.cohensf]
-what = "Cohen's _f_ for main effects"
+action = "Cohen's _f_ for main effects"
 code = "effectsize::cohens_f(model)"
 details = "d = 2 * f"
 
 [extract.effect.cohensd.diff]
-what = "Cohen's _d_ for group difference"
+action = "Cohen's _d_ for group difference"
 code = """
 emg = emmeans::emmeans(model, ~ diagnosis)
 emmeans::eff_size(
@@ -156,11 +156,11 @@ details = "Use with care"
 section = "Hypothesis testing"
 
 [hyptest.anova]
-what = "Coefficient significance"
+action = "Coefficient significance"
 code = "car::Anova(model)"
 
 [hyptest.lrt]
-what = "Test for nested model improvement (likelihood ratio test)"
+action = "Test for nested model improvement (likelihood ratio test)"
 code = "performance::test_lrt(model0, model1)"
 
 [hyptest.lrt.anova]

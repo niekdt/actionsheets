@@ -21,44 +21,44 @@ details = """
 section = "Create"
 
 [create.dataframe]
-what = "From data.frame"
+action = "From data.frame"
 code = "as.data.table(df)"
 
 [create.dataframe.inplace]
-what = "Change data.frame to data.table, in-place"
+action = "Change data.frame to data.table, in-place"
 code = "setDT(df)"
 
 [create.dataframe.rownames]
-what = "From data.frame, storing row names as the first column"
+action = "From data.frame, storing row names as the first column"
 code = "as.data.table(df, keep.rownames=TRUE)"
 
 [create.list.vectors.named]
-what = "From list of named vectors"
+action = "From list of named vectors"
 code = "as.data.table(do.call(rbind, veclist))"
 
 [create.statmod]
-what = "From statistical object"
+action = "From statistical object"
 code = "broom::tidy(lm) %>% as.data.table()"
 
 [create.statmod.row]
-what = "From statistical object to one-row frame"
+action = "From statistical object to one-row frame"
 code = "broom::glance(lm) %>% as.data.table()"
 
 [create.rle]
-what = "From running-length encoding (RLE)"
+action = "From running-length encoding (RLE)"
 code = "rle(x) %>% unclass() %>% as.data.table()"
 
 [create.matrix]
-what = "From matrix to long format"
+action = "From matrix to long format"
 code = "melt(data.table(x), measure = colnames(x), id=character())"
 
 [create.array]
-what = "From array to long format"
+action = "From array to long format"
 code = "as.data.table(x)"
 details = "Ensure that all dims are named"
 
 [create.file.csv]
-what = "From CSV file"
+action = "From CSV file"
 code = "fread('derp.csv')"
 
 
@@ -66,19 +66,19 @@ code = "fread('derp.csv')"
 section = "Properties"
 
 [prop.col.names]
-what = "Column names"
+action = "Column names"
 code = "names(dt)"
 
 [prop.col.count]
-what = "Number of columns"
+action = "Number of columns"
 code = "length(dt)"
 
 [prop.row.count]
-what = "Number of rows"
+action = "Number of rows"
 code = "nrow(dt)"
 
 [prop.keys]
-what = "Get key(s)"
+action = "Get key(s)"
 code = "key(dt)"
 
 
@@ -86,7 +86,7 @@ code = "key(dt)"
 section = "Test"
 
 [test.empty]
-what = "Empty (no rows)"
+action = "Empty (no rows)"
 code = "nrow(dt) == 0"
 
 
@@ -95,19 +95,19 @@ section = "Update"
 description = "Modify the data table in-place (i.e., by reference)"
 
 [update.keys]
-what = "Set key(s) by symbols"
+action = "Set key(s) by symbols"
 code = "setkey(dt, Age, Sex)"
 
 [update.keys.named]
-what = "Set key(s) by names"
+action = "Set key(s) by names"
 code = "setkeyv(dt, c('Age', 'Sex'))"
 
 [update.attr.set]
-what = "Assign attribute"
+action = "Assign attribute"
 code = "setattr(dt, 'myAttr', value)"
 
 [update.attr.remove]
-what = "Remove attribute"
+action = "Remove attribute"
 code = "setattr(dt, 'myAttr', NULL)"
 
 
@@ -120,11 +120,11 @@ See the snippets in the Grow section for replacing complete column(s).
 """
 
 [update.map.column.subset.constant]
-what = "Update some rows with constant value, conditional on another column"
+action = "Update some rows with constant value, conditional on another column"
 code = "dt[is.na(x), y:=1]"
 
 [update.map.column.value.grouped]
-what = "Update rows with values conditional on group (key)"
+action = "Update rows with values conditional on group (key)"
 code = """
 dtg = data.table(…, x=2, key=Group)
 dt[dtg, x := i.x]
@@ -132,7 +132,7 @@ dt[dtg, x := i.x]
 
 
 [update.map.column.factor.na]
-what = "Replace factor column NA values by a special level"
+action = "Replace factor column NA values by a special level"
 code = "dt[is.na(f), f := 'N/A']"
 
 [update.order]
@@ -144,11 +144,11 @@ section = "Sort"
 description = "Sorting can be handled automatically by setting a column as one of the keys through setkey()."
 
 [update.reorder.sort.sym]
-what = "Sort by column symbols"
+action = "Sort by column symbols"
 code = "setorder(dt, Age, Sex)"
 
 [update.reorder.sort.named]
-what = "Sort by column names"
+action = "Sort by column names"
 code = "setorderv(dt, c('Age', 'Sex'))"
 
 
@@ -157,38 +157,38 @@ section = "Grow"
 description = "Increase the size of the data table"
 
 [update.grow.column.value]
-what = "Add column with constant value _value_"
+action = "Add column with constant value _value_"
 code = "dt[, x := value]"
 
 [update.grow.column.values]
-what = "Add column with new vector of values (per row)"
+action = "Add column with new vector of values (per row)"
 code = "dt[, x := values]"
 details = "_values_ must be of same length as number of rows of the data table"
 
 [update.grow.columns.value]
-what = "Add columns with constant values"
+action = "Add columns with constant values"
 code = "dt[, ':='(x=1, y=2)]"
 
 [update.grow.columns.var.value]
-what = "Add variable columns with constant values"
+action = "Add variable columns with constant values"
 code = "dt[, c('x', 'y') := .(1, 2)]"
 
 [update.grow.columns.matrix]
-what = "Add columns from matrix columns"
+action = "Add columns from matrix columns"
 code = """
 mat = matrix(1:8, ncol=2)
 dt[, c('a' ,'b') := split(mat, col(mat))]
 """
 
 [update.grow.columns.matrix.t]
-what = "Add columns from matrix rows"
+action = "Add columns from matrix rows"
 code = """
 mat = matrix(1:8, nrow=2)
 dt[, c('a' ,'b') := split(mat, row(mat))]
 """
 
 [update.grow.columns.table]
-what = "Add columns from another table for matching keys"
+action = "Add columns from another table for matching keys"
 code = """
 dt2 = data.table(…)
 dt[dt2, (vars) := mget(vars)]
@@ -199,53 +199,53 @@ dt[dt2, (vars) := mget(vars)]
 section = "Add column derived from another column"
 
 [update.grow.column.derive.grouped]
-what = "Add column with aggregate value by group"
+action = "Add column with aggregate value by group"
 code = "dt[, x := mean(y), by=ID]"
 
 [update.grow.column.derive.rolling.'right-mean-partial']
-what = "Right-aligned rolling mean of size _w_ (partial windows)"
+action = "Right-aligned rolling mean of size _w_ (partial windows)"
 code = "dt[, RMean := Reduce('+', shift(x, 1:w-1, fill=0)) / pmin(w, .I)]"
 
 [update.grow.column.derive.rolling.grouped.'right-sum']
-what = "Right-aligned rolling sum of size _w_"
+action = "Right-aligned rolling sum of size _w_"
 code = "dt[, RSum := Reduce('+', shift(x, 0:(w-1), fill=0)), by=ID]"
 details = "Easily 50 times faster than zoo::rollapply"
 
 [update.grow.column.derive.rolling.grouped.'right-mean-fixed']
-what = "Right-aligned rolling mean with fixed window _w_ (zero-filled)"
+action = "Right-aligned rolling mean with fixed window _w_ (zero-filled)"
 code = "dt[, RMean := Reduce('+', shift(x, 0:(w-1), fill=0)) / w, by=ID]"
 
 [update.grow.column.derive.rolling.grouped.'right-mean-partial']
-what = "Right-aligned rolling mean (partial windows)"
+action = "Right-aligned rolling mean (partial windows)"
 code = "dt[, RMean := Reduce('+', shift(x, 0:(w-1), fill=0)) / pmin(w, 1:.N), by=ID]"
 
 [update.grow.column.derive.rolling.grouped.'right-mean-na']
-what = "Right-aligned rolling mean (ignoring NAs)"
+action = "Right-aligned rolling mean (ignoring NAs)"
 code = """
 dt[, RMean := Reduce('+', shift(ifelse(is.na(x), 0, x), 0:(W-1), fill=0)) /
     Reduce('+', shift(is.finite(x), 0:(W-1), fill=0)), by=ID]
 """
 
 [update.grow.column.derive.rolling.grouped.'center-mean-fixed']
-what = "Centered rolling mean (fixed window of size $W$ (inserting zeroes))"
+action = "Centered rolling mean (fixed window of size $W$ (inserting zeroes))"
 code = "dt[, CMean := Reduce('+', shift(x, -floor(W/2):floor(W/2), fill=0)) / W, by=ID]"
 
 [update.grow.column.derive.rolling.grouped.'center-mean-partial']
-what = "Centered rolling mean (partial windows)"
+action = "Centered rolling mean (partial windows)"
 code = """
 dt[, CMean := Reduce('+', shift(x, -floor(W/2):floor(W/2), fill=0)) /
     pmin(W, c(1:ceiling(.N/2), floor(.N/2):1)), by=ID]
 """
 
 [update.grow.column.derive.rolling.grouped.'center-mean-na']
-what = "Centered rolling mean (ignoring NAs)"
+action = "Centered rolling mean (ignoring NAs)"
 code = """
 dt[, CMean := Reduce('+', shift(x, -floor(W/2):floor(W/2), fill=0)) /
     Reduce('+', shift(is.finite(x), -floor(W/2):floor(W/2), fill=0)), by=ID]
 """
 
 [update.grow.column.derive.rolling.grouped.match]
-what = "Mark consecutive matching rows"
+action = "Mark consecutive matching rows"
 code = """
 dt[, CMatch := {
     r = rle(MATCH)
@@ -256,7 +256,7 @@ dt[, CMatch := {
 details = "Needs a better description"
 
 [update.grow.column.derive.rolling.grouped.match.count]
-what = "Count column for consecutive matches"
+action = "Count column for consecutive matches"
 code = """
 dt[, MatchNr := {
     function(x) cumsum(x) + cummin(c(0, diff(x)) * cumsum(x))
@@ -271,15 +271,15 @@ description = "Reduce the size of the data table"
 
 
 [update.shrink.column]
-what = "Remove column"
+action = "Remove column"
 code = "dt[, x := NULL]"
 
 [update.shrink.columns]
-what = "Remove columns"
+action = "Remove columns"
 code = "dt[, ':='(x=NULL, y=NULL)]"
 
 [update.shrink.columns.var]
-what = "Remove variable columns"
+action = "Remove variable columns"
 code = "dt[, c('x', 'y') := NULL]"
 
 
@@ -288,7 +288,7 @@ section = "Join"
 description = "Join with another data frame"
 
 [update.join.left]
-what = "Left join"
+action = "Left join"
 code = """
 cols = c('x', 'y')
 dt2[dt1, (cols) := mget(paste0('i.', cols))]
@@ -304,7 +304,7 @@ section = "Scalar"
 description = "Extract a scalar result."
 
 [query.scalar.duplicate.count]
-what = "Number of duplicated rows"
+action = "Number of duplicated rows"
 code = "sum(duplicated(dt))"
 
 
@@ -313,7 +313,7 @@ section = "Vector"
 description = "Extract a vector result."
 
 [query.vector.index.row.key]
-what = "Find row indices of key value"
+action = "Find row indices of key value"
 code = "dt['a1', which=TRUE]"
 
 
@@ -322,11 +322,11 @@ section = "Extract column"
 description = "Extract a result per row (vector of length nrow(data))"
 
 [query.col.vector]
-what = "Get column values as vector"
+action = "Get column values as vector"
 code = "dt$Age"
 
 [query.col.vector.var]
-what = "Get column values by variable name"
+action = "Get column values by variable name"
 code = "dt[[col]]"
 
 
@@ -346,22 +346,22 @@ section = "Map"
 description = "Derive a new data frame of the same shape"
 
 [derive.map.replace.na.zero]
-what = "Replace NAs with zero"
+action = "Replace NAs with zero"
 code = "dt[is.na(dt)] = 0"
 
 [derive.map.replace.na.value]
-what = "Replace NAs with value _v_"
+action = "Replace NAs with value _v_"
 code = "dt[is.na(dt)] = v"
 
 [derive.map.replace.na.locf]
-what = "Replace missing values using LOCF"
+action = "Replace missing values using LOCF"
 code = """
 locf = function(x) x[cummax(c(TRUE, tail(!is.na(x) * seq_along(x), -1)))]
 dt[, x := locf(x), by=ID]
 """
 
 [derive.map.replace.na.nocb]
-what = "Replace missing values using NOCB"
+action = "Replace missing values using NOCB"
 code = """
 locf = function(x) x[cummax(c(TRUE, tail(!is.na(x) * seq_along(x), -1)))]
 nocb = function(x) rev(locf(rev(x))
@@ -375,94 +375,94 @@ description = "Derive a subset of the data frame"
 
 
 [derive.shrink.column]
-what = "Select a single column"
+action = "Select a single column"
 code = "dt[, .(Age)]"
 
 [derive.shrink.column.var]
-what = "Select a single column by variable name"
+action = "Select a single column by variable name"
 code = "dt[, list(col)]"
 
 
 [derive.shrink.columns]
-what = "Select columns"
+action = "Select columns"
 code = "dt[, .(Age, Sex)]"
 
 [derive.shrink.columns.except]
-what = "Select all columns except"
+action = "Select all columns except"
 code = "dt[, -c('Age', 'Sex')]"
 
 [derive.shrink.columns.map]
-what = "Select columns and apply function"
+action = "Select columns and apply function"
 code = "dt[, lapply(.SD, mean), .SDcols=c('Age', 'Sex')]"
 
 [derive.shrink.rows.index]
-what = "Select rows by row number"
+action = "Select rows by row number"
 code = "dt[1:10]"
 
 [derive.shrink.rows.key]
-what = "Select rows with key value"
+action = "Select rows with key value"
 code = "dt[dtquery[query, .(ID)]]"
 
 [derive.shrink.rows.key.factor]
-what = "Select rows with key value, dropping factor levels"
+action = "Select rows with key value, dropping factor levels"
 code = "dt[c('a1', 'a2')]"
 details = "Discards factor level order!"
 
 [derive.shrink.rows.key.first]
-what = "Select first matching row for each specified key"
+action = "Select first matching row for each specified key"
 code = "dt[c('a1', 'a2'), mult='first']"
 
 [derive.shrink.rows.keys]
-what = "Select rows indexed by multiple keys"
+action = "Select rows indexed by multiple keys"
 code = "dt[.('a1', 'b1')]"
 details = "Notice the dot"
 
 [derive.shrink.rows.keys.table]
-what = "Select rows of keys specified in a table"
+action = "Select rows of keys specified in a table"
 code = """
 dtquery = data.table(..., by=keys)
 dt[dtquery]
 """
 
 [derive.shrink.rows.keys.match]
-what = "Select rows of groups, excluding non-existent queried rows"
+action = "Select rows of groups, excluding non-existent queried rows"
 code = """
 dtquery = data.table(..., by=keys)
 dt[dtquery, nomatch=0]
 """
 
 [derive.shrink.rows.values]
-what = "Select rows with values specified in table"
+action = "Select rows with values specified in table"
 code = """
 dtquery = data.table(...)
 merge(dt, dtquery, by=COLUMNS)
 """
 
 [derive.shrink.rows.unique]
-what = "Unique rows"
+action = "Unique rows"
 code = "unique(dt)"
 
 [derive.shrink.rows.unique.columns]
-what = "Unique rows by columns"
+action = "Unique rows by columns"
 code = "unique(dt, by = keys(dt))"
 
 [derive.shrink.rows.duplicate]
-what = "Duplicated rows"
+action = "Duplicated rows"
 code = "dt[duplicated(dt),]"
 
 [derive.shrink.rows.sample]
-what = "Sample _n_ rows"
+action = "Sample _n_ rows"
 code = "dt[sample(.N, n),]"
 
 [derive.shrink.rows.sample.key]
-what = "Sample _n_ rows by key groups"
+action = "Sample _n_ rows by key groups"
 code = """
 dtquery = data.table(sample(levels(dt$Id), n))
 dt[dtquery]
 """
 
 [derive.shrink.rows.grouped.head]
-what = "First _n_ rows per group"
+action = "First _n_ rows per group"
 code = "dt[dt[, .I[1:10], by=ID]]"
 details = "Not the best way"
 
@@ -471,33 +471,33 @@ section = "Aggregation"
 description = "Aggregate rows by group"
 
 [derive.shrink.aggregate.column]
-what = "By group"
+action = "By group"
 code = "dt[,, by = ID]"
 details = "Typically used for categorical columns, e.g., string, factor, date, or int"
 
 [derive.shrink.aggregate.column.str]
-what = "By group, from column name"
+action = "By group, from column name"
 code = "dt[,, by = 'ID']"
 
 [derive.shrink.aggregate.column.var]
-what = "By variable column name"
+action = "By variable column name"
 code = "dt[,, by=(var)]"
 
 [derive.shrink.aggregate.column.interval]
-what = "By fixed-sized bins from a numeric column"
+action = "By fixed-sized bins from a numeric column"
 code = "dt[ , , by=findInterval(NumericColumn, seq(1, 100, by=7))]"
 
 
 [derive.shrink.aggregate.columns]
-what = "By groups (columns)"
+action = "By groups (columns)"
 code = "dt[,, by = .(IDa, IDb)]"
 
 [derive.shrink.aggregate.columns.str]
-what = "By string column names"
+action = "By string column names"
 code = "dt[,, by = c('IDa', 'IDb')]"
 
 [derive.shrink.aggregate.columns.range]
-what = "By range of keys"
+action = "By range of keys"
 code = "dt[,, by = IDa:IDc]"
 
 
@@ -505,20 +505,20 @@ code = "dt[,, by = IDa:IDc]"
 section = "Grow"
 
 [derive.grow.rows.missing.keys]
-what = "Insert missing rows based on missing combination of keys"
+action = "Insert missing rows based on missing combination of keys"
 code = "dt[CJ(unique(IDa), unique(IDb))]"
 details = "Uses a cross-join on all levels of the given two columns IDa and IDb"
 
 [derive.grow.rows.rep]
-what = "Repeat each row _n_ times"
+action = "Repeat each row _n_ times"
 code = "dt[rep(1:.N, n)]"
 
 [derive.grow.rows.rep.grouped]
-what = "Repeat rows by group"
+action = "Repeat rows by group"
 code = "dt[, lapply(.SD, rep, 10), by=ID]"
 
 [derive.grow.rows.rep.index]
-what = "Repeat data.table along a sequence as new index"
+action = "Repeat data.table along a sequence as new index"
 code = """
 s = LETTERS[1:5]
 dt2 = replicate(length(s), dt, simplify=FALSE) %>%
@@ -531,39 +531,39 @@ dt2 = replicate(length(s), dt, simplify=FALSE) %>%
 section = "Reshape"
 
 [derive.reshape.wide]
-what = "To wide format"
+action = "To wide format"
 code = "dcast(dt, IDa + IDb ~ Param, value.var = 'Value')"
 details = "`...` represents all variables, and `.` represents no variable"
 
 [derive.reshape.wide.prefix]
-what = "To wide format with value column prefix"
+action = "To wide format with value column prefix"
 code = "dcast(dt, IDa + IDb ~ paste0('prefix', Param), value.var='Value')"
 
 [derive.reshape.wide.agg]
-what = "To wide format with aggregation"
+action = "To wide format with aggregation"
 code = """
 dcast(dt, IDa + IDb ~ Param, value.var='Value',
     fun.aggregate=list(first, last), fill=NA)
 """
 
 [derive.reshape.wide.grouped]
-what = "To wide format on a single grouping factor"
+action = "To wide format on a single grouping factor"
 code = "dcast(dt, ... ~ Group, value.var = 'Value')"
 
 [derive.reshape.wide.nindex]
-what = "To wide format without an index"
+action = "To wide format without an index"
 code = "unstack(dt, Value ~ Param) %>% as.data.table()"
 
 [derive.reshape.long]
-what = "To long format"
+action = "To long format"
 code = "melt(dt, id=c('IDa', 'IDb'), measure=c('Param1', 'Param2'))"
 
 [derive.reshape.long.cols]
-what = "To long format for specific columns (no index)"
+action = "To long format for specific columns (no index)"
 code = "melt(dt, id=character(), measure=c('Param1', 'Param2'))"
 
 [derive.reshape.transpose]
-what = "Transpose"
+action = "Transpose"
 code = "t(dt) %>% as.data.table()"
 details = "Drops column names!"
 
@@ -573,61 +573,61 @@ section = "Join"
 description = "Join two or more data frames"
 
 [derive.join.inner]
-what = "Inner join"
+action = "Inner join"
 code = "merge(dt1, dt2)"
 
 [derive.join.inner.2]
 code = "dt1[dt2, nomatch=0]"
 
 [derive.join.inner.on]
-what = "Inner join with mismatching keys"
+action = "Inner join with mismatching keys"
 code = "merge(dt1, dt2, by.x=c('a1', 'b1'), by.y=c('b1', 'b2'))"
 
 [derive.join.outer]
-what = "Outer join"
+action = "Outer join"
 code = "merge(dt1, dt2, all=TRUE)"
 
 [derive.join.outer.lowmem]
-what = "Outer join (low memory)"
+action = "Outer join (low memory)"
 code = """
 dt12 = d[dt2, nomatch=0]
 rbind(dt1[!dt12], dt12, dt2[!dt12])
 """
 
 [derive.join.left]
-what = "Left join"
+action = "Left join"
 code = "merge(dt1, dt2, all.x = TRUE)"
 
 [derive.join.left.dupecol]
-what = "Left join with identical column names"
+action = "Left join with identical column names"
 code = "dt12 = dt2[dt1, .(x1=x, x2=i.x)]"
 
 [derive.join.right]
-what = "Right join"
+action = "Right join"
 code = "merge(dt1, dt2, all.y = TRUE)"
 
 [derive.join.anti]
-what = "Anti join"
+action = "Anti join"
 code = "dt1[!dt2]"
 
 [derive.join.union]
-what = "Union"
+action = "Union"
 code = "funion(dt, dt2)"
 
 [derive.join.intersect]
-what = "Intersection"
+action = "Intersection"
 code = "fintersect(dt, dt2)"
 
 [derive.join.setdiff]
-what = "Set difference"
+action = "Set difference"
 code = "fsetdiff(dt, dt2)"
 
 [derive.join.seteq]
-what = "Set equal"
+action = "Set equal"
 code = "fsetequal(dt, dt2)"
 
 [derive.join.expand]
-what = "Combine two tables, repeating rows for all unique pairs (`expand.grid`)"
+action = "Combine two tables, repeating rows for all unique pairs (`expand.grid`)"
 code = """data.table(
     dt1[rep(1:.N, nrow(dt2))],
     dt2[rep(1:.N, each=nrow(dt1))]
@@ -638,13 +638,13 @@ code = """data.table(
 section = "Convert"
 
 [convert.dataframe]
-what = "Data.frame"
+action = "Data.frame"
 code = "as.data.frame(dt)"
 
 [convert.list.grouped]
-what = "List of data.frames, by group"
+action = "List of data.frames, by group"
 code = "split(dt, by='Id')"
 
 [convert.matrix]
-what = "Matrix"
+action = "Matrix"
 code = "data.matrix(dt)"

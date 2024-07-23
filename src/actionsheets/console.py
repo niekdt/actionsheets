@@ -131,7 +131,7 @@ def _render_snippets(data: pl.DataFrame) -> RenderResult:
         row_styles=['', f'on {_bg_color2}']
     )
 
-    table.add_column('What', style=_action_color, min_width=15)
+    table.add_column('Action', style=_action_color, min_width=15)
     table.add_column('Code', no_wrap=True, overflow='fold', min_width=40, max_width=100)
     table.add_column('Details', style=f'{_details_color} i', min_width=10)
 
