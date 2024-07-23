@@ -171,3 +171,18 @@ def test_alt_sheet():
     assert sheet.has_snippet('derive.copy.new')
 
     assert sheet.count_snippets() == 8
+
+
+def test_find_snippets():
+    sheet = parse_toml(alt_sheet)
+
+    assert sheet.find_snippets(query='antidisestablishmentarianism').height == 0
+
+    assert sheet.find_snippets(query='create')['entry'].to_list() == [
+        'create.empty', 'create.string', 'create.int'
+    ]
+
+    assert sheet.find_snippets(query='empty')['entry'].to_list() == [
+        'create.empty', 'test.empty'
+    ]
+

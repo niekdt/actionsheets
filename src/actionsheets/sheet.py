@@ -120,7 +120,7 @@ class ActionsheetView:
         """
         terms = re.split(r'\s+|,|\.|\|', query)
 
-        result = self.data.with_columns(
+        result = self.snippets().with_columns(
             pl.col('entry').str.count_matches('|'.join(terms)).alias('matches')
         ).filter(pl.col('matches') > 0)
 
