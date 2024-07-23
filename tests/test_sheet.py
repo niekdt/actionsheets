@@ -198,7 +198,7 @@ main_sheet = parse_toml(alt_sheet)
     (['create.empty', 'test.empty'], {'create', 'create.empty', 'test', 'test.empty'}),
 ])
 def test_filter_view(entries: list[str], result: set[str]):
-    assert set(main_sheet.filter_view(entries=entries).data['entry'].to_list()) == result
+    assert set(main_sheet.filter(entries=entries).data['entry'].to_list()) == result
 
 
 def test_find_snippets():

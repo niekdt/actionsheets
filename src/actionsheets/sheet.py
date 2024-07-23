@@ -87,7 +87,7 @@ class ActionsheetView:
         info['parents'] = section.split(sep='.')[:-1]
         return info
 
-    def filter_view(self, entries: list[str]) -> Self:
+    def filter(self, entries: list[str]) -> Self:
         """
         Get a filtered view comprising the given entries, and all of their parents
         :param entries: List of entry IDs to include in the reduced view
@@ -111,7 +111,7 @@ class ActionsheetView:
 
         return ActionsheetView(info=self.info, data=filtered_data)
 
-    def section_view(self, section: str) -> Self:
+    def filter_section(self, section: str) -> Self:
         """
         Get a filtered view comprising only the children of a given section
         :param section: Section ID
