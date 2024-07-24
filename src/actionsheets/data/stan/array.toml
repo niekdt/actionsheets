@@ -1,0 +1,84 @@
+language = "stan"
+parent = "stan"
+name = "array"
+title = "Array"
+
+[create]
+section = "Create"
+
+[create.1d.declare]
+action = "Declare 1D array of length _N_"
+code = "real a[N];"
+
+[create.2d.declare]
+action = "Declare 2D array of size _N_ by _M_"
+code = "real a[N,M];"
+
+[create.3d.declare]
+action = "Declare 3D array of size _N_ by _M_ by _O_"
+code = "real a[N,M,O];"
+
+[create.1d.constant.zero]
+action = "Declare 1D array with zeros"
+code = "real a[N] = rep_array(0, N);"
+
+[create.1d.values]
+action = "Declare 1D array with values"
+code = "real a[] = {1, 2, 5}"
+
+[create.2d.values]
+action = "Declare 2D array with values"
+code = "int b[2, 3] = { { 1, 2, 3 }, { 4, 5, 6 } };"
+
+
+[prop]
+section = "Properties"
+
+[prop.dim]
+action = "Dimensions"
+code = "dims(a)"
+
+[prop.length]
+action = "Number of elements"
+code = "num_elements(a)"
+
+[prop.dim.1]
+action = "Size of first dimension"
+code = "size(a)"
+details = "real a[4,3]; then size(a) = 4"
+
+
+[derive]
+section = "Derive"
+
+
+[derive.grow]
+section = "Grow"
+
+[derive.grow.append.array]
+action = "Append array"
+code = "append_array(x, y)"
+
+
+[convert]
+section = "Convert"
+
+[convert.1d]
+action = "To 1D array"
+code = "to_array_1d(a)"
+
+[convert.2d]
+action = "To 2D array"
+code = "to_array_2d(a)"
+
+[convert.vector]
+action = "To vector"
+code = "to_vector(a)"
+
+[convert.matrix]
+action = "To matrix"
+code = "to_matrix(a)"
+
+[convert.matrix.1d]
+action = "1D array to matrix of size (column-major order)"
+code = "to_matrix(a, nrow, ncol)"

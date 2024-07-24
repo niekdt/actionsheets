@@ -2,3 +2,28 @@ language = "stan"
 parent = ""
 name = "stan"
 title = "Stan"
+
+[output]
+section = "Output"
+
+[output.print]
+action = "Print string"
+code = """
+print("Hello world")
+"""
+
+[output.print.var]
+action = "Print value of variable with name"
+code = """
+print("x=", x);
+"""
+
+
+[error]
+section = "Errors"
+
+[error.throw]
+action = "Throw error"
+code = """
+reject("x contains NaNs");
+"""
