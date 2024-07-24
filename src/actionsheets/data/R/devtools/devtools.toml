@@ -2,3 +2,21 @@ language = "R"
 parent = "r"
 name = "devtools"
 title = "devtools"
+
+[rtools]
+section = "Rtools"
+description = """
+Rtools can be downloaded and installed from https://cran.r-project.org/bin/windows/Rtools/
+"""
+
+[rtools.installed]
+action = "Check if Rtools is present"
+code = "pkgbuild::has_rtools()"
+
+
+[build]
+section = "Build"
+
+[build.installed]
+action = "Check if build tools are present"
+code = "pkgbuild::check_build_tools()"
