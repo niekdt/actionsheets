@@ -1,0 +1,31 @@
+language = "python"
+parent = "python"
+name = "package"
+title = "Package"
+description = """
+Functions for importing packages or accessing information about packages.
+"""
+details = "This sheet is incomplete."
+
+
+[extract]
+section = "Extract"
+
+
+[extract.meta]
+section = "Package meta data"
+
+[extract.meta.version]
+action = "Version of a given package"
+code = """
+from importlib.metadata import version
+version('actionsheets')
+"""
+
+[extract.meta.data]
+action = "All package metadata, as dict"
+code = """
+from importlib.metadata import metadata
+dict(metadata('actionsheets'))
+"""
+details = "Conceals duplicate metadata entries"
