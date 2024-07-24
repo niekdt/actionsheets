@@ -94,6 +94,21 @@ code = "v[i]"
 action = "Get element at index _i_ as vector"
 code = "rep_vector(v[i], 1)"
 
+[extract.index.max]
+action = "Get index of largest value"
+code = """
+int which_max(vector x) {
+	real max_x = max(x);
+	int i = 0;
+	while (x[i] != max_x) {
+	  i += 1;
+	}
+	return i;
+}
+
+which_max(v)
+"""
+
 
 [derive]
 section = "Derive"
