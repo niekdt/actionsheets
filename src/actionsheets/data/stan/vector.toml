@@ -1,0 +1,226 @@
+language = "stan"
+parent = "stan"
+name = "vector"
+title = "Vector"
+
+[create]
+section = "Create"
+
+[create.matrix]
+action = "From matrix"
+code = "to_vector(m)"
+details = "Type of vector depends on shape of the matrix?"
+
+[create.array.1d]
+action = "From 1D array"
+code = """
+real a[] = {1, 2};
+to_vector(a)
+"""
+
+[create.column]
+section = "Create column vector"
+
+[create.column.declare]
+action = "Declare column vector of size _N_"
+code = "vector[N] v;"
+
+[create.column.values]
+action = "Declare column vector with values"
+code = "vector[3] v = [3, 5, 7]'"
+
+[create.column.constant.zero]
+action = "Declare column vector filled with zeros"
+code = "vector[N] v = rep_vector(0, N);"
+
+[create.column.constant.value]
+action = "Declare column vector filled with _value_"
+code = "vector[N] v = rep_vector(value, N);"
+
+
+[create.row]
+section = "Create row vector"
+
+[create.row.declare]
+action = "Declare row vector of size _N_"
+code = "row_vector[N] v;"
+
+[create.row.values]
+action = "Declare row vector with values"
+code = "row_vector[3] v = [3, 5, 7];"
+
+
+[create.special]
+section = "Create special vectors with constraints"
+
+[create.special.ordered]
+action = "Declare ordered vector of size _N_"
+code = "ordered[N] v;"
+
+[create.special.posordered]
+action = "Declare positive ordered vector of size _N_"
+code = "positive_ordered[N] v;"
+
+[create.special.simplex]
+action = "Declare simplex of size _N_ (proportions vector that sum up to 1)"
+code = "simplex[N] theta;"
+
+[create.special.unit]
+action = "Declare unit vector"
+code = "unit_vector[N] theta;"
+
+[create.special.optional]
+action = "Declare optional vector in parameter block, conditional on _include_"
+code = "vector[include ? N : 0] v;"
+details = "Useful for disabling model feature to save memory"
+
+
+[prop]
+section = "Properties"
+
+[prop.length]
+action = "Length (number of elements)"
+code = "num_elements(v)"
+
+
+[extract]
+section = "Extract"
+
+[extract.index]
+action = "Get element at index _i_"
+code = "v[i]"
+
+[extract.index.vector]
+action = "Get element at index _i_ as vector"
+code = "rep_vector(v[i], 1)"
+
+
+[derive]
+section = "Derive"
+
+
+[derive.map]
+section = "Map"
+description = "Element-wise operations."
+
+[derive.map.sq]
+action = "Square elements"
+code = "square(v)"
+
+[derive.map.sqrt]
+action = "Square root elements"
+code = "sqrt(v)"
+
+[derive.map.prod]
+action = "Different multiplication per element"
+code = "v .* w"
+
+[derive.map.pow]
+action = "Different power per element"
+code = "exp(p * log(v))"
+details = "only for strictly positive v"
+
+[derive.map.pow.for]
+code = """
+N = num_elements(v);
+vector c[N];
+for (i in 1:N) {
+  c[i] = v[i] ^ p[i];
+}
+"""
+
+[derive.map.cumsum]
+action = "Cumulative sum"
+code = "cumulative_sum(v)"
+
+[derive.map.softmax]
+action = "Softmax"
+code = "softmax(v)"
+
+[derive.map.softmax.log]
+action = "Log-softmax"
+code = "log_softmax(v)"
+
+[derive.map.dot.self]
+action = "Dot product (self)"
+code = "dot_self(v)"
+details = "`v * v`, or `sum(v .* v)`"
+
+[derive.map.dot]
+action = "Dot product"
+code = "v * w"
+
+[derive.map.dot.fun]
+code = "dot_product(v, w)"
+
+[derive.grow]
+section = "Grow"
+
+[derive.grow.col.append.value]
+action = "Append element to column vector"
+code = "append_row(v, x)"
+
+[derive.grow.col.prepend.value]
+action = "Prepend element to column vector"
+code = "append_row(x, v)"
+
+[derive.grow.row.append.value]
+action = "Append element to row vector"
+code = "append_col(v, x)"
+
+[derive.grow.row.prepend.value]
+action = "Prepend element to row vector"
+code = "append_col(x, v)"
+
+
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.head]
+action = "First _n_ elements (head)"
+code = "head(v, n)"
+
+[derive.shrink.tail]
+action = "Last _n_ elements (tail)"
+code = "tail(v, n)"
+
+[derive.shrink.slice]
+action = "Slice"
+code = "v[start:end]"
+
+[derive.shrink.slice.n]
+action = "Slice of length _n_"
+code = "segment(v, start, n)"
+
+
+[derive.reshape]
+section = "Reshape"
+
+[derive.reshape.transpose]
+action = "Transpose"
+code = "v'"
+
+
+[convert]
+section = "Convert"
+
+[convert.row]
+action = "To row vector"
+code = "to_row_vector(v)"
+
+[convert.t]
+action = "Transpose: from row to column vector, or vice versa"
+code = "v'"
+
+[convert.matrix.singular]
+action = "To matrix with 1 row or column"
+code = "to_matrix(v)"
+details = "Depends on whether _v_ is a row or column vector"
+
+[convert.matrix]
+action = "To _n_ by _m_ matrix, column-major order"
+code = "to_matrix(v, nrow, ncol)"
+
+[convert.array.1d]
+action = "To 1D array"
+code = "to_array_1d(v)"

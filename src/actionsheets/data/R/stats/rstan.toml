@@ -1,0 +1,52 @@
+language = "R"
+parent = "r"
+name = "rstan"
+title = "RStan"
+description = """
+
+"""
+
+[install]
+section = "Installation"
+description = """
+For standard installation instructions, see https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started
+"""
+
+[install.latest]
+action = "Install latest dev version from Github"
+code = """
+remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "")
+"""
+
+[install.win]
+action = "Reinstall on Windows"
+code = """
+# Install rtools
+# Check toolchain
+pkgbuild::has_build_tools(debug = TRUE)
+# Optimize toolchain
+dotR <- file.path(Sys.getenv("HOME"), ".R")
+if (!file.exists(dotR)) dir.create(dotR)
+M <- file.path(dotR, ifelse(.Platform$OS.type == "windows", "Makevars.win", "Makevars"))
+if (!file.exists(M)) file.create(M)
+cat(
+    "\nCXX14FLAGS=-O3 -march=native -mtune=native",
+    if( grepl("^darwin", R.version$os)) "CXX14FLAGS += -arch x86_64 -ftemplate-depth-256" else
+    if (.Platform$OS.type == "windows") "CXX11FLAGS=-O3 -march=corei7 -mtune=corei7" else
+    "CXX14FLAGS += -fPIC",
+    file = M, sep = "\n", append = TRUE
+)
+# Install package
+remove.packages("rstan")
+install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)
+"""
+
+[install.linux]
+action = "Reinstall on Linux"
+code = """
+# check gcc version
+system('gcc -v')
+remove.packages("rstan")
+remove.packages("StanHeaders")
+install.packages('rstan')
+"""
