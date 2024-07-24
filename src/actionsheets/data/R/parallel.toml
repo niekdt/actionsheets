@@ -1,0 +1,180 @@
+language = "R"
+parent = "r"
+name = "parallel"
+title = "Parallel computation"
+
+[foreach]
+section = "Foreach package"
+
+[register]
+section = "Register parallel back-end"
+
+[register.snow]
+action = "snow"
+code = """
+library(snow)
+library(doSNOW)
+cl = makeCluster(detectCores()-1)
+registerDoSNOW(cl)
+"""
+
+[register.snow.stop]
+action = "Stop snow"
+code = "stopCluster(cl)"
+
+[register.snowfall]
+action = "snowfall"
+code = """
+library(snowfall)
+library(doSNOW)
+sfInit(parallel=TRUE, cpus=detectCores()-1)
+registerDoSNOW(sfGetCluster())
+"""
+
+[register.snowfall.stop]
+action = "Stop snowfall"
+code = "sfStop()"
+
+[register.test]
+action = "Check if a parallel back-end is registered"
+code = "getDoParRegistered()"
+
+[register.seq]
+action = "Unregister parallel back-end"
+code = "registerDoSEQ()"
+
+
+[foreach.foreach]
+section = "For-each loop"
+
+[foreach.foreach.seq]
+action = "Sequential for-loop"
+code = """
+foreach(i = 1:4) %do% {
+    Sys.sleep(1)
+}
+"""
+details = "Useful for debugging purposes"
+
+[foreach.foreach.parallel]
+action = "Parallel for-each loop"
+code = """
+foreach(i = 1:4) %dopar% {
+    Sys.sleep(4)
+}
+"""
+
+[foreach.foreach.combine]
+action = "Combine results through concatenation"
+code = """
+foreach(i=1:4, .combine=c) %dopar% {
+    1
+}
+"""
+
+[foreach.foreach.finalize]
+action = "Post-process results"
+code = "foreach(..., .final=as.integer)"
+
+[foreach.foreach.init]
+action = "Provide initial output object"
+code = """
+lm0 = lm(y~x, data=dt)
+foreach(i = 1:4, .init=lm0) %dopar% {
+    lm(y~x, data=dt)
+}
+"""
+details = "Saves time"
+
+[foreach.foreach.order]
+action = "Run loop in arbitrary order"
+code = "foreach(..., .inorder=FALSE)"
+details = "More efficient"
+
+[foreach.foreach.pkg]
+action = "Load packages needed by the for-loop body"
+code = "foreach(..., .packages=c('data.table'))"
+
+[foreach.foreach.error.ignore]
+action = "Ignore and exclude errors from result"
+code = "foreach(..., .errorhandling='remove')"
+
+[foreach.foreach.export]
+action = "Expose variable to for-loop body"
+code = "foreach(..., .export=c('var'))"
+
+[foreach.foreach.nexport]
+action = "Exclude from export"
+code = "foreach(..., .noexport=c('var'))"
+
+[foreach.foreach.verbose]
+action = "Verbose mode"
+code = "foreach(..., .verbose=TRUE)"
+
+
+[future]
+section = "Future package"
+
+
+[future.run]
+section = "Run"
+
+[future.run.expr]
+action = "Run an expression"
+code = "x %<-% { 100 }"
+details = """
+x %<-% { 100 }
+y %<-% { 200 }
+x  + y # blocks until results for x and y are in
+"""
+
+[future.run.expr.op]
+action = "Run expression with operator conflict from other package"
+code = "future::`%<-%`(x, { 100 })"
+
+[future.run.expr.label]
+action = "Run expression with a label"
+code = "x %<-% { 100 } %label% 'math'"
+
+[future.run.expr.lazy]
+action = "Run expression only once its value is requested"
+code = "x %<-% { 100 } %lazy% TRUE"
+
+[future.run.expr.seed]
+action = "Run expression with seed"
+code = """
+RNGkind("L'Ecuyer-CMRG")
+x %<-% { rnorm(0, 1) } %seed% {set.seed(1); .Random.seed}
+"""
+
+[future.run.exprs]
+action = "Run expressions and put results in list"
+code = """
+results = listenv::listenv()
+results[1] %<-% 200;
+results[2] %<-% 300;
+"""
+
+[future.create]
+action = "Create future"
+code = "f = future({ 100 })"
+
+[future.apply]
+action = "Apply a function to a list"
+code = "future.apply::future_lapply(1:2, cat)"
+
+[future.test.resolved]
+action = "Check if a future has finished computation"
+code = "resolved(f)"
+
+[future.value]
+action = "Get the computed value of a future (blocking)"
+code = "value(f)"
+
+[future.all]
+action = "Get all futures from an environment or list"
+code = "futures(results)"
+
+[future.result]
+action = "Retrieve result ignoring errors"
+code = "result = tryCatch(x, error=function(e) NULL)"
