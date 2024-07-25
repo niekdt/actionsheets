@@ -2,3 +2,19 @@ language = "python"
 parent = "python"
 name = "polars"
 title = "Polars package"
+description = """
+Polars is a "blazingly fast" DataFrame library for manipulating structured data.
+
+Website: https://pola.rs/
+Docs: https://docs.pola.rs/
+
+Features:
+- Among the fastest data.frame engines with DuckDB, according to their [own benchmarks](https://www.pola.rs/benchmarks.html). Polars is significantly faster than pandas, and even beats R's excellent data.table package in some scenarios.
+- Consistent API (unlike, e.g., pandas)
+- Built-in query optimization, made even more powerful through lazy evaluation (see LazyFrame)
+- Native parallel computation support for many operations
+- Support for common data storage formats and layers.
+- Streaming support: Can handle datasets larger than RAM allows
+- Uses Apache Arrow arrays to represent data in memory while Pandas uses Numpy arrays, allows for easy integration with other tools that support Apache Arrow.
+- Can import and export from pandas
+"""
