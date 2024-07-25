@@ -884,6 +884,10 @@ code = "data.item(i, name)"
 [convert]
 section = "Convert"
 
+[convert.lazy]
+action = "To `polars.LazyFrame`"
+code = "data.lazy()"
+
 [convert.pandas]
 action = "To `pandas.DataFrame`"
 code = "data.to_pandas()"
