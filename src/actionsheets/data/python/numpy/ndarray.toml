@@ -22,25 +22,28 @@ action = "Ensure at least 3D array"
 code = "np.atleast_3d(x)"
 
 
-[prop]
-section = "Properties"
+[extract]
+section = "Extract"
 
-[prop.ndim]
-action = "Number of dimensions"
-code = "x.ndim"
-
-[prop.dim]
-action = "Dimension sizes"
-code = "x.shape"
-
-[prop.nelems]
+[extract.length]
 action = "Number of elements"
 code = "x.size"
 
-[prop.len0]
+[extract.ndim]
+action = "Number of dimensions"
+code = "x.ndim"
+
+[extract.dim]
+action = "Dimension sizes"
+code = "x.shape"
+
+[extract.len0]
 action = "Size of the first dimension"
 code = "len(x)"
 
+[extract.hash]
+action = "Hash"
+code = "hash(x.data.tobytes())"
 
 
 [derive]

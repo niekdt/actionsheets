@@ -25,6 +25,10 @@ code = "np.array(0, dtype=np.int64)"
 [test]
 section = "Test"
 
+[test.is]
+action = "Is scalar"
+code = "x.ndim == 0"
+
 [test.'nan']
 action = "Is NaN"
 code = "np.isnan(x)"
@@ -33,7 +37,7 @@ code = "np.isnan(x)"
 action = "Is infinite"
 code = "np.isinf(x)"
 
-[test.ninf]
+[test.finite]
 action = "Is finite"
 code = "np.isfinite(x)"
 
@@ -41,10 +45,10 @@ code = "np.isfinite(x)"
 [derive]
 section = "Derive"
 
-[derive.log]
+[derive.transform.log]
 action = "Log transform"
 code = "np.log(x)"
 
-[derive.log10]
+[derive.transform.log10]
 action = "Log-10 transform"
 code = "np.log10(x)"

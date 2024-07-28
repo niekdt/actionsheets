@@ -61,10 +61,18 @@ code = "np.stack((v1, v2), axis=1)"
 code = "np.vstack((v1, v2)).transpose()"
 
 
-[get]
-section = "Get"
+[extract]
+section = "Extract"
 
-[get.elem]
+[extract.length]
+action = "Number of elements"
+code = "m.size"
+
+[extract.hash]
+action = "Hash"
+code = "hash(m.data.tobytes())"
+
+[extract.elem]
 action = "Element at row _i_, column _j_"
 code = "m[i,j]"
 
@@ -93,7 +101,15 @@ code = "m[i] = v"
 action = "Fill column _j_ with scalar value"
 code = "m[:,j] = v"
 
-[update.resize.fill.zero]
+
+[update.reshape]
+section = "Reshape"
+
+[update.reshape.transpose]
+action = "Transpose"
+code = "m.transpose()"
+
+[update.reshape.fill.zero]
 action = "Resize to shape, fill with zeros"
 code = "m.resize(m, d)"
 
@@ -103,35 +119,35 @@ section = "Derive"
 description = "All operations create a new instance"
 
 
-[derive.map]
+[derive.transform]
 section = "Map"
 description = "Operations are element-wise and preserve the shape of the matrix."
 
-[derive.map.increment.scalar]
+[derive.transform.increment.scalar]
 action = "Increment all elements with scalar value"
 code = "m + v"
 
-[derive.map.increment.matrix]
+[derive.transform.increment.matrix]
 action = "Increment elements by the respective element of another matrix"
 code = "m + m2"
 details = "Must have same shape"
 
-[derive.map.min.matrix]
+[derive.transform.min.matrix]
 action = "Find min between two matrices"
 code = "np.fmin(m, m2)"
 
-[derive.map.max.matrix]
+[derive.transform.max.matrix]
 action = "Find max between two matrices"
 code = "np.fmax(m, m2)"
 
-[derive.map.clip]
+[derive.transform.clip]
 action = "Clip (truncate) between [_a_, _b_]"
 code = "np.clip(m, a_min=a, a_max=b)"
 details = "a_min < a_max is not checked"
 
 
 [derive.order]
-section = "Reorder"
+section = "Order"
 description = "Operations preserve the shape of the matrix."
 
 [derive.order.rev]
@@ -159,6 +175,18 @@ code = "np.sort(m, axis=0)"
 [derive.order.sort.row.desc]
 action = "Sort elements per row descending"
 code = "np.sort(m, axis=1)"
+
+
+[derive.grow]
+section = "Operations that increase the size of the matrix"
+
+[derive.grow.pad.scalar]
+action = "Pad with sclar value"
+code = "np.pad(m, pad_width=1, constant_values=v)"
+
+[derive.grow.pad.edge]
+action = "Pad with edge element"
+code = "np.pad(m, pad_width=1, mode='edge')"
 
 
 [derive.shrink]
@@ -202,18 +230,6 @@ details = "Use nanmean() to ignore NaNs"
 action = "Median per column"
 code = "np.median(m, axis=0)"
 details = "Use nanmedian() to ignore NaNs"
-
-
-[derive.grow]
-section = "Operations that increase the size of the matrix"
-
-[derive.grow.pad.scalar]
-action = "Pad with sclar value"
-code = "np.pad(m, pad_width=1, constant_values=v)"
-
-[derive.grow.pad.edge]
-action = "Pad with edge element"
-code = "np.pad(m, pad_width=1, mode='edge')"
 
 
 [derive.reshape]
