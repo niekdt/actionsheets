@@ -8,6 +8,24 @@ Functions for importing packages or accessing information about packages.
 details = "This sheet is incomplete."
 
 
+[test]
+section = "Test"
+
+[test.exists]
+action = "Check if package or top-level module _Name_ exists"
+code = """
+import importlib.util
+importlib.util.find_spec("Name") is not None
+"""
+details = "Can be used to check for submodules, but this loads the parent import!"
+source = "https://stackoverflow.com/a/14050282/22638740"
+
+[test.loaded]
+action = "Check if package or module _Pkg_ is loaded"
+code = "'Pkg' in sys.modules"
+
+
+
 [extract]
 section = "Extract"
 
@@ -29,3 +47,29 @@ from importlib.metadata import metadata
 dict(metadata('actionsheets'))
 """
 details = "Conceals duplicate metadata entries"
+
+
+[import]
+section = "Import"
+
+[import.pkg]
+action = "Import package or top-level module"
+code = "import actionsheets"
+
+[import.pkg.try]
+action = "Try import package or top-level module"
+code = """
+try:
+    import actionsheetsss
+except ImportError as e
+    print(e)
+"""
+
+[import.module.try]
+action = "Try to import submodule, catch error if not found"
+code = """
+try:
+    import actionsheets.paper
+except ModuleNotFoundError as e:
+    print(e)
+"""
