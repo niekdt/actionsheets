@@ -8,17 +8,17 @@ details = ""
 
 [create]
 section = "Create"
-description = "Define a dictionary"
+description = "Create a dictionary"
 
-[create.empty]
-action = "Empty"
+[create.define.empty]
+action = "Define empty dictionary"
 code = "x = {}"
 
-[create.string]
-action = "Define with string keys"
+[create.define.str]
+action = "Define with string keys and values"
 code = "x = {'color': 'blue', 'size': 'large'}"
 
-[create.int]
+[create.define.int]
 action = "Define with integer keys"
 code = "x = {1: 'a', 2: 'b', 3: 'c'}"
 
@@ -31,32 +31,25 @@ keywords = "fill"
 action = "Define dynamically from iterators for keys and values"
 code = "x = dict(zip(key_iter, value_iter))"
 
-[create.merge]
-action = "Merge dictionaries"
-code = "z = x | y"
-
-[create.merge.unpack]
-code = "z = {**x, **y}"
-
 
 [test]
 section = "Test"
-
-[test.is]
-action = "Is dict"
-code = "x is dict"
 
 [test.inherits]
 action = "Is dict or subclass"
 code = "isinstance(x, dict)"
 
+[test.is]
+action = "Is dict but not subclass"
+code = "type(x) is dict"
+
 [test.empty]
-action = "Empty"
-code = "if x:"
+action = "Is empty"
+code = "x"
 
 [test.nempty]
-action = "Not empty"
-code = "if not x:"
+action = "Is not empty"
+code = "not x"
 
 [test.contains.key]
 action = "Contains key _k_"
@@ -91,62 +84,71 @@ action = "Contains duplicate values"
 code = "len(x) != len(set(x.values()))"
 
 
-[get]
-section = "Get"
+[extract]
+section = "Extract"
 
-[get.value]
-action = "Value"
-code = "x['color']"
-details = "Throws an error if missing"
+[extract.length]
+action = "Number of key-value elements"
+code = "len(x)"
 
-[get.value.try]
-action = "Try get value"
-code = "x.get('color')"
-details = "Returns `None` if missing"
+[extract.hash]
+action = "Hash"
+code = "hash(frozenset(x.items()))"
+source = "https://stackoverflow.com/a/5884123/22638740"
 
-[get.value.try.default]
-action = "Try get value with default _v_"
-code = "x.get('color', v)"
-
-[get.values.keys.list]
-action = "Values from list of keys"
-code = "[x[k] for k in keys_list]"
-
-[get.keys]
+[extract.keys]
 action = "Keys"
 code = "x.keys()"
 details = "As `dict_keys`"
 
-[get.keys.list]
+[extract.keys.list]
 action = "Keys as list"
 code = "list(x)"
 
-[get.keys.list.sorted]
+[extract.keys.list.sorted]
 action = "Keys as sorted list"
 code = "sorted(x)"
 
-[get.values]
+[extract.values]
 action = "Values"
 code = "x.values()"
 details = "As `dict_values`"
 
-[get.values.list]
+[extract.values.list]
 action = "Values as list"
 code = "list(x.values())"
 
-[get.values.sorted]
+[extract.values.sorted]
 action = "Values sorted by keys"
 code = "[x[k] for k in sorted(x)]"
 
-[get.entries]
+[extract.entries]
 action = "Entries (as list of tuples)"
 code = "x.items()"
 
-[get.key.value.first]
+[extract.value]
+action = "Value from key"
+code = "x['color']"
+details = "Throws an error if missing"
+
+[extract.value.try]
+action = "Try get value from key"
+code = "x.get('color')"
+details = "Returns `None` if missing"
+
+[extract.value.try.default]
+action = "Try get value from key, with default _v_ if missing"
+code = "x.get('color', v)"
+
+[extract.values.keys.list]
+action = "Values from list of keys"
+code = "[x[k] for k in keys_list]"
+
+[extract.key.value.first]
 action = "First key with value _v_"
 code = "next(k for k in x if x[k] == v)"
 
-[get.keys.value.all]
+[extract.keys.value.all]
 action = "All keys with value _v_"
 code = "[k for k in x if x[k] == v]"
 
@@ -154,20 +156,16 @@ code = "[k for k in x if x[k] == v]"
 [update]
 section = "Update"
 
-[update.default]
-action = "Set default entry value for missing key"
-code = "x.setdefault('size', 'medium')"
-
-[update.entry]
+[update.transform.entry]
 action = "Update entry value"
 code = "x['size'] = 'small'"
 
-[update.entry.ifexists]
+[update.transform.ifexists]
 action = "Update entry, error if missing"
 code = "?"
 details = "?"
 
-[update.rename]
+[update.transform.rename]
 action = "Rename entry"
 code = "x['new'] = x.pop('old')"
 
@@ -176,19 +174,20 @@ code = "x['new'] = x.pop('old')"
 section = "Grow"
 
 [update.grow.add]
-action = "Add/update entry"
+action = "Add or update entry"
 code = "x['size'] = 'small'"
 
-[update.grow.merge]
-action = "Merge with another dictionary"
-code = "x |= y"
-
-[update.grow.merge.fun]
-code = "x.update(y)"
+[update.grow.add.missing]
+action = "Add entry with value if it does not exist"
+code = "x.setdefault('size', 'medium')"
 
 
 [update.shrink]
 section = "Shrink"
+
+[update.shrink.clear]
+action = "Remove all entries (clear)"
+code = "x.clear()"
 
 [update.shrink.remove.entry]
 action = "Remove entry by key"
@@ -207,12 +206,19 @@ action = "Remove keys, get values"
 code = "[x.pop(k) for k in keys]"
 
 [update.shrink.pop.last]
-action = "Remove last entry, get value"
+action = "Remove last-inserted entry, get value"
 code = "x.popitem()"
 
-[update.shrink.clear]
-action = "Clear (remove all entries)"
-code = "x.clear()"
+[update.combine]
+section = "Combine"
+description = "Instead of merging several dictionaries, consider using a [ChainMap](https://docs.python.org/3/library/collections.html#collections.ChainMap), which is often much faster."
+
+[update.combine.merge]
+action = "Merge with another dictionary"
+code = "x |= y"
+
+[update.combine.merge.fun]
+code = "x.update(y)"
 
 
 [derive]
@@ -225,40 +231,73 @@ code = "x.copy()"
 [derive.copy.new]
 code = "dict(x)"
 
-[derive.subset.keys]
+[derive.shrink.keys]
 action = "Subset for keys"
 code = "{k: x[k] for k in keys}"
 details = "Error if a key is missing"
 
-[derive.subset.keys.default]
+[derive.shrink.keys.default]
 action = "Subset for keys with default _v_"
 code = "{k: x.get(k, default=v) for k in keys}"
 
-[derive.subset.keys.intersect]
+[derive.shrink.keys.intersect]
 action = "Subset (intersection) for keys"
 code = "{k: x[k] for k in x.keys() if k in keys}"
 details = "Returns empty dict if all keys are missing"
 
-[derive.subset.keys.diff]
+[derive.shrink.keys.diff]
 action = "Subset except for keys"
 code = "{k: x[k] for k in x.keys() if k not in keys}"
+
+
+[derive.combine]
+section = "Combine"
+
+[derive.combine.merge]
+action = "Merge dictionaries"
+code = "z = x | y"
+
+[derive.combine.merge.unpack]
+code = "z = {**x, **y}"
 
 
 [convert]
 section = "Convert"
 
-[convert.pretty]
-action = "Pretty print"
-code = "pprint.pprint(x)"
-
 [convert.list]
 action = "List of key-value tuples"
 code = "x.items()"
 
-[convert.json]
+[convert.str.json]
 action = "JSON string"
 code = "json.dumps(x)"
 
-[convert.json.robust]
+[convert.str.json.robust]
 action = "JSON string, handle non-string entries"
 code = "json.dumps(x, default = str)"
+
+
+[iter]
+section = "Iterate"
+
+[iter.for.keys]
+action = "Loop over keys"
+code = "for key in x:"
+
+[iter.for.values]
+action = "Loop over values"
+code = "for value in x.values():"
+
+[iter.for.entries]
+action = "Loop over key-value pairs"
+code = "for key, value in x.items():"
+details = "More efficient than a key-based for-loop as each `x[k]` lookup requires recomputation of the hash for _k_"
+
+
+
+[show]
+section = "Show"
+
+[show.print]
+action = "Pretty print"
+code = "pprint.pprint(x)"

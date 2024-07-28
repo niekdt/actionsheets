@@ -7,7 +7,7 @@ title = "Iterators"
 section = "Create"
 
 [create.counter]
-action = "Counter"
+action = "Indefinite counter"
 code = "itertools.count()"
 
 [create.counter.start]
@@ -23,8 +23,8 @@ action = "Create limited counter from _n_ to _m_"
 code = "?"
 
 [create.constant.len]
-action = "Repeat constant _n_ times"
-code = "itertools.repeat(123, n)"
+action = "Repeat constant value _v_ by _n_ times"
+code = "itertools.repeat(v, n)"
 
 [create.grid]
 action = "2D coordinates grid from (0, 0) to (_n - 1_, _m - 1_ )"
@@ -70,7 +70,7 @@ code = "x1, x2 = itertools.tee(x)"
 section = "Usage"
 
 [usage.for]
-action = "Iterate over elements"
+action = "Loop over iterator"
 code = """
 for i in iter:
     print(i)
@@ -81,19 +81,19 @@ for i in iter:
 section = "Test"
 description = "Note that all tests consume."
 
-[test.true.all]
+[test.'true'.all]
 action = "All elements are true"
 code = "all(bool_iter)"
 
-[test.true.any]
+[test.'true'.any]
 action = "Any element is true"
 code = "any(bool_iter)"
 
-[test.false.all]
+[test.'false'.all]
 action = "All elements are false"
 code = "not any(bool_iter)"
 
-[test.false.any]
+[test.'false'.any]
 action = "Any element is false"
 code = "not all(bool_iter)"
 
@@ -109,185 +109,195 @@ action = "All elements are true conditional on function"
 code = "all(map(boolFun, iter))"
 
 
+[extract]
+section = "Extract"
+description = "Operations (partially) consume the iterable unless mentioned otherwise."
 
-[get]
-section = "Get"
-
-[get.consume]
-action = "Consume fully"
-code = "collections.deque(x, maxlen=0)"
-
-[get.elem.next]
-action = "Get next element"
-code = "next(iter)"
-
-[get.elem.next.default]
-action = "Get next element with default if depleted"
-code = "next(iter, 0)"
-
-[get.elem.n]
-action = "Get _n_ th element"
-code = "next(itertools.islice(x, n, None), default)"
-
-[get.elem.cond]
-action = "Get first element according to criterion"
-code = "next(e for e in x if e == 1)"
-
-[get.elem.cond.filter]
-code = "next(filter(lambda e: e == 1, x))"
-
-[get.true.index]
-action = "Get index of first true element"
-code = "?"
-
-[get.false.index]
-action = "Get index of first false element"
-code = "?"
-
-[get.len]
+[extract.len]
 action = "Get remaining length"
 code = "sum(1 for _ in iter)"
 details = "Fully consumes"
 
+[extract.elem.next]
+action = "Next element"
+code = "next(iter)"
 
-[map]
-section = "Map"
+[extract.elem.next.default]
+action = "Get next element with default if depleted"
+code = "next(iter, 0)"
 
-[map.custom]
-action = "Map elements"
+[extract.elem.n]
+action = "Get _n_ th element"
+code = "next(itertools.islice(x, n, None), default)"
+
+[extract.elem.cond]
+action = "Get first element according to criterion"
+code = "next(e for e in x if e == 1)"
+
+[extract.elem.cond.filter]
+code = "next(filter(lambda e: e == 1, x))"
+
+[extract.'true'.index]
+action = "Get index of first true element"
+code = "?"
+
+[extract.'false'.index]
+action = "Get index of first false element"
+code = "?"
+
+
+[update]
+section = "Update"
+
+[update.shrink.clear]
+action = "Clear (consume fully)"
+code = "collections.deque(x, maxlen=0)"
+
+
+[derive]
+section = "Derive"
+
+
+[derive.transform]
+section = "Transform iterable"
+description = "Using the derived iterable consumes the original one as well."
+
+[derive.transform.expr]
+action = "Transform elements by expression"
 code = "x + 1 for x in iter"
 
-[map.elem.fun]
+[derive.transform.elem.fun]
 action = "Map elements with function"
 code = "map(fun, iter)"
 
-[map.bool.not]
+[derive.transform.bool.not]
 action = "Invert boolean iterator"
 code = "map(lambda x: not x, bool_iter)"
 
-[map.bool.not.map]
+[derive.transform.bool.not.map]
 code = "map(operator.not_, bool_iter)"
 
-[map.cumsum]
+[derive.transform.cumsum]
 action = "Cumulative sum"
 code = "itertools.accumulate(iter)"
 
-[map.cum]
+[derive.transform.cum]
 action = "Accumulate function (reduce() with keeping all results)"
 code = "itertools.accumulate(iter, fun)"
 
 
-[merge]
-section = "Combine iterators"
 
-[merge.tuple.shortest]
-action = "Combine iterable elements as tuple, stop on shortest iterable"
-code = "zip(x, y, ...)"
+[derive.grow]
+section = "Grow"
 
-[merge.tuple.equal]
-action = "Combine iterable elements as tuple, expect equal length"
-code = "zip(x, y, ..., strict=True)"
-details = "Throws error if an iterable is depleted prematurely"
+[derive.grow.append.iter]
+action = "Append iterable"
+code = "itertools.chain(iter, append_iter)"
 
-[merge.tuple.longest]
-action = "Combine iterable elements as tuple until all iterables are exhausted, with default value for depleted iterables"
-code = "itertools.zip_longest(x, y, ..., fillvalue = None)"
+[derive.grow.prepend.iter]
+action = "Prepend iterable"
+code = "itertools.chain(prepend_iter, iter)"
 
-[merge.tuple.combinations.pairs]
-action = "Create combinations of pairs"
-code = "itertools.combinations(x, 2)"
+[derive.grow.cartesian]
+action = "Cartesian product of two or more iterables"
+code = "itertools.product(x, y, ...)"
 
-[merge.tuple.combinations.group]
-action = "Create combinations of size _n_"
-code = "itertools.combinations(x, n)"
+[derive.grow.cycle]
+action = "Repeat iterable indefinitely"
+code = "itertools.cycle(x)"
 
-[merge.tuple.combinations.replacement]
-action = "Create combinations of pairs with replacement (so including pairs of (A, A))"
-code = "itertools.combinations_with_replacement(x, 2)"
+[derive.grow.repeat]
+action = "Repeat iterable _n_ times"
+code = "itertools.repeat(x, n)"
 
-[merge.tuple.combinations.group.replacement]
-action = "Create combinations of size n with replacement"
-code = "itertools.combinations_with_replacement(x, n)"
-
-[merge.tuple.perm]
-action = "Create permutations"
-code = "itertools.permutations(x)"
+[derive.grow.elem.repeat]
+action = "Repeat each element of iterable _n_ times"
+code = "itertools.chain.from_iterable(itertools.repeat(tuple(x), n))"
 
 
-[shrink]
+[derive.update.shrink]
 section = "Shrink"
 
-[shrink.head]
+[derive.shrink.head]
 action = "First _n_ items of iterable"
 code = "itertools.islice(x, n)"
 
-[shrink.tail]
+[derive.shrink.tail]
 action = "Last _n_ items of iterable"
 code = "iter(collections.deque(x, maxlen = n))"
 
-[shrink.drop.head]
+[derive.shrink.drop.head]
 action = "Drop first _n_ items of iterable"
 code = "itertools.islice(x, start=n)"
 
-[shrink.slice]
+[derive.shrink.slice]
 action = "Slice based on (index) integer iterable"
 code = "?"
 
-[shrink.filter.fun]
+[derive.shrink.filter.fun]
 action = "Filter based on boolean function"
 code = "filter(bool_fun, iterable)"
 
-[shrink.filter.iter]
+[derive.shrink.filter.iter]
 action = "Filter based on boolean iterable"
 code = "itertools.compress(x, mask_iter)"
 
-[shrink.filter.iter.negate]
+[derive.shrink.filter.iter.negate]
 action = "Inverse filter iterable based on a boolean iterable"
 code = "itertools.filterfalse(mask, x)"
 
-[shrink.iters.filter2.fun]
+[derive.shrink.iters.filter2.fun]
 action = "Filter iterables based on boolean function"
 code = "filter(lambda x: x[0] != x[1], zip(iter1, iter2))"
 
-[shrink.filter.while.true]
+[derive.shrink.filter.while.'true']
 action = "Take while predicate is true"
 code = "itertools.takewhile(lambda x: x < 5, x)"
 
-[shrink.drop.while.true]
+[derive.shrink.drop.while.'true']
 action = "Drop while predicate is true"
 code = "itertools.dropwhile(lambda x: x < 5, x)"
 
 
-[grow]
-section = "Grow"
+[derive.combine]
+section = "Combine iterables"
 
-[grow.append.iter]
-action = "Append iterable"
-code = "itertools.chain(iter, append_iter)"
-
-[grow.prepend.iter]
-action = "Prepend iterable"
-code = "itertools.chain(prepend_iter, iter)"
-
-[grow.cartesian]
-action = "Cartesian product of two or more iterables"
-code = "itertools.product(x, y, ...)"
-
-[grow.cycle]
-action = "Repeat iterable indefinitely"
-code = "itertools.cycle(x)"
-
-[grow.repeat]
-action = "Repeat iterable _n_ times"
-code = "itertools.repeat(x, n)"
-
-[grow.elem.repeat]
-action = "Repeat each element of iterable _n_ times"
-code = "itertools.chain.from_iterable(itertools.repeat(tuple(x), n))"
-
-[grow.concat]
-action = "Chain iterables"
+[derive.combine.concat]
+action = "Chain iterables (concatenate)"
 code = "itertools.chain.from_iterable(x, y, ...)"
+
+[derive.combine.tuple.shortest]
+action = "Combine iterable elements as tuple, stop on shortest iterable"
+code = "zip(x, y, ...)"
+
+[derive.combine.tuple.equal]
+action = "Combine iterable elements as tuple, expect equal length"
+code = "zip(x, y, ..., strict=True)"
+details = "Throws error if an iterable is depleted prematurely"
+
+[derive.combine.tuple.longest]
+action = "Combine iterable elements as tuple until all iterables are exhausted, with default value for depleted iterables"
+code = "itertools.zip_longest(x, y, ..., fillvalue = None)"
+
+[derive.combine.tuple.combinations.pairs]
+action = "Create combinations of pairs"
+code = "itertools.combinations(x, 2)"
+
+[derive.combine.tuple.combinations.group]
+action = "Create combinations of size _n_"
+code = "itertools.combinations(x, n)"
+
+[derive.combine.tuple.combinations.replacement]
+action = "Create combinations of pairs with replacement (so including pairs of (A, A))"
+code = "itertools.combinations_with_replacement(x, 2)"
+
+[derive.combine.tuple.combinations.group.replacement]
+action = "Create combinations of size n with replacement"
+code = "itertools.combinations_with_replacement(x, n)"
+
+[derive.combine.tuple.perm]
+action = "Create permutations"
+code = "itertools.permutations(x)"
 
 
 [convert]

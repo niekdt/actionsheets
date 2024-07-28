@@ -9,15 +9,15 @@ details = "This sheet is incomplete."
 
 [create]
 section = "Create"
-description = "Define a set"
+description = "Create a set"
 
 [create.empty]
-action = "Empty"
+action = "Empty set"
 code = "set()"
 details = "`{}` defines a dictionary!"
 
 [create.define]
-action = "Define"
+action = "Define with values"
 code = "{'apple', 'banana', 'pear'}"
 
 [create.tuple]
@@ -36,13 +36,13 @@ code = "set(x)"
 [test]
 section = "Test"
 
-[test.is]
-action = "Is set"
-code = "x is set"
-
 [test.inherits]
 action = "Is set or subclass"
 code = "isinstance(x, set)"
+
+[test.is]
+action = "Is set and not subclass"
+code = "type(x) is set"
 
 [test.empty]
 action = "Empty"
@@ -76,26 +76,36 @@ action = "Contains none of the given values"
 code = "x.isdisjoint([v1, v2])"
 
 
-[test.set]
+[test.compare]
 section = "Compare with another set"
 
-[test.set.disjoint]
+[test.compare.disjoint]
 action = "Sets share no values"
 code = "x.isdisjoint(y)"
 
-[test.set.sub]
+[test.compare.sub]
 action = "Set is a subset of the other: all values of x are in y"
 code = "x.issubset(y)"
 
-[test.set.super]
+[test.compare.super]
 action = "Set is a superset of the other: all values of y are in x"
 code = "x.issuperset(y)"
 
+
+[extract]
+section = "Extract"
+
+[extract.length]
+action = "Number of (unique) values"
+code = "len(x)"
+
+[extract.hash]
+action = "Hash"
+code=  "hash(frozenset(x))"
+
+
 [update]
 section = "Update"
-
-[update.map]
-section = "Map"
 
 
 [update.grow]
@@ -130,36 +140,36 @@ code = "x.discard('strawberry')"
 [derive]
 section = "Derive"
 
-[derive.join]
-section = "Join"
-description = "Join with another set"
+[derive.combine]
+section = "Combine"
+description = "Combine with another set"
 
-[derive.join.union]
+[derive.combine.union]
 action = "Union with another set"
 code = "x | y"
 
-[derive.join.union.fun]
+[derive.combine.union.fun]
 code = "x.union(y)"
 
-[derive.join.intersect]
+[derive.combine.intersect]
 action = "Intersection with another set: get values which are present in both sets"
 code = "x & y"
 
-[derive.join.intersect.fun]
+[derive.combine.intersect.fun]
 code = "x.intersect(y)"
 
-[derive.join.diff]
+[derive.combine.diff]
 action = "Difference to another set: get values which are not present in the other set"
 code = "x - y"
 
-[derive.join.diff.fun]
+[derive.combine.diff.fun]
 code = "x.difference(y)"
 
-[derive.join.symdiff]
+[derive.combine.symdiff]
 action = "Symmetric difference with another set: get values that are not present in both sets"
 code = "x ^ y"
 
-[derive.join.symdiff.fun]
+[derive.combine.symdiff.fun]
 code = "x.symmetric_difference(y)"
 
 
@@ -174,5 +184,3 @@ code = "tuple(x)"
 [convert.list]
 action = "List of values"
 code = "list(x)"
-
-

@@ -1,33 +1,29 @@
 language = "python"
 parent = "python.collections"
 name = "tuple"
-keywords = ["vector"]
+keywords = ["pair", "immutable"]
 title = "Tuple"
-description = "An ordered immutable collection of data elements"
+description = "An ordered immutable collection of elements."
 
 [create]
 section = "Create"
 
 [create.empty]
-action = "Empty"
+action = "Empty tuple"
 code = "()"
 
 [create.scalar]
-action = "Single element"
+action = "Define with single element"
 code = "(1,)"
 details = "Comma is important"
 
 [create.multiple]
-action = "Multiple elements"
+action = "Define with multiple elements"
 code = "(1, 2, 3)"
 
 [create.assign]
-action = "Via multiple assignment"
+action = "Define with elements via multiple assignment"
 code = "x = 1, 2, 3"
-
-[create.concat]
-action = "From multiple tuples"
-code = "a + b + c"
 
 [create.iter]
 action = "From iterator"
@@ -47,11 +43,11 @@ section = "Test"
 
 [test.empty]
 action = "Empty"
-code = "if not x:"
+code = "not x"
 
 [test.nempty]
 action = "Not empty"
-code = "if x:"
+code = "x"
 
 [test.contains.value]
 action = "Contains value _v_"
@@ -65,104 +61,152 @@ code = "v not in x"
 action = "Contains duplicate values"
 code = "len(v) != len(set(v))"
 
-[test.true.all]
+[test.'true'.all]
 action = "All elements are `True`"
 code = "all(x)"
 
-[test.true.any]
+[test.'true'.any]
 action = "Any element is `True`"
 code = "any(x)"
 
-[test.true.none]
+[test.'true'.none]
 action = "No elements are `True`"
 code = "not any(x)"
 
 
-[get]
-section = "Get"
+[extract]
+section = "Extract"
 
-[get.length]
+[extract.length]
 action = "Length"
 code = "len(x)"
 
-[get.value.index]
+[extract.hash]
+action = "Hash"
+code = "hash(x)"
+
+[extract.value.index]
 action = "Value at index _i_ (_i_th value)"
 code = "x[i]"
 
-[get.value.endindex]
+[extract.value.endindex]
 action = "Value from end index _j_" 
 code = "x[-j]"
 
-[get.value.count]
+[extract.value.count]
 action = "Count occurrences of value _v_"
 code = "x.count(v)"
 
-[get.index.value.first]
+[extract.index.value.first]
 action = "First index of value _v_"
 code = "x.index(v)"
 details = "Error if missing"
 
-[get.index.value.inrange.first]
+[extract.index.value.inrange.first]
 action = "First index of value _v_ between index range [ _n_, _m_ ]"
 code = "x.index(v, n, m)"
 details = "Error if missing in range"
 
-[get.sum]
+
+[extract.aggregate]
+section = "Aggregate"
+
+[extract.aggregate.sum]
 action = "Sum elements"
 code = "sum(x)"
 
-[get.min]
+[extract.aggregate.min]
 action = "Min of elements"
 code = "min(x)"
 
-[get.max]
+[extract.aggregate.max]
 action = "Max of elements"
 code = "max(x)"
+
+
+[update]
+section = "Update"
+description = "Although tuples are immutable, it's possible to update the tuple stored in a variable in-place"
+
+[update.grow]
+section = "Grow"
+
+[update.grow.append.value]
+action = "Append element"
+code = "x += (1,)"
+
+[update.grow.append.values]
+action = "Append elements"
+code = "x += (1, 2)"
+
+
+[update.combine]
+section = "Combine"
+
+[update.combine.append.tuple]
+action = "Append tuple _y_"
+code = "x += y"
+
+[update.combine.append.list]
+action = "Append elements of list _y_"
+code = "x += tuple(y)"
 
 
 [derive]
 section = "Derive"
 details = "Creates a new immutable copy"
 
-[derive.slice]
-action = "Slice between [ _n_, _m_ ] (subset)"
-code = "x[n:m]"
 
-[derive.head]
-action = "First _n_ elements"
-code = "x[:n]"
+[derive.order]
+section = "Order"
 
-[derive.tail]
-action = "Last _n_ elements"
-code = "x[-n:]"
-
-[derive.append.value]
-action = "Append element"
-code = "x += (1,)"
-
-[derive.append.tuple]
-action = "Append tuple"
-code = "x += y"
-
-[derive.reverse]
+[derive.order.reverse]
 action = "Reverse"
 code = "x[::-1]"
 
-[derive.reverse.reversed]
+[derive.order.reverse.reversed]
 code = "tuple(reversed(x))"
 details = "Much slower in all cases"
 
-[derive.sort]
-action = "Sort"
+[derive.order.sort.asc]
+action = "Sort ascendingly"
 code = "tuple(sorted(x))"
 
-[derive.shuffle]
+[derive.order.shuffle]
 action = "Shuffle"
 code = "tuple(random.sample(x, k=len(x)))"
 
-[derive.repeat]
+
+[derive.grow]
+section = "Grow"
+
+[derive.grow.repeat]
 action = "Replicate elements _n_ times"
 code = "x * n"
+
+
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.slice]
+action = "Slice between [ _n_, _m_ ] (subset)"
+code = "x[n:m]"
+
+[derive.shrink.head]
+action = "First _n_ elements"
+code = "x[:n]"
+
+[derive.shrink.tail]
+action = "Last _n_ elements"
+code = "x[-n:]"
+
+
+[derive.combine]
+section = "Combine"
+
+[derive.combine.concat]
+action = "Concatenate tuples"
+code = "x + y + z"
 
 
 [convert]
@@ -172,10 +216,6 @@ section = "Convert"
 action = "Multiple assignment"
 code = "a, b = x"
 details = "Number of variables must match tuple length"
-
-[convert.hash]
-action = "Hash"
-code = "hash(x)"
 
 [convert.string]
 action = "Comma-separated string"
