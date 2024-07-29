@@ -28,10 +28,6 @@ details = "[Source](https://stackoverflow.com/a/2257449/22638740)"
 action = "Literals (concatenate)"
 code = "'a' 'b' 'c'"
 
-[create.concat]
-action = "Concatenate strings"
-code = "x + y"
-
 [create.list.sep]
 action = "From list, separated by comma"
 code = "','.join(['a', 'b'])"
@@ -100,6 +96,7 @@ code = "'a = {:06.2f}'.format(3.1234)"
 action = "Datetime with format"
 code = "'{:%Y-%m-%d %H:%M}'.format(datetime(2001, 2, 3, 4, 5))"
 
+
 [test]
 section = "Test"
 
@@ -160,40 +157,43 @@ action = "Contains _n_ regex substrings"
 code = "len(re.findall('\\w', 'a. a')) == n"
 
 
-[get]
-section = "Get"
+[extract]
+section = "Extract"
 
-[get.length]
-action = "Length"
+[extract.length]
+action = "Number of characters (length)"
 code = "len(x)"
+details = "? how is this handled for unicode ?"
 
-[get.substring.index.first]
+[extract.hash]
+action = "Session hash"
+code = "hash(x)"
+
+[extract.find.substring.index.first]
 action = "Find first index of substring"
 code = "x.index(substr)"
 details = "Raises error if not found"
 
-[get.substring.index.first.try]
+[extract.find.substring.index.first.try]
 action = "Try find index of substring"
 code = "x.find(substr)"
 
-[get.substring.index.last.try]
+[extract.find.substring.index.last.try]
 action = "Try find last index of substring"
 code = "x.rfind(substr)"
 
-[get.substring.count]
+[extract.count.substring]
 action = "Count number of non-overlapping substring occurrences"
 code = "x.count(substr)"
 
-[get.substring.count.inrange]
+[extract.count.substring.inrange]
 action = "Count number of non-overlapping substring occurrences in range [_n_, _m_]"
 code = "x.count(substr, n, m)"
+
 
 [derive]
 section = "Derive"
 
-[derive.map.dict]
-action = "Map from dict"
-code = "{'yes': 'ja', 'no': 'nee'}[x]"
 
 [derive.transform]
 section = "Transform the string whilst preserving length"
@@ -210,9 +210,45 @@ code = "x.upper()"
 action = "Capitalize"
 code = "x.capitalize()"
 
-[derive.transform.reverse]
-action = "Reverse"
+[derive.transform.dict]
+action = "Map from dict"
+code = "{'yes': 'ja', 'no': 'nee'}[x]"
+
+
+[derive.order]
+section = "Order"
+
+[derive.order.reverse]
+action = "Reverse characters"
 code = "x[::-1]"
+
+
+[derive.grow]
+section = "Expand string"
+
+[derive.grow.pad.left]
+action = "Left-pad to length _n_"
+code = "x.ljust(n)"
+
+[derive.grow.pad.right]
+action = "Right-pad to length _n_"
+code = "x.rjust(n)"
+
+[derive.grow.pad.both]
+action = "Left-right padding to length _n_"
+code = "x.center(n)"
+
+[derive.grow.rep]
+action = "Replicate _n_ times"
+code = "x * n"
+
+[derive.grow.concat]
+action = "Concatenate"
+code = "x + y"
+
+[derive.grow.iter]
+action = "Join with iterable"
+code = "x.join(iter)"
 
 
 [derive.shrink]
@@ -277,40 +313,17 @@ code = "?"
 action = "Remove regex group pattern"
 code = "?"
 
-[derive.grow]
-section = "Expand string"
 
-[derive.grow.pad.left]
-action = "Left-pad to length _n_"
-code = "x.ljust(n)"
+[derive.combine]
+section = "Combine"
 
-[derive.grow.pad.right]
-action = "Right-pad to length _n_"
-code = "x.rjust(n)"
-
-[derive.grow.pad.both]
-action = "Left-right padding to length _n_"
-code = "x.center(n)"
-
-[derive.grow.rep]
-action = "Replicate _n_ times"
-code = "x * n"
-
-[derive.grow.concat]
-action = "Concatenate"
+[derive.combine.concat]
+action = "Concatenate strings"
 code = "x + y"
-
-[derive.grow.iter]
-action = "Join with iterable"
-code = "x.join(iter)"
 
 
 [convert]
 section = "Convert"
-
-[convert.hash]
-action = "Session hash"
-code = "hash(x)"
 
 [convert.bytes]
 action = "To bytes"

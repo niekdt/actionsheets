@@ -24,14 +24,6 @@ code = "datetime.utcnow()"
 action = "Unix epoch"
 code = "datetime.fromtimestamp(0)"
 
-[create.min]
-action = "Earliest representable datetime"
-code = "datetime.min"
-
-[create.max]
-action = "Latest representable datetime"
-code = "datetime.max"
-
 [create.combine]
 action = "From date and time"
 code = "datetime.combine(date, time)"
@@ -67,8 +59,24 @@ action = "From total days since reference datetime"
 code = "ref_datetime + timedelta(n)"
 
 
+[constants]
+section = "Constants"
+
+[constants.min]
+action = "Earliest representable datetime"
+code = "datetime.min"
+
+[constants.max]
+action = "Latest representable datetime"
+code = "datetime.max"
+
+
 [test]
 section = "Test"
+
+[test.inherits]
+action = "Is datetime"
+code = "isinstance(x, datetime.datetime)"
 
 [test.equal]
 action = "Same moment"

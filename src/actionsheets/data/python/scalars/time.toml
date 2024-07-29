@@ -16,10 +16,6 @@ code = "time(hour, minute, second)"
 action = "Current time"
 code = "datetime.now().time()"
 
-[create.time.max]
-action = "Latest representable time"
-code = "time.max"
-
 [create.str.time]
 action = "Time from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time string"
 code = "time.fromisoformat(time_str)"
@@ -30,8 +26,20 @@ action = "From total seconds since start of day"
 code = "(datetime.min + timedelta(seconds=7321.5)).time()"
 
 
+[constants]
+section = "Constants"
+
+[constants.time.max]
+action = "Latest representable time"
+code = "time.max"
+
+
 [test]
 section = "Test"
+
+[test.inherits]
+action = "Is time"
+code = "isinstance(x, datetime.time)"
 
 [test.equal]
 action = "Same moment in time"
@@ -45,6 +53,7 @@ code = "x < y"
 [test.after]
 action = "Happens after _y_"
 code = "x > y"
+
 
 [extract]
 section = "Extract"

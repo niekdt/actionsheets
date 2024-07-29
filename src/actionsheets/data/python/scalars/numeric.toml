@@ -135,6 +135,7 @@ f = locale.atof(x)
 locale.setlocale(locale.LC_NUMERIC, loc)
 """
 
+
 [test]
 section = "Test"
 
@@ -185,6 +186,10 @@ code = "math.isinf(x) and x < 0"
 [extract]
 section = "Extract"
 
+[extract.hash]
+action = "Hash"
+code = "hash(x)"
+
 [extact.bits]
 action = "Number of bits needed to represent the integer (ignoring sign)"
 code = "x.bit_length()"
@@ -201,10 +206,6 @@ code = "str(x)"
 [convert.float.str.locale]
 action = "Float to string according to locale"
 code = "locale.str(float)"
-
-[convert.hash]
-action = "Hash"
-code = "hash(x)"
 
 [convert.int.bytes]
 action = "Int to bytes"

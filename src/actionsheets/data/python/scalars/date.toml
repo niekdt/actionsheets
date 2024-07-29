@@ -20,14 +20,6 @@ code = "date.today()"
 action = "Unix epoch date"
 code = "date.fromtimestamp(0)"
 
-[create.min]
-action = "Earliest representable date"
-code = "date.min"
-
-[create.max]
-action = "Latest representable date"
-code = "date.max"
-
 [create.str]
 action = "Date from any valid [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date string"
 code = "date.fromisoformat(date_string)"
@@ -54,8 +46,24 @@ action = "From total days since reference date"
 code = "ref_date + timedelta(n)"
 
 
+[constants]
+section = "Constants"
+
+[constants.min]
+action = "Earliest representable date"
+code = "date.min"
+
+[constants.max]
+action = "Latest representable date"
+code = "date.max"
+
+
 [test]
 section = "Test"
+
+[test.inherits]
+action = "Is date"
+code = "isinstance(x, datetime.date)"
 
 [test.equal]
 action = "Same date"
@@ -105,6 +113,9 @@ details = "Mon=0, Sun=6"
 
 
 [diff]
+section = "Difference between dates"
+
+[diff.timedelta]
 action = "Difference between dates, as timedelta"
 code = "x - y"
 
@@ -119,7 +130,7 @@ code = "?"
 [diff.years]
 action = "Difference between dates, in years"
 code = "x.year - y.year - ((x.month, x.day) < (y.month, y.day))"
-details = "[Source](https://stackoverflow.com/a/9754466/22638740)"
+source = "https://stackoverflow.com/a/9754466/22638740"
 
 
 [derive]
