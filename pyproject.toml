@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "actionsheets"
-version = "0.0.11"
+version = "0.0.12"
 description = "Quick-reference sheets defined in terms of a desired action and a code solution"
 authors = ["Niek Den Teuling <niekdt@users.noreply.github.com>"]
 license = "MIT"
