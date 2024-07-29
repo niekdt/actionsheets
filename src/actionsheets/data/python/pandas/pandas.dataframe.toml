@@ -3,7 +3,7 @@ parent = "python.pandas"
 name = "dataframe"
 title = "Pandas DataFrame"
 description = """
-`pandas.DataFrame` seems to be the MS Excel of the Python data processing universe: Slow, write-once, inconsistent API, and many ways to achieve the same thing (the true pythonic way), but very handy for quick & dirty data manipulation and popular for that reason.
+Opinionated: `pandas.DataFrame` seems to be the MS Excel of the Python data processing universe: Slow, write-once, inconsistent API, and many ways to achieve the same thing (the true pythonic way), but very handy for quick & dirty data manipulation and popular for that reason.
 
 Words of caution:
 
@@ -38,36 +38,37 @@ arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 DataFrame(arr, columns = ['a', 'b', 'c'])
 """
 
-[prop]
-section = "Properties"
 
-[prop.col.names]
-action = "Column names"
-code = "list(data)"
+[extract]
+section = "Extract"
 
-[prop.row.names]
-action = "Row names"
-code = "data.index"
-
-[prop.col.count]
-action = "Number of columns"
-code = "len(data.columns)"
-
-[prop.col.count.shape]
-code = "data.shape[1]"
-
-[prop.row.count]
+[extract.row.count]
 action = "Number of rows"
 code = "len(data)"
 
-[prop.row.count.shape]
+[extract.row.count.shape]
 code = "data.shape[0]"
 
-[prop.cell.count]
+[extract.col.names]
+action = "Column names"
+code = "list(data)"
+
+[extract.row.names]
+action = "Row names"
+code = "data.index"
+
+[extract.col.count]
+action = "Number of columns"
+code = "len(data.columns)"
+
+[extract.col.count.shape]
+code = "data.shape[1]"
+
+[extract.cell.count]
 action = "Number of cells"
 code = "data.size"
 
-[prop.dim]
+[extract.dim]
 action = "Dimensions (as tuple)"
 code = "data.shape"
 
