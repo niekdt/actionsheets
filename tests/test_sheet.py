@@ -212,3 +212,10 @@ def test_find_snippets():
         'create.empty', 'test.empty'
     ]
 
+
+def test_unicode():
+    sheet = parse_toml(empty_sheet + '[create.pi]\naction = "π"\ncode = "abcΣπ"\ndetails = "🙂"')
+
+    assert (sheet.snippets()['title'] == 'π').all()
+    assert (sheet.snippets()['code'] == 'abcΣπ').all()
+    assert (sheet.snippets()['details'] == '🙂').all()
