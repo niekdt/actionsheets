@@ -187,7 +187,7 @@ def parse_toml_file(path) -> ActionsheetView:
     :param path: The path to open
     :return: Processed action sheet info and data
     """
-    with open(path) as file:
+    with open(path, encoding='utf-8') as file:
         file_content = file.read()
         return parse_toml(content=file_content, content_id=path)
 
