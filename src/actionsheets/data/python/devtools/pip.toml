@@ -88,7 +88,7 @@ code = "pip install -U --upgrade-strategy=only-if-needed SomeProject"
 [upgrade.all]
 action = "Upgrade all packages on Windows"
 code = "pip freeze | %{$_.split('==')[0]} | %{pip install --upgrade $_}"
-details = "This is peak pythonic..."
+details = "Not recommended! As it can result in cross-dependency version conflicts."
 source = "https://www.activestate.com/resources/quick-reads/how-to-update-all-python-packages/"
 
 
