@@ -69,10 +69,6 @@ action = "Install from Git repository on branch"
 code = "pip install git+https://github.com/pypa/sampleproject.git@main"
 
 
-[update]
-section = "Update packages"
-
-
 [upgrade]
 section = "Upgrade packages"
 
@@ -88,6 +84,12 @@ details = "The handling of dependencies depends on the upgrade-strategy used."
 [upgrade.pkg.nodep]
 action = "Upgrade package, and dependencies if needed"
 code = "pip install -U --upgrade-strategy=only-if-needed SomeProject"
+
+[upgrade.all]
+action = "Upgrade all packages on Windows"
+code = "pip freeze | %{$_.split('==')[0]} | %{pip install --upgrade $_}"
+details = "This is peak pythonic..."
+source = "https://www.activestate.com/resources/quick-reads/how-to-update-all-python-packages/"
 
 
 [remove]
