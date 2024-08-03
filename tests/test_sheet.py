@@ -222,16 +222,18 @@ def test_unicode():
     assert (sheet.snippets()['details'] == '🙂').all()
 
 
-def test_source():
-    ref_url = 'https://github.com/niekdt/actionsheets'
+@pytest.mark.parametrize('source', [
+    'https://github.com/niekdt/actionsheets',
+    'From a friend'
+])
+def test_source(source):
     sheet = parse_toml(
         single_snippet_sheet +
-        f'[create.ref]\naction = "Borrowed snippet"\ncode = "1 + 1"\nsource = "{ref_url}"'
+        f'[create.ref]\naction = "Borrowed snippet"\ncode = "1 + 1"\nsource = "{source}"'
     )
 
-    assert 'source' in sheet.snippets()
     assert sheet.snippets().filter(pl.col('entry') == 'create.empty')['source'][0] is None
-    assert sheet.snippets().filter(pl.col('entry') == 'create.ref')['source'][0] == ref_url
+    assert sheet.snippets().filter(pl.col('entry') == 'create.ref')['source'][0] == source
 
 
 @pytest.mark.parametrize('keywords', [
