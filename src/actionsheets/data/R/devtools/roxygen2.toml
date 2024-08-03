@@ -214,7 +214,7 @@ code = "@seealso browseVignettes('roxygen2')"
 action = "Family"
 code = "@family sharedNames"
 
-[format.link.source]
+[format.link._source]
 action = "Specify source"
 code = "@source This dataset was generated using [generateData]"
 

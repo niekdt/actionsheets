@@ -111,7 +111,8 @@ tab content 2
 ##
 content below tabbed region
 """
-details = "[Source](https://stackoverflow.com/questions/38062706/rmarkdown-how-to-end-tabbed-content). The newlines are crucial!"
+details = "The newlines are crucial!"
+source = "https://stackoverflow.com/questions/38062706/rmarkdown-how-to-end-tabbed-content"
 
 [struct.sec.paragraph.collapse]
 action = "Collapsible paragraph"
@@ -164,7 +165,7 @@ code = """
 R CODE HERE
 ```
 """
-details = "[Source](https://holtzy.github.io/Pimp-my-rmd/)"
+source = "https://holtzy.github.io/Pimp-my-rmd/"
 
 [figs.r.sub]
 action = "Dynamic subfigures from R code"
@@ -174,7 +175,7 @@ boxplot(1:10)
 plot(rnorm(10))
 ```
 """
-details = "[Source](https://holtzy.github.io/Pimp-my-rmd/)"
+source = "https://holtzy.github.io/Pimp-my-rmd/"
 
 [figs.r.interactive]
 action = "Interactive ggplot"

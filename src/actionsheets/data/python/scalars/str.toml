@@ -22,7 +22,7 @@ code = "''.join(random.choices(string.ascii_lowercase + string.digits, k=n))"
 [create.random.alphanum]
 action = "Random alphanumeric string of length _n_"
 code = "''.join(random.choices(string.ascii_lowercase + string.digits, k=n))"
-details = "[Source](https://stackoverflow.com/a/2257449/22638740)"
+source = "https://stackoverflow.com/a/2257449/22638740"
 
 [create.literal.multi]
 action = "Literals (concatenate)"
