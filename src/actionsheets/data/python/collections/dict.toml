@@ -32,7 +32,7 @@ keys = ['a', 'b', 'c']
 [create.iter.fill]
 action = "Define from keys iterator and constant value _v_"
 code = "dict.fromkeys(key_iter, v)"
-keywords = "fill"
+keywords = ["fill"]
 
 [create.iter.kv]
 action = "Define dynamically from iterators for keys and values"

@@ -37,7 +37,7 @@ code = """
 date: "r format(Sys.time(), '%d %B %Y')"
 """
 
-[info.keywords]
+[info._keywords]
 action = "Keywords"
 code = "tags: [analysis, ai]"
 

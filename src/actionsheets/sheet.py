@@ -6,7 +6,7 @@ from typing import Literal, Self
 
 import polars as pl
 
-header_keys = ('name', 'language', 'parent', 'title', 'description', 'details', 'code')
+header_keys = ('name', 'language', 'parent', 'title', 'description', 'details', 'keywords', 'code')
 section_keys = ('section', 'description', 'details', 'code')
 solution_keys = ('code', 'details', 'source')
 action_keys = ('action', 'description') + solution_keys
@@ -233,7 +233,12 @@ def _process_header(data: dict, content_id: str) -> dict:
 
     assert 'description' not in data or isinstance(data['description'], str), \
         f'description must be str'
+
     assert 'details' not in data or isinstance(data['details'], str), f'details must be str'
+
+    if 'keywords' in data:
+        assert_keywords(data['keywords'])
+        data['keywords'] = list(set(data['keywords']))
 
     sheet_info = {k: data[k] for k in data.keys() if k in header_keys}
     return sheet_info
@@ -355,3 +360,9 @@ def assert_name(name: any, path: str):
     assert isinstance(name, str), f'{path}: name must be str'
     assert name, f'{path}: name is empty'
     assert '.' not in name, f'{path}: name cannot contain "."'
+
+
+def assert_keywords(keywords: any):
+    assert isinstance(keywords, list), 'keywords must be a list of non-empty strings'
+    assert not keywords or all(isinstance(e, str) and e for e in keywords), \
+        'keywords must be list of non-empty strings'

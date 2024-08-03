@@ -232,3 +232,28 @@ def test_source():
     assert 'source' in sheet.snippets()
     assert sheet.snippets().filter(pl.col('entry') == 'create.empty')['source'][0] is None
     assert sheet.snippets().filter(pl.col('entry') == 'create.ref')['source'][0] == ref_url
+
+
+@pytest.mark.parametrize('keywords', [
+    '""', '"a"', '[""]', '["a", ""]', '["", "b"]', '["", ""]'
+])
+def test_wrong_keywords(keywords):
+    with pytest.raises(Exception):
+        parse_toml(header + f'keywords = {keywords}')
+
+
+@pytest.mark.parametrize('keywords,result', [
+    ([], set()),
+    (['a'], {'a'}),
+    (['a', 'b'], {'a', 'b'}),
+    (['a', 'b', 'b'], {'a', 'b'}),
+    (['a', 'b', 'c'], {'a', 'b', 'c'})
+])
+def test_keywords(keywords: list[str], result: set[str]):
+    if not keywords:
+        keywords_str = '[]'
+    else:
+        keywords_str = '["' + '", "'.join(keywords) + '"]'
+
+    sheet = parse_toml(header + f'keywords = {keywords_str}')
+    assert sheet.info['keywords'] == list(result)

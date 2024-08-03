@@ -1,7 +1,12 @@
 import pytest
+import polars as pl
 from actionsheets.sheets import default_sheets
 
 sheets = default_sheets()
+
+
+def test_keywords():
+    assert sheets.sheets_data.schema['keywords'] == pl.List(pl.String)
 
 
 def test_filter():
