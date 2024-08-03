@@ -1,10 +1,27 @@
 [tool.poetry]
 name = "actionsheets"
-version = "0.0.13"
-description = "Quick-reference sheets defined in terms of a desired action and a code solution"
+version = "0.1.0"
+description = "Provides a large collection of searchable quick-reference code-snippet sheets defined in terms of a desired action and corresponding code snippet."
 authors = ["Niek Den Teuling <niekdt@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://actionsheets.streamlit.app/"
+repository = "https://github.com/niekdt/actionsheets"
+keywords = ["cheatsheets", "code snippets", "quick reference"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Topic :: Documentation",
+    "Topic :: Software Development :: Documentation",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: R",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: OS Independent"
+]
+
+[tool.poetry.urls]
+"Issue tracker" = "https://github.com/niekdt/actionsheets/issues"
 
 [tool.poetry.dependencies]
 python = "^3.11"
