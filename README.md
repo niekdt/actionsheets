@@ -46,10 +46,10 @@ _Examples: define a date, parse date from string, create set from a list of valu
 2. **Test**  
 Check or assess something about the object.  
 _Examples: is it empty? does it contain a given value?_
-3. [**Extract**](#extract)  
+3. **Extract** 
 Get properties, attributes, or other information about the object _of a different type than the object_ (typically scalars).  
 _Examples: length of a list, element value at a given index, max value among elements._
-4. [**Derive / Update**](#derive-update)  
+4. **Derive / Update**
 Create a derived or altered object from the given object, preserving the object type, or _update_ the object in-place / by-reference.  
 _Examples: head of a list, slicing a string, selecting conditional rows from a data frame._
 5. **Convert**
