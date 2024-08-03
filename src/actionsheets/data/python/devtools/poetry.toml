@@ -110,7 +110,21 @@ code = "poetry lock"
 
 [save.reqs]
 action = "Export environment as *requirements.txt*"
-code = "poetry export -f requirements.txt --output requirements.txt"
+code = "poetry export -f requirements.txt > requirements.txt"
+details = """
+Requires a plugin, install via:
+`poetry self add poetry-plugin-export`
+"""
+source = "https://python-poetry.org/docs/cli/#export"
+
+[save.reqs.nohash]
+action = "Export environment as *requirements.txt* without hashes"
+code = "poetry export --without-hashes -f requirements.txt > requirements.txt"
+details = """
+Requires a plugin, install via:
+`poetry self add poetry-plugin-export`
+"""
+source = "https://python-poetry.org/docs/cli/#export"
 
 
 [restore]
