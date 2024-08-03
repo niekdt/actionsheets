@@ -4,20 +4,20 @@ name = "r"
 title = "R"
 
 
-[source]
+[_source]
 section = "Sourcing"
 description = "Running an R script"
 
-[source.file]
+[_source.file]
 action = "Run R script file"
 code = "source('file.R')"
 
-[source.file.path]
+[_source.file.path]
 action = "Get sourced file from within script"
 code = "as.character(sys.call(1))[2]"
 details = "Does not work during start-up!"
 
-[source.file.dir]
+[_source.file.dir]
 action = "Get sourced directory from within script"
 code = "dirname(as.character(sys.call(1))[2])"
 

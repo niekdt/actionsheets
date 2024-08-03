@@ -257,6 +257,12 @@ def _process_entries(
     df = pl.DataFrame()
 
     entries = _get_entries(content)
+
+    for entry in entries:
+        assert entry not in entry_keys, \
+            f'''The entry name "{entry}" in section "{id}" is a reserved field.
+            Suggested fix: use "_{entry}", or rename.'''
+
     for entry_name in entries:
         entry_id = id + '.' + entry_name if id else entry_name
         entry_dict = _process_entry(

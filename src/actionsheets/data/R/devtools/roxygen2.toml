@@ -31,7 +31,7 @@ code = "@return Return value description here"
 action = "Class slot"
 code = "@slot slotName Description here"
 
-[basic.details]
+[basic._details]
 action = "Details"
 code = "@details Details here"
 
@@ -126,7 +126,7 @@ action = "Table"
 code = "?"
 details = "Use markdown?"
 
-[format.details._section]
+[format._details._section]
 action = "Sections"
 code = """
 @details First part

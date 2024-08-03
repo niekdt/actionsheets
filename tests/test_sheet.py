@@ -1,7 +1,9 @@
+import tomllib
+
 import pytest
 import polars as pl
 
-from actionsheets.sheet import parse_toml, ActionsheetView
+from actionsheets.sheet import parse_toml, ActionsheetView, action_keys, entry_keys, reserved_keys
 
 
 @pytest.mark.parametrize('entry,result', [
@@ -259,3 +261,11 @@ def test_keywords(keywords: list[str], result: set[str]):
 
     sheet = parse_toml(header + f'keywords = {keywords_str}')
     assert sheet.info['keywords'] == list(result)
+
+
+@pytest.mark.parametrize('field', set(entry_keys + reserved_keys))
+def test_reserved_field(field):
+    with pytest.raises((AssertionError, tomllib.TOMLDecodeError)) as e:
+        parse_toml(single_snippet_sheet + f'[create.{field}]\naction="To fail"\ncode="1 = 1"')
+    print(e.type)
+    print(e.value)
