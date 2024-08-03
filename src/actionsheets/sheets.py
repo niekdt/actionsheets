@@ -114,10 +114,16 @@ class Actionsheets:
         :return: Sheet ID, or empty string if no matches
         """
         terms = re.split(r'\s+|,|\.|\|', query)
+        re_query = '|'.join(terms)
 
         result = self.sheets_data.with_columns(
-            pl.col('sheet').str.count_matches('|'.join(terms)).alias('matches')
-        ).filter(pl.col('matches') > 0)
+            id_matches=pl.col('sheet').str.count_matches(re_query),
+            keyword_matches=pl.col('keywords').list.count_matches(re_query)
+        ).with_columns(
+            matches=pl.sum_horizontal('id_matches', 'keyword_matches')
+        ).filter(
+            pl.col('matches') > 0
+        )
 
         if result.height:
             return result.sort('matches', descending=True).head(n=1)[0, 'sheet']

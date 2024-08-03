@@ -2,6 +2,7 @@ language = "python"
 parent = "python.scalars"
 name = "numeric"
 title = "Numeric"
+keywords = ["number", "integer", "int", "float", "double"]
 
 [constants]
 section = "Constants"

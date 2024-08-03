@@ -3,6 +3,7 @@ parent = "r"
 name = "rmarkdown"
 title = "Rmarkdown"
 details = "This sheet is not organized well"
+keywords = ["markdown", "rmd"]
 
 [info]
 section = "Page info"

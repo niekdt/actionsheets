@@ -2,6 +2,7 @@ language = "python"
 parent = "python.collections"
 name = "iter"
 title = "Iterators"
+keywords = ["iterable"]
 
 [create]
 section = "Create"

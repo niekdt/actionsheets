@@ -3,6 +3,7 @@ parent = "python.scalars"
 name = "str"
 title = "String"
 description = "String handling"
+keywords = ["string", "chars"]
 
 [create]
 section = "Create"

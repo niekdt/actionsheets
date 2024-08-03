@@ -31,7 +31,9 @@ def test_filter():
     ('datetime', 'python.scalars.datetime'),
     ('polars dataframe', 'python.polars.dataframe'),
     ('pandas dataframe', 'python.pandas.dataframe'),
-    ('dict', 'python.collections.dict')
+    ('dict', 'python.collections.dict'),
+    ('str', 'python.scalars.str'),
+    ('chars', 'python.scalars.str')
 ])
 def test_find_sheet(query: str, result: str):
     assert sheets.find_sheet(query) == result

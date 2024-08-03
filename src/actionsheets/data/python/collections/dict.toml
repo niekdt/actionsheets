@@ -4,6 +4,7 @@ name = "dict"
 title = "Dict"
 description = "Maps hashable objects to a value"
 details = ""
+keywords = ["map", "dictionary"]
 
 
 [create]
