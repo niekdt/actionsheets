@@ -130,14 +130,19 @@ source = "https://python-poetry.org/docs/cli/#export"
 [restore]
 section = "Restore state"
 
+[restore.deps]
+action = "Install all dependencies, but not the root project"
+code = "poetry install --no-root"
+details = "For `package.mode=false`, you can just run `poetry install`"
+
 [restore.project]
-action = "Install all dependencies defined in the lock or project file"
+action = "Install the project (if package), and all dependencies defined in the lock or project file"
 code = "poetry install"
 
 [restore.project.sync]
-action = "Install all required dependencies, and remove unused dependencies (sync)"
+action = "Install the project (if package), and all required dependencies, and remove unused dependencies (sync)"
 code = "poetry install --sync"
 
 [restore.project.group]
-action = "Install all dependencies, including optional dep group(s)"
+action = "Install the project (if package), and all dependencies, including optional dep group(s)"
 code = "poetry install --with docs,tests"
