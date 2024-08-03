@@ -134,7 +134,7 @@ code = "data.schema['alive'] == pl.Bool"
 
 [test.col.type.str]
 action = "Column is string type"
-code = "data.schema['sex'] == pl.Utf8"
+code = "data.schema['sex'] == pl.String"
 
 [test.col.type.number]
 action = "Columns is numeric"
@@ -151,6 +151,14 @@ code = "data.schema['age'] == pl.Int64"
 [test.col.type.float]
 action = "Columns is float"
 code = "data.schema['age'].is_float()"
+
+[test.col.type.list]
+action = "Column is list type"
+code = "data.schema['keywords'] == pl.List"
+
+[test.col.type.list.str]
+action = "Column is of type list of strings"
+code = "data.schema['keywords'] == pl.List(pl.String)"
 
 [test.col.row.gt.all]
 action = "Column is consistently rowwise greater than another column"
