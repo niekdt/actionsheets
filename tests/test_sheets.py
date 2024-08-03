@@ -22,9 +22,8 @@ def test_filter():
 
 
 @pytest.mark.parametrize('query,result', [
-    ('datetime', 'python.scalars.datetime'),
-    ('dataframe', 'python.pandas.dataframe'),
     ('pneumonoultramicroscopicsilicovolcanoconiosis', ''),
+    ('datetime', 'python.scalars.datetime'),
     ('polars dataframe', 'python.polars.dataframe'),
     ('pandas dataframe', 'python.pandas.dataframe'),
     ('dict', 'python.collections.dict')
