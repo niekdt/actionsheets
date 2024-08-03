@@ -100,11 +100,11 @@ class Actionsheets:
         )
 
     def filter(self, sheet: str) -> Self:
-        sheets = self.sheets(parent=sheet) + [sheet]
+        sheet_ids = self.sheets(parent=sheet) + [sheet]
 
         return Actionsheets(
-            sheets_data=self.sheets_data.filter(pl.col('sheet').is_in(sheets)),
-            snippets_data=self.snippets_data.filter(pl.col('sheet').is_in(sheets))
+            sheets_data=self.sheets_data.filter(pl.col('sheet').is_in(sheet_ids)),
+            snippets_data=self.snippets_data.filter(pl.col('sheet').is_in(sheet_ids))
         )
 
     def find_sheet(self, query: str) -> str:
@@ -192,12 +192,12 @@ def _process_sheet_list(
     return Actionsheets(sheets_data, snippets_data)
 
 
-def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
+def _process_sheets(sheets_data: pl.DataFrame) -> pl.DataFrame:
     # Rename columns
-    sheets = sheets.rename({'name': 'sheet_name', 'parent': 'sheet_parent'})
+    sheets_data = sheets_data.rename({'name': 'sheet_name', 'parent': 'sheet_parent'})
 
     # Generate IDs
-    sheets = sheets.with_columns(
+    sheets_data = sheets_data.with_columns(
         pl.when(pl.col('sheet_parent') == '').
         then(pl.col('sheet_name')).
         otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name')).
@@ -206,8 +206,8 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
 
     # Check for missing parent topics
     missing_sheet_names = (
-        sheets['sheet_parent'].
-        filter(sheets['sheet_parent'].is_in(sheets['sheet']).not_()).
+        sheets_data['sheet_parent'].
+        filter(sheets_data['sheet_parent'].is_in(sheets_data['sheet']).not_()).
         replace('', None).
         drop_nulls()
     )
@@ -215,7 +215,7 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
         f'missing definition for parent topic(s): {", ".join(missing_sheet_names)}'
 
     # Fill optional fields, compute depth
-    sheets = sheets.with_columns(
+    sheets_data = sheets_data.with_columns(
         pl.col('description').fill_null(''),
         pl.col('details').fill_null(''),
         pl.col('sheet').str.count_matches(r'\.').alias('depth')
@@ -223,7 +223,7 @@ def _process_sheets(sheets: pl.DataFrame) -> pl.DataFrame:
 
     # Set column order
     col_order = ['sheet', 'sheet_parent', 'sheet_name', 'language']
-    return sheets.select(pl.col(col_order), pl.exclude(col_order))
+    return sheets_data.select(pl.col(col_order), pl.exclude(col_order))
 
 
 def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
@@ -262,7 +262,7 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
             cfg.set_tbl_hide_column_data_types(True)
             cfg.set_fmt_str_lengths(100)
             warnings.warn(
-                f'{long_snippets.height} code snippet(s) exceed max width of 80 chars:\n{long_snippets}'
+                f'{long_snippets.height} code snippet(s) exceed 80 chars per line:\n{long_snippets}'
             )
 
     # ensure column order
@@ -270,7 +270,7 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
     return snippets_data.select(pl.col(col_order), pl.exclude(col_order))
 
 
-_default_sheets: Actionsheets = None
+_default_sheets: Actionsheets | None = None
 
 
 def default_sheets() -> Actionsheets:
