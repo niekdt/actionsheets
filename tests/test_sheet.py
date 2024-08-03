@@ -267,5 +267,14 @@ def test_keywords(keywords: list[str], result: set[str]):
 def test_reserved_field(field):
     with pytest.raises((AssertionError, tomllib.TOMLDecodeError)) as e:
         parse_toml(single_snippet_sheet + f'[create.{field}]\naction="To fail"\ncode="1 = 1"')
-    print(e.type)
-    print(e.value)
+    print(f'Error type: {e.type}, Message: "{e.value}"')
+
+
+@pytest.mark.parametrize('name', set(('a', 'b_') + entry_keys + reserved_keys))
+def test_prefix(name):
+    sheet = parse_toml(
+        single_snippet_sheet +
+        f'[create._{name}]\naction = "Borrowed snippet"\ncode = "1 + 1"'
+    )
+
+    assert sheet.has_snippet(f'create.{name}')

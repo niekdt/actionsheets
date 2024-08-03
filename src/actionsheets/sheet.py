@@ -264,10 +264,11 @@ def _process_entries(
             Suggested fix: use "_{entry}", or rename.'''
 
     for entry_name in entries:
-        entry_id = id + '.' + entry_name if id else entry_name
+        name = entry_name.lstrip('_')
+        entry_id = id + '.' + name if id else name
         entry_dict = _process_entry(
             data=content[entry_name],
-            name=entry_name,
+            name=name,
             id=entry_id,
             parent_data=parent_entry,
             parent_entry=parent_section
