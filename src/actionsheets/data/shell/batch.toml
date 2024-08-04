@@ -1,0 +1,180 @@
+language = "bat"
+parent = "shell"
+name = "batch"
+title = "Windows Batch"
+description = """
+Scripting language for [Windows Batch files](https://en.wikipedia.org/wiki/Batch_file).
+"""
+details = """
+This sheet is very incomplete.
+
+To write comments, start the line with `:: ` or `REM `.
+For in-line comments, use `& :: ` or `& REM `.
+"""
+
+[cli]
+section = "Command-line argument handling"
+
+[cli.print]
+action = "Print _n_th parameter"
+code = "echo %n"
+
+[cli.eq]
+action = "Check equality of _n_th parameter"
+code = """
+if %n%==1 echo "Arg is 1!"
+"""
+
+[var]
+section = "Variables"
+description = """
+By default, variables are global!
+
+For local declaration and usage of variables, encapsulate them in `SETLOCAL` and `ENDLOCAL`.
+"""
+
+[var.declare]
+action = "Declare variable named _name_ with value _value_"
+code = "set name = value"
+
+[var.declare.str.empty]
+action = "Declare empty string variable"
+code = "set msg ="
+
+[var.declare.str]
+action = "Declare string variable"
+code = "set msg = Hello world!"
+
+[var.declare.num]
+action = "Declare numeric variable named _name_ with value _value_"
+code = "set /A name = value"
+
+[var.get]
+action = "Get value of variable named _name_"
+code = "%name%"
+details = "Environment variables are just variables."
+
+[var.get.env.path]
+action = "Get PATH environment variable"
+code = "%PATH%"
+
+[var.exists]
+action = "Test of variable exists"
+code = """
+set var1 = 2
+if defined var1 echo "Variable var1 exists!"
+"""
+
+
+[flow]
+section = "Control flow"
+
+[flow.if]
+action = "If"
+code = "if %status% == 200 echo OK"
+
+[flow.ifelse]
+action = "If-else"
+code = """
+if %status% == 200 (echo OK) else (echo Error)
+"""
+
+[flow.for]
+action = "For-loop over range [_a_, _b_] with stepsize _s_"
+code = """
+for /L %%var in (a,s,b) do echo %%var
+"""
+
+
+[flow.pause.key]
+action = "Pause until user presses a key"
+code = "pause"
+
+[flow.pause.time.key]
+action = "Pause until _n_ seconds have elapsed or user presses a key"
+code = "timeout n"
+
+[flow.exit]
+action = "End execution of script"
+code = "exit /B"
+
+[flow.exit.eof]
+code = "goto :eof"
+
+
+[num]
+section = "Number handling"
+
+[num.sum]
+action = "Add"
+code = "set /A y = %x% + 1"
+
+[num.sub]
+action = "Subtract"
+code = "set /A y = %x% - 2"
+
+[num.mult]
+action = "Multiply"
+code = "set /A y = %x% * 2"
+
+[num.div]
+action = "Divide"
+code = "set /A y = %x% / 2"
+
+[num.mod]
+action = "Modulus"
+code = "set /A y = x % 2"
+
+
+[str]
+section = "String handling"
+
+[str.length]
+action = "Number of characters (length)"
+code = "?"
+details = "No standard function available"
+
+[str.concat]
+action = "Concatenate strings"
+code = """
+set w = world
+set /a y = 2024
+set msg = Hello %w% in %y%!
+"""
+
+[str.empty]
+action = "Test for empty string"
+code = "[%msg%]==[]"
+
+[str.int]
+action = "Parse as integer"
+code = "set /a count = %countstr%"
+
+
+[out]
+section = "Output"
+
+[out.clear]
+action = "Clear console"
+code = "cls"
+
+[out.std]
+section = "Standard output"
+
+[out.std.off]
+action = "Disable command prompts"
+code = "@echo off"
+
+[out.std.print]
+action = "Print string"
+code = "echo Hello world!"
+
+
+[filesystem]
+section = "Filesystem handling"
+
+[filesystem.file.exists]
+action = "Check if file exists"
+code = """
+if exist C:\\file.txt echo "File exists"
+"""

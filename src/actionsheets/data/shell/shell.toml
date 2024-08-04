@@ -1,0 +1,7 @@
+language = "shell"
+parent = ""
+name = "shell"
+title = "Shell"
+description = """
+A collection of [shell script languages](https://en.wikipedia.org/wiki/Shell_script) and command-line argument tools.
+"""

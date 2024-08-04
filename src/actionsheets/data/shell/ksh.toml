@@ -1,0 +1,425 @@
+language = "ksh"
+parent = "shell"
+name = "ksh"
+title = "Korn shell"
+description = """
+https://en.wikipedia.org/wiki/KornShell
+"""
+details = """
+This sheet is incomplete.
+
+Notes:
+* Start script with: #!/bin/ksh
+* Enable executation for file by running chmod u+x script.sh
+"""
+
+[cli]
+section = "Command-line argument parsing"
+
+[cli._name]
+action = "Program name, including the path if started from another directory"
+code = "$0"
+
+[cli.argcount]
+action = "Number of arguments"
+code = "$#"
+
+[cli.test]
+section = "Test"
+
+[cli.test.narg]
+action = "Check for zero arguments"
+code = """if [[ $# -eq 0 ]];then
+    print "No Arguments"
+    exit
+fi
+"""
+
+[cli.arg.n]
+action = "Get the _n_th argument"
+code = "$n"
+
+[cli.arg.n.default]
+action = "Get the _n_th argument, with default value"
+code = """${n-"Default value here"}"""
+
+[cli.expand]
+action = "Expand all arguments to a single word"
+code = "$*"
+
+[cli.expand.str]
+action = "Expand all arguments to single string"
+code = "$@"
+
+[cli.expand.sep]
+action = "Expand arguments to separate words"
+code = """
+"$@"
+"""
+
+
+[special]
+section = "Special variables"
+description = "Note that the positional parameters are special variables too."
+
+[special.exitstatus]
+action = "Exit status of last command"
+code = "$?"
+
+[special.processid]
+action = "Process id of current program"
+code = "$$"
+
+[special.processid.bg]
+action = "Process id of last background job"
+code = "$!"
+
+
+[constant]
+section = "Constants"
+
+[constant.declare]
+action = "Declare constant"
+code = "declare -r PASSWD_FILE=/etc/passwd"
+
+
+[var]
+section = "Variables"
+description = """
+- Don't put dots in variable names!
+- By default, all variables are global! Even within functions!
+"""
+
+[var.get]
+action = "Get variable value"
+code = "$var"
+
+[var.get.default]
+action = "Get variable value with default value _value_"
+code = "${var:-value}"
+
+[var.getset]
+action = "Get variable and set it with default value if it is not set"
+code = "${var:=value}"
+
+[var.get.err]
+action = "Get variable value but throw error if not set"
+code = """${var:?"Error! var not set!"}"""
+
+[var.test.set]
+action = "Check if variable is set"
+code = "${var:+1}"
+details = "Returns 1 if set, else nothing"
+
+[var.set]
+action = "Set value for variable"
+code = "var=value"
+
+[var.set.input]
+action = "Set value from user input"
+code = "read var"
+
+[var.set.output]
+action = "Set command output for variable"
+code = "var=command args"
+
+[var.local.declare]
+action = "Declare local variable"
+code = "typeset var"
+
+[var.local.set]
+action = "Set local variable"
+code = "typeset var = value"
+
+
+[fun]
+section = "Functions"
+description = "Use the `local` statement to define local variables."
+
+[fun.define]
+action = "Define function"
+code = """
+function get_name {
+    return $name
+}
+"""
+
+[fun.define.args]
+action = "Define function with arguments"
+code = """function increment {
+    local x = $1
+    return (( $x + 1 ))
+}
+"""
+
+[fun.call]
+action = "Call function"
+code = "foo"
+
+[fun.call.args]
+action = "Call function with arguments"
+code = "foo arg1 arg2"
+
+
+[flow]
+section = "Control flows"
+description = "See http://www.bolthole.com/solaris/ksh-basics.html"
+
+[flow.pipe]
+action = "Chain (pipe) commands"
+code = "command1 | command2 | command3"
+
+[flow.if]
+action = "If"
+code = """if [[ $value -eq 2 ]];then
+    print "$value is 2"
+fi
+"""
+
+[flow.ifelse]
+action = "If-else"
+code = """
+if [[ $value -eq 2 ]];then
+    print "$value is 2"
+else
+    print "$value is not 2"
+fi
+"""
+
+[flow.ifelseif]
+action = "If-elseif"
+code = """
+if [[ $status -eq 200 ]];then
+    print "OK (status = 200)"
+elif [[ $value -gt 400 ]];then
+    print "Error (status > 400)"
+else
+    print "Not 200 but < 400"
+fi
+"""
+
+[flow.switch]
+action = "Switch"
+code = """
+case $food in
+    apple|pear) print "fruit";;
+    onion)  print "veggy";;
+    *)  print "unknown";;
+esac
+"""
+details = """
+Cases don't fall through, unless `;&` is used instead of `;;`
+Strings can be matched using wildcards.
+"""
+
+[flow.for]
+action = "For"
+code = """
+for f in $(ls);do
+    (( count += 1 ))
+done
+print "Total: $count"
+"""
+details = "Use `continue` to skip the loop. Use `break` to exit the loop."
+
+[flow.until]
+action = "Until"
+code = """
+until [[ $stopnow -eq 1 ]] ; do
+	echo just run this once
+	stopnow=1;
+	echo we should not be here again.
+done
+"""
+
+[flow.pause]
+action = "Pause for _n_ seconds"
+code = "sleep n"
+
+
+[err]
+section = "Error handling"
+
+[err.throw]
+action = "Throw error and stop execution, with unspecified error"
+code = "exit 1"
+
+[err.throw.msg]
+action = "Throw error with message"
+code = """
+echo "Error!" 1>&2
+exit 2
+"""
+
+[err.run.success]
+action = "Run command only if the former command succeeds"
+code = "command1 && command2"
+
+[err.run.fail]
+action = "Run command only if the former command fails"
+code = "command1 || command2"
+
+[err.run.cleanup]
+action = "Run (cleanup) function on error"
+code = "trap cleanup ERR"
+details = "For a previously defined cleanup function"
+
+[err.run.err]
+action = "Run code on error"
+code = """trap "echo Oh no!" ERR"""
+
+[err.run.interupt]
+action = "Run code on interupt"
+code = """trap "echo Oh no!" INT"""
+details = "e.g., when user presses `Ctrl+C`"
+
+[err.run.'err-or-interupt']
+action = "Run code on error or interrupt"
+code = """trap "echo Oh no!" ERR INT"""
+
+[err.run.terminate]
+action = "Run code on process termination"
+code = """trap "echo Oh no!" TERM"""
+
+
+[num]
+section = "Number handling"
+
+[num.increment]
+action = "Increment variable"
+code = "(( count += 1))"
+
+[num.increment.2]
+code = "let count += 1"
+
+[num.sum]
+action = "Sum variables"
+code = "sum = $(( a + b ))"
+
+[num.eq]
+action = "Equals number _num_"
+code = "$count -eq num"
+
+[num.neq]
+action = "Not equals number _num_"
+code = "$count -ne num"
+
+[num.gt]
+action = "Greater than number _num_"
+code = "$value -gt num"
+
+[num.lt]
+action = "Less than number _num_"
+code = "$value -lt num"
+
+
+[str]
+section = "String handling"
+
+[str.eq]
+action = "Equals string _str_"
+code = """
+$name = "str"
+"""
+
+[str.neq]
+action = "Not equals string _str_"
+code = """
+$name != "str"
+"""
+
+[str.path]
+section = "Path handling"
+
+[str.path.parent]
+action = "Get parent path"
+code = "${name%/*}"
+
+[str.path.file._name]
+action = "Get filename from path"
+code = "${name##*/}"
+
+
+[out]
+section = "Output"
+
+[out.print]
+action = "Print message"
+code = """
+echo "Hello world!"
+"""
+
+[out.print.var]
+action = "Print variable"
+code = "echo $var"
+
+[out.print.format]
+action = "Formatted printing"
+code = """
+printf "counting %d days" $days
+"""
+
+[out.redirect]
+section = "Data redirection"
+
+[out.redirect.write]
+action = "Write to new file or overwrite file"
+code = "command > file"
+
+[out.redirect.append]
+action = "Append file"
+code = "command >> file"
+
+[out.redirect.err]
+action = "Redirect error output"
+code = "command 2> file"
+
+[out.redirect.std]
+action = "Redirect to normal output"
+code = "command 2>&1"
+
+[out.redirect.err.discard]
+action = "Discard errors"
+code = "command 2>/dev/null"
+
+[out.redirect.discard]
+action = "Discard all output"
+code = "command > /dev/null 2>&1"
+
+[out.redirect.input]
+action = "File as input to command"
+code = "command < file"
+
+
+[filesystem]
+section = "Filesystem handling"
+
+[filesystem.dir.exists]
+action = "Check if directory exists"
+code = """
+[ -d "$DIRPATH" ]
+"""
+
+[filesystem.dir.missing]
+action = "Check if directory is missing"
+code = """
+[ ! -d "$DIRPATH" ]
+"""
+
+[filesystem.file.exists]
+action = "Check if file exists"
+code = """
+[ -f "$FILEPATH" ]
+"""
+
+[filesystem.dir.create]
+action = "Create directory"
+code = """
+mkdir "$DIRPATH"
+"""
+
+[filesystem.files.count]
+action = "Count the number of files in a directory"
+code = """
+count=find $dir -maxdepth 1 -name "*.txt" -type f | wc -l
+"""
