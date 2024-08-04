@@ -2,6 +2,32 @@ language = "python"
 parent = ""
 name = "python"
 title = "Python"
+description = """
+[Python](https://www.python.org/about/) is an easy-to-learn high-level programming language.
+It is especially suitable for beginners to programming, amateurs/hobbyists, scientists, engineers.
+
+Pros:
+- **Easy to learn**
+  - High-level
+  - Dynamically typed
+  - Simple and readable syntax
+- **Vast [ecosystem](https://pypi.org/)**
+- **Large community and help sources**
+- **Rapid prototyping**
+- **Excellent [glue language](https://www.devx.com/terms/glue-language/)**
+  - Many packages interface with C or other fast languages to achieve performant code
+  - Interoperable with many other languages
+
+Cons:
+- **Very slow**: About 50 times slower than C. This is not a deal-breaker though for a glue/scripting language, and for prototyping purposes.
+- **Low-quality packages**: There are almost no imposed requirements on packages and compability between packages: Expect compatibility issues, breaking functionality across package versions, unintuitive APIs, and lacking documentation.
+- **Non-standardized tooling**: despite the emphasis on the _Pythonic way_, there are hilariously many cases of competing tools, packages, and standards: see dependency management, repository structure, unit testing, to name a few.
+- **Dynamically typed**: great for rapid prototyping, not for large frameworks.
+
+Short Python cheatsheets:
+- https://www.pythoncheatsheet.org/
+- https://quickref.me/python
+"""
 
 
 [run]
@@ -16,4 +42,4 @@ code = "os.system('python script.py')"
 
 [run.script.args]
 action = "Start Python script with arguments, wait for completion"
-code = "os.system('python script.py -file 'hello.csv'')"
+code = """os.system('python script.py -file "hello.csv")"""
