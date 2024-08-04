@@ -4,6 +4,53 @@ name = "str"
 title = "String"
 description = "String handling"
 keywords = ["string", "chars"]
+code = "import string"
+
+[constant]
+section = "Constants"
+
+[constant.letters.lower]
+action = "Lowercase letters"
+code = "string.ascii_lowercase"
+details = "abcdefghijklmnopqrstuvwxyz"
+
+[constant.letters.upper]
+action = "Uppercase letters"
+code = "string.ascii_uppercase"
+details = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+[constant.letters]
+action = "Lowercase and uppercase letters"
+code = "string.ascii_letters"
+details = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+[constant.digits]
+action = "Digits"
+code = "string.digits"
+details = "0123456789"
+
+[constant.hex]
+action = "Hexadecimal digits"
+code = "string.hexdigits"
+details = "0123456789abcdefABCDEF"
+
+[constant.whitespace]
+action = "Whitespace characters"
+code = "string.whitespace"
+details = "Includes space, tab, linefeed, return, formfeed, and vertical tab."
+
+[constant.punctuation]
+action = "Punctuation characters"
+code = "string.punctuation"
+details = """
+!"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~
+"""
+
+[constant.printable]
+action = "Printable characters"
+code = "string.printable"
+details = "Combination of digits, letters, punctuation, and whitespace."
+
 
 [create]
 section = "Create"
@@ -295,7 +342,7 @@ details = "_y_ is excluded"
 
 [derive.shrink.upto.line]
 action = "Substring up to first line break"
-code = "x.split('\n')[0]"
+code = "x.split('\\n')[0]"
 details = "Line break is excluded"
 
 [derive.shrink.remove.prefix]
