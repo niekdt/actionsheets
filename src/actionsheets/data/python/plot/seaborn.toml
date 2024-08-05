@@ -1,0 +1,335 @@
+language = "python"
+parent = "python.plot"
+name = "plotnine"
+title = "Seaborn"
+description = """
+[Searborn](https://seaborn.pydata.org/) is a high-level interface to [matplotlib](https://matplotlib.org/).
+It is great for rapidly creating standard yet pretty data visualizations.
+
+Pros:
+- Easy-to-use, high-level
+- Pretty statistical data visualizations by default
+- Theming and color palettes
+- Extendable or modifable with matplotlib code
+
+Cons:
+- Limited support for complex visualizations (in which case, consider matplotlib)
+
+To install, run:
+```shell
+pip install seaborn
+```
+"""
+code = """
+import seaborn as sns
+import seaborn.objects as so
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+import numpy as np
+import pandas as pd
+
+sns.set_theme()
+"""
+details = """
+For use in Jupyter notebooks, make sure you enable _matplotlib mode_ to see the plots.
+Alternatively, call:
+```python
+import matplotlib.pyplot as plt
+plt.show()
+```
+"""
+
+[theme]
+section = "Theming"
+description = "If no theme is set, the default matplotlib theme is used."
+
+[theme.set.default]
+action = "Set default theme"
+code = "sns.set_theme()"
+
+
+[plot]
+section = "Plots"
+
+[plot.dist]
+section = "Distribution plots"
+description = "See https://seaborn.pydata.org/generated/seaborn.displot.html"
+
+[plot.dist.box]
+section = "Boxplots"
+
+[plot.dist.box.std]
+action = "Boxplot"
+code = "sns.boxplot(iris, x='sepal_length')"
+
+[plot.dist.box.group]
+action = "Boxplot by group"
+code = "sns.boxplot(iris, x='sepal_length', y='species')"
+
+[plot.dist.box.group2]
+action = "Boxplot by two grouping factors"
+code = "sns.boxplot(fmri, x='signal', y='region', hue='event')"
+
+[plot.dist.box.group.facet]
+action = "Facetted boxplot by two grouping factors"
+code = "sns.catplot(fmri, kind='box', x='signal', y='region', col='event')"
+
+
+[plot.dist.hist]
+section = "Histograms"
+
+[plot.dist.hist.std]
+action = "Plot histogram"
+code = "sns.histplot(iris, x='sepal_length')"
+
+[plot.dist.hist.discrete]
+action = "Plot histogram with bins centered at discrete values"
+code = "sns.histplot(iris, x='sepal_length', discrete=True)"
+details = "For example, at integer values"
+
+[plot.dist.hist.width]
+action = "Plot histogram with bin-width"
+code = "sns.histplot(iris, x='sepal_length', binwidth=1.0)"
+
+[plot.dist.hist.n]
+action = "Plot histogram with a given number of bins"
+code = "sns.histplot(iris, x='sepal_length', bins=5)"
+
+[plot.dist.hist.kde]
+action = "Plot histogram and kernel density"
+code = "sns.histplot(iris, x='sepal_length', kde=True)"
+
+[plot.dist.hist.norm]
+action = "Plot normalized histogram"
+code = "sns.histplot(iris, x='sepal_length', stat='proportion')"
+
+[plot.dist.hist.norm.pct]
+action = "Plot normalized histogram as percentage"
+code = "sns.histplot(iris, x='sepal_length', stat='percent')"
+
+[plot.dist.hist.facet]
+action = "Facetted histogram chart"
+code = "sns.displot(iris, x='sepal_length', col='species')"
+
+
+[plot.dist.kde]
+section = "Kernel density plots"
+
+[plot.dist.kde.std]
+action = "Plot kernel density"
+code = "sns.kdeplot(iris, x='sepal_length')"
+
+[plot.dist.kde.group]
+action = "Plot kernel density by group"
+code = "sns.kdeplot(iris, x='sepal_length', hue='species')"
+
+[plot.dist.kde.facet]
+action = "Facetted kernel density chart"
+code = "sns.displot(iris, kind='kde', x='sepal_length', col='species')"
+
+[plot.dist.kde.violin]
+action = "Violin plot"
+code = "sns.violinplot(iris, x='sepal_length')"
+
+[plot.dist.kde.violin.group]
+action = "Violin plot with grouping factor"
+code = "sns.violinplot(iris, x='sepal_length', y='species')"
+
+
+[plot.dist.cdf]
+section = 'Empirical cumulative density plots'
+
+[plot.dist.cdf.step]
+action = "Plot stepped cumulative density"
+code = "sns.ecdfplot(iris, x='sepal_length')"
+
+[plot.dist.cdf.step.inv]
+action = "Plot stepped inverse cumulative density"
+code = "sns.ecdfplot(iris, x='sepal_length', complementary=True)"
+
+[plot.dist.cdf.step.group]
+action = "Plot stepped cumulative density by group"
+code = "sns.displot(iris, kind='ecdf', x='sepal_length', hue='species')"
+
+[plot.dist.cdf.step.facet]
+action = "Facetted plot of stepped cumulative density"
+code = "sns.displot(iris, kind='ecdf', x='sepal_length', col='species')"
+
+[plot.dist.cdf.hist]
+action = "Plot cumulative density as barplot"
+code = "sns.histplot(iris, x='sepal_length', cumulative=True, stat='proportion')"
+
+[plot.dist.cdf.hist.group]
+action = "Plot cumulative density by group as barplot"
+code = """
+sns.histplot(iris, x='sepal_length', hue='species',
+    cumulative=True, stat='proportion', common_norm=False)
+"""
+details = "Each group reaches 1.0"
+
+[plot.dist.cdf.hist.facet]
+action = "Facetted plot of cumulative density by group as barplot"
+code = """
+sns.displot(iris, x='sepal_length',
+    cumulative=True, stat='proportion', common_norm=False, col='species')
+"""
+details = "Each group reaches 1.0"
+
+[plot.dist.cdf.rug]
+action = "Plot step-wise cumulative density with density rug"
+code = "sns.displot(iris, kind='ecdf', x='sepal_length', rug=True)"
+
+
+[plot.2d]
+section = "Bivariate plots"
+description = "Plots involving two continuous variables."
+
+[plot.2d.scatter]
+section = "Scatter plots"
+
+[plot.2d.scatter.std]
+action = "Scatter plot"
+code = "sns.scatterplot(iris, x='sepal_length', y='sepal_width')"
+
+[plot.2d.scatter.group]
+action = "Scatter plot with grouping factor"
+code = "sns.scatterplot(iris, x='sepal_length', y='sepal_width', hue='species')"
+
+[plot.2d.scatter.facet]
+action = "Facetted scatter plot"
+code = """
+sns.relplot(
+    data=iris, kind='scatter',
+    x='sepal_length', y='sepal_width',
+    col='species'
+)
+"""
+
+
+[plot.2d.joint]
+section = "Joint plots"
+
+[plot.2d.joint.scatter_kde]
+action = "Scatter plot with KDE axes"
+code = "sns.jointplot(iris, x='sepal_length', y='sepal_width')"
+details = "Scatter and KDE"
+
+[plot.2d.joint.scatter_kde.group]
+action = "Scatter plot with KDE axes, with grouping factor"
+code = "sns.jointplot(iris, x='sepal_length', y='sepal_width', hue='species')"
+
+[plot.2d.joint.hist]
+action = "Plot heatmap with histograms along axes"
+code = "sns.jointplot(iris, kind='hist', x='sepal_length', y='sepal_width')"
+
+
+[plot.2d.line]
+section = "Line plots"
+
+[plot.2d.line.std]
+action = "Line plot"
+code = """
+sns.lineplot(flights.query('month=="May"'), x='year', y='passengers', hue='month')
+"""
+
+[plot.2d.line.group]
+action = "Line plot, with separate lines per group"
+code = "sns.lineplot(flights, x='year', y='passengers', hue='month')"
+source = "https://seaborn.pydata.org/generated/seaborn.lineplot.html"
+
+[plot.2d.line.group.err]
+action = "Line plot involving duplicate observations per x, as confidence region"
+code = "sns.lineplot(flights, x='year', y='passengers')"
+
+[plot.2d.line.facet]
+action = "Facetted line plot"
+code = """
+sns.relplot(
+    data=fmri, kind='line',
+    x='timepoint', y='signal',
+    col='region', row='event'
+)
+"""
+
+[plot.nd]
+section = "Multivariate plots"
+description = "Plots involving more than two continuous variables."
+
+[plot.nd.pairs]
+action = "Pairs plot"
+code = "sns.pairplot(iris)"
+details = "Plots pairwise scatter, and KDE along the diagonal"
+
+
+[plot.facet]
+section = "Facetted plotting options"
+description = """
+The function for creating facetted plots differs between the kinds of plots, so only options are described here.
+See, for example, `sns.displot()`, `sns.relplot()` and `sns.catplot()`.
+"""
+
+[plot.facet.col]
+action = "Horizontally stacked facets"
+code = "col='region'"
+
+[plot.facet.col.wrap]
+action = "Horizontally stacked facets, wrap after _n_ columns"
+code = "col='region', col_wrap=n"
+
+[plot.facet.row]
+action = "Vertically stacked facets"
+code = "row='region'"
+
+[plot.facet.row.wrap]
+action = "Vertically stacked facets, wrap after _n_ columns"
+code = "row='region', row_wrap=n"
+
+[plot.facet.grid]
+action = "Grid-based facets along two grouping factors"
+code = "col='region', row='event'"
+
+
+[config]
+section = "Plot configuration"
+description = "Arguments should be used inside the `sns.relplot` function."
+
+[config.flip]
+action = "Flip axes"
+code = "orient='y'"
+
+[config.log]
+action = "Log-scale with base _b_"
+code = "log_scale=('y', b)"
+
+[config.axis.format.comma]
+action = "Format axis with comma as thousands separator"
+code = """
+import matplotlib.ticker as ticker
+iris['sepal_length'] *= 1000
+g = sns.histplot(iris, x='sepal_length')
+
+g.xaxis.set_major_formatter(
+    ticker.FuncFormatter(lambda x, p: format(int(x), ','))
+)
+"""
+details = "Very tedious"
+
+[config.axis.format.percent]
+action = "Format axis with percentage labels"
+code = """
+import matplotlib.ticker as ticker
+g = sns.ecdfplot(iris, x='sepal_length', stat='percent')
+
+g.yaxis.set_major_formatter( ticker.PercentFormatter() )
+"""
+details = "`PercentFormatter` assumes percent input, not proportion, so 1.0 = '1.0%'"
+
+[config.aspect]
+action = "1:1 aspect ratio"
+code = "aspect=1"
+
+[config.legend.hide]
+action = "Hide legend"
+code = "legend=False"

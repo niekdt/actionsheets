@@ -1,0 +1,10 @@
+language = "python"
+parent = "python"
+name = "plot"
+title = "Plots"
+
+description = """
+Sheets on data visualizations, plots, charts, graphs.
+
+Detailed comparison of many plotting packages: https://learnpython.com/blog/python-libraries-data-visualization/
+"""
