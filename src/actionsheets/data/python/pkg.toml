@@ -66,6 +66,17 @@ except ImportError as e
     print(e)
 """
 
+[import.pkg.track]
+action = "Try import package or top-level module, store result in indicator variable"
+code = """
+try:
+    import actionsheets
+    assert actionsheets
+    _no_actionsheets = False
+except ImportError:
+    _no_actionsheets = True
+"""
+
 [import.module.try]
 action = "Try to import submodule, catch error if not found"
 code = """
