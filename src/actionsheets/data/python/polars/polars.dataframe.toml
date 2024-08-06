@@ -814,6 +814,35 @@ data.filter(
 )
 """
 
+[derive.shrink.row.select.sample]
+action = "Sample at most _n_ rows"
+code = "data.sample(n)"
+
+[derive.shrink.row.select.sample.wr]
+action = "Sample _n_ rows, with replacement"
+code = "data.sample(n, with_replacement=True)"
+details = "Replicates some rows. The result is guaranteed to have _n_ rows, even when the input contains fewer rows."
+source = "https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.sample.html"
+
+[derive.shrink.row.select.sample.group]
+action = "Sample at most _n_ rows per group"
+code = """
+data.filter(
+    pl.int_range(pl.len()).shuffle().over('patient') < n
+)
+"""
+details = "Groups with fewer than _n_ rows keep all rows."
+source = "https://stackoverflow.com/a/72636610/22638740"
+
+[derive.shrink.row.select.sample.wr.group]
+action = "Sample _n_ rows per group, with replacement"
+code = """
+data.group_by('Patient').map_groups(
+    lambda df: df.sample(n, with_replacement=True)
+)
+"""
+details = "Very slow due to the `map_groups()` call."
+
 
 [derive.shrink.row.remove]
 section = "Exclude rows"
