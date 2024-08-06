@@ -1,9 +1,9 @@
 language = "python"
 parent = "python.plot"
-name = "plotnine"
+name = "seaborn"
 title = "Seaborn"
 description = """
-[Searborn](https://seaborn.pydata.org/) is a high-level interface to [matplotlib](https://matplotlib.org/).
+[Seaborn](https://seaborn.pydata.org/) is a high-level interface to [matplotlib](https://matplotlib.org/).
 It is great for rapidly creating standard yet pretty data visualizations.
 
 Pros:
