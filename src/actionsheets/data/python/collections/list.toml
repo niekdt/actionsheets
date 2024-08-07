@@ -24,6 +24,26 @@ code = "x = [1, 3, 9]"
 action = "Define with _n_ repeated values _v_"
 code = "x = [v] * n"
 
+[create.count]
+action = "List of _n_ increasing counts, starting from zero"
+code = "list(range(n))"
+
+[create.count.step]
+action = "List of increasing counts, starting from zero with step size _s_"
+code = "list(range(0, n, s))"
+
+[create.revcount]
+action = "List of _n_ decreasing counts to zero"
+code = "list(range(n, 0, -1))"
+
+[create.revcount.step]
+action = "List of _n_ decreasing counts to zero, with step size _s_"
+code = "list(range(n, 0, -s))"
+
+[create.range]
+action = "List of increasing integers between [_a_, _b_]"
+code = "list(range(a, b))"
+
 [create.tuple]
 action = "From tuple"
 code = """
