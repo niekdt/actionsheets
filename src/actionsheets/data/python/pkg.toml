@@ -49,6 +49,33 @@ dict(metadata('actionsheets'))
 """
 details = "Conceals duplicate metadata entries"
 
+[extract.file]
+action = "Get file path from package"
+code = """
+from importlib import resources
+path = str(resources.files('actionsheets.data').joinpath('python.toml'))
+"""
+
+[extract.files]
+action = "Get file paths from package according to pattern, recursively"
+code = """
+from importlib import resources
+from importlib.resources.abc import Traversable
+
+def gather_files(entries: Iterator[Traversable]) -> list[str]:
+    files_list = []
+    for entry in entries:
+        if entry.is_dir():
+            files_list += gather_files(entry.iterdir())
+        elif entry.name.endswith('.csv'):
+            files_list += [entry]
+    return files_list
+
+data_root = resources.files('actionsheets.data')
+paths = gather_files(data_root.iterdir())
+"""
+details = "Code could be simplified"
+
 
 [import]
 section = "Import"
