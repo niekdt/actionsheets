@@ -20,6 +20,16 @@ code = "sys.maxsize"
 section = "Create"
 description = "`int()` throws `ValueError` if the input cannot be parsed"
 
+[create.define]
+action = "Define integer"
+code = "x = 10"
+details = "Cannot contain decimal values or result will be `float`."
+
+[create.define.sci]
+action = "Define integer from scientific notation"
+code = "x = int(1e6)"
+details = "Cast is needed otherwise result is `float`"
+
 [create.binary]
 action = "Binary integer"
 code = "[sign]0b[b2int]"
