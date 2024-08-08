@@ -43,3 +43,58 @@ code = "os.system('python script.py')"
 [run.script.args]
 action = "Start Python script with arguments, wait for completion"
 code = """os.system('python script.py -file "hello.csv")"""
+
+
+[env]
+section = 'Environment'
+
+[env.var]
+section = 'Environment variables'
+description = "All snippets require `import os`. Updates to the environment are not reflected in the `os.environ` mapping."
+
+[env.var.list]
+action = "Get list of all environment variables"
+code = "list(os.environ)"
+
+[env.var.dict]
+action = "Get all environment variables as dict"
+code = "dict(os.environ)"
+
+[env.var.test.exists]
+action = "Check if environment variable exists"
+code = "'path' in os.environ"
+details = "Case-insensitive"
+
+[env.var.get]
+action = "Get value of environment variable, error if not found"
+code = "os.environ['path']"
+
+[env.var.get.empty]
+action = "Try get value of environment variable, or return `None`"
+code = "os.getenv('path')"
+
+[env.var.get.empty.2]
+code = "os.environ.get('path')"
+
+[env.var.get.default]
+action = "Try get value of environment variable, or return default value _v_"
+code = "os.environ.get('missingvar', v)"
+
+[env.var.set]
+action = "Set / update environment variable"
+code = "os.environ['derp'] = 'hello'"
+
+[env.var.set.new]
+action = "Set environment variable only if it is not yet defined"
+code = "os.environ.setdefault('derp', 'world')"
+
+[env.var.remove]
+action = "Delete environment variable, error if not defined"
+code = "del os.environ['derp']"
+
+[env.var.remove.pop]
+code = "os.environ.pop('derp')"
+
+[env.var.remove.try]
+action = "Try delete environment variable"
+code = "os.environ.pop('derp', None)"
