@@ -118,11 +118,34 @@ code = "data['sex'].is_not_null().all()"
 
 [test.col.duplicate.none]
 action = "Column has no duplicate values"
-code = "?"
+code = "data['date'].is_unique().all()"
 
 [test.col.duplicate.any]
 action = "Column has duplicate values"
-code = "?"
+code = "data['date'].is_duplicated().any()"
+
+[test.col.duplicates.any.group]
+action = "Column has duplicates within groups"
+code = """
+data.select(
+    pl.col('date').is_duplicated().any().over('patient').any()
+).item()
+"""
+details = "Checks whether any group (patient) has duplicate values (dates)"
+
+[test.col.duplicates.any.group.over]
+code = """
+data.select(
+    pl.col('date').is_duplicated().any().over('patient')
+).to_series().any()
+"""
+
+[test.col.duplicates.any.group.by]
+code = """
+data.group_by('patient').agg(
+    dupe=pl.col('date').is_duplicated().any()
+)['dupe'].any()
+"""
 
 [test.col.type]
 action = "Column is of type"
