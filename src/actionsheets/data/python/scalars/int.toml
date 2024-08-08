@@ -1,0 +1,107 @@
+language = "python"
+parent = "python.scalars"
+name = "int"
+title = "Integers"
+keywords = ["number", "integer", "int"]
+
+[constants]
+section = "Constants"
+
+[constants.int.min]
+action = "Min int"
+code = "-sys.maxsize"
+
+[constants.int.max]
+action = "Max int"
+code = "sys.maxsize"
+
+
+[create]
+section = "Create"
+description = "`int()` throws `ValueError` if the input cannot be parsed"
+
+[create.binary]
+action = "Binary integer"
+code = "[sign]0b[b2int]"
+details = "-0b10 (-2)"
+
+[create.hex]
+action = "Hex integer"
+code = "[sign]0x[b16int]"
+details = "e.g., -0xF (-16)"
+
+[create.str]
+action = "Integer from string"
+code = "int(x)"
+
+[create.str.hex]
+action = "Integer from hex string (base 16)"
+code = "int(x, 16)"
+details = "e.g., DEADBEEF"
+
+[create.str.prefix]
+action = "Integer from string with base determined by prefix"
+code = "int(x, 0)"
+details = "Base 10 by default, base-16 for 0x, base-2 for 0b"
+
+[create.str.locale]
+action = "Integer from string according to locale"
+code = "locale.atoi(x)"
+
+[create.uint.bytes]
+action = "Unsigned integer from bytes"
+code = "int.from_bytes(x, byteorder='big')"
+
+[create.bytes]
+action = "Signed integer from bytes"
+code = "int.from_bytes(x, byteorder='big', signed=True)"
+
+
+[test]
+section = "Test"
+
+[test.is]
+action = "Is integer"
+code = "type(x) is int"
+
+
+[extract]
+section = "Extract"
+
+[extract.hash]
+action = "Hash"
+code = "hash(x)"
+
+[extact.bits]
+action = "Number of bits needed to represent the integer (ignoring sign)"
+code = "x.bit_length()"
+details = "Same as `floor(log2(|x|))`"
+
+
+[convert]
+section = "Convert"
+
+[convert.str]
+action = "To string"
+code = "str(x)"
+
+[convert.str.comma]
+action = "To string, with comma as thousands separator"
+code = "f'{x:,}'"
+
+[convert.str.hex]
+action = "To hex string"
+code = "hex(x)"
+details = "Format: `[sign] ['0x'] integer"
+
+[convert.bytes]
+action = "To bytes"
+code = "x.to_bytes(8, byteorder='big')"
+details = "`OverflowError` is raised if the integer is not representable with the given number of bytes"
+
+[convert.bytes.signed]
+code = "x.to_bytes(8, byteorder='big', signed=True)"
+
+[convert.bytes.array]
+action = "Count to byte array (mutable)"
+code = "bytearray(x)"
