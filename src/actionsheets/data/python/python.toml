@@ -3,7 +3,7 @@ parent = ""
 name = "python"
 title = "Python"
 description = """
-[Python](https://www.python.org/about/) is an easy-to-learn high-level programming language.
+[Python](https://www.python.org/about/) is an easy-to-learn high-level general-purpose programming language.
 It is especially suitable for beginners to programming, amateurs/hobbyists, scientists, engineers.
 
 Pros:
@@ -23,6 +23,8 @@ Cons:
 - **Low-quality packages**: There are almost no imposed requirements on packages and compability between packages: Expect compatibility issues, breaking functionality across package versions, unintuitive APIs, and lacking documentation.
 - **Non-standardized tooling**: despite the emphasis on the _Pythonic way_, there are hilariously many cases of competing tools, packages, and standards: see dependency management, repository structure, unit testing, to name a few.
 - **Dynamically typed**: great for rapid prototyping, not for large frameworks.
+- **No built-in language support for vector and matrix operations**: results in needlessly verbose code for any engineering or data science applications.
+- **No fluent interface**: No support for chaining function calls, which is a common use case in analysis scripts and data manipulation. This results in many data science libraries resorting to the builder pattern, which forces the use of implementing subclasses just to call another function.
 
 Short Python cheatsheets:
 - https://www.pythoncheatsheet.org/

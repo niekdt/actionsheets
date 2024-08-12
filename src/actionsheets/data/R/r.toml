@@ -2,7 +2,39 @@ language = "R"
 parent = ""
 name = "r"
 title = "R"
+description = """
+[R](https://www.r-project.org/) is an easy-to-learn high-level programming language especially tailored to data science applications.
 
+Pros:
+- **Easy to learn**
+  - High-level
+  - Dynamically typed
+- **Dynamic evaluation**, enabling powerful functions and more readable specification of formulas and models
+- **Very reliable [ecosystem](https://cran.r-project.org/)**, compared to Python.
+  Packages need to meet many requirements and demonstrate compatibility with dependencies.
+- **High-quality data science packages**
+- **Large community and help sources**
+- **Rapid prototyping**
+- **Excellent [glue language](https://www.devx.com/terms/glue-language/)**
+  - Many packages interface with C or other fast languages to achieve performant code
+  - Interoperable with many other languages
+- **Reliable and standardized tooling**
+- **Fluent inferface**: supports chaining functions, yielding much more readable analysis scripts.
+- **Excellent notebook support**
+- **Native vector/matrix support in the language**
+- **Good documention**: functions are generally well-documented and include code examples.
+
+Cons:
+- **Lack of proper namespaces**: you are guaranteed to stumble into import order conflicts or naming conflicts.
+- **Cryptic error messages**: R's standard error messages are very confusing. The inconsistent/unreadable stack trace does not help either.
+- **Confusing object-oriented systems**: there are at least [three systems](https://adv-r.hadley.nz/oo-tradeoffs.html) for implementing object-oriented programming to some degree ([S3](https://adv-r.hadley.nz/s3.html), [S4](https://adv-r.hadley.nz/s4.html), [R6](https://adv-r.hadley.nz/r6.html)). Enough said.
+- **Inconsistent standard library**: Quite a learning hurdle to get over.
+- **Dot operator**: increases the flexibility of functions, but documentation of options is often severely lacking.
+- **Very slow**: This is not a deal-breaker though for a glue/scripting language, and for prototyping purposes.
+- **Dynamic evaluation**: A powerful feature, but is very confusing to new users, and difficult to implement for advanced users.
+  - Environments: generally confusing for users, and can lead to fun surprising (serializing a simple linear formula resulting in a 10 GB file).
+- **Dynamically typed**: great for rapid prototyping, not for large frameworks.
+"""
 
 [_source]
 section = "Sourcing"
