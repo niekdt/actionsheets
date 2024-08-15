@@ -1,0 +1,7 @@
+language = "R"
+parent = "r"
+name = "plot"
+title = "Plots"
+description = """
+Sheets on data visualizations, plots, charts, graphs.
+"""

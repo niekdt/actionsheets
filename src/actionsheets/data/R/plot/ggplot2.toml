@@ -1,0 +1,568 @@
+language = "R"
+parent = "r"
+name = "ggplot2"
+title = "ggplot2"
+description = """
+A declarative approach to creating plots from tidy data.
+
+See https://ggplot2.tidyverse.org/
+"""
+details = "This sheet is a work in progress."
+code = """
+library(ggplot2)
+library(scales)
+data(iris)
+data(diamonds)
+data(economics)
+
+# some snippets use the Orthodont data from the nlme package
+library(nlme)
+data(Orthodont)
+"""
+
+[theme]
+section = "Theming"
+description = "For themes, see https://ggplot2-book.org/themes#sec-themes"
+
+[theme.set.default]
+action = "Set default theme"
+code = "theme_set(theme_minimal())"
+
+
+[plot]
+section = "Plots"
+
+[plot.dist]
+section = "Distribution plots"
+
+[plot.dist.box]
+section = "Boxplots"
+
+[plot.dist.box.default]
+action = "Boxplot, oriented horizontally"
+code = """
+ggplot(iris, aes(x=Sepal.Length)) +
+    geom_boxplot()
+"""
+
+[plot.dist.box.outliers]
+action = "Boxplot, hide outliers"
+code = """
+ggplot(iris, aes(x=Sepal.Length)) +
+    geom_boxplot(outlier.shape=NA)
+"""
+
+[plot.dist.box.vertical]
+action = "Boxplot, oriented vertically"
+code = """
+ggplot(iris, aes(y=Sepal.Length)) +
+    geom_boxplot()
+"""
+
+[plot.dist.box.group]
+action = "Boxplot by group"
+code = """
+ggplot(iris, aes(x=Sepal.Length, y=Species)) +
+    geom_boxplot()
+"""
+
+[plot.dist.box.group2]
+action = "Boxplot by two grouping factors"
+code = """
+ggplot(diamonds, aes(x=price, y=cut, fill=clarity)) +
+    geom_boxplot()
+"""
+
+
+[plot.dist.hist]
+section = "Histograms"
+
+[plot.dist.hist.std]
+action = "Plot histogram"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram()
+"""
+
+[plot.dist.hist.dot]
+action = "Plot histogram as a stack of dots (dot plot)"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_dotplot()
+"""
+
+[plot.dist.hist.discrete.one]
+action = "Plot histogram centered at integer values"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(binwidth=1, boundary=-.5)
+"""
+
+[plot.dist.hist.width]
+action = "Plot histogram with bin-width"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(binwidth = 1.0)
+"""
+
+[plot.dist.hist.n]
+action = "Plot histogram with a given number of bins"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(bins = 5)
+"""
+
+[plot.dist.hist.kde]
+action = "Plot histogram and kernel density, for bin width _w_"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(binwidth = w) +
+    geom_density(aes(y = ..count.. * w))
+"""
+
+[plot.dist.hist.norm]
+action = "Plot normalized histogram (AUC = 1)"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(aes(y=..density..))
+"""
+
+[plot.dist.hist.norm.kde]
+action = "Plot normalized histogram (AUC = 1) and kernel density"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(aes(y=..density..)) +
+    geom_density()
+"""
+
+[plot.dist.hist.prop.pct]
+action = "Plot proportional histogram as percentage"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(aes(y=after_stat(count)/sum(after_stat(count)))) +
+    scale_y_continuous(labels=scales::percent) +
+    labs(y = 'Proportion')
+"""
+
+[plot.dist.hist.facet]
+action = "Facetted histogram chart"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram() +
+    facet_wrap(~ Species)
+"""
+
+[plot.dist.hist.facet.norm]
+action = "Facetted histogram chart, normalized per facet"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(aes(y = stat(width * density))) +
+    facet_wrap(~ Species) +
+    scale_y_continuous(labels=scales::percent) +
+    labs(y = 'Proportion')
+"""
+source = "https://github.com/tidyverse/ggplot2/issues/2499#issuecomment-448788543"
+
+[plot.dist.hist.facet.norm.2]
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_histogram(aes(
+        y = after_stat(count) /
+            tapply(after_stat(count), after_stat(PANEL), sum)[after_stat(PANEL)])
+    ) +
+    facet_wrap(~ Species)
+"""
+details = "Yikes"
+
+
+[plot.dist.kde]
+section = "Kernel density plots"
+
+[plot.dist.kde.default]
+action = "Plot kernel density (AUC = 1)"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_density()
+"""
+
+[plot.dist.kde.scale]
+action = "Plot kernel density rescaled with peak at 1.0"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_density(aes(y = ..ndensity..))
+"""
+
+[plot.dist.kde.scale.2]
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_density(aes(y = ..scaled..))
+"""
+
+[plot.dist.kde.group]
+action = "Plot kernel density by group"
+code = """
+ggplot(iris, aes(x = Sepal.Length, color = Species)) +
+    geom_density()
+"""
+
+[plot.dist.kde.facet]
+action = "Facetted kernel density chart"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_density() + facet_wrap(~ Species)
+"""
+
+[plot.dist.kde.violin]
+action = "Violin plot"
+code = "?"
+details = "Doesn't seem to be possible."
+
+[plot.dist.kde.violin.group]
+action = "Violin plot with grouping factor"
+code = """
+ggplot(iris, aes(x = Sepal.Length, y = Species)) +
+    geom_violin()
+"""
+
+[plot.dist.kde.violin.group.vertical]
+action = "Violin plot with grouping factor, oriented vertically"
+code = """
+ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+    geom_violin()
+"""
+
+
+[plot.dist.cdf]
+section = 'Empirical cumulative density plots'
+
+[plot.dist.cdf.step]
+action = "Plot stepped cumulative density"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    stat_ecdf()
+"""
+
+
+[plot.dist.cdf.step.pad]
+action = "Plot stepped cumulative density for available interval only"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    stat_ecdf(pad = FALSE)
+"""
+
+[plot.dist.cdf.step.inv]
+action = "Plot stepped inversed / complementary cumulative density"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_step(aes(y = 1 - ..y..), stat='ecdf')
+"""
+
+[plot.dist.cdf.step.group]
+action = "Plot stepped cumulative density by group"
+code = """
+ggplot(iris, aes(x = Sepal.Length, color = Species)) +
+    stat_ecdf()
+"""
+
+[plot.dist.cdf.step.facet]
+action = "Facetted plot of stepped cumulative density"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    stat_ecdf() + facet_wrap(~ Species)
+"""
+
+[plot.dist.cdf.line]
+action = "Plot interpolated cumulative density"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_line(stat='ecdf')
+"""
+
+[plot.dist.cdf.hist]
+action = "Plot cumulative density as barplot"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    stat_ecdf(geom='bar')
+"""
+details = "Ugly, as bars are equal width"
+
+[plot.dist.cdf.rug]
+action = "Plot step-wise cumulative density with density rug"
+code = """
+ggplot(iris, aes(x = Sepal.Length)) +
+    stat_ecdf() + geom_rug()
+"""
+
+
+[plot.2d]
+section = "Bivariate plots"
+description = "Plots involving two continuous variables."
+
+[plot.2d.scatter]
+section = "Scatter plots"
+
+[plot.2d.scatter.std]
+action = "Scatter plot"
+code = """
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+    geom_point()
+"""
+
+[plot.2d.scatter.jitter]
+action = "Scatter plot without overlap (jitter plot)"
+code = """
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+    geom_jitter()
+"""
+
+[plot.2d.scatter.count]
+action = "Scatter plot with bigger points for overlaps, with legend for counts"
+code = """
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+    geom_count()
+"""
+
+[plot.2d.scatter.count.nolegend]
+action = "Scatter plot with bigger points for overlaps, with legend for proportional size"
+code = """
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+    geom_count(aes(size = ..prop..))
+"""
+
+[plot.2d.scatter.group]
+action = "Scatter plot with grouping factor"
+code = """
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+    geom_point()
+"""
+
+[plot.2d.scatter.facet]
+action = "Facetted scatter plot"
+code = """
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+    geom_point() +
+    facet_wrap(~ Species)
+"""
+
+
+[plot.2d.line]
+section = "Line plots"
+
+[plot.2d.line.default]
+action = "Line plot"
+code = """
+ggplot(economics, aes(x = date, y = unemploy)) + geom_line()
+"""
+
+[plot.2d.line.group]
+action = "Line plot, with separate lines per group"
+code = """
+ggplot(Orthodont, aes(x = age, y = distance, group = Subject)) +
+    geom_line()
+"""
+
+[plot.2d.line.group.err]
+action = "Line plot involving duplicate observations per x, as confidence region"
+code = "?"
+
+[plot.2d.line.facet]
+action = "Facetted line plot"
+code = """
+ggplot(Orthodont, aes(x = age, y = distance, group = Subject)) +
+    geom_line() +
+    facet_wrap(~ Sex)
+"""
+
+[plot.2d.hline]
+action = "Add horizontal line"
+code = "p + geom_hline(yintercept = 0)"
+
+[plot.2d.vline]
+action = "Add vertical line"
+code = "p + geom_vline(xintercept = 0)"
+
+[plot.2d.abline]
+action = "Add intercept-slope (ab) line"
+code = "p + geom_abline(intercept = 0, slope = 1)"
+
+[plot.2d.regression.default]
+action = "Smooth data"
+code = """
+ggplot(economics, aes(x = date, y = unemploy)) +
+    geom_line() +
+    geom_smooth()
+"""
+
+[plot.2d.regression.abline]
+action = "Smooth with intercept-slope model"
+code = """
+ggplot(economics, aes(x = date, y = unemploy)) +
+    geom_line() +
+    geom_smooth(method = 'lm', formula = y ~ x)
+"""
+
+[plot.2d.regression.x]
+action = "Smooth data only at the specified x-axis locations"
+code = """
+ggplot(economics, aes(x = date, y = unemploy)) +
+    geom_line() +
+    geom_smooth(
+        xseq = seq(0, 5000, by = 100)
+    )
+"""
+details = "Not a great example since this is easier for a numeric x-axis."
+
+[plot.2d.regression.quantile]
+action = "Quantile regression"
+code = """
+ggplot(economics, aes(x = date, y = unemploy)) +
+    geom_line() +
+    geom_quantile()
+"""
+
+[facet]
+section = "Facetting"
+
+[facet.label]
+action = "Use labeling function for facet titles"
+code = "p + facet_grid(~ Group, labeller = label_parsed)"
+
+
+[aes]
+section = "Aestethic options"
+
+[aes.var]
+action = "Define mapping programmatically"
+code = """
+var = 'Sepal.Length'
+aes_string(x = var)
+"""
+details = "Deprecated, but no clue what the alternative is, since documentation is lacking"
+
+
+[config]
+section = "Plot configuration / esthetics"
+
+[config.title]
+action = "Set title"
+code = "p + labs(title = 'My title')"
+
+[config.subtitle]
+action = "Set subtitle"
+code = "p + labs(subtitle = 'My subtitle')"
+
+[config.caption]
+action = "Set caption"
+code = "p + labs(caption = 'Based on iris data')"
+
+[config.axis.flip]
+action = "Flip axes"
+code = "p + coord_flip()"
+
+[config.axis.aspect]
+action = "1:1 aspect ratio of axes"
+code = "p + coord_equal()"
+
+[config.axis.range]
+action = "Set range of axes"
+code = "p + xlim(c(0, 10)) + ylim(c(5, 15))"
+
+[config.axis.extend]
+action = "Extend range to include data points"
+code = "p + expand_limits(x = c(0, 1, 5), y = 1)"
+
+[config.axis.ticks]
+action = "Set axis ticks, with corresponding tick labels"
+code = "p + scale_x_continuous(breaks = 1:3, labels = LETTERS[1:3])"
+
+[config.axis.log]
+action = "Base-10 log scale axis"
+code = "p + scale_x_log10()"
+
+[config.axis.log.label]
+action = "Base 10 log scale axis with labels"
+code = "p + scale_x_log10(labels = scales::label_log())"
+
+[config.axis.label]
+action = "Set axis label"
+code = "p + xlab('X-axis') + ylab('Y-axis')"
+
+[config.axis.labels]
+action = "Set title and axis labels"
+code = "p + labs(title = 'My title', x = 'X-axis', y = 'Y-axis')"
+
+[config.axis.label.rotate]
+action = "Show labels at 45 degree angle"
+code = "theme(axis.text.x = element_text(angle = 45))"
+
+[config.axis.label.subscript]
+action = "Label with subscript"
+code = "p + labs(x = expression('Pressure support cmH' [2] * 'O)' )"
+details = "Strange syntax"
+
+[config.axis.format.percent]
+action = "Format axis with percentage labels"
+code = "p + scale_x_continuous(labels=scales::percent)"
+
+[config.axis.format.comma]
+action = "Format axis with comma as thousands separator"
+code = "p + scale_x_continuous(labels=scales::comma)"
+
+[config.axis.broken]
+action = "Broken axis"
+code = "?"
+details = "Not possible unless manually drawing as two stacked plots"
+source = "https://stackoverflow.com/questions/44694496/y-break-with-scale-change-in-r"
+
+
+[config.legend.hide]
+action = "Hide legend of a specific scale"
+code = "p + scale_fill_discrete(guide = 'none')"
+
+[config.legend.hide.all]
+action = "Hide all legends"
+code = "theme(legend.position = 'none')"
+details = "It is more readable to specify per scale that the legend should be hidden, see `show.legend`"
+source = "https://stackoverflow.com/questions/35618260/remove-legend-ggplot-2-2"
+
+[config.legend.hide.all.2]
+code = "p + guides(fill = 'none', color = 'none', linetype = 'none', shape = 'none')"
+
+[config.legend.nolines]
+action = "Legend without lines"
+code = """
+p + guides(
+    fill = guide_legend(override.aes = list(linetype = 0)),
+    color = guide_legend(override.aes = list(linetype = 0))
+)
+"""
+source = "https://stackoverflow.com/questions/29941900/remove-lines-from-color-and-fill-legends"
+
+[config.legend.multirow]
+action = "Multirow legend"
+code = "p + guides(fill = guide_legend(nrow = 2, byrow = TRUE))"
+details = "Makes the fill legend multirow"
+
+[config.draw.grid.front]
+action = "Draw grid in front of geoms"
+code = """
+x_intercept = ggplot_build(p)$layout$panel_ranges[[1]]$x.major_source
+y_intercept = ggplot_build(p)$layout$panel_ranges[[1]]$y.major_source
+
+p + geom_vline(xintercept = x_intercept, color = '#f0f0f0') +
+        geom_hline(yintercept = y_intercept, color = '#f0f0f0') +
+"""
+
+[config.data.swap]
+action = "Swap data of plot"
+code = "p %+% newdata"
+
+[config.data.subset]
+action = "Plot using a subset of the (new) data"
+code = "p %+% subset(mpg, fl == '2')"
+source = "https://ggplot2.tidyverse.org/reference/gg-add.html#what-can-you-add-"
+
+
+[print]
+action = "Print last plot"
+code = "print(last_plot())"
