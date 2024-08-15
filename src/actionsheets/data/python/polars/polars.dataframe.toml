@@ -420,9 +420,56 @@ data.with_columns(
 """
 
 
+[derive.transform.aggregate.rows]
+section = "Over consecutive rows"
+description = "Aggregate over consecutive rows, e.g., for computing a moving average."
+
+[derive.transform.aggregate.rows.rolling.cmean]
+action = "Compute centered rolling mean with window size _w_"
+code = """
+data.with_columns(
+    smoothValue=pl.col('value').
+        rolling_mean(window_size=w, min_periods=0, center=True)
+)
+"""
+
+[derive.transform.aggregate.rows.rolling.cmean.group]
+action = "Compute centered rolling mean per group with window size _w_"
+code = """
+data.with_columns(
+    smoothValue=pl.col('value').
+        rolling_mean(window_size=w, min_periods=0, center=True).
+        over('patient')
+)
+"""
+
+[derive.transform.aggregate.rows.detrend.cmean]
+action = "Detrend a column by group, using a centered rolling mean with window size _w_"
+code = """
+data.with_columns(
+    trend=pl.col('value').
+        rolling_mean(window_size=w, min_periods=0, center=True).
+        over('patient')
+).with_columns(
+    detrendedValue=(pl.col('value') - pl.col('trend')).over('Patient')
+)
+"""
+
+[derive.transform.aggregate.rows.detrend.cmean.keep]
+action = "Detrend a column by group but preserve the mean level, using a centered rolling mean with window size _w_"
+code = """
+data.with_columns(
+    trend=pl.col('value').rolling_mean(
+        window_size=w, min_periods=0, center=True).over('patient')
+).with_columns(
+    detrendedValue=(
+        pl.col('value') - pl.col('trend') + pl.col('trend').mean()
+    ).over('Patient')
+"""
+
 [derive.transform.aggregate.time]
 section = "Over time"
-description = "Aggregation is done at a fixed datetime interval (e.g., daily, hourly), based on an datetime index."
+description = "Aggregation is done with respect to a date/time column (e.g., hourly, daily, weekly)"
 
 [derive.transform.aggregate.time.row]
 section = "Row-based"
