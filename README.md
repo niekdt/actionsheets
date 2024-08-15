@@ -21,6 +21,20 @@ The package can print actionsheets in the console with coloring and syntax highl
     
 This way of organizing sheets is especially useful for packages or functions with powerful versatile functionality, where merely listing the API does not cover the full capabilities. 
 
+## Install
+To install the latest release:
+```shell
+pip install actionsheets
+```
+
+To install according to the latest commit:
+```shell
+pip install git+https://github.com/niekdt/actionsheets.git
+```
+
+```shell
+poetry add git+https://github.com/niekdt/actionsheets.git
+```
 
 ## Contributing
 Actionsheets are defined using [TOML](https://toml.io/) files. 
