@@ -1,5 +1,6 @@
 language = "python"
 parent = "python.collections"
+after = "list"
 name = "dict"
 title = "Dict"
 description = "Maps hashable objects to a value"

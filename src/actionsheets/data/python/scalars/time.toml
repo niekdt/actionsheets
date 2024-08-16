@@ -1,5 +1,6 @@
 language = "python"
 parent = "python.scalars"
+after = "datetime"
 name = "time"
 title = "Time"
 description = "Time representation"

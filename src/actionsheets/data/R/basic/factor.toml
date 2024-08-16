@@ -1,5 +1,6 @@
 language = "R"
 parent = "r.basic"
+after = "vector"
 name = "factor"
 title = "factor"
 description = "For representing categorical data with a finite number of options (levels)"

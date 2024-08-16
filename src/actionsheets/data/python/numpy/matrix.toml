@@ -1,5 +1,6 @@
 language = "python"
 parent = "python.numpy"
+after = "vector"
 name = "matrix"
 title = "Matrices"
 description = "2D-array operations"

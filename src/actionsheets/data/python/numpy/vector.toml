@@ -1,5 +1,6 @@
 language = "python"
 parent = "python.numpy"
+after = "scalar"
 name = "vector"
 title = "Vectors"
 description = "1D-array operations"

@@ -6,7 +6,8 @@ from typing import Literal, Self
 
 import polars as pl
 
-header_keys = ('name', 'language', 'parent', 'title', 'description', 'details', 'keywords', 'code')
+header_keys = ('name', 'language', 'parent', 'title', 'description', 'details',
+               'keywords', 'code', 'after')
 section_keys = ('section', 'description', 'details', 'code')
 solution_keys = ('code', 'details', 'source')
 action_keys = ('action', 'description') + solution_keys

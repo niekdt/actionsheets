@@ -1,6 +1,7 @@
 language = "python"
 parent = "python.collections"
 name = "set"
+after = "list"
 title = "Set"
 description = """
 A collection of unique items, unordered and unindexed.

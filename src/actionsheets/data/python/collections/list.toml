@@ -1,5 +1,6 @@
 language = "python"
 parent = "python.collections"
+after = "tuple"
 name = "list"
 title = "List"
 description = "An ordered collection of elements"

@@ -227,6 +227,18 @@ def _process_sheets(sheets_data: pl.DataFrame) -> pl.DataFrame:
         pl.col('sheet').str.count_matches(r'\.').alias('depth')
     )
 
+    # Handle sheet ordering
+    sheets_data = (
+        sheets_data.with_columns(
+            _sort=pl.concat_str(pl.col('after').fill_null(''), pl.lit('.'), pl.col('sheet_name'))
+        ).
+        sort(by=['sheet_parent', '_sort']).
+        with_columns(
+            rank=pl.cum_count('_sort').over('sheet_parent')
+        ).
+        select(pl.exclude(['after', '_sort']))
+    )
+
     # Set column order
     col_order = ['sheet', 'sheet_parent', 'sheet_name', 'language']
     return sheets_data.select(pl.col(col_order), pl.exclude(col_order))

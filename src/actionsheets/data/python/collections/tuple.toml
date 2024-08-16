@@ -1,6 +1,7 @@
 language = "python"
 parent = "python.collections"
 name = "tuple"
+after = "iter"
 keywords = ["pair", "immutable"]
 title = "Tuple"
 description = "An ordered immutable collection of elements."

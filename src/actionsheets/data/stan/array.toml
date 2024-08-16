@@ -1,5 +1,6 @@
 language = "stan"
 parent = "stan"
+after = "matrix"
 name = "array"
 title = "Array"
 

@@ -1,5 +1,6 @@
 language = "python"
 parent = "python.numpy"
+after = "matrix"
 name = "ndarray"
 title = "ND-arrays"
 description = "ND-array operations"

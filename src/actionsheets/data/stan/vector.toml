@@ -1,5 +1,6 @@
 language = "stan"
 parent = "stan"
+after = "scalar"
 name = "vector"
 title = "Vector"
 
