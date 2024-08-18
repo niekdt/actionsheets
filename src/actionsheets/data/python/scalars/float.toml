@@ -1,5 +1,6 @@
 language = "python"
 parent = "python.scalars"
+after = "int"
 name = "float"
 title = "Floats"
 keywords = ["number", "float", "double"]

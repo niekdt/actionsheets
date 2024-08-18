@@ -1,6 +1,5 @@
 language = "R"
 parent = "r.devtools"
-after = "devtools"
 name = "roxygen2"
 title = "roxygen2"
 

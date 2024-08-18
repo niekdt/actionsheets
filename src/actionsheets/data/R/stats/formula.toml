@@ -1,6 +1,5 @@
 language = "R"
 parent = "r.stats"
-after = "factor"
 name = "formula"
 title = "formula"
 details = "This sheet is incomplete."

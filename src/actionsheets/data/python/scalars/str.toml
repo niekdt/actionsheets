@@ -1,6 +1,6 @@
 language = "python"
 parent = "python.scalars"
-after = "numeric"
+after = "float"
 name = "str"
 title = "String"
 description = "String handling"

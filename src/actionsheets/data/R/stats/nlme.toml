@@ -1,5 +1,6 @@
 language = "R"
 parent = "r.stats"
+after = "formula"
 name = "nlme"
 title = "nlme"
 description = """

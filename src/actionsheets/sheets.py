@@ -228,20 +228,65 @@ def _process_sheets(sheets_data: pl.DataFrame) -> pl.DataFrame:
     )
 
     # Handle sheet ordering
-    sheets_data = (
-        sheets_data.with_columns(
-            _sort=pl.concat_str(pl.col('after').fill_null(''), pl.lit('.'), pl.col('sheet_name'))
-        ).
-        sort(by=['sheet_parent', '_sort']).
-        with_columns(
-            rank=pl.cum_count('_sort').over('sheet_parent')
-        ).
-        select(pl.exclude(['after', '_sort']))
-    )
+    sheets_data = _subprocess_sheets_order(sheets_data)
 
     # Set column order
     col_order = ['sheet', 'sheet_parent', 'sheet_name', 'language']
     return sheets_data.select(pl.col(col_order), pl.exclude(col_order))
+
+
+def _subprocess_sheets_order(sheets_data: pl.DataFrame) -> pl.DataFrame:
+    df_after = sheets_data.select(
+        ['sheet_name', 'sheet', 'sheet_parent', 'after']
+    )
+    # Find sheets without after-reference
+    df_resolved = df_after.filter(
+        pl.col('after').is_null()
+    )
+
+    # Resolve after-references incrementally
+    while True:
+        # Compute key for resolved sheets
+        df_resolved = df_resolved.with_columns(
+            _key=pl.concat_str(pl.col('after').fill_null(''), pl.lit('.'), pl.col('sheet_name'))
+        )
+        # Find remaining unresolved sheets
+        df_unresolved = df_after.join(df_resolved, on=['sheet_parent', 'sheet_name'], how='anti')
+
+        # Update after column to the _key of referenced sheet
+        df_new = df_unresolved.join(
+            df_resolved.select(['sheet_parent', 'sheet_name', '_key']),
+            left_on=['sheet_parent', 'after'],
+            right_on=['sheet_parent', 'sheet_name'],
+            coalesce=True
+        ).with_columns(
+            after=pl.col('_key')
+        )
+
+        # Add newly resolved sheets to the resolved frame
+        df_resolved = df_resolved.vstack(df_new)
+
+        if not df_new.height:
+            assert not df_unresolved.height, \
+                'unresolvable "after" entries for sheets: {sheets}, missing reference sheet'.format(
+                    sheets=', '.join(df_unresolved['sheet'].to_list())
+                )
+            break
+
+    return (
+        sheets_data.
+        select(pl.exclude('after')).
+        join(
+            df_resolved.select(pl.exclude(['sheet_name', 'sheet_parent'])),
+            on='sheet',
+            how='left'
+        ).
+        sort(by=['sheet_parent', '_key']).
+        with_columns(
+            rank=pl.cum_count('_key').over('sheet_parent')
+        ).
+        select(pl.exclude(['after', '_key']))
+    )
 
 
 def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
