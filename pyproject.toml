@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "actionsheets"
-version = "0.1.0"
+version = "0.2.0"
 description = "Provides a large collection of searchable quick-reference code-snippet sheets defined in terms of a desired action and corresponding code snippet."
 authors = ["Niek Den Teuling"]
 license = "MIT"
