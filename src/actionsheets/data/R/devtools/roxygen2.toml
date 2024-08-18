@@ -1,5 +1,6 @@
 language = "R"
 parent = "r.devtools"
+after = "devtools"
 name = "roxygen2"
 title = "roxygen2"
 
@@ -284,8 +285,8 @@ code = """
 ```{r}
 1 + 1
 ```
-details = "Code blocks cannot refer to each other
 """
+details = "Code blocks cannot refer to each other"
 
 [dynamic.figure]
 action = "Generate figure"

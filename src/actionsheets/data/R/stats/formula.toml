@@ -1,5 +1,5 @@
 language = "R"
-parent = "r.basic"
+parent = "r.stats"
 after = "factor"
 name = "formula"
 title = "formula"

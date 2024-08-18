@@ -1,5 +1,5 @@
 language = "R"
-parent = "r"
+parent = "r.stats"
 name = "rstan"
 title = "RStan"
 description = """

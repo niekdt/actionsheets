@@ -1,0 +1,4 @@
+language = "R"
+parent = "r"
+name = "stats"
+title = "Stats"
