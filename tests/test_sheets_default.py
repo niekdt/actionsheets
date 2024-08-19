@@ -16,6 +16,12 @@ def test_snippets():
     assert sheets.sheets_data['snippets'].max() > 100
 
 
+def test_partial():
+    assert sheets.sheets_data.schema['partial'] == pl.Boolean
+    assert sheets.sheets_data['partial'].any()
+    assert not sheets.sheets_data['partial'].all()
+
+
 def test_filter():
     py_sheets = sheets.filter('python')
     assert not py_sheets.has_sheet('r')

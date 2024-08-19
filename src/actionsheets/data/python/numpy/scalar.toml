@@ -1,9 +1,9 @@
+partial = true
 language = "python"
 parent = "python.numpy"
 name = "scalar"
 title = "Scalars"
 description = "0D-array operations"
-details = "This sheet is highly incomplete."
 
 
 [create]

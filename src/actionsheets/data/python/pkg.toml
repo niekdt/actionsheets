@@ -1,3 +1,4 @@
+partial = true
 language = "python"
 parent = "python"
 name = "package"
@@ -5,7 +6,6 @@ title = "Package"
 description = """
 Functions for importing packages or accessing information about packages.
 """
-details = "This sheet is incomplete."
 keywords = ["pkg", "library", "module"]
 
 

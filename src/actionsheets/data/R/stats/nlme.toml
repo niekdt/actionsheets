@@ -1,3 +1,4 @@
+partial = true
 language = "R"
 parent = "r.stats"
 after = "formula"
@@ -7,7 +8,6 @@ description = """
 Useful links:
  * https://quantdev.ssri.psu.edu/sites/qdev/files/ILD_Ch06_2017_MLMwithHeterogeneousVariance.html
 """
-details = "This sheet is incomplete."
 
 [create]
 section = "Create"

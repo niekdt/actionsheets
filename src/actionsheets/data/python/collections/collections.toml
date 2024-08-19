@@ -1,3 +1,4 @@
+partial = true
 language = "python"
 parent = "python"
 name = "collections"

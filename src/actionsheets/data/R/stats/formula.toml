@@ -1,8 +1,8 @@
+partial = true
 language = "R"
 parent = "r.stats"
 name = "formula"
 title = "formula"
-details = "This sheet is incomplete."
 
 [create]
 section = "Create"

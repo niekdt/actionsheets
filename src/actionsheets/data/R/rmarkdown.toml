@@ -1,8 +1,8 @@
+partial = true
 language = "md"
 parent = "r"
 name = "rmarkdown"
 title = "Rmarkdown"
-details = "This sheet is not organized well"
 keywords = ["markdown", "rmd"]
 
 [info]

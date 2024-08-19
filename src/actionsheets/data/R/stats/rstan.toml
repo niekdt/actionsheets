@@ -1,3 +1,4 @@
+partial = true
 language = "R"
 parent = "r.stats"
 name = "rstan"
@@ -16,7 +17,8 @@ For standard installation instructions, see https://github.com/stan-dev/rstan/wi
 [install.latest]
 action = "Install latest dev version from Github"
 code = """
-remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "")
+remotes::install_github("stan-dev/rstan",
+    ref = "develop", subdir = "rstan/rstan", build_opts = "")
 """
 
 [install.win]

@@ -1,8 +1,8 @@
+partial = true
 language = "R"
 parent = "r"
 name = "eval"
 title = "Dynamic evaluation"
-details = "This sheet is incomplete and not organized well"
 
 
 [variables]

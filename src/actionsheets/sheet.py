@@ -7,7 +7,7 @@ from typing import Literal, Self
 import polars as pl
 
 header_keys = ('name', 'language', 'parent', 'title', 'description', 'details',
-               'keywords', 'code', 'after')
+               'keywords', 'code', 'after', 'partial')
 section_keys = ('section', 'description', 'details', 'code')
 solution_keys = ('code', 'details', 'source')
 action_keys = ('action', 'description') + solution_keys
@@ -231,6 +231,11 @@ def _process_header(data: dict, content_id: str) -> dict:
     assert 'title' in data, f'no title defined'
     assert isinstance(data['title'], str), f'title must be str'
     assert data['title'], f'title is empty'
+
+    if 'partial' in data:
+        assert isinstance(data['partial'], bool), f'partial must be boolean'
+    else:
+        data['partial'] = False
 
     assert 'description' not in data or isinstance(data['description'], str), \
         f'description must be str'

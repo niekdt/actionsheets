@@ -17,6 +17,7 @@ def test_parse_toml_file(file: str):
     assert 'name' in sheet.info
     assert 'title' in sheet.info
     assert 'language' in sheet.info
+    assert 'partial' in sheet.info
 
     assert type(sheet.data) is pl.DataFrame
     assert sheet.data.height > 0

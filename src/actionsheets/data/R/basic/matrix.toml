@@ -1,9 +1,9 @@
+partial = true
 language = "R"
 parent = "r.basic"
 after = "vector"
 name = "matrix"
 title = "matrix"
-details = "This sheet is incomplete."
 
 
 [create]
