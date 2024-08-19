@@ -17,6 +17,10 @@ section = "Create list"
 action = "Empty list"
 code = "x = []"
 
+[create.single]
+action = "List with single element"
+code = "x = ['hello']"
+
 [create.define]
 action = "Define with values"
 code = "x = [1, 3, 9]"
@@ -49,9 +53,8 @@ code = "list(range(a, b))"
 action = "From tuple"
 code = """
 t = (1, 3, 9)
-x = [t]
+x = list(t)
 """
-details = "Faster than `list(t)`"
 
 [create.iter]
 action = "From iterable"
@@ -67,12 +70,15 @@ a2, b2 = zip(*ab)
 """
 
 [create.sample]
-action = "Sample _n_ random numbers between [ _a_, _b_ ) with replacement"
-code = "random.choices(range(a, b), k=n)"
+action = "Sample _n_ random integers between [ _a_, _b_ ) with replacement"
+code = """
+import random
+random.choices(range(a, b), k=n)
+"""
 details = "Considerably faster than list comprehension"
 
 [create.sample.wo]
-action = "Sample _n_ random numbers between [ _a_, _b_ ) w/o replacement"
+action = "Sample _n_ random integers between [ _a_, _b_ ) w/o replacement"
 code = "random.sample(range(a, b), n)"
 
 [create.lists.iter]
@@ -82,6 +88,13 @@ list(itertools.chain.from_iterable(
     [fun(e) for e in entries]
 ))
 """
+
+[create.list.combi]
+action = "Generate list of _r_-length permutation tuples from indices up to _b_"
+code = """
+list(itertools.combinations_with_replacement(range(b), r))
+"""
+details = "Returns `[(0, 0), (0, 1), ..., (b - 1, b - 1)]`"
 
 
 [test]
@@ -426,7 +439,11 @@ code = "x * n"
 
 [derive.grow.rep.len]
 action = "Replicate to ensure length _n_"
-code = "?"
+code = """
+from itertools import islice, cycle
+list(islice(cycle(x), n))
+"""
+source = "https://stackoverflow.com/a/10325689/22638740"
 
 [derive.grow.append]
 action = "Append element"
