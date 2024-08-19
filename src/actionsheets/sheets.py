@@ -201,7 +201,8 @@ def _process_sheet_list(
         snippets_data.filter(pl.col('type') == 'action').
         group_by('sheet').
         agg(snippets=pl.len()),
-        on='sheet'
+        on='sheet',
+        how='left'
     )
 
     return Actionsheets(sheets_data, snippets_data)

@@ -5,6 +5,10 @@ from actionsheets.sheets import default_sheets
 sheets = default_sheets()
 
 
+def test_langs():
+    assert {'python', 'r', 'stan', 'shell'}.issubset(sheets.sheets(nested=False))
+
+
 def test_keywords():
     assert sheets.sheets_data.schema['keywords'] == pl.List(pl.String)
 
