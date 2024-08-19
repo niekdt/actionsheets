@@ -9,6 +9,13 @@ def test_keywords():
     assert sheets.sheets_data.schema['keywords'] == pl.List(pl.String)
 
 
+def test_snippets():
+    assert sheets.sheets_data.schema['snippets'].is_integer()
+    assert (sheets.sheets_data['snippets'] >= 0).all()
+    assert (sheets.sheets_data['snippets'] > 0).any()
+    assert sheets.sheets_data['snippets'].max() > 100
+
+
 def test_filter():
     py_sheets = sheets.filter('python')
     assert not py_sheets.has_sheet('r')

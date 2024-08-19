@@ -44,7 +44,8 @@ class Actionsheets:
 
     def count_snippets(self, parent: str = '', nested: bool = True) -> int:
         """
-        Count the number of snippets under the given parent sheet
+        Dynamically count the number of snippets under the given parent sheet.
+        For a faster assessment, see the "snippets" column in the sheets data frame.
         :param parent: Parent sheet ID (optional)
         :param nested: Whether to count snippets from nested sheets
         :return: Number of snippets
@@ -194,6 +195,14 @@ def _process_sheet_list(
 ) -> Actionsheets:
     sheets_data = _process_sheets(pl.DataFrame(sheet_info_list))
     snippets_data = _process_snippets(pl.concat(sheet_data_list, how='diagonal'))
+
+    # Compute snippet count
+    sheets_data = sheets_data.join(
+        snippets_data.filter(pl.col('type') == 'action').
+        group_by('sheet').
+        agg(snippets=pl.len()),
+        on='sheet'
+    )
 
     return Actionsheets(sheets_data, snippets_data)
 
