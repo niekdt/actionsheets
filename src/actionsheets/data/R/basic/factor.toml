@@ -38,17 +38,47 @@ section = "Test"
 action = "Is factor"
 code = "is.factor(x)"
 
+[test.contains.value]
+action = "Contains value _v_"
+code = "v %in% f"
 
-[get]
-section = "Get"
+[test.contains.na]
+action = "Contains `NA` value (not as level)"
+code = "anyNA(f)"
 
-[get.levels]
+[test.contains.na.level]
+action = "Contains `NA` (as `<NA>` level)"
+code = "NA %in% f"
+details = "`anyNA(f)` does not work!"
+
+[test.contains.level.value]
+action = "Contains level named _v_"
+code = "v %in% levels(f)"
+
+[test.contains.level.na]
+action = "Contains `<NA>` level"
+code = "anyNA(levels(f))"
+
+
+[extract]
+section = "Extract"
+
+[extract.levels.count]
+action = "Number of levels"
+code = "nlevels(f)"
+
+[extract.levels]
 action = "Levels"
 code = "levels(f)"
 
-[get.levels.count]
-action = "Number of levels"
-code = "nlevels(f)"
+[extract.levels.factor]
+action = "Levels, as factor, and in order"
+code = "factor(levels(f), levels(f))"
+
+[extract.levels.factor.used]
+action = "Used levels, as factor, and in order"
+code = "sort(unique(f))"
+details = "Useful for generating reference categorical newdata for `predict()`"
 
 
 [derive]
