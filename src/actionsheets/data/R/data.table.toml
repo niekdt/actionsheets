@@ -16,6 +16,8 @@ details = """
 * `mult='first'` argument provides a useful shortcut for dropping group columns
 * Perform merges prior to row subsetting to preserve the keys. Row subsetting followed by a merge drops the obsolete keys, for some reason.
 """
+code = "library(data.table)"
+
 
 [create]
 section = "Create"

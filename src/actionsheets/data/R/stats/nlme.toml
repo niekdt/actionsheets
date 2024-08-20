@@ -8,6 +8,8 @@ description = """
 Useful links:
  * https://quantdev.ssri.psu.edu/sites/qdev/files/ILD_Ch06_2017_MLMwithHeterogeneousVariance.html
 """
+code = "library(nlme)"
+
 
 [create]
 section = "Create"

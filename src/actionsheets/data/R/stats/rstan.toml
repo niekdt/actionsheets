@@ -7,6 +7,8 @@ description = """
 
 """
 keywords = ["stan"]
+code = "library(rstan)"
+
 
 [install]
 section = "Installation"
