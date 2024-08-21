@@ -6,7 +6,6 @@ title = "Set"
 description = """
 A collection of unique items, unordered and unindexed.
 """
-details = "This sheet is incomplete."
 
 [create]
 section = "Create"

@@ -1,3 +1,4 @@
+partial = true
 language = "ksh"
 parent = "shell"
 name = "ksh"
@@ -6,11 +7,9 @@ description = """
 https://en.wikipedia.org/wiki/KornShell
 """
 details = """
-This sheet is incomplete.
-
 Notes:
-* Start script with: #!/bin/ksh
-* Enable executation for file by running chmod u+x script.sh
+* Start script with: `#!/bin/ksh`
+* Enable executation for file by running `chmod u+x script.sh`
 """
 
 [cli]

@@ -1,3 +1,4 @@
+partial = true
 language = "bat"
 parent = "shell"
 name = "batch"
@@ -6,8 +7,6 @@ description = """
 Scripting language for [Windows Batch files](https://en.wikipedia.org/wiki/Batch_file).
 """
 details = """
-This sheet is very incomplete.
-
 To write comments, start the line with `:: ` or `REM `.
 For in-line comments, use `& :: ` or `& REM `.
 """

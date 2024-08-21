@@ -78,8 +78,22 @@ ggplot(diamonds, aes(x=price, y=cut, fill=clarity)) +
 [plot.dist.hist]
 section = "Histograms"
 
+[plot.dist.hist.discrete]
+action = "Plot histogram for discrete data (frequency per category)"
+code = """
+ggplot(iris, aes(x = Species)) +
+    geom_bar()
+"""
+
+[plot.dist.hist.discrete.norm]
+action = "Plot normalized histogram (AUC = 1) for discrete data"
+code = """
+ggplot(iris, aes(x = Species)) +
+    geom_bar(aes(y = after_stat(count) / sum(after_stat(count))))
+"""
+
 [plot.dist.hist.std]
-action = "Plot histogram"
+action = "Plot histogram for continuous data"
 code = """
 ggplot(iris, aes(x = Sepal.Length)) +
     geom_histogram()
