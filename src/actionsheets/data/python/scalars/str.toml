@@ -403,9 +403,14 @@ action = "Split string into two parts by separator (as triplet)"
 code = "x.partition(sep)"
 
 [convert.split.list]
-action = "Split string into multiple parts by separator (as list)"
+action = "Split string into multiple parts by separator _sep_ (as list)"
 code = "x.split(sep)"
 
 [convert.split.list.lines]
 action = "Split string into lines (as list)"
 code = "x.splitlines()"
+
+[convert.split.list.cum]
+action = "Split string into cumulative parts by separator _sep_ (as list)"
+code = "list(itertools.accumulate(x.split(sep), lambda x, y: sep.join([x, y])))"
+details = "For `sep='.'`, `a.b.c` becomes `[a, a.b, a.b.c]`"

@@ -1,0 +1,254 @@
+language = "python"
+parent = "python"
+name = "controlflow"
+title = "Control flows"
+
+
+[condition]
+section = "Conditional flows"
+
+[condition.if]
+action = "If statement"
+code = """
+if a == 2:
+    print('A is 2')
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#if"
+
+[condition.if.oneline]
+action = "If statement on single line (one-liner)"
+code = "if x < y < z: print(x); print(y); print(z)"
+source = "https://docs.python.org/3/reference/compound_stmts.html"
+
+[condition.ifelse]
+action = "If-else statement"
+code = """
+if a == 2:
+    print('A is 2')
+else:
+    print('A is not 2')
+"""
+
+[condition.ififelse]
+action = "Nested if-else statements"
+code = """
+if a == 2:
+    print('A is 2')
+elif a == 3:
+    print('A is 3')
+else:
+    print('A is not 2 and 3')
+"""
+
+[condition.switch]
+action = "Switch statement (match)"
+code = """
+match fruit:
+    case 'banana':
+        print('Fruit is banana')
+    case 'apple':
+        print('Apple')
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#match"
+
+[condition.switch.default]
+action = "Switch statement with default"
+code = """
+match fruit:
+    case 'banana':
+        print('Fruit is banana')
+    case 'apple':
+        print('Apple')
+    case _:  # default
+        print('Undefined object')
+"""
+
+[condition.switch.guard]
+action = "Switch statement with conditional (guarded) cases"
+code = """
+match fruit:
+    case 'banana':
+        print('Banana')
+    case 'apple' if in_stock > 5:
+        print('Apple available')
+    case _:  # default
+        print('Unavailable')
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#guards"
+
+
+
+[iter]
+section = "Iterative flows"
+
+[iter.while]
+action = "While loop"
+code = """
+while condition():
+    work()
+"""
+
+[iter.while.'true']
+action = "Infinite while loop"
+code = """
+while True:
+    pass
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#while"
+
+[iter.while.skip]
+action = "While loop with skips"
+code = """
+while condition():
+    if condition2():
+        continue
+    work()
+"""
+
+[iter.while.final]
+action = "While loop with finalization"
+code = """
+while condition():
+    work()
+else:
+    print('Work completed')
+"""
+
+[iter.dowhile]
+action = "Do-while loop"
+code = """
+while True:
+    work()
+    if condition():
+        break
+"""
+details = "Not natively supported in Python. This snippet does not work with Else because the loop is terminated using `break`."
+
+[iter.for]
+action = "For loop"
+code = """
+for i in range(4):
+    work(i)
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#for"
+
+[iter.for.final]
+action = "For loop with finalization"
+code = """
+for i in range(4):
+    work(i)
+else:
+    print('Success')
+"""
+
+[iter.for.skip]
+action = "For loop with skips"
+code = """
+for i in range(4):
+    if i == 2:
+        continue
+    work(i)
+"""
+
+
+[error]
+section = "Error/exception flows"
+
+[error.assert]
+action = "Assert statement"
+code = "assert True != False"
+
+[error.assert.msg]
+action = "Assert statement with custom message"
+code = "assert True != False, 'faulty logic'"
+
+[error.raise]
+action = "Raise error _e_"
+code = "raise e"
+
+[error.try]
+action = "Try statement"
+code = """
+try:
+    io_action()
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#try"
+
+[error.try.general]
+action = "Try statement with general exception handling"
+code = """
+import sys
+try:
+    io_action()
+except:
+    print(repr(sys.exception()))
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#except"
+
+
+[error.try.exception]
+action = "Try statement with exception handling"
+code = """
+try:
+    io_action()
+except e as FileNotFoundError:
+    print(repr(sys.exception()))
+"""
+
+[error.try.exceptions]
+action = "Try statement with handling of multiple exceptions"
+code = """
+try:
+    io_action()
+except e as FileNotFoundError:
+    print('File is missing')
+except e as InterruptedError:
+    print('Interrupted')
+"""
+
+[error.try.group]
+action = "Try statement with exception group handling"
+code = """
+try:
+    io_action()
+except* OSError as e:
+    print(f'caught {type(e)} with nested {e.exceptions}')
+"""
+details = "Note the asterisk"
+source = "https://docs.python.org/3/library/exceptions.html#ExceptionGroup"
+
+[error.try.finalize]
+action = "Try statement with finalization when executation completed successfully (no errors, returns, breaks)"
+code = """
+try:
+    io_action()
+else:
+    print('Success!')
+"""
+
+[error.try.cleanup]
+action = "Try statement with cleanup statement"
+code = """
+try:
+    io_action()
+finally:
+    print('We are done')
+"""
+details = "The finally clause is always executed, even when the try statement errs, returns, or breaks."
+
+
+[error.with]
+action = "With statement"
+code = """
+with a() as A:
+    work()
+"""
+source = "https://docs.python.org/3/reference/compound_stmts.html#with"
+details = "Run statements using a context manager, which ensures safe handling of resources, handling both opening (enter) and closing (exit)."
+
+[error.with.multi]
+action = "Multiple with statements"
+code = """
+with a() as A, b() as B:
+    work()
+"""
