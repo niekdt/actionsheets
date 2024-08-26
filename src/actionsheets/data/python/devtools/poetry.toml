@@ -143,6 +143,100 @@ code = "poetry install"
 action = "Install the project (if package), and all required dependencies, and remove unused dependencies (sync)"
 code = "poetry install --sync"
 
+[restore.project.dev]
+action = "Install the project with dev dependencies"
+code = "poetry install --with dev"
+
 [restore.project.group]
 action = "Install the project (if package), and all dependencies, including optional dep group(s)"
 code = "poetry install --with docs,tests"
+
+[restore.project.verbose]
+action = "Install the project with verbose output for troubleshooting"
+code = "poetry -vvv install"
+
+[ci]
+section = "Continuous integration"
+description = "For configuring authentication, see the Authentication section"
+
+[ci.poetry]
+action = "Install poetry and restore package project"
+code = """
+pip install poetry
+poetry install --with dev
+"""
+
+[ci.cache]
+action = "Use poetry with lockfile-based caching"
+code = """
+- uses: actions/cache@v3
+  with:
+    path: ~/.cache/pypoetry
+    key: ${{ hashFiles('poetry.lock') }}
+"""
+language = "yaml"
+
+[ci.flake8]
+action = "Run flake8"
+code = "poetry run flake8"
+
+[ci.pytest]
+action = "Run pytest"
+code = "poetry run pytest"
+
+
+[cfg]
+section = "Config"
+
+[cfg.git.client]
+action = "Use system Git client instead of Dulwich"
+code = "poetry config experimental.system-git-client true"
+
+[cfg.git.client.env]
+code = "export POETRY_EXPERIMENTAL_SYSTEM_GIT_CLIENT = true"
+
+
+[auth]
+section = "Authentication"
+description = "Authentication for private repository or package access"
+
+[auth.http]
+section = "HTTPS"
+
+[auth.http.token.gh.config]
+action = "Set access token for private GitHub package _foo_ installed via HTTPS"
+code = """
+poetry config repositories.foo https://github.com/my_private_org/foo.git
+poetry config http-basic.foo x-token-auth ${{ secrets.MY_TOKEN }}
+"""
+details = "Doesn't always work (??)"
+source = "https://github.com/orgs/python-poetry/discussions/3794#discussioncomment-7650366"
+
+[auth.http.token.gh.config.env]
+code = """
+export POETRY_REPOSITORIES_FOO_URL = https://github.com/my_private_org/foo.git
+export POETRY_HTTP_BASIC_FOO_USERNAME = x-token-auth
+export POETRY_HTTP_BASIC_FOO_PASSWORD = ${{ secrets.MY_TOKEN }}
+"""
+source = "https://python-poetry.org/docs/repositories/"
+
+[auth.http.token.gh.config.git]
+code = """
+git config --global url."https://x-token-auth:${{ secrets.MY_TOKEN }}@github.com/my_private_org/foo".insteadOf "https://github.com/my_private_org/foo"
+"""
+details = "Fallback option"
+
+[auth.ssh]
+section = "SSH"
+
+[auth.ssh.token.gh]
+action = "Set access token for GitHub package installed via SSH (git@)"
+code = "?"
+details = "A solution is suggested in https://stackoverflow.com/a/78074270/22638740, but no supporting documentation"
+
+[auth.ssh.token.http]
+action = "Use HTTPS access token for private GitHub packages from _my_private_org_ that were added via SSH"
+code = """
+git config --global url."https://x-token-auth:${{ secrets.MY_TOKEN }}@github.com/my_private_org/".insteadOf "ssh://git@github.com/my_private_org/"
+"""
+source = "https://github.com/orgs/python-poetry/discussions/3794#discussioncomment-8934350"
