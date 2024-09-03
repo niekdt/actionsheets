@@ -42,35 +42,35 @@ section = "Boxplots"
 [plot.dist.box.default]
 action = "Boxplot, oriented horizontally"
 code = """
-ggplot(iris, aes(x=Sepal.Length)) +
+ggplot(iris, aes(x = Sepal.Length)) +
     geom_boxplot()
 """
 
 [plot.dist.box.outliers]
 action = "Boxplot, hide outliers"
 code = """
-ggplot(iris, aes(x=Sepal.Length)) +
-    geom_boxplot(outlier.shape=NA)
+ggplot(iris, aes(x = Sepal.Length)) +
+    geom_boxplot(outlier.shape = NA)
 """
 
 [plot.dist.box.vertical]
 action = "Boxplot, oriented vertically"
 code = """
-ggplot(iris, aes(y=Sepal.Length)) +
+ggplot(iris, aes(y = Sepal.Length)) +
     geom_boxplot()
 """
 
 [plot.dist.box.group]
 action = "Boxplot by group"
 code = """
-ggplot(iris, aes(x=Sepal.Length, y=Species)) +
+ggplot(iris, aes(x = Sepal.Length, y = Species)) +
     geom_boxplot()
 """
 
 [plot.dist.box.group2]
 action = "Boxplot by two grouping factors"
 code = """
-ggplot(diamonds, aes(x=price, y=cut, fill=clarity)) +
+ggplot(diamonds, aes(x = price, y = cut, fill = clarity)) +
     geom_boxplot()
 """
 
@@ -110,7 +110,7 @@ ggplot(iris, aes(x = Sepal.Length)) +
 action = "Plot histogram centered at integer values"
 code = """
 ggplot(iris, aes(x = Sepal.Length)) +
-    geom_histogram(binwidth=1, boundary=-.5)
+    geom_histogram(binwidth = 1, boundary = -.5)
 """
 
 [plot.dist.hist.width]
@@ -139,14 +139,14 @@ ggplot(iris, aes(x = Sepal.Length)) +
 action = "Plot normalized histogram (AUC = 1)"
 code = """
 ggplot(iris, aes(x = Sepal.Length)) +
-    geom_histogram(aes(y=..density..))
+    geom_histogram(aes(y = ..density..))
 """
 
 [plot.dist.hist.norm.kde]
 action = "Plot normalized histogram (AUC = 1) and kernel density"
 code = """
 ggplot(iris, aes(x = Sepal.Length)) +
-    geom_histogram(aes(y=..density..)) +
+    geom_histogram(aes(y = ..density..)) +
     geom_density()
 """
 
@@ -154,8 +154,8 @@ ggplot(iris, aes(x = Sepal.Length)) +
 action = "Plot proportional histogram as percentage"
 code = """
 ggplot(iris, aes(x = Sepal.Length)) +
-    geom_histogram(aes(y=after_stat(count)/sum(after_stat(count)))) +
-    scale_y_continuous(labels=scales::percent) +
+    geom_histogram(aes(y = after_stat(count) / sum(after_stat(count)))) +
+    scale_y_continuous(labels = scales::percent) +
     labs(y = 'Proportion')
 """
 
@@ -171,9 +171,9 @@ ggplot(iris, aes(x = Sepal.Length)) +
 action = "Facetted histogram chart, normalized per facet"
 code = """
 ggplot(iris, aes(x = Sepal.Length)) +
-    geom_histogram(aes(y = stat(width * density))) +
+    geom_histogram(aes(y = after_stat(width * density))) +
     facet_wrap(~ Species) +
-    scale_y_continuous(labels=scales::percent) +
+    scale_y_continuous(labels = scales::percent) +
     labs(y = 'Proportion')
 """
 source = "https://github.com/tidyverse/ggplot2/issues/2499#issuecomment-448788543"
