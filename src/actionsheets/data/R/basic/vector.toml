@@ -10,6 +10,13 @@ section = "Create"
 action = "Define vector"
 code = "c(1, 2, 3)"
 
+[create.fill]
+action = "Define with _n_ repeated values _v_"
+code = "rep(v, n)"
+
+[create.fill.replen]
+code = "rep_len(v, n)"
+
 [create.constant.zero]
 action = "Zeros, length _n_"
 code = "numeric(n)"

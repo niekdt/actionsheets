@@ -1,0 +1,255 @@
+partial = true
+language = "R"
+parent = "r.basic"
+after = "vector"
+name = "list"
+title = "list"
+description = "For representing a list of arbitrary objects"
+
+[create]
+section = "Create"
+
+[create.empty]
+action = "Empty list"
+code = "list()"
+
+[create.single]
+action = "List with single element"
+code = "list('hello')"
+
+[create.define]
+action = "Define list"
+code = "list(1, 'a', third = c(1, 2))"
+
+[create.fill.null]
+action = "List of `NULL` values, length _n_"
+code = "vector('list', length = n)"
+
+[create.fill.value]
+action = "List of repeated scalar value _v_, repeated _n_ times"
+code = "rep(v, n) |> as.list()"
+details = "Only works for scalar (length 1) input"
+
+[create.fill.object]
+action = "List of repeated object _obj_, repeated _n_ times"
+code = "replicate(n, obj, simplify = FALSE)"
+details = "Also works for vector objects"
+
+[create.vector]
+action = "From vector"
+code = "as.list(vec)"
+
+[create.string]
+action = 'From string, character per element'
+code = "strsplit('hello', '')[[1]] |> as.list()"
+
+[create.dataframe]
+action = 'From `data.frame`, as a named list of column vectors'
+code = "as.list(df)"
+
+[create.dataframe.row]
+action = "From `data.frame`, as a list of row vectors"
+code = "split(df, seq(nrow(df)))"
+source = "https://stackoverflow.com/a/14370455/22638740"
+
+[create.env]
+action = "From environment, as name-value pairs"
+code = "as.list(env)"
+
+
+[test]
+section = "Test"
+
+[test.inherits]
+action = "Is list or subclass"
+code = "is.list(x)"
+details = "Also `TRUE` for `data.frame` and other list-based data structures"
+
+[test.is]
+action = "Is list and not subclass"
+code = "is(x, 'list')"
+
+[test.empty]
+action = "Empty"
+code = "length(x) == 0"
+
+[test.nempty]
+action = "Not empty"
+code = "length(x) > 0"
+
+[test.nempty.assert]
+code = "assertthat::not_empty(x)"
+
+[test.equal]
+action = "Pairwise equal to another list"
+code = "identical(x, y)"
+
+[test.equal.alleq]
+code = "all.equal(x, y) |> isTRUE()"
+
+[test.contains.null]
+action = "Contains `NULL`"
+code = "sapply(x, is.null) |> any()"
+
+[test.contains.null.v]
+code = "vapply(x, is.null, FUN.VALUE = TRUE) |> any()"
+details = "Fastest"
+
+[test.contains.null.in]
+code = "list(NULL) %in% x"
+details = "Slowest"
+
+[test.contains.elem]
+action = "Contains element _e_"
+code = "e %in% x"
+
+[test.missing.elem]
+action = "Does not contain element _e_"
+code = "not(e %in% x)"
+
+[test.contains.elem.multi.scalar]
+action = "Contains specific scalar elements"
+code = "all(c(1, 2) %in% x)"
+
+[test.contains.elem.multi.object]
+action = "Contains specific objects"
+code = "all(list(1, 2) %in% x)"
+
+[test.elem.type.all]
+action = "Elements are all of type _t_"
+code = "sapply(x, is.numeric) |> all()"
+
+[test.elem.duplicate.none]
+action = "No duplicate elements"
+code = "len(x) == len(unique(x))"
+
+[test.elem.duplicate.any]
+action = "Has duplicate elements"
+code = "len(x) != len(unique(x))"
+
+
+[extract]
+section = "extract"
+
+[extract.length]
+action = "Number of elements (length)"
+code = "length(x)"
+
+[extract.elem.first]
+action = "First element"
+code = "x[[1]]"
+
+[extract.elem.index]
+action = "_i_th element"
+code = "x[[i]]"
+
+[extract.elem.last]
+action = "Last element"
+code = "tail(x, 1)"
+
+[extract.elem._name]
+action = "First element with name _g_, as literal"
+code = "x$g"
+
+[extract.elem._name.var]
+action = "First element with name _g_ in variable"
+code = "x[g]"
+
+[extract.elem.find]
+action = "Index of element _e_"
+code = "which(x %in% e)"
+details = "Use `list(e)` for non-scalar elements. Returns empty vector if missing."
+
+
+[derive]
+section = "Derive"
+
+[derive.grow]
+section = "Grow"
+
+[derive.grow.append.null]
+action = "Append `NULL`"
+code = "append(x, list(NULL))"
+
+[derive.grow.append.elem]
+action = "Append scalar element _e_"
+code = "append(x, e)"
+details = "Not applicable for non-scalar vectors (length 0 or > 1)"
+
+[derive.grow.insert.elem]
+action = "Insert scalar element _e_ at the _i_th position"
+code = "append(x, e, after = i)"
+
+[derive.grow.rep]
+action = "Replicate list _n_ times"
+code = "rep(x, n)"
+
+[derive.grow.replen]
+action = "Replicate list to ensure length _n_"
+code = "rep_len(x, n)"
+details = "Cycles through elements until the length is reached"
+
+
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.slice]
+action = "Slice from _a_th to _b_th element"
+code = "x[a:b]"
+
+[derive.shrink.head]
+action = "First _n_ elements (head)"
+code = "head(x, n)"
+
+[derive.shrink.head.2]
+code = "x[1:n]"
+
+[derive.shrink.tail]
+action = "Last _n_ elements (tail)"
+code = "tail(x, n)"
+
+[derive.shrink.drop.head]
+action = "Drop first _n_ elements"
+code = "tail(x, -n)"
+
+[derive.shrink.drop.head.2]
+code = "x[-1:-n]"
+
+[derive.shrink.drop.tail]
+action = "Drop last _n_ elements"
+code = "head(x, -n)"
+
+[derive.shrink.indices]
+action = "List of elements from a vector of indices _vi_"
+code = "x[vi]"
+details = "`x[c(2, 3)]`"
+
+[derive.shrink.names]
+action = "List of elements from a vector of names _vn_"
+code = "x[vn]"
+details = "`x[c('a', 'b')]"
+
+[derive.shrink.filter.cond]
+action = "Filter on condition or predicate function"
+code = "Filter(function(e) e > 2, x)"
+
+
+[derive.combine]
+section = "Combine lists"
+
+[derive.combine.concat]
+action = "Concatenate lists"
+code = "c(x, y, z)"
+
+
+[convert]
+section = "Convert"
+
+[convert.vector]
+action = "To vector (flatten)"
+code = "unlist(x)"
+details = "Warning: results strongly depend on element types: Elements are converted to common type. Vector elements are concatenated. Zero-length elements (e.g., `NULL` or `integer()`) are excluded."
+
+[convert.vector.unnamed]
+action = "To vector (flatten), drop names"
+code = "unlist(x, use.names = FALSE)"

@@ -15,19 +15,19 @@ section = "Create list"
 
 [create.empty]
 action = "Empty list"
-code = "x = []"
+code = "[]"
 
 [create.single]
 action = "List with single element"
-code = "x = ['hello']"
+code = "['hello']"
 
 [create.define]
 action = "Define with values"
-code = "x = [1, 3, 9]"
+code = "[1, 3, 9]"
 
 [create.fill]
 action = "Define with _n_ repeated values _v_"
-code = "x = [v] * n"
+code = "[v] * n"
 
 [create.count]
 action = "List of _n_ increasing counts, starting from zero"
@@ -125,11 +125,11 @@ action = "Contains `None`"
 code = "None in x"
 
 [test.contains.elem]
-action = "Contains element"
+action = "Contains element _e_"
 code = "e in x"
 
 [test.missing.elem]
-action = "Does not contain element"
+action = "Does not contain element _e_"
 code = "e not in x"
 
 [test.contains.elem.multi]
@@ -141,8 +141,9 @@ action = "Contains elements _elems_"
 code = "set(elems).issubset(x)"
 
 [test.elem.type.all]
-action = "Elements are all of type"
-code = "all(isinstance(e, str) for e in x)"
+action = "Elements are all of type _t_"
+code = "all(isinstance(e, t) for e in x)"
+details = "e.g., type `str`"
 
 [test.elem.'true'.all]
 action = "All elements True"
