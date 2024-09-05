@@ -18,6 +18,14 @@ code = ".Machine$double.xmin"
 action = "Max value"
 code = ".Machine$double.xmax"
 
+[constants.eps]
+action = "Epsilon: smallest representable addition difference"
+code = ".Machine$double.eps"
+
+[constants.neps]
+action = "Negative epsilon: smallest representable subtraction difference"
+code = ".Machine$double.neg.eps"
+
 [constants.na]
 action = "Missing value (NA)"
 code = "NA_real_"
@@ -72,6 +80,18 @@ action = "Is numeric, but not integer"
 code = "storage.mode(x) == 'double'"
 
 
+[test.vector]
+section = "Tests for vector"
+
+[test.vector.equal.all]
+action = "All elements are equal (no `NA`s present)"
+code = "abs(max(x) - min(x)) < .Machine$double.neg.eps"
+
+[test.vector.equal.tol.all]
+action = "All elements are equal within absolute tolerance _t_ (no `NA`s present)"
+code = "abs(max(x) - min(x)) < t"
+
+
 [derive]
 section = "Derive"
 
@@ -112,6 +132,37 @@ section = "Convert"
 action = "To integer (truncate)"
 code = "as.integer(x)"
 
-[convert.char]
-action = "To character"
+[convert.format]
+section = "Format as string"
+
+[convert.format.default]
+action = "To string"
 code = "as.character(x)"
+
+[convert.format.comma]
+action = "Format with thousands separator (comma)"
+code = "scales::comma(x)"
+
+[convert.format.signif]
+action = "Format with _d_ significant digits"
+code = "formatC(x, digits = d, format='fg')"
+
+[convert.format.percent]
+action = "Format as percentage"
+code = "scales::percent(x)"
+
+[convert.format.sign]
+action = "Format with sign prefix"
+code = "formatC(x, format = 'f', flag = '+', drop0trailing = TRUE)"
+
+[convert.format.sci]
+action = "Format with scientific notation"
+code = "formatC(x, format = 'e')"
+
+[convert.format.sci.sign]
+action = "Format with scientific notation and sign prefix"
+code = "formatC(x, format = 'e', flag = '+')"
+
+[convert.format.sci.signif]
+action = "Format with scientific notation, with _d_ significant digits"
+code = "formatC(x, format = 'e', digits = d)"

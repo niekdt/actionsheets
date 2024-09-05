@@ -78,6 +78,17 @@ section = "Convert"
 action = "To numeric"
 code = "as.numeric(x)"
 
-[convert.char]
+[convert.format]
+section = "Format as string"
+
+[convert.format.default]
 action = "To character"
 code = "as.character(x)"
+
+[convert.format.comma]
+action = "Format with thousands separator (comma)"
+code = "scales::comma(x)"
+
+[convert.format.sign]
+action = "Format with sign prefix"
+code = "formatC(x, format = 'fg', flag = '+')"
