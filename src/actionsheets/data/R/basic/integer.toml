@@ -1,0 +1,83 @@
+partial = true
+language = "R"
+parent = "r.basic"
+after = "logical"
+name = "integer"
+title = "integer"
+description = "For representing integer values"
+
+
+[constants]
+section = "Constants"
+
+[constants.min]
+action = "Min integer"
+code = ".Machine$integer.min"
+
+[constants.max]
+action = "Max integer"
+code = ".Machine$integer.max"
+
+[constants.na]
+action = "Missing value (`NA`)"
+code = "NA_integer_"
+
+
+[create]
+section = "Create"
+
+[create.empty]
+action = "Empty integer vector, length 0"
+code = "integer()"
+
+[create.vector]
+section = "Integer vectors"
+
+[create.vector.zero]
+action = "Integer vector of zeros, length _n_"
+code = "integer(n)"
+
+[create.vector.cast]
+action = "Cast to integer"
+code = "as.integer(y)"
+
+[create.vector.string]
+action = "Parse string to integer"
+code = "as.integer(y)"
+details = "Parse failures return `NA`"
+
+
+[test]
+section = "Test"
+
+[test.is]
+action = "Is integer"
+code = "is.integer(x)"
+
+
+[test.vector]
+section = "Integer vectors"
+
+[test.vector.pairwise.all]
+action = "Vectors are pairwise equal (no `NA`s present)"
+code = "all(x == y)"
+
+[test.vector.all.equal]
+action = "All elements are equal (no `NA`s present)"
+code = "min(x) == max(x)"
+
+[test.vector.all.equal.na]
+action = "All elements are equal, igorning `NA`s)"
+code = "min(x, na.rm = TRUE) == max(x, na.rm = TRUE)"
+
+
+[convert]
+section = "Convert"
+
+[convert.numeric]
+action = "To numeric"
+code = "as.numeric(x)"
+
+[convert.char]
+action = "To character"
+code = "as.character(x)"

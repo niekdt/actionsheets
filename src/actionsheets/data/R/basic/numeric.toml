@@ -1,0 +1,117 @@
+partial = true
+language = "R"
+parent = "r.basic"
+after = "integer"
+name = "numeric"
+title = "numeric"
+description = "For representing numeric values as doubles"
+
+
+[constants]
+section = "Constants"
+
+[constants.min]
+action = "Min value"
+code = ".Machine$double.xmin"
+
+[constants.max]
+action = "Max value"
+code = ".Machine$double.xmax"
+
+[constants.na]
+action = "Missing value (NA)"
+code = "NA_real_"
+
+[constants.'nan']
+action = "Not a number (NaN)"
+code = "NaN"
+
+[constants.'inf']
+action = "Positive infinity"
+code = "Inf"
+
+[constants.ninf]
+action = "Negative infinity"
+code = "-Inf"
+
+
+[create]
+section = "Create"
+
+[create.empty]
+action = "Empty numeric vector, length 0"
+code = "numeric()"
+
+[create.vector]
+section = "Numeric vectors"
+
+[create.vector.zero]
+action = "Numeric vector of zeros, length _n_"
+code = "numeric(n)"
+
+[create.vector.cast]
+action = "Cast to numeric"
+code = "as.numeric(y)"
+
+[create.vector.string]
+action = "Parse string to numeric"
+code = "as.numeric(y)"
+details = "Parse failures return `NA`"
+
+
+[test]
+section = "Test"
+
+[test.is]
+action = "Is numeric"
+code = "is.numeric(x)"
+details = "Integers are also numeric"
+
+[test.real]
+action = "Is numeric, but not integer"
+code = "storage.mode(x) == 'double'"
+
+
+[derive]
+section = "Derive"
+
+[derive.floor]
+action = "Floor"
+code = "floor(x)"
+details = "trunc(2.6) = 2, trunc(-2.5) = -3"
+
+[derive.ceiling]
+action = "Ceiling"
+code = "ceiling(x)"
+details = "ceiling(2.6) = 3, ceiling(-2.5) = -2"
+
+[derive.trunc]
+action = "Truncate to integer"
+code = "trunc(x)"
+details = "trunc(2.6) = 2, trunc(-2.5) = -2"
+
+[derive.round]
+action = "Round to _d_ decimal places"
+code = "round(x, d)"
+details = "round(2.6) = 3, round(-2.55, 1) = -2.5"
+
+[derive.round.pow10]
+action = "Round to nearest _p_th power of ten"
+code = "round(x, -p)"
+details = "round(520, -2) = 500"
+
+[derive.signif]
+action = "Round to _d_th significant digits"
+code = "signif(x, d)"
+
+
+[convert]
+section = "Convert"
+
+[convert.int]
+action = "To integer (truncate)"
+code = "as.integer(x)"
+
+[convert.char]
+action = "To character"
+code = "as.character(x)"

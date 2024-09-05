@@ -1,0 +1,120 @@
+partial = true
+language = "R"
+parent = "r.basic"
+after = "vector"
+name = "logical"
+title = "logical"
+description = "For representing boolean values"
+
+
+[constants]
+section = "Constants"
+
+[constants.'true']
+action = "True"
+code = "TRUE"
+
+[constants.'false']
+action = "False"
+code = "FALSE"
+
+[constants.na]
+action = "Missing value (`NA`)"
+code = "NA"
+
+
+[create]
+section = "Create"
+
+[create.empty]
+action = "Empty logical vector, length 0"
+code = "logical()"
+
+[create.vector]
+section = "Logical vectors"
+
+[create.vector.'false']
+action = "Logical vector of `FALSE` values, length _n_"
+code = "logical(n)"
+
+[create.vector.cast]
+action = "Cast to logical"
+code = "as.logical(y)"
+
+[create.vector.string]
+action = "Parse string to logical"
+code = "as.logical(y)"
+details = "Parse failures return `NA`"
+
+
+[test]
+section = "Test"
+
+[test.is]
+action = "Is logical"
+code = "is.logical(x)"
+
+
+[test.scalar]
+section = "Logical scalars"
+
+[test.scalar.'true']
+action = "Is scalar and `TRUE`"
+code = "isTRUE(x)"
+
+[test.scalar.'false']
+action = "Is scalar and `FALSE`"
+code = "isFALSE(x)"
+
+
+[test.vector]
+section = "Logical vectors"
+
+[test.vector.'true'.all]
+action = "All elements `TRUE`"
+code = "all(x)"
+details = "Returns `NA` if x contains missing values!"
+
+[test.vector.'true'.all.na]
+action = "All elements are `TRUE`, ignoring `NA`s"
+code = "all(x, na.rm = TRUE)"
+
+[test.vector.'false'.all]
+action = "All elements `FALSE`"
+code = "!any(x)"
+details = "Returns `NA` if x contains missing values!"
+
+[test.vector.'false'.all.na]
+action = "All elements are `FALSE`, ignoring `NA`s"
+code = "!any(x, na.rm = TRUE)"
+
+[test.vector.na.all]
+action = "All `NA`"
+code = "all(is.na(x))"
+
+[test.vector.na.any]
+action = "Any `NA`"
+code = "anyNA(x)"
+
+[test.vector.na.none]
+action = "No `NA`"
+code = "!anyNA(x)"
+
+[test.vector.na.none.assertthat]
+code = "assertthat::noNA(x)"
+
+
+[convert]
+section = "Convert"
+
+[convert.int]
+action = "To integer (zeros and ones)"
+code = "as.integer(x)"
+
+[convert.numeric]
+action = "To numeric (zeros and ones)"
+code = "as.numeric(x)"
+
+[convert.char]
+action = "To character"
+code = "as.character(x)"
