@@ -29,6 +29,29 @@ description = "For themes, see https://ggplot2-book.org/themes#sec-themes"
 action = "Set default theme"
 code = "theme_set(theme_minimal())"
 
+[theme.set.default.color.viridis]
+action = "Set viridis as default color"
+code = """
+options(
+    ggplot2.discrete.colour = 'viridis',
+    ggplot2.discrete.fill = 'viridis',
+    ggplot2.continuous.colour = 'viridis',
+    ggplot2.continuous.fill = 'viridis'
+)
+"""
+
+[theme.set.default.color.viridis.option]
+action = "Set viridis option as default color"
+code = """
+options(
+    ggplot2.discrete.colour = function(...) scale_color_viridis_d(..., option = 'turbo'),
+    ggplot2.discrete.fill = function(...) scale_fill_viridis_d(..., option = 'turbo'),
+    ggplot2.continuous.colour = function(...) scale_color_viridis_c(..., option = 'turbo'),
+    ggplot2.continuous.fill = function(...) scale_fill_viridis_c(..., option = 'turbo')
+)
+"""
+
+
 
 [plot]
 section = "Plots"
