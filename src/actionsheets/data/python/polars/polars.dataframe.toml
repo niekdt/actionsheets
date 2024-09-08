@@ -79,9 +79,16 @@ code = "data.is_empty()"
 action = "Data frames are equal"
 code = "data.equals(data2)"
 
+[test.cols.null.any]
+action = "Any column contains null row"
+code = "any(col.has_nulls() for col in data)"
+
+[test.cols.null.all]
+action = "Any column is filled with nulls"
+code = "any(col.is_null().all() for col in data)"
 
 [test.col]
-section = "Columns"
+section = "Tests for specific column(s)"
 
 [test.col.contains]
 action = "Contains column"
@@ -396,8 +403,24 @@ code = "data.fill_nan(value)"
 
 
 [derive.transform.mask]
-section = "Mask"
+section = "Row mask"
 description = "All snippets output a `pl.Series` object. Use `.to_list()` to obtain list output."
+
+[derive.transform.mask.null.any]
+action = "Mask indicating whether rows contain null in any column"
+code = """
+data.select(
+    pl.any_horizontal(pl.all().is_null())
+).to_series()
+"""
+
+[derive.transform.mask.null.all]
+action = "Mask indicating whether rows contain null in all columns"
+code = """
+data.select(
+    pl.all_horizontal(pl.all().is_null())
+).to_series()
+"""
 
 [derive.transform.mask.row.duplicate]
 action = "Mask indicating duplicate rows"
@@ -1013,6 +1036,10 @@ code = "data.join(data2, on = ['sex', 'country'], how = 'anti')"
 
 [convert]
 section = "Convert"
+
+[convert.series]
+action = "To series (first column only)"
+code = "data.to_series()"
 
 [convert.lazy]
 action = "To `polars.LazyFrame`"
