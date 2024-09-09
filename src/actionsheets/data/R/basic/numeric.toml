@@ -79,6 +79,22 @@ details = "Integers are also numeric"
 action = "Is numeric, but not integer"
 code = "storage.mode(x) == 'double'"
 
+[test.scalar]
+section = "Tests for single number(s)"
+
+[test.scalar.equal]
+action = "Is equal to number"
+code = "isTRUE(all.equal(x, y))"
+
+[test.scalar.equal.2]
+code = "abs(x - y) < .Machine$double.eps"
+
+[test.scalar.equal.tol]
+action = "Is equal to number with tolerance _t_"
+code = "isTRUE(all.equal(x, y, tolerance = t))"
+
+[test.scalar.equal.tol.2]
+code = "abs(x - y) < t"
 
 [test.vector]
 section = "Tests for vector"
@@ -90,6 +106,14 @@ code = "abs(max(x) - min(x)) < .Machine$double.neg.eps"
 [test.vector.equal.tol.all]
 action = "All elements are equal within absolute tolerance _t_ (no `NA`s present)"
 code = "abs(max(x) - min(x)) < t"
+
+[test.vector.equal.all.na]
+action = "All elements are equal (with NAs)"
+code = "isTRUE(all.equal(x, y))"
+
+[test.vector.equal.tol.na]
+action = "All elements are equal within absolute tolerance _t_"
+code = "isTRUE(all.equal(x, y, tolerance = t))"
 
 
 [derive]
