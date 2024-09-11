@@ -115,6 +115,25 @@ code = "isTRUE(all.equal(x, y))"
 action = "All elements are equal within absolute tolerance _t_"
 code = "isTRUE(all.equal(x, y, tolerance = t))"
 
+[test.vector.whole.all]
+action = "Are all elements whole numbers (no NAs present)"
+code = "all(x == round(x))"
+
+[test.vector.whole.all.2]
+code = "max(x %% 1) < .Machine$double.neg.eps"
+
+[test.vector.whole.all.na]
+action = "Are all elements whole numbers?"
+code = "max(x %% 1, na.rm = TRUE) < .Machine$double.neg.eps"
+
+[test.vector.pdecimal.all]
+action = "Are all elements rounded to at most _p_ decimals? (no NAs present)"
+code = "all(x == round(x, p))"
+details = "For example, for p=1: 0.1, -2.6, for p=2: 0.11, -2.63"
+
+[test.vector.pdecimal.all.na]
+action = "Are all elements rounded to at most _p_ decimals? (no NAs present)"
+code = "all(x == round(x, p), na.rm = TRUE)"
 
 [derive]
 section = "Derive"
