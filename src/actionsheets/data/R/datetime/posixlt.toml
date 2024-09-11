@@ -3,20 +3,24 @@ parent = "r.datetime"
 name = "posixlt"
 title = "POSIXlt"
 
+
 [create]
 section = "Create"
 
 [create.ymd]
 action = "From ymd"
-code = "ISOdate(years, months, days) |> as.POSIXlt()"
+code = "ISOdate(year, month, day) |> as.POSIXlt()"
+
+[create.ymd.lubridate]
+code = "lubridate::make_date(year, month, day) |> as.POSIXlt()"
 
 [create.ymdhms]
 action = "From ymdhms"
-code = "ISOdatetime(years, months, days, hours, minutes, seconds) |> as.POSIXlt()"
+code = "ISOdatetime(year, month, day, hour, minute, second) |> as.POSIXlt()"
 
 [create.ymdhms.utc]
 action = "From ymdhms in UTC timezone"
-code = "ISOdatetime(years, months, days, hours, minutes, seconds, tz = 'UTC') |> as.POSIXlt()"
+code = "ISOdatetime(year, month, day, hour, minute, second, tz = 'UTC') |> as.POSIXlt()"
 
 [create.current.date]
 action = "Current date in UTC"

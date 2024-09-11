@@ -19,6 +19,14 @@ There are several classes and packages available for handling dates & times:
 - `POSIXt` base class
 """
 
+[config]
+section = "Config"
+
+[config.tz]
+action = "Set timezone for session"
+code = "Sys.setenv(TZ='UCT')"
+
+
 [extract]
 section = "Extract"
 

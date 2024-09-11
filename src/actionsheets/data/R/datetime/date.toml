@@ -3,12 +3,16 @@ parent = "r.datetime"
 name = "date"
 title = "Date"
 
+
 [create]
 section = "Create"
 
 [create.ymd]
 action = "From ymd"
-code = "ISOdate(years, months, days) |> as.Date()"
+code = "ISOdate(year, month, day) |> as.Date()"
+
+[create.ymd.lubridate]
+code = "lubridate::make_date(year, month, day)"
 
 [create.current]
 action = "Current date"
@@ -48,6 +52,53 @@ code = "as.Date(x, '%Y-%m-%d')"
 [create.str.dmy.flex]
 action = "Date from d-m-Y ordered string"
 code = "lubridate::dmy(x)"
+
+[create.vector]
+section = "Vector of dates"
+
+[create.vector.fill]
+action = "Vector of length _n_ filled with date _d_"
+code = "rep(d, n)"
+
+[create.vector.seq.day]
+action = "Sequence (vector) of _n_ consecutive dates, starting from _d_"
+code = "seq(d, length.out = n, by = 'day')"
+
+[create.vector.seq.day.x]
+action = "Sequence of _n_ consecutive dates, starting from _d_"
+code = "seq(d, length.out = n, by = 'day')"
+
+[create.vector.seq.day.to]
+action = "Sequence (vector) of consecutive dates between dates _d_ and _d2_"
+code = "seq(d, d2, by = 'day')"
+
+[create.vector.seq.week]
+action = "Sequence of _n_ dates, starting from _d_ with weekly increments"
+code = "seq(d, length.out = n, by = 'week')"
+
+[create.vector.seq.week.rev]
+action = "Sequence of _n_ dates counting down from date _d_ with weekly decrements"
+code = "seq(d, length.out = n, by = '-1 week')"
+
+[create.vector.seq.week.x]
+action = "Sequence of _n_ dates, starting from _d_ with _w_-week increments"
+code = "seq(d, length.out = n, by = 'w week')"
+
+[create.vector.seq.week.to]
+action = "Sequence of dates between _d_ and _d2_ with weekly increment"
+code = "seq(d, d2, by = 'week')"
+
+[create.vector.seq.year]
+action = "Sequence of _n_ dates, starting from _d_ with yearly increments"
+code = "seq(d, length.out = n, by = 'year')"
+
+
+[constant]
+section = "Constants"
+
+[constant.na]
+action = "NA"
+code = "lubridate::NA_Date_"
 
 
 [test]
@@ -105,6 +156,38 @@ code = "lubridate::isoweek(x)"
 action = "Weekday number"
 code = "lubridate::wday(x, week_start = 1)"
 details = "Mon=1, Sun=7"
+
+
+[update]
+section = "Update"
+
+[update.firstday.year]
+action = "Change to first day of year"
+code = "lubridate::yday(x) = 1"
+
+[update.firstday.month]
+action = "Change to first day of month"
+code = "lubridate::day(x) = 1"
+
+[update.year]
+action = "Change year to _y_"
+code = "lubridate::year(x) = y"
+
+
+[derive]
+section = "Derive"
+
+[derive.firstday.year]
+action = "Change to first day of year"
+code = "trunc(x, 'year')"
+
+[derive.firstday.month]
+action = "Change to first day of month"
+code = "trunc(d, 'month')"
+
+[derive.shift.days]
+action = "Shift forward by _n_ days"
+code = "x + n"
 
 
 [convert]

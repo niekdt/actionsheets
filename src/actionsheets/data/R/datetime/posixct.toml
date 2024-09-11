@@ -3,16 +3,23 @@ parent = "r.datetime"
 name = "posixct"
 title = "POSIXct"
 
+
 [create]
 section = "Create"
 
 [create.ymd]
 action = "From ymd"
-code = "ISOdate(years, months, days)"
+code = "ISOdate(year, month, day)"
+
+[create.ymd.lubridate]
+code = "lubridate::make_date(year, month, day) |> as.POSIXct()"
 
 [create.ymdhms]
 action = "From ymdhms"
-code = "ISOdatetime(years, months, days, hours, minutes, seconds)"
+code = "ISOdatetime(year, month, day, hour, minute, second)"
+
+[create.ymdhms.lubridate]
+code = "lubridate::make_datetime(year, month, day, hour, min, sec)"
 
 [create.ymdhms.utc]
 action = "From ymdhms in UTC timezone"
@@ -141,8 +148,19 @@ code = "lubridate::second(x)"
 section = "Derive"
 
 [derive.shift.days]
+action = "Shift forward by _n_ days"
+code = "x + n * 86400"
+
+[derive.shift.days.lubridate]
+code = "x + lubridate::days(n)"
+
+[derive.shift.seconds]
 action = "Shift forward by _n_ seconds"
 code = "x + n"
+
+[derive.shift.ymdhms]
+action = "Shift forward by a specific ymdhms period"
+code = "x + lubridate::period(year, month, day, hour, minute, second)"
 
 [derive.trunc.time]
 action = "Truncate to date"
