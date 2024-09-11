@@ -398,8 +398,17 @@ code = "data.fill_null(strategy='forward')"
 details = "Wrong for grouped data"
 
 [derive.transform.fill.'nan'.value]
-action = "Fill NaNs with value"
-code = "data.fill_nan(value)"
+action = "Fill NaNs with value _v_"
+code = "data.fill_nan(v)"
+
+[derive.transform.fill.'inf'.value]
+action = "Fill infinity with value _v_ for all columns of dtype float"
+code = """
+import polars.selectors as cs
+data.with_columns(
+    cs.float().replace(float('inf'), v)
+)
+"""
 
 
 [derive.transform.mask]
