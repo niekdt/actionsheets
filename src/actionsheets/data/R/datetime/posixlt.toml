@@ -1,0 +1,189 @@
+language = "R"
+parent = "r.datetime"
+name = "posixlt"
+title = "POSIXlt"
+
+[create]
+section = "Create"
+
+[create.ymd]
+action = "From ymd"
+code = "ISOdate(years, months, days) |> as.POSIXlt()"
+
+[create.ymdhms]
+action = "From ymdhms"
+code = "ISOdatetime(years, months, days, hours, minutes, seconds) |> as.POSIXlt()"
+
+[create.ymdhms.utc]
+action = "From ymdhms in UTC timezone"
+code = "ISOdatetime(years, months, days, hours, minutes, seconds, tz = 'UTC') |> as.POSIXlt()"
+
+[create.current.date]
+action = "Current date in UTC"
+code = "Sys.Date() |> as.POSIXlt()"
+
+[create.current.datetime]
+action = "Current datetime"
+code = "Sys.time() |> as.POSIXlt()"
+
+[create.current.datetime.lubridate]
+code = "lubridate::now() |> as.POSIXlt()"
+
+[create.current.utc]
+action = "Current datetime in UTC timezone"
+code = "lubridate::now(tzone = 'UTC') |> as.POSIXlt()"
+
+[create.epoch]
+action = "Unix epoch"
+code = "as.POSIXlt(0)"
+
+[create.seconds.epoch]
+action = "From total seconds since Unix epoch"
+code = "as.POSIXlt(n)"
+
+[create.str.ymd]
+action = "Datetime from YYYY-MM-DD string"
+code = "as.POSIXlt(x)"
+
+[create.str.ymdhms]
+action = "Datetime from YYYY-MM-DD HH:mm:ss string"
+code = "as.POSIXlt(x)"
+
+[create.str.dmy]
+action = "Date from DD-MM-YYYY string"
+code = "as.POSIXlt(x, format = '%d-%m-%Y')"
+
+
+[test]
+section = "Test"
+
+[test.inherits.posixt]
+action = "Is POSIXt"
+code = "inherits(x, 'POSIXt')"
+
+[test.inherits.posixt.lubridate]
+code = "lubridate::is.POSIXt(x)"
+
+[test.inherits.posixlt]
+action = "Is POSIXlt"
+code = "inherits(x, 'POSIXlt')"
+
+[test.inherits.posixlt.lubridate]
+code = "lubridate::is.POSIXlt(x)"
+
+[test.equal]
+action = "Same date"
+code = "x == y"
+
+[test.before]
+action = "Happens before _y_"
+code = "x < y"
+
+[test.after]
+action = "Happens after _y_"
+code = "x > y"
+
+
+[extract]
+section = "Extract"
+
+[extract.days.epoch]
+action = "Days from Unix epoch"
+code = "as.Date(x) |> as.integer()"
+
+[extract.seconds.epoch]
+action = "Seconds from Unix epoch (timestamp)"
+code = "as.integer(x)"
+
+[extract.year]
+action = "Year"
+code = "lubridate::year(x)"
+
+[extract.month]
+action = "Month"
+code = "lubridate::month(x)"
+
+[extract.day]
+action = "Day"
+code = "lubridate::day(x)"
+
+[extract.week]
+action = "Week number (1-53)"
+code = "lubridate::week(x)"
+
+[extract.week.iso]
+action = "ISO week number (1-52)"
+code = "lubridate::isoweek(x)"
+
+[extract.weekday]
+action = "Weekday number"
+code = "lubridate::wday(x, week_start = 1)"
+details = "Mon=1, Sun=7"
+
+[extract.hour]
+action = "Hour"
+code = "lubridate::hour(x)"
+
+[extract.minute]
+action = "Minute"
+code = "lubridate::minute(x)"
+
+[extract.second]
+action = "Second"
+code = "lubridate::second(x)"
+
+
+[derive]
+section = "Derive"
+
+[derive.shift.days]
+action = "Shift forward by _n_ seconds"
+code = "x + n"
+
+[derive.trunc.time]
+action = "Truncate to date"
+code = "trunc(x, 'days')"
+details = "Drops the time component, falling back to midnight 00:00:00"
+
+[derive.trunc.hour]
+action = "Truncate to hours"
+code = "trunc(x, 'hours')"
+
+[derive.trunc.mins]
+action = "Truncate to minutes"
+code = "trunc(x, 'mins')"
+
+
+[convert]
+section = "Convert"
+
+[convert.date]
+action = "To `Date`"
+code = "as.Date(x)"
+
+[convert.posixlt]
+action = "To `POSIXct`"
+code = "as.POSIXct(x)"
+
+[convert.format]
+section = "Format as string"
+
+[convert.format.iso]
+action = "Format as ISO datetime (yyyy-mm-dd HH:MM:SS.SSS)"
+code = "as.character(x)"
+
+[convert.format.ymdhms]
+action = "Format as yyyy-mm-dd HH:MM:SS"
+code = "format(x)"
+
+[convert.format.ymd]
+action = "Format as yyyy-mm-dd"
+code = "format(d, '%Y-%m-%d')"
+
+[convert.format.dmy]
+action = "Format as dd-mm-yyyy"
+code = "format(d, '%d-%m-%Y')"
+
+[convert.format.syslocale]
+action = "Format in system locale"
+code = "format(x, '%a %b %d')"

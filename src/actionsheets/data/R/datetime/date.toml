@@ -1,0 +1,138 @@
+language = "R"
+parent = "r.datetime"
+name = "date"
+title = "Date"
+
+[create]
+section = "Create"
+
+[create.ymd]
+action = "From ymd"
+code = "ISOdate(years, months, days) |> as.Date()"
+
+[create.current]
+action = "Current date"
+code = "Sys.Date()"
+
+[create.current.lubridate]
+code = "lubridate::today() |> as.Date()"
+
+[create.current.utc]
+action = "Current date in UTC timezone"
+code = "lubridate::today(tzone = 'UTC') |> as.Date()"
+
+[create.epoch]
+action = "Unix epoch"
+code = "as.Date(0)"
+
+[create.days.epoch]
+action = "From total days since Unix epoch"
+code = "as.Date(n)"
+
+[create.days.ref]
+action = "From total days since reference date"
+code = "as.Date(n, origin = ref_date)"
+
+[create.str.ymd]
+action = "Date from YYYY-MM-DD string"
+code = "as.Date(x)"
+
+[create.str.ymd.flex]
+action = "Date from Y-m-d ordered string"
+code = "lubridate::ymd(x)"
+
+[create.str.dmy]
+action = "Date from DD-MMM-YYYY string"
+code = "as.Date(x, '%Y-%m-%d')"
+
+[create.str.dmy.flex]
+action = "Date from d-m-Y ordered string"
+code = "lubridate::dmy(x)"
+
+
+[test]
+section = "Test"
+
+[test.inherits]
+action = "Is date"
+code = "lubridate::is.Date(x)"
+
+[test.equal]
+action = "Same date"
+code = "x == y"
+
+[test.before]
+action = "Happens before _y_"
+code = "x < y"
+
+[test.after]
+action = "Happens after _y_"
+code = "x > y"
+
+
+[extract]
+section = "Extract"
+
+[extract.days.epoch]
+action = "Days from Unix epoch"
+code = "as.integer(x)"
+
+[extract.seconds.epoch]
+action = "Seconds from Unix epoch (timestamp)"
+code = "as.POSIXct(x) |> as.integer()"
+
+[extract.year]
+action = "Year"
+code = "lubridate::year(x)"
+
+[extract.month]
+action = "Month"
+code = "lubridate::month(x)"
+
+[extract.day]
+action = "Day"
+code = "lubridate::day(x)"
+
+[extract.week]
+action = "Week number (1-53)"
+code = "lubridate::week(x)"
+
+[extract.week.iso]
+action = "ISO week number (1-52)"
+code = "lubridate::isoweek(x)"
+
+[extract.weekday]
+action = "Weekday number"
+code = "lubridate::wday(x, week_start = 1)"
+details = "Mon=1, Sun=7"
+
+
+[convert]
+section = "Convert"
+
+[convert.datetime]
+action = "To datetime at midnight (00:00:00) in UTC"
+code = "as.POSIXct(x)"
+
+[convert.posixct]
+action = "To `POSIXct` at midnight (00:00:00) in UTC"
+code = "as.POSIXct(x)"
+
+[convert.posixlt]
+action = "To `POSIXlt` at midnight (00:00:00) in UTC"
+code = "as.POSIXlt(x)"
+
+[convert.format]
+section = "Format"
+
+[convert.format.iso]
+action = "Format as ISO date (yyyy-mm-dd)"
+code = "format(x)"
+
+[convert.format.dmy]
+action = "Format as dd-mm-yyyy"
+code = "format(d, '%d-%m-%Y')"
+
+[convert.format.syslocale]
+action = "Format in system locale"
+code = "format(x, '%a %b %d')"

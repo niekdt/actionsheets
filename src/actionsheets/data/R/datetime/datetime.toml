@@ -1,0 +1,28 @@
+language = "R"
+parent = "r"
+name = "datetime"
+title = "Date & time handling"
+description = """
+There are several classes and packages available for handling dates & times:
+
+## Date
+- `Date` class (recommended), fractional number of days since Unix epoch
+- `IDate` class, integer number of days since Unix epoch, defined by the `data.table` package (for use in data.tables)
+
+## Time
+- `ITime` class, from the `data.table` package
+- `hms` class, from the `hms` package
+
+## Datetime
+- `POSIXct` class (recommended): stores datetime as the number of seconds since Unix epoch
+- `POSIXlt` class: stores datetime as separate y/m/d/h/m/s components
+- `POSIXt` base class
+"""
+
+[extract]
+section = "Extract"
+
+[extract.tz]
+action = "Get system time-zone region"
+code = "Sys.timezone()"
+details = "Warning: OS-specific output; check the documentation!"
