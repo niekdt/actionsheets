@@ -1,5 +1,5 @@
 language = "python"
-parent = "python"
+parent = "python.output"
 name = "logging"
 title = "Logging"
 description = """
@@ -53,11 +53,11 @@ code = "logging.basicConfig(level='DEBUG')"
 
 [update.root.disable]
 action = "Disable root logger"
-code = "logging.disable()"
+code = "logging.root.disable = True"
 
 [update.root.enable]
 action = "Re-enable root logger"
-code = "logging.disable(0)"
+code = "logging.root.disable = False"
 
 [update.root.capture.warning]
 action = "Capture warnings outputted via the `warnings` module"
