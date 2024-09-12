@@ -1,0 +1,141 @@
+language = "python"
+parent = "python"
+name = "logging"
+title = "Logging"
+description = """
+Functionality for event logging.
+"""
+code = "import logging"
+
+[create]
+section = "Create"
+
+[create.root]
+action = "Root logger"
+code = "logging.root"
+
+[create.module]
+action = "Module-level logger"
+code = "logger = logging.getLogger(__name__)"
+
+
+[update]
+section = "Update"
+
+
+[update.root]
+section = "Update root logger"
+description = "The root API is inconsistent with the logger API"
+
+[update.root.level]
+action = "Set root logging level to _lvl_"
+code = "logging.basicConfig(level=lvl)"
+
+[update.root.level.critical]
+action = "Set root logging level to critical or fatal"
+code = "logging.basicConfig(level='CRITICAL')"
+
+[update.root.level.error]
+action = "Set root logging level to error"
+code = "logging.basicConfig(level='ERROR')"
+
+[update.root.level.warning]
+action = "Set root logging level to warning"
+code = "logging.basicConfig(level='WARNING')"
+
+[update.root.level.info]
+action = "Set root logging level to info"
+code = "logging.basicConfig(level='INFO')"
+
+[update.root.level.debug]
+action = "Set root logging level to debug"
+code = "logging.basicConfig(level='DEBUG')"
+
+[update.root.disable]
+action = "Disable root logger"
+code = "logging.disable()"
+
+[update.root.enable]
+action = "Re-enable root logger"
+code = "logging.disable(0)"
+
+[update.root.capture.warning]
+action = "Capture warnings outputted via the `warnings` module"
+code = "logging.captureWarnings(True)"
+details = "For example, `warnings.warn('uh oh')`"
+
+[update.root.format.datetime]
+action = "Set message format to show full datetime"
+code = "logging.basicConfig(format='%(asctime)s %(message)s')"
+
+
+[update.logger]
+section = "Specific logger"
+description = "Update specific logger stored in variable `logger`"
+
+[update.logger.level]
+action = "Set logging level to _lvl_"
+code = "logger.setLevel(lvl)"
+details = "See levels [here](https://docs.python.org/3/library/logging.html#logging-levels)"
+
+[update.logger.level.critical]
+action = "Set logging level to critical or fatal"
+code = "logger.setLevel('CRITICAL')"
+
+[update.logger.level.error]
+action = "Set logging level to error"
+code = "logger.setLevel('ERROR')"
+
+[update.logger.level.warning]
+action = "Set logging level to warning"
+code = "logger.setLevel('WARNING')"
+
+[update.logger.level.info]
+action = "Set logging level to info"
+code = "logger.setLevel('INFO')"
+
+[update.logger.level.debug]
+action = "Set logging level to debug"
+code = "logger.setLevel('DEBUG')"
+
+[update.logger.disable]
+action = "Disable logger"
+code = "logger.disable = True"
+
+[update.logger.enable]
+action = "Re-enable logger"
+code = "logger.disable = False"
+
+
+[usage]
+section = "Usage"
+description = "For logging to a specific logger, call the respective function on the logger instead of `logging`."
+
+[usage.error]
+action = "Log error"
+code = "logging.error('my error msg')"
+
+[usage.exception]
+action = "Log error with exception stack trace"
+code = "logging.exception('my error msg')"
+details = "For use in exception handling"
+
+[usage.warning]
+action = "Log unavoidable warning"
+code = "logging.warning('my warning msg')"
+
+[usage.warnings]
+action = "Log avoidable warning"
+code = """
+import warnings
+warnings.warn('my warning msg')
+"""
+details = "Make sure that `logging.captureWarnings(True)`"
+
+[usage.info]
+action = "Log info"
+code = "logging.info('my info msg')"
+
+[usage.debug]
+action = "Log debug message"
+code = "logging.debug('my debug msg')"

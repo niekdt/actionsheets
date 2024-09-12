@@ -1,0 +1,31 @@
+partial = true
+language = "python"
+parent = "python"
+name = "output"
+title = "Output"
+description = """
+Functionality for printing, logging or generating other program output
+"""
+
+[usage]
+section = 'Usage'
+
+[usage.str]
+action = "Print string"
+code = "print('hello world')"
+
+[usage.str.cat]
+action = "Print string without newline"
+code = "print('hello world', end='')"
+
+[usage.strs]
+action = "Print multiple strings, separated by space"
+code = "print('hello', 'world')"
+
+[usage.strs.comma]
+action = "Print multiplate strings, separated by comma"
+code = "print('a', 'b', 'c', sep=',')"
+
+[usage.obj]
+action = "Print string-representation of object"
+code = "print(x)"
