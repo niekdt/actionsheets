@@ -65,70 +65,98 @@ code = "type(data) is pd.DataFrame"
 action = "Is empty"
 code = "data.empty"
 
-[test.col.exists]
+[test.exists]
+section = "Test for presence of columns"
+
+[test.exists.col]
 action = "Has column _col_"
 code = "col in data"
 
-[test.col.exists.all]
+[test.exists.col.all]
 action = "Has columns _cols_"
 code = "data.columns.isin(cols).all()"
 
-[test.col.exists.all.set]
+[test.exists.col.all.set]
 code = "set(cols).issubset(data)"
 
-[test.col.exists.only]
+[test.exists.cols.only]
 action = "Only contains columns _cols_"
 code = "set(data) == set(cols)"
 
-[test.col.exists.any]
+[test.exists.cols.any]
 action = "Has any of these columns _cols_"
 code = "data.columns.isin(cols).any()"
 
-[test.col.exists.any.set]
+[test.exists.cols.any.set]
 code = "set(data).issuperset(cols)"
 
-[test.col.exists.none]
+[test.exists.cols.none]
 action = "Does not have these columns _cols_"
 code = "set(cols).isdisjoint(data)"
 
-[test.col.bool]
-action = "Column _col_ is boolean type"
+
+[test.type]
+section = "Tests for column types"
+
+[test.type.bool]
+action = "Is column _col_ boolean type"
 code = "pd.api.types.is_bool_dtype(data[col])"
 
-[test.col.str]
-action = "Column _col_ is string type"
+[test.type.categorical]
+action = "Is column _col_ categorical type"
+code = "isinstance(data[col], pd.CategoricalDtype)"
+
+[test.type.str]
+action = "Is column _col_ string type"
 code = "pd.api.types.is_string_dtype(data[col])"
 
-[test.col.numeric]
-action = "Column _col_ is numeric type"
+[test.type.numeric]
+action = "Is column _col_ numeric type"
 code = "pd.api.types.is_numeric_dtype(data[col])"
 
-[test.col.int]
-action = "Column _col_ is integer type"
+[test.type.int]
+action = "Is column _col_ integer type"
 code = "pd.api.types.is_integer_dtype(data[col])"
 
-[test.col.datetime]
-action = "Column _col_ is datetime type"
+[test.type.datetime]
+action = "Is column _col_ datetime type"
 code = "pd.api.types.is_datetime64_dtype(data[col])"
 
-[test.col.datetime.ns]
-action = "Column _col_ is datetime(nanosecond) type"
+[test.type.datetime.ns]
+action = "Is column _col_ datetime(nanosecond) type"
 code = "data.dtypes[col] == numpy.dtype('datetime64[ns]'))"
 
-[test.col.value.missing.any]
-action = "Column _col_ contains missing value"
+[test.value.col.na.any]
+action = "Does column _col_ contain NA value(s)"
 code = "data[col].isna().values.any()"
 
-[test.col.value.missing.none]
-action = "Column _col_ contains no missing values"
-code = "data[col].notnull().values.all()"
 
-[test.col.multi.value.missing.none]
-action = "Multiple columns _cols_ contain no missing values"
+[test.contains]
+section = "Tests for values"
+
+[test.contains.na]
+action = "Contains NA"
+code = "data.isna().any().any()"
+
+[test.contains.na.none]
+action = "Contains no NA"
+code = "data.notna().all().all()"
+
+[test.contains.na.col]
+action = "Does column _col_ contain NA value(s)"
+code = "data[col].hasnan"
+
+[test.contains.na.col.none]
+action = "Does column _col_ not contain NA values"
+code = "~data[col].hasnan"
+
+[test.contains.na.cols.none]
+action = "Do none of the columns _cols_ contain NA values"
 code = "data[['col1', 'col2']].notnull().all().all()"
 
+
 [test.duplicate]
-section = "Duplicates"
+section = "Tests for duplicates"
 
 [test.duplicate.row.none]
 action = "No duplicated rows (all unique)"
@@ -443,6 +471,39 @@ code = "data.explode(?)"
 [derive.reshape.transpose]
 action = "Transpose"
 code = "data.T"
+
+
+[derive.combine]
+section = "Combine"
+
+[derive.combine.concat]
+action = "Concatenate rows of dataframes"
+code = "pd.concat([df, df2, dfN])"
+details = "Consider `ignore_index=True`"
+
+[derive.combine.concat.mix]
+action = "Concatenate rows of dataframes, having partially overlapping columns"
+code = "?"
+
+[derive.combine.merge.inner]
+action = "Inner join"
+code = "data.merge(data2, on=['sex', 'country'])"
+
+[derive.combine.merge.left]
+action = "Left join"
+code = "data.merge(data2, on=['sex', 'country'], how='left')"
+
+[derive.combine.merge.right]
+action = "Right join"
+code = "data.merge(data2, on=['sex', 'country'], how='right')"
+
+[derive.combine.merge.outer]
+action = "Outer (full) join"
+code = "data.merge(data2, on=['sex', 'country'], how='outer')"
+
+[derive.combine.merge.cross]
+action = "Cross join"
+code = "data.merge(data2, on=['sex', 'country'], how='cross')"
 
 
 [iter]

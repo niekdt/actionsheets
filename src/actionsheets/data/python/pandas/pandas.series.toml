@@ -82,6 +82,10 @@ code = "pd.api.types.is_bool_dtype(x)"
 action = "Is categorical series"
 code = "isinstance(x.dtype, pd.CategoricalDtype)"
 
+[test.type.categorical.ordered]
+action = "Is ordered categorical series"
+code = "isinstance(x.dtype, pd.CategoricalDtype) and x.ordered"
+
 [test.type.numeric]
 action = "Is numeric series"
 code = "pd.api.types.is_numeric_dtype(x)"
@@ -204,6 +208,10 @@ code = "x.size"
 [extract.length.len]
 code = "len(x)"
 
+[extract.hash]
+action = "Hash"
+code = "hash(x.values.tobytes())"
+
 [extract.dtype]
 action = "Dtype"
 code = "x.dtype"
@@ -289,6 +297,45 @@ code = "x.fillna(value=v)"
 action = "Replace value _v_ by NA"
 code = "x.replace(V, pd.NA)"
 details = "May cast series to another type if nulls are not supported (example: int)"
+
+[derive.transform.cast]
+section = "Cast to type"
+
+[derive.transform.cast.bool]
+action = "Cast to boolean"
+code = "x.astype(bool)"
+
+[derive.transform.cast.int]
+action = "Cast to integer"
+code = "x.astype(int)"
+
+[derive.transform.cast.float]
+action = "Cast to float"
+code = "x.astype(float)"
+
+[derive.transform.cast.str]
+action = "Cast to string"
+code = "x.astype(str)"
+
+[derive.transform.cast.categorical]
+action = "Cast to categorical (nominal)"
+code = "x.astype('category')"
+
+[derive.transform.cast.categorical.levels]
+action = "Cast to categorical (nominal) with given categories"
+code = "pd.Categorical(x, categories=['a', 'b', 'c'])"
+
+[derive.transform.cast.categorical.ordered]
+action = "Cast to ordered categorical (ordinal)"
+code = "pd.Categorical(x, ordered=True)"
+
+[derive.transform.cast.ordered.categorical]
+action = "Cast ordered categorical to unordered categorical"
+code = "x.as_unordered()"
+
+[derive.transform.cast.categorical.int]
+action = "Cast categorical to integer codes"
+code = "pd.Series(z.codes)"
 
 
 [derive.grow]

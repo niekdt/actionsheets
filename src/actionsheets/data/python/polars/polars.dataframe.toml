@@ -1008,7 +1008,7 @@ code = "pl.concat([df, df2, dfN])"
 
 [derive.combine.concat.mix]
 action = "Concatenate rows of dataframes, having partially overlapping columns"
-code = "pl.concat([df, df2, dfN], how = 'diagonal')"
+code = "pl.concat([df, df2, dfN], how='diagonal')"
 
 [derive.combine.merge.sorted]
 action = "Merge two data frames on the sorted key"
@@ -1016,31 +1016,31 @@ code = "data.merge(data2)"
 
 [derive.combine.merge.inner]
 action = "Inner join"
-code = "data.join(data2, on = ['sex', 'country'])"
+code = "data.join(data2, on=['sex', 'country'])"
 
 [derive.combine.merge.left]
-action = "Left join"
-code = "data.join(data2, on = ['sex', 'country'], how = 'left')"
+action="Left join"
+code = "data.join(data2, on=['sex', 'country'], how='left')"
 
 [derive.combine.merge.right]
 action = "Right join"
-code = "data.join(data2, on = ['sex', 'country'], how = 'right')"
+code = "data.join(data2, on=['sex', 'country'], how='right')"
 
 [derive.combine.merge.outer]
 action = "Outer (full) join"
-code = "data.join(data2, on = ['sex', 'country'], how = 'full')"
+code = "data.join(data2, on=['sex', 'country'], how='full')"
 
 [derive.combine.merge.cross]
 action = "Cross join"
-code = "data.join(data2, on = ['sex', 'country'], how = 'cross')"
+code = "data.join(data2, on=['sex', 'country'], how='cross')"
 
 [derive.combine.merge.semi]
 action = "Semi join (one match per index)"
-code = "data.join(data2, on = ['sex', 'country'], how = 'semi')"
+code = "data.join(data2, on=['sex', 'country'], how='semi')"
 
 [derive.combine.merge.anti]
 action = "Anti join (exclude matches from table 2)"
-code = "data.join(data2, on = ['sex', 'country'], how = 'anti')"
+code = "data.join(data2, on=['sex', 'country'], how='anti')"
 
 
 [convert]
