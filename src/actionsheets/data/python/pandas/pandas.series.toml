@@ -1,0 +1,351 @@
+date = 2024-09-16
+partial = true
+language = "python"
+parent = "python.pandas"
+name = "series"
+title = "Pandas Series"
+description = """
+Opinionated words of caution:
+- Types are (currently?) a mess, and autocasting does not make this any better.
+- Specify dtype when defining series to avoid surprises further down the pipeline.
+- Missing values are a complete mess: None/Null/NA/NaN are all used interchangeably, despite the existence of is.na and is.null implying otherwise.
+- The representation of missing values differs per type (float uses nan even for NA inputs, object uses NA), which makes the whole thing even more confusing.
+  - This seems to be fixed with the new Int64 and Float64 types, although this won't help in practice as autocasting still uses the old types.
+- Avoid indexes unless you have a good reason. Consider using a DataFrame instead.
+- The `in` operator, counterintuitively, works on the index, not the values.
+"""
+code = "import pandas as pd"
+
+[create]
+section = "Create"
+
+[create.define.constant]
+action = "Constant value _v_ of length _n_"
+code = "pd.Series(v, index=range(n))"
+
+[create.list]
+action = "From list"
+code = "pd.Series([1, 2, 3, 7])"
+
+[create.define.int]
+action = "Define series as int"
+code = "pd.Series([1, '2', 3], dtype='int')"
+
+[create.define.int64]
+action = "Define series as nullable int"
+code = "pd.Series([1, None, 3], dtype = 'Int64')"
+details = "Preserves None as <NA>"
+
+[create.define.float]
+action = "Define series as float"
+code = "pd.Series([1, None, 3], dtype='float')"
+details = "None is converted to NaN!"
+
+[create.define.float64]
+action = "Define series as nullable float"
+code = "pd.Series([1, None, 3.5], dtype = 'Float64')"
+details = "None, NA and NaN are all set to <NA>"
+
+[create.dataframe.column]
+action = "From DataFrame column _s_"
+code = "data[s]"
+
+
+[test]
+section = "Test"
+
+[test.inherits]
+action = "Is series or subclass"
+code = "isinstance(x, pd.Series)"
+
+[test.is]
+action = "Is series and not subclass"
+code = "type(x) is pd.Series"
+
+[test.empty]
+action = "Empty"
+code = "x.empty"
+
+[test.nempty]
+action = "Not empty"
+code = "not x.empty"
+
+[test.length]
+action = "Has length _n_"
+code = "len(x) == n"
+
+[test.type.bool]
+action = "Is boolean series"
+code = "pd.api.types.is_bool_dtype(x)"
+
+[test.type.categorical]
+action = "Is categorical series"
+code = "isinstance(x.dtype, pd.CategoricalDtype)"
+
+[test.type.numeric]
+action = "Is numeric series"
+code = "pd.api.types.is_numeric_dtype(x)"
+details = "For example, int or float"
+
+[test.type.int]
+action = "Is integer series"
+code = "pd.api.types.is_integer_dtype(x)"
+details = "For example, int or Int64"
+
+[test.type.uint]
+action = "Is unsigned integer series"
+code = "pd.api.types.is_unsigned_integer_dtype(x)"
+
+[test.type.float]
+action = "Is float series"
+code = "pd.api.types.is_float_dtype(x)"
+details = "For example, float or Float64"
+
+[test.type.datetime]
+action = "Is datetime64 series"
+code = "pd.api.types.is_datetime64_dtype(x)"
+
+[test.type.datetime.ns]
+action = "Is datetime64[ns] series"
+code = "pd.api.types.is_datetime64_ns_dtype(x)"
+
+[test.type.str]
+action = "Is string series"
+code = "pd.api.types.is_string_dtype(x)"
+
+[test.type.object]
+action = "Is object series"
+code = "pd.api.types.is_object_dtype(x)"
+
+[test.hashable]
+action = "Is hashable series"
+code = "pd.api.types.is_hashable(x)"
+
+[test.duplicate.none]
+action = "No duplicate elements (all unique)"
+code = "x.is_unique"
+
+[test.duplicate.any]
+action = "Any duplicate elements"
+code = "not x.is_unique"
+
+[test.contains.na]
+action = "Contains NA"
+code = "x.hasnans"
+
+[test.contains.na.all]
+action = "Contains only NA"
+code = "x.isna().all()"
+
+[test.contains.na.none]
+action = "Contains no NA"
+code = "x.notna().all()"
+
+[test.contains.value]
+action = "Contains value _v_, ignoring NAs"
+code = "x.isin([v]).any()"
+details = "WARNING: `v in x' tests the indices instead!"
+
+[test.contains.value.eq]
+code = "any(x == v)"
+
+[test.contains.values]
+action = "Contains any of the values _v1_, _v2_, ignoring NAs"
+code = "x.isin([v1, v2]).any()"
+
+[test.missing.value]
+action = "Does not contain value _v_"
+code = "all(x != v)"
+
+[test.order.increasing]
+action = "Are elements in increasing order"
+code = "x.is_monotonic_increasing"
+
+[test.order.decreasing]
+action = "Are elements in decreasing order"
+code = "x.is_monotonic_decreasing"
+
+
+[test.bool]
+section = "Test boolean series"
+
+[test.bool.'true'.all]
+action = "All values are True"
+code = "x.all()"
+
+[test.bool.'false'.all]
+action = "All values are False"
+code = "not x.any()"
+
+
+[test.str]
+section = "Tests for string series"
+
+[test.str.contains]
+action = "Contains string _s_"
+code = "x.str.contains(s).any()"
+
+
+[test.assert]
+section = "Assertions"
+
+[test.assert.equal]
+action = "Assert series equal"
+code = "pd.testing.assert_series_equal(x, y)"
+
+
+[extract]
+section = "Extract"
+
+[extract.length]
+action = "Number of elements"
+code = "x.size"
+
+[extract.length.len]
+code = "len(x)"
+
+[extract.dtype]
+action = "Dtype"
+code = "x.dtype"
+
+[extract.nunique]
+action = "Number of unique elements, ignoring NAs"
+code = "x.nunique()"
+
+[extract.min]
+action = "Smallest value, ignoring NAs"
+code = "x.min()"
+
+[extract.max]
+action = "Greatest value, ignoring NAs"
+code = "x.max()"
+
+[extract.value.counts]
+action = "Count occurrence per value"
+code = "x.value_counts()"
+
+
+[update]
+section = "Update"
+description = "Warning: updates may change the dtype of the series!"
+
+[update.elem.index.na]
+action = "Set element at index _i_ to NA"
+code = "x[i] = pd.NA"
+
+[update.elem.index.value]
+action = "Set element at index _i_ to value _v_"
+code = "x[i] = v"
+
+
+[derive]
+section = "Derive"
+
+[derive.cast]
+section = "Cast"
+
+[derive.cast.numeric]
+action = "Cast series to numeric dtype"
+code = "pd.to_numeric(x)"
+
+
+[derive.order]
+section = "Order"
+
+[derive.order.reverse]
+action = "Reverse"
+code = "x[::-1]"
+
+[derive.order.sort.asc]
+action = "Sort ascendingly"
+code = "x.sort_values()"
+details = "Nulls are placed last"
+
+[derive.order.sort.desc]
+action = "Sort descendingly"
+code = "x.sort_values(ascending=False)"
+details = "Nulls are placed last"
+
+[derive.order.shuffle]
+action = "Shuffle"
+code = "x.sample(frac=1)"
+
+
+[derive.transform]
+section = "Transform"
+
+[derive.transform.mask]
+section = "Mask"
+
+[derive.transform.mask.duplicate]
+action = "Duplicate mask"
+code = "x.duplicated()"
+
+[derive.transform.fill.na]
+action = "Fill NA by value_v_"
+code = "x.fillna(value=v)"
+
+[derive.transform.replace.value.na]
+action = "Replace value _v_ by NA"
+code = "x.replace(V, pd.NA)"
+details = "May cast series to another type if nulls are not supported (example: int)"
+
+
+[derive.grow]
+section = "Grow"
+
+
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.head]
+action = "First _n_ elements"
+code = "x.head(n)"
+
+[derive.shrink.tail]
+action = "Last _n_ elements"
+code = "x.tail(n)"
+
+[derive.shrink.slice]
+action = "Slice"
+code = "x[a:b]"
+
+[derive.shrink.sample]
+action = "Sample _n_ elements"
+code = "x.sample(n)"
+
+[derive.shrink.duplicates]
+action = "Remove duplicates"
+code = "x.drop_duplicates()"
+
+
+[convert]
+section = "Convert"
+
+[convert.list]
+action = "To list"
+code = "x.tolist()"
+
+[convert.list.2]
+code = "list(x)"
+
+[convert.set]
+action = "To set of unique values"
+code = "set(x)"
+details = "`NA` is included only once, `nan` is only included once"
+
+[convert.dataframe]
+action = "To DataFrame (single column)"
+code = "x.to_frame()"
+
+[convert.numpy]
+action = "To Numpy ND array"
+code = "x.to_numpy()"
+
+[convert.dict]
+action = "To dict (index-value pairs)"
+code = "x.to_dict()"
+
+[convert.str.json]
+action = "To JSON index-value array"
+code = "x.to_json()"

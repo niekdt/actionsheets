@@ -1,17 +1,22 @@
+date = 2024-09-16
 partial = true
 language = "python"
 parent = "python.pandas"
 name = "dataframe"
 title = "Pandas DataFrame"
 description = """
-Opinionated: `pandas.DataFrame` seems to be the MS Excel of the Python data processing universe: Slow, write-once, inconsistent API, and many ways to achieve the same thing (the true pythonic way), but very handy for quick & dirty data manipulation and popular for that reason.
+Opinionated words of caution:
 
-Words of caution:
-
-* Index columns are not usable as data. Don't bother with index columns unless you want to polute your code with many `reset_index()` calls.
+* Data frames force a frustrating distinction between the "data" and index columns, despite this being completely meaningless in typical exploratory data analysis applications where what constitutes an index is highly context-dependent. Also, pandas is very slow regardless, so all effort on making effective use of index columns is a waste of time.
+* Don't bother with index columns unless you want to polute your code with many `reset_index()` calls, or risk surprising results.
+* On the other hand, you cannot ignore index columns, as you'll run into vague index errors whether you want it or not (e.g., assigning groupby results, shuffling rows).
 * MultiIndex versus multiple indices. Just don't. If you cared about speed you would not be using pandas anyway.
+* Many conflicting dtypes, inconsistencies in API functions for handling them, and ad-hoc mixing with numpy functions.
 * Complex queries will be a series of data variable updates, which is hard to read, and guaranteed to lead to bugs at a later stage during refactoring.
+* Inconsistent APIs between data frames, columns, groupby output, and index columns.
+* Because of all the complexities above, writing good and clean pandas code is very hard, as is evident by the large volume of unreadable/anti-pattern-riddled pandas code online (e.g., stackoverflow).
 """
+code = "import pandas as pd"
 
 
 [create]
@@ -23,25 +28,136 @@ code = "?"
 
 [create.list]
 action = "Single column from list"
-code = "DataFrame([1, 2, 3])"
+code = "pd.DataFrame([1, 2, 3])"
+
+[create.lists]
+action = "From column lists"
+code = "pd.DataFrame({'A': [1, 2], 'fruits': ['banana', 'apple']})"
 
 [create.dict]
-action = "Column per dictionary entry"
+action = "From dictionary with column list entries"
 code = """
 dict = {'Name': ['John', 'Sue'], 'Age': [40, 35]}
-DataFrame(dict)
+pd.DataFrame(dict)
 """
 
 [create.numpy]
-action = "Numpy 2D array"
+action = "From Numpy 2D array"
 code = """
+import numpy as np
 arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-DataFrame(arr, columns = ['a', 'b', 'c'])
+pd.DataFrame(arr, columns = ['a', 'b', 'c'])
 """
+
+
+[test]
+section = "Test"
+
+[test.inherits]
+action = "Is data frame or subclass"
+code = "isinstance(data, pd.DataFrame)"
+
+[test.is]
+action = "Is data frame and not subclass"
+code = "type(data) is pd.DataFrame"
+
+[test.empty]
+action = "Is empty"
+code = "data.empty"
+
+[test.col.exists]
+action = "Has column _col_"
+code = "col in data"
+
+[test.col.exists.all]
+action = "Has columns _cols_"
+code = "data.columns.isin(cols).all()"
+
+[test.col.exists.all.set]
+code = "set(cols).issubset(data)"
+
+[test.col.exists.only]
+action = "Only contains columns _cols_"
+code = "set(data) == set(cols)"
+
+[test.col.exists.any]
+action = "Has any of these columns _cols_"
+code = "data.columns.isin(cols).any()"
+
+[test.col.exists.any.set]
+code = "set(data).issuperset(cols)"
+
+[test.col.exists.none]
+action = "Does not have these columns _cols_"
+code = "set(cols).isdisjoint(data)"
+
+[test.col.bool]
+action = "Column _col_ is boolean type"
+code = "pd.api.types.is_bool_dtype(data[col])"
+
+[test.col.str]
+action = "Column _col_ is string type"
+code = "pd.api.types.is_string_dtype(data[col])"
+
+[test.col.numeric]
+action = "Column _col_ is numeric type"
+code = "pd.api.types.is_numeric_dtype(data[col])"
+
+[test.col.int]
+action = "Column _col_ is integer type"
+code = "pd.api.types.is_integer_dtype(data[col])"
+
+[test.col.datetime]
+action = "Column _col_ is datetime type"
+code = "pd.api.types.is_datetime64_dtype(data[col])"
+
+[test.col.datetime.ns]
+action = "Column _col_ is datetime(nanosecond) type"
+code = "data.dtypes[col] == numpy.dtype('datetime64[ns]'))"
+
+[test.col.value.missing.any]
+action = "Column _col_ contains missing value"
+code = "data[col].isna().values.any()"
+
+[test.col.value.missing.none]
+action = "Column _col_ contains no missing values"
+code = "data[col].notnull().values.all()"
+
+[test.col.multi.value.missing.none]
+action = "Multiple columns _cols_ contain no missing values"
+code = "data[['col1', 'col2']].notnull().all().all()"
+
+[test.duplicate]
+section = "Duplicates"
+
+[test.duplicate.row.none]
+action = "No duplicated rows (all unique)"
+code = "~data.duplicated().any()"
+
+[test.duplicate.row.any]
+action = "Some rows are duplicated"
+code = "data.duplicated().any()"
+
+[test.duplicate.row.grouped.none]
+action = "No groups in column _groupCol_ have duplicated values for column _valueCol_"
+code = "~data.duplicated(subset=['groupCol', 'valueCol']).any()"
+
+[test.duplicate.row.grouped]
+action = "Some groups in column _groupCol_ have duplicate elements in column _valueCol_"
+code = "data.duplicated(subset=['groupCol', 'valueCol']).any()"
+
+[test.duplicate.cols.none]
+action = "No columns are duplicated by values"
+code = "?"
+
+[test.duplicate.cols.any]
+action = "Some columns are duplicate by values"
+code = "?"
 
 
 [extract]
 section = "Extract"
+description = "Snippets which return non-DataFrame output (e.g., scalar, series)"
 
 [extract.row.count]
 action = "Number of rows"
@@ -73,87 +189,33 @@ code = "data.size"
 action = "Dimensions (as tuple)"
 code = "data.shape"
 
+[extract.col]
+action = "Get column named _name_ (as series)"
+code = "data['name']"
 
-[test]
-section = "Test"
+[extract.rowmask]
+section = "Extract row masks"
 
-[test.empty]
-action = "Empty"
-code = "data.empty"
+[extract.rowmask.na]
+action = "Mask for missing values (None, NA, NaN)"
+code = "data.isna()"
 
-[test.col.exists]
-action = "Has column _col_"
-code = "col in data"
+[extract.rowmask.notna]
+action = "Mask for non-missing values"
+code = "data.notna()"
+details = "Same result for `data.notnull()`?"
 
-[test.col.exists.all]
-action = "Has columns _cols_"
-code = "data.columns.isin(cols).all()"
+[extract.rowmask.duplicate]
+action = "Mask for duplicate rows"
+code = "data.duplicated()"
 
-[test.col.exists.all.set]
-code = "set(cols).issubset(data)"
-
-[test.col.exists.only]
-action = "Only contains columns _cols_"
-code = "set(data) == set(cols)"
-
-[test.col.exists.any]
-action = "Has any of these columns _cols_"
-code = "data.columns.isin(cols).any()"
-
-[test.col.exists.any.set]
-code = "set(data).issuperset(cols)"
-
-[test.col.exists.none]
-action = "Does not have these columns _cols_"
-code = "set(cols).isdisjoint(data)"
-
-[test.col.bool]
-action = "Column _col_ is boolean type"
-code = "pandas.api.types.is_bool_dtype(data[col])"
-
-[test.col.str]
-action = "Column _col_ is string type"
-code = "pandas.api.types.is_string_dtype(data[col])"
-
-[test.col.numeric]
-action = "Column _col_ is numeric type"
-code = "pandas.api.types.is_numeric_dtype(data[col])"
-
-[test.col.int]
-action = "Column _col_ is integer type"
-code = "pandas.api.types.is_integer_dtype(data[col])"
-
-[test.col.datetime]
-action = "Column _col_ is datetime type"
-code = "pandas.api.types.is_datetime64_dtype(data[col])"
-
-[test.col.datetime.ns]
-action = "Column _col_ is datetime(nanosecond) type"
-code = "data.dtypes[col] == numpy.dtype('datetime64[ns]'))"
-
-[test.col.value.missing.any]
-action = "Column _col_ contains missing value"
-code = "data[col].isna().values.any()"
-
-[test.col.value.missing.none]
-action = "Column _col_ contains no missing values"
-code = "data[col].notnull().values.all()"
-
-[test.col.multi.value.missing.none]
-action = "Multiple columns _cols_ contain no missing values"
-code = "data[['col1', 'col2']].notnull().all().all()"
+[extract.rowmask.duplicate.cols]
+action = "Mask for duplicates across columns in list _cols_"
+code = "data.duplicated(subset=cols)"
 
 
 [query]
 section = "Query"
-
-[query.col]
-action = "Select column"
-code = "data[['Name']]"
-
-[query.col.multi]
-action = "Select columns"
-code = "data[['Name', 'Age']]"
 
 [query.cell.at]
 action = "Cell at row _i_, col _j_"
@@ -162,14 +224,6 @@ code = "data.at[i, j]"
 [query.row.first]
 action = "First row (Series)"
 code = "data.iloc[0]"
-
-[query.row.head]
-action = "First _n_ rows"
-code = "data.head(n)"
-
-[query.row.tail]
-action = "Last _n_ rows"
-code = "data.tail(n)"
 
 [query.row.at]
 action = "Row by row number _i_"
@@ -186,23 +240,64 @@ code = "data.query(...)"
 
 [update]
 section = "Update"
-description = "All operations are in-place."
+description = """
+All operations are in-place.
+Transformed columns can be assigned to new frames, but this operation is generally unsafe as it depends on the index columns matching.
+"""
 
-[update.col.rename]
+
+[update.transform]
+section = "Transform"
+
+[update.transform.col]
+section = "Transform a single column"
+
+[update.transform.col.rename]
 action = "Rename column"
 code = "data.rename(columns={'old': 'new'}, inplace=True)"
 
-[update.col.rename.multi]
-action = "Rename multiple columns"
+[update.transform.col.datetime]
+action = "Set datetime column _date_ to standard unit (ns)"
+code = "data['date'] = data['date'].apply(pd.to_datetime)"
+details = "Needed, for example, to avoid data corruption when saving to HDF5 store"
+
+[update.transform.col.sample.group]
+action = "Sample a column _col_ per grouping in _group_ (ignore index)"
+code = """
+data[col] = data.groupby(group)[col].transform(
+    lambda x: x.sample(frac=1).to_list()
+)
+"""
+details = "`to_list()` is essential here to force pandas to ignore the index columns, otherwise there is no effect from sampling..."
+
+[update.transform.cols]
+section = "Transform multiple columns"
+
+[update.transform.cols.rename]
+action = "Rename columns"
 code = "data.rename(columns={'old1': 'new1', 'old2': 'new2'}, inplace=True)"
 
-[update.col.rename.dyn]
-action = "Rename columns dynamically"
+[update.transform.cols.rename.list]
+action = "Rename columns based on a list of old names and list of new names"
 code = "data.rename(columns=dict(zip(oldNames, newNames)), inplace=True)"
 
-[update.col.rename.lower.all]
+[update.transform.cols.rename.lower]
 action = "All columns to lowercase"
 code = "data.rename(str.lower, axis='columns', inplace=True)"
+
+
+[update.grow]
+section = "Grow"
+
+[update.grow.rownum]
+action = "Add column with row number (ignore index)"
+code = "data['num'] = range(len(data))"
+details = 'Starts from 1'
+
+[update.grow.rownum.group]
+action = "Add column with row number per grouping in _group_ (ignore index)"
+code = "data['num'] = data.groupby('group').cumcount().add(1)"
+details = 'Starts from 1'
 
 [update.cell.at]
 action = "Set cell at row _i_, col _j_ to value _v_"
@@ -219,126 +314,133 @@ code = "data.replace(?)"
 
 [derive]
 section = "Derive"
-description = "All operations create a new instance."
+description = "All operations create a new DataFrame."
 
-[derive.col.rename]
+
+[derive.transform]
+section = "Transform"
+
+
+[derive.transform.col]
+section = "Transform single column"
+
+[derive.transform.col.rename]
 action = "Rename column"
 code = "data.rename(columns={'old': 'new'})"
 
-[derive.col.rename.multi]
+[derive.transform.col.rename.multi]
 action = "Rename multiple columns"
 code = "data.rename(columns={'old1': 'new1', 'old2': 'new2'})"
 
-[derive.col.rename.dyn]
+[derive.transform.col.rename.dyn]
 action = "Rename columns dynamically"
 code = "data.rename(columns=dict(zip(oldNames, newNames)))"
 
-[derive.col.rename.lower.all]
+[derive.transform.col.rename.lower.all]
 action = "All columns to lowercase"
 code = "data.rename(str.lower, axis='columns')"
 
-[derive.col.datetime]
-action = "Set datetime column to standard unit (ns)"
-code = "data['Date'] = data['Date'].apply(pd.to_datetime)"
-details = "Needed for example to avoid data corruption when saving to HDF5 store"
 
-[derive.mask.na]
-action = "Mask for NAs"
-code = "data.isna()"
-
-[derive.mask.na.null]
-code = "data.isnull()"
-details = "?"
-
-[derive.mask.notna]
-action = "Mask for non-missing values"
-code = "data.notna()"
-
-[derive.mask.notna.null]
-code = "data.notnull()"
-details = "?"
-
-[derive.mask.duplicate]
-action = "Mask for duplicates"
-code = "data.duplicated()"
-
-
-[shrink]
-section = "Shrink"
-
-[shrink.row.pop]
-action = "Pop row"
-code = "data.pop()"
-
-[shrink.row.remove.list]
-action = "Remove rows list _rows_"
-code = "data.drop(rows)"
-
-[shrink.row.remove.duplicate]
-action = "Remove duplicated rows"
-code = "data.drop_duplicates()"
-
-[shrink.col.remove.duplicate]
-action = "Drop duplicated columns"
-code = "?"
-
-[shrink.col.remove]
-action = "Remove column _col_"
-code = "data.drop(columns=col)"
-
-[shrink.col.remove.multi]
-action = "Remove columns list _cols_"
-code = "data.drop(columns=cols)"
-
-[shrink.row.remove.missing.cols]
-action = "Remove rows with a missing value in any column"
-code = "df.dropna()"
-
-[shrink.row.remove.missing.cols.subset]
-action = "Drop rows with a missing value in the given columns list _cols_"
-code = "df.dropna(subset=cols)"
-
-[shrink.row.remove.missing.cols.n]
-action = "Remove rows with at least _n_ non-missing values across columns"
-code = "df.dropna(thresh=n)"
-
-[shrink.row.remove.missing.col.all]
-action = "Drop rows with missing values in every column"
-code = "df.dropna(how='all')"
-
-[shrink.col.missing.row.any]
-action = "Drop columns with a missing value in any row"
-code = "data.dropna(axis='columns')"
-
-
-[grow]
+[derive.grow]
 section = "Grow"
 
-[grow.col.append]
+[derive.grow.col.append]
 action = "Append column"
 code = "?"
 
-[grow.col.append.multi]
+[derive.grow.col.append.multi]
 action = "Append columns"
 code = "?"
 
-[grow.col.insert]
+[derive.grow.col.insert]
 action = "Insert column"
 code = "data.insert(x)"
 
 
-[reshape]
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.row]
+section = "Reduce number of rows"
+
+[derive.shrink.row.head]
+action = "Keep first _n_ rows"
+code = "data.head(n)"
+
+[derive.shrink.row.tail]
+action = "Keep last _n_ rows"
+code = "data.tail(n)"
+
+[derive.shrink.row.pop]
+action = "Pop row"
+code = "data.pop()"
+
+[derive.shrink.row.remove.list]
+action = "Remove rows list _rows_"
+code = "data.drop(rows)"
+
+[derive.shrink.row.remove.duplicate]
+action = "Remove duplicated rows"
+code = "data.drop_duplicates()"
+
+[derive.shrink.row.remove.missing.cols]
+action = "Remove rows with a missing value in any column"
+code = "data.dropna()"
+
+[derive.shrink.row.remove.missing.cols.subset]
+action = "Remove rows with a missing value in the given columns list _cols_"
+code = "data.dropna(subset=cols)"
+
+[derive.shrink.row.remove.missing.cols.n]
+action = "Remove rows with at least _n_ non-missing values across columns"
+code = "data.dropna(thresh=n)"
+
+[derive.shrink.row.remove.missing.col.all]
+action = "Remove rows with missing values in every column"
+code = "data.dropna(how='all')"
+
+
+[derive.shrink.col]
+section = "Reduce number of columns"
+
+[derive.shrink.col.keep]
+action = "Select single column named _subject_"
+code = "data[['subject']]"
+details = "Note the double brackets"
+
+[derive.shrink.cols.keep]
+action = "Select columns"
+code = "data[['subject', 'date']]"
+
+[derive.shrink.col.remove.duplicate]
+action = "Remove duplicated columns"
+code = "?"
+
+[derive.shrink.col.remove]
+action = "Remove column _col_"
+code = "data.drop(columns=col)"
+
+[derive.shrink.col.remove.multi]
+action = "Remove columns list _cols_"
+code = "data.drop(columns=cols)"
+
+[derive.shrink.col.missing.row.any]
+action = "Remove columns with a missing value in any row"
+code = "data.dropna(axis='columns')"
+
+
+[derive.reshape]
 section = "Reshape"
 
-[reshape.melt]
+[derive.reshape.melt]
 action = "Melt"
 code = "data.melt(?)"
 
-[reshape.dcast]
+[derive.reshape.dcast]
 action = "Dcast"
 code = "data.explode(?)"
 
-[reshape.transpose]
+[derive.reshape.transpose]
 action = "Transpose"
 code = "data.T"
 
@@ -362,7 +464,50 @@ code = "for col in data.columns:"
 [convert]
 section = "Convert"
 
+[convert.dict.list]
+action = "To dict of column lists"
+code = "data.to_dict('list')"
+
+[convert.dict.series]
+action = "To dict of column series"
+code = "recodata.to_dict('series')"
+
+[convert.list.dict]
+action = "To list of dict per row"
+code = "data.to_dict('records')"
+
 [convert.numpy]
-action = "Numpy 2D array"
-code = "data.values"
-details = "Uses numpy package"
+action = "To Numpy 2D array"
+code = """
+import numpy as np
+data.to_numpy()
+"""
+
+[convert.polars]
+action = "To polars DataFrame"
+code = """
+import polars as pl
+import pyarrow
+pl.from_pandas(data)
+"""
+
+[convert.file]
+section = "To file format"
+
+[convert.file.csv]
+action = "To CSV file"
+code = "data.to_csv('file.csv')"
+
+[convert.file.tsv]
+action = "To TSV file"
+code = "data.to_table('file.tsv')"
+
+[convert.file.json]
+action = "To JSON file"
+code = "data.to_json('file.json', orient)"
+details = "See docs to determine orientation"
+source = "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.html"
+
+[convert.file.parquet]
+action = "To parquet"
+code = "data.to_parquet('file.parquet')"

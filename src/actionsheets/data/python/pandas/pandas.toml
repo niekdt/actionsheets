@@ -2,3 +2,23 @@ language = "python"
 parent = "python"
 name = "pandas"
 title = "Pandas package"
+description = """
+Opinionated: `pandas.DataFrame` seems to be the MS Excel of the Python data processing universe:
+Slow, write-once, inconsistent API, and many ways to achieve the same thing (the true pythonic way), but very handy for quick & dirty data manipulation and popular for that reason.
+
+Words of caution:
+- Needlessly high learning curve.
+  - Inconsistent API, functions do many different things, and many functions to do the same thing (very pythonic).
+  - Counterintuitive defaults (too many examples in 2 days of usage to even bother listing here).
+  - DataFrame, Series and Groupby outputs have mismatched APIs. Enjoy memorizing 3 interfaces and the subtle differences between them.
+  - The whole notion of (multi) indexes just complicates things with no benefit at all. Worse, indexes are impossible to ignore, as pandas will block certain operations if indexes don't match (which it caused itself).
+- Unreadable / messy code
+  - Just look at any non-trivial example in practice.
+  - The inconsistent/complicated APIs encourage bad habits, resulting in even less readable code.
+- Slow: the least of pandas' problems, but just another reason to not even bother
+
+
+Data manipulation doesn't need to be so tedious (see R dplyr, R data.table, polars).
+
+To conclude: The only good reason to use pandas is because your friends/colleagues are already using it.
+"""
