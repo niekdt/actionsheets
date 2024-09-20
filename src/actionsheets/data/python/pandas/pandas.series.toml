@@ -197,6 +197,10 @@ section = "Assertions"
 action = "Assert series equal"
 code = "pd.testing.assert_series_equal(x, y)"
 
+[test.assert.equal._name]
+action = "Assert series equal, ignoring the names"
+code = "pd.testing.assert_series_equal(x, y, check_names=False)"
+
 
 [extract]
 section = "Extract"
@@ -231,6 +235,18 @@ code = "x.max()"
 [extract.value.counts]
 action = "Count occurrence per value"
 code = "x.value_counts()"
+
+
+[extract.type]
+section = "Dtype-specific operations"
+
+[extract.type.list.length]
+action = "Get length of each list element"
+code = "x.list.len()"
+
+[extract.type.list.item]
+action = "Get the _i_th item of each list element"
+code = "x.list[i]"
 
 
 [update]

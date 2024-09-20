@@ -49,6 +49,18 @@ arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 pd.DataFrame(arr, columns = ['a', 'b', 'c'])
 """
 
+[create.str.json]
+action = "From JSON string"
+code = """
+import json
+json_dict = json.loads(json_string)
+pd.DataFrame(json_dict)
+"""
+
+[create.file.json]
+action = "From JSON file"
+code = "pd.read_json(path)"
+
 
 [test]
 section = "Test"
@@ -183,6 +195,18 @@ action = "Some columns are duplicate by values"
 code = "?"
 
 
+[test.assert]
+section = "Assertions"
+
+[test.assert.frame.equal]
+action = "Assert frames are equal"
+code = "pd.testing.assert_frame_equal(x, y)"
+
+[test.assert.frame.equal.order]
+action = "Assert frames are equal, ignoring column order and row order"
+code = "pd.testing.assert_frame_equal(x, y, check_like=True)"
+
+
 [extract]
 section = "Extract"
 description = "Snippets which return non-DataFrame output (e.g., scalar, series)"
@@ -298,6 +322,16 @@ data[col] = data.groupby(group)[col].transform(
 """
 details = "`to_list()` is essential here to force pandas to ignore the index columns, otherwise there is no effect from sampling..."
 
+[update.transform.col.list.apply]
+action = "Apply function to a list column _myCol_ (as flattened series)"
+code = """
+flat_data = data.explode('myCol')
+flat_data.index.name = '_index'
+data['myCol'] = flat_data['myCol'].groupby('_index').agg(lambda x: x)
+"""
+details = "Setting the index name is required because pandas cannot group by nameless index..."
+
+
 [update.transform.cols]
 section = "Transform multiple columns"
 
@@ -376,9 +410,12 @@ section = "Grow"
 action = "Append column"
 code = "?"
 
-[derive.grow.col.append.multi]
+[derive.grow.cols.append]
 action = "Append columns"
-code = "?"
+code = "data.assign(s1, s2)"
+
+[derive.grow.cols.append.concat]
+code = "pd.concat(data, [s1, s2], axis=1)"
 
 [derive.grow.col.insert]
 action = "Insert column"
@@ -505,6 +542,23 @@ code = "data.merge(data2, on=['sex', 'country'], how='outer')"
 action = "Cross join"
 code = "data.merge(data2, on=['sex', 'country'], how='cross')"
 
+[derive.combine.merge.anti]
+action = "Left anti join"
+code = """
+import polars as pl
+pl1 = pl.from_pandas(data)
+pl2 = pl.from_pandas(data2)
+pl1.join(pl2, on=['sex', 'country'], how='anti').to_pandas()
+"""
+details = "pandas' `merge()` does not support anti joins"
+source = "https://docs.pola.rs/user-guide/transformations/joins/#anti-join"
+
+[derive.combine.merge.anti.pandas]
+code = """
+outer_data = data.merge(data2, how='outer', indicator=True)
+outer_data[~(outer_data._merge == 'both')].drop('_merge', axis=1)
+"""
+source = "https://stackoverflow.com/a/55543744/22638740"
 
 [iter]
 section = "Iterate"
@@ -572,3 +626,42 @@ source = "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.
 [convert.file.parquet]
 action = "To parquet"
 code = "data.to_parquet('file.parquet')"
+
+
+[config]
+section = "Options"
+
+[config.option]
+action = "Set an option _opt_ to _value_"
+code = "pd.set_option('opt', value)"
+source = "https://pandas.pydata.org/docs/reference/api/pandas.set_option.html"
+
+[config.option.temp]
+action = "Use options within a context"
+code = """
+from pandas import option_context
+with option_context('display.max_rows', 10, 'display.max_columns', None):
+    print(data)
+"""
+source = "https://pandas.pydata.org/docs/reference/api/pandas.option_context.html"
+
+[config.display.columns]
+action = "Show all columns"
+code = "pd.options.display.max_columns = None"
+
+[config.display.rows]
+action = "Show all rows"
+code = "pd.options.display.max_rows = None"
+
+[config.display.width]
+action = "Set max output width, in characters"
+code = "pd.options.display.width = 120"
+details = "Default is 80"
+
+[config.display.float]
+action = "Show floats with _d_ decimal digits precision"
+code = "pd.options.display.precision = d"
+
+[config.display.comma]
+action = "Format numbers with thousand separator"
+code = "pd.options.styler.format.thousands = ','"

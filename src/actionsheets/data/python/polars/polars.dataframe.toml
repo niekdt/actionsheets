@@ -1039,7 +1039,7 @@ action = "Semi join (one match per index)"
 code = "data.join(data2, on=['sex', 'country'], how='semi')"
 
 [derive.combine.merge.anti]
-action = "Anti join (exclude matches from table 2)"
+action = "Left anti join (exclude matches from table 2)"
 code = "data.join(data2, on=['sex', 'country'], how='anti')"
 
 
