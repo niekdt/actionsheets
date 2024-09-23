@@ -351,6 +351,15 @@ code = "data.rename(str.lower, axis='columns', inplace=True)"
 [update.grow]
 section = "Grow"
 
+[update.grow.col.append]
+action = "Append series as column _col_"
+code = "data['col'] = s"
+details = "Overwrites existing column"
+
+[update.grow.col.append.cat.na]
+action = "Append undefined categorical column _col_"
+code = "data['col'] = pd.Categorical([None] * len(data), categories=['a', 'b', 'c'])"
+
 [update.grow.rownum]
 action = "Add column with row number (ignore index)"
 code = "data['num'] = range(len(data))"
@@ -407,8 +416,8 @@ code = "data.rename(str.lower, axis='columns')"
 section = "Grow"
 
 [derive.grow.col.append]
-action = "Append column"
-code = "?"
+action = "Append column _col_ from series _s_"
+code = "df.assign(col=s)"
 
 [derive.grow.cols.append]
 action = "Append columns"
@@ -605,6 +614,11 @@ import polars as pl
 import pyarrow
 pl.from_pandas(data)
 """
+
+[convert.str.rows]
+action = "To pretty string, with at most _n_ rows"
+code = "data.to_string(index=False, max_rows=n)"
+
 
 [convert.file]
 section = "To file format"

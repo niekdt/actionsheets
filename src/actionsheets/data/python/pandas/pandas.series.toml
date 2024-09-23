@@ -19,7 +19,15 @@ code = "import pandas as pd"
 [create]
 section = "Create"
 
-[create.define.constant]
+[create.empty]
+action = "Empty series (of object type)"
+code = "pd.Series()"
+
+[create.constant.na]
+action = "Series filled with NAs of length _n_ (of object type)"
+cpde = "pd.Series([None] * n)"
+
+[create.constant.value]
 action = "Constant value _v_ of length _n_"
 code = "pd.Series(v, index=range(n))"
 
@@ -28,23 +36,39 @@ action = "From list"
 code = "pd.Series([1, 2, 3, 7])"
 
 [create.define.int]
-action = "Define series as int"
+action = "Int series from a list of integers"
 code = "pd.Series([1, '2', 3], dtype='int')"
 
 [create.define.int64]
-action = "Define series as nullable int"
+action = "Nullable int series from a list of integers"
 code = "pd.Series([1, None, 3], dtype = 'Int64')"
 details = "Preserves None as <NA>"
 
+[create.define.int64.na]
+action = "Nullable int series filled with NA of length _n_"
+code = "pd.Series([None] * 3, dtype='Int64')"
+
 [create.define.float]
-action = "Define series as float"
+action = "Float series from list of numbers"
 code = "pd.Series([1, None, 3], dtype='float')"
 details = "None is converted to NaN!"
 
 [create.define.float64]
-action = "Define series as nullable float"
+action = "Nullable float series from a list of numbers"
 code = "pd.Series([1, None, 3.5], dtype = 'Float64')"
 details = "None, NA and NaN are all set to <NA>"
+
+[create.define.float64.na]
+action = "Nullable float series filled with NA of length _n_"
+code = "pd.Series([None] * 3, dtype='Int64')"
+
+[create.define.cat]
+action = "Categorical series from list of strings"
+code = "pd.Categorical(['b', 'b', 'a'], categories=['a', 'b', 'c'])
+
+[create.define.cat.na]
+action = "Categorical series filled with NA of length _n_"
+code = "pd.Categorical([None] * n, categories=['a', 'b', 'c'])
 
 [create.dataframe.column]
 action = "From DataFrame column _s_"
