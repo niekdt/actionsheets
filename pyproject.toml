@@ -30,6 +30,10 @@ rich = "^13.7"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
 
+
+[tool.poetry.group.test.dependencies]
+pandas = "^2.2.3"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -551,23 +551,20 @@ code = "data.merge(data2, on=['sex', 'country'], how='outer')"
 action = "Cross join"
 code = "data.merge(data2, on=['sex', 'country'], how='cross')"
 
-[derive.combine.merge.anti]
+[derive.combine.merge.anti.left]
 action = "Left anti join"
 code = """
-import polars as pl
-pl1 = pl.from_pandas(data)
-pl2 = pl.from_pandas(data2)
-pl1.join(pl2, on=['sex', 'country'], how='anti').to_pandas()
+outer_data = data.merge(data2, on=['sex', 'country'], how='outer', indicator=True)
+outer_data[outer_data._merge == 'left_only'].drop('_merge', axis=1)
 """
-details = "pandas' `merge()` does not support anti joins"
-source = "https://docs.pola.rs/user-guide/transformations/joins/#anti-join"
 
-[derive.combine.merge.anti.pandas]
+[derive.combine.merge.anti.right]
+action = "Left anti join"
 code = """
 outer_data = data.merge(data2, how='outer', indicator=True)
-outer_data[~(outer_data._merge == 'both')].drop('_merge', axis=1)
+outer_data[outer_data._merge == 'right_only'].drop('_merge', axis=1)
 """
-source = "https://stackoverflow.com/a/55543744/22638740"
+
 
 [iter]
 section = "Iterate"

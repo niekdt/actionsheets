@@ -25,7 +25,7 @@ code = "pd.Series()"
 
 [create.constant.na]
 action = "Series filled with NAs of length _n_ (of object type)"
-cpde = "pd.Series([None] * n)"
+code = "pd.Series([None] * n)"
 
 [create.constant.value]
 action = "Constant value _v_ of length _n_"
@@ -64,11 +64,11 @@ code = "pd.Series([None] * 3, dtype='Int64')"
 
 [create.define.cat]
 action = "Categorical series from list of strings"
-code = "pd.Categorical(['b', 'b', 'a'], categories=['a', 'b', 'c'])
+code = "pd.Categorical(['b', 'b', 'a'], categories=['a', 'b', 'c'])"
 
 [create.define.cat.na]
 action = "Categorical series filled with NA of length _n_"
-code = "pd.Categorical([None] * n, categories=['a', 'b', 'c'])
+code = "pd.Categorical([None] * n, categories=['a', 'b', 'c'])"
 
 [create.dataframe.column]
 action = "From DataFrame column _s_"
