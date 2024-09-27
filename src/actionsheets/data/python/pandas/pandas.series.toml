@@ -20,8 +20,39 @@ code = "import pandas as pd"
 section = "Create"
 
 [create.empty]
+section = "Create empty series"
+
+[create.empty.object]
 action = "Empty series (of object type)"
 code = "pd.Series()"
+
+[create.empty.bool]
+action = "Empty boolean series"
+code = "pd.Series(dtype=bool)"
+
+[create.empty.category.undefined]
+action = "Empty categorical series without defined categories"
+code = "pd.Series(dtype='category')"
+
+[create.empty.category]
+action = "Empty categorical series with pre-defined categories"
+code = "pd.Categorical([], categories=['a', 'b', 'c'])"
+
+[create.empty.int]
+action = "Empty int series"
+code = "pd.Series(dtype=int)"
+
+[create.empty.float]
+action = "Empty float series"
+code = "pd.Series(dtype=float)"
+
+[create.empty.date]
+action = "Empty datetime series"
+code = "pd.Series(dtype='datetime64[ns]')"
+
+
+[create.constant]
+section = "Create series of constant values"
 
 [create.constant.na]
 action = "Series filled with NAs of length _n_ (of object type)"
@@ -31,9 +62,13 @@ code = "pd.Series([None] * n)"
 action = "Constant value _v_ of length _n_"
 code = "pd.Series(v, index=range(n))"
 
-[create.list]
-action = "From list"
-code = "pd.Series([1, 2, 3, 7])"
+
+[create.define]
+section = "Create series from a list of values"
+
+[create.define.list]
+action = "Object series from a generic list of values"
+code = "pd.Series([1, None, 'a'])"
 
 [create.define.int]
 action = "Int series from a list of integers"
@@ -255,6 +290,14 @@ code = "x.min()"
 [extract.max]
 action = "Greatest value, ignoring NAs"
 code = "x.max()"
+
+[extract.min.index]
+action = "Index of the smallest value, ignoring NAs"
+code = "x.idxmin()"
+
+[extract.max.index]
+action = "Index of the greatest value, ignoring NAs"
+code = "x.idxmax()"
 
 [extract.value.counts]
 action = "Count occurrence per value"

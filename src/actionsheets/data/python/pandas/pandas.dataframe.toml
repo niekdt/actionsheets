@@ -155,7 +155,7 @@ action = "Contains no NA"
 code = "data.notna().all().all()"
 
 [test.contains.na.col]
-action = "Does column _col_ contain NA value(s)"
+action = "Does column _col_ contain any NA values"
 code = "data[col].hasnan"
 
 [test.contains.na.col.none]
@@ -165,6 +165,26 @@ code = "~data[col].hasnan"
 [test.contains.na.cols.none]
 action = "Do none of the columns _cols_ contain NA values"
 code = "data[['col1', 'col2']].notnull().all().all()"
+
+[test.contains.'inf']
+action = "Contains any infinity"
+code = """
+import numpy as np
+data.isin([np.inf, -np.inf]).values.any()
+"""
+
+[test.contains.'inf'.col]
+action = "Does column _col_ contain any infinite values"
+code = """
+import numpy as np
+data['col'].isin([np.inf, -np.inf]).any()
+"""
+
+[test.contains.'inf'.col.2]
+code = """
+import numpy as np
+np.isinf(data['col']).any()
+"""
 
 
 [test.duplicate]
@@ -265,6 +285,11 @@ code = "data.duplicated()"
 action = "Mask for duplicates across columns in list _cols_"
 code = "data.duplicated(subset=cols)"
 
+[extract.row.count.group]
+action = "Extract row count by group _group_"
+code = "data.groupby('group').size().reset_index(name='count')"
+details = "Returns a data frame with group columns and a respective count column"
+
 
 [query]
 section = "Query"
@@ -360,6 +385,10 @@ details = "Overwrites existing column"
 action = "Append undefined categorical column _col_"
 code = "data['col'] = pd.Categorical([None] * len(data), categories=['a', 'b', 'c'])"
 
+[update.grow.col.append.str.concat]
+action = "Add string column _col_ based on concatenation of two string columns _x_ and _y_, with separator _sep_"
+code = "data['col'] = data['x'] + 'sep' + data['y']"
+
 [update.grow.rownum]
 action = "Add column with row number (ignore index)"
 code = "data['num'] = range(len(data))"
@@ -430,6 +459,12 @@ code = "pd.concat(data, [s1, s2], axis=1)"
 action = "Insert column"
 code = "data.insert(x)"
 
+[derive.grow.col.str.split]
+action = "Split string column _col_ into two columns based on separator _sep_"
+code = """
+data['col'].str.split('sep', n=1, expand=True)
+"""
+
 
 [derive.shrink]
 section = "Shrink"
@@ -441,13 +476,39 @@ section = "Reduce number of rows"
 action = "Keep first _n_ rows"
 code = "data.head(n)"
 
+[derive.shrink.row.remove.head]
+action = "Remove first _n_ rows"
+code = "data[n:]"
+
 [derive.shrink.row.tail]
 action = "Keep last _n_ rows"
 code = "data.tail(n)"
 
+[derive.shrink.row.remove.tail]
+action = "Remove last _n_ rows"
+code = "data[:-n]"
+
 [derive.shrink.row.pop]
 action = "Pop row"
 code = "data.pop()"
+
+[derive.shrink.row.largest]
+action = "Select _n_ largest rows according to column _col_"
+code = "data.nlargest(n, col)"
+
+[derive.shrink.row.largest.group]
+action = "Select _n_ largest rows per group _group_, according to column _col_"
+code = "data.groupby('group').apply(lambda x: x.nlargest(n=n, columns='col')).reset_index(drop=True))"
+
+[derive.shrink.row.last.group]
+action = "Select last row per group _group_"
+code = "data.groupby('group').last().reset_index()"
+
+[derive.shrink.row.max.group]
+action = "Select the row per group _group_ with the largest value for column _col_"
+code = """
+data.loc[data.groupby('group')['col'].idxmax()].reset_index(drop=True)
+"""
 
 [derive.shrink.row.remove.list]
 action = "Remove rows list _rows_"
@@ -525,11 +586,20 @@ section = "Combine"
 [derive.combine.concat]
 action = "Concatenate rows of dataframes"
 code = "pd.concat([df, df2, dfN])"
-details = "Consider `ignore_index=True`"
+details = "Consider `ignore_index=True` argument"
 
 [derive.combine.concat.mix]
 action = "Concatenate rows of dataframes, having partially overlapping columns"
 code = "?"
+
+[derive.combine.concat.cols]
+action = "Concatenate columns of dataframes, assuming equal index, and assuming columns don't overlap"
+code = "pd.concat([data, data2], axis=1)"
+details = "Unsafe. First make sure indexes are aligned, or output has twice the number of rows"
+
+[derive.combine.concat.cols.safe]
+action = "Concatenate columns of dataframes, ignoring the index, and assuming columns don't overlap"
+code = "pd.concat([data.reset_index(drop=True), data2.reset_index(drop=True)], axis=1)"
 
 [derive.combine.merge.inner]
 action = "Inner join"
@@ -622,11 +692,13 @@ section = "To file format"
 
 [convert.file.csv]
 action = "To CSV file"
-code = "data.to_csv('file.csv')"
+code = "data.to_csv('file.csv', index=False)"
+details = "`index=False` is needed not to polute CSV with a meaningless index"
 
 [convert.file.tsv]
 action = "To TSV file"
-code = "data.to_table('file.tsv')"
+code = "data.to_csv('file.tsv', sep='\t', index=False)"
+details = "`index=False` is needed not to polute TSV with a meaningless index"
 
 [convert.file.json]
 action = "To JSON file"
