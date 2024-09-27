@@ -161,6 +161,10 @@ code = "next(k for k in x if x[k] == v)"
 action = "All keys with value _v_"
 code = "[k for k in x if x[k] == v]"
 
+[extract.index.key]
+action = "Get index of key _k_"
+code = "list(x.keys()).index(k)"
+
 
 [update]
 section = "Update"

@@ -185,6 +185,13 @@ code = "x[0]"
 action = "Last element"
 code = "x[-1]"
 
+[extract.elem.sample]
+action = "Random element"
+code = """
+import random
+random.choice(x)
+"""
+
 [extract.elem.count]
 action = "Number of occurrences of element"
 code = "x.count(e)"
@@ -469,6 +476,13 @@ code = "x[:n]"
 [derive.shrink.tail]
 action = "Last _n_ elements (tail)"
 code = "x[-n:]"
+
+[derive.shrink.sample]
+action = "Select _n_ elements at random"
+code = """
+import random
+random.choices(x, k=n)
+"""
 
 [derive.shrink.indices]
 action = "List of elements from a list of indices"
