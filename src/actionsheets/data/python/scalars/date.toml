@@ -28,11 +28,11 @@ details = "e.g., `2023-01-30` or `20230130`"
 
 [create.str.ymd]
 action = "Date from YYYY-MM-DD string"
-code = "datetime.strptime(datetime_str, '%y-%m-%d')"
+code = "datetime.strptime(datetime_str, '%y-%m-%d').date()"
 
 [create.str.dmy]
 action = "Date from DD-MMM-YYYY string"
-code = "datetime.strptime(datetime_str, '%d-%b-%y')"
+code = "datetime.strptime(datetime_str, '%d-%b-%y').date()"
 
 [create.seconds.epoch]
 action = "From total seconds since Unix epoch"
