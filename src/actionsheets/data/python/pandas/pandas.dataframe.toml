@@ -354,7 +354,10 @@ flat_data = data.explode('myCol')
 flat_data.index.name = '_index'
 data['myCol'] = flat_data['myCol'].groupby('_index').agg(lambda x: x)
 """
-details = "Setting the index name is required because pandas cannot group by nameless index..."
+details = """
+Warning: empty lists are converted to NaN (??)
+Setting the index name is required because pandas cannot group by nameless index...
+"""
 
 
 [update.transform.cols]
@@ -554,6 +557,10 @@ code = "?"
 [derive.shrink.col.remove]
 action = "Remove column _col_"
 code = "data.drop(columns=col)"
+
+[derive.shrink.col.remove.try]
+action = "Remove column _col_ if it exists"
+code = "data.drop(columns=col, errors='ignore')"
 
 [derive.shrink.col.remove.multi]
 action = "Remove columns list _cols_"
