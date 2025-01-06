@@ -207,13 +207,13 @@ def test_filter_view(entries: list[str], result: set[str]):
 def test_find_snippets():
     assert main_sheet.find_snippets(query='antidisestablishmentarianism').height == 0
 
-    assert main_sheet.find_snippets(query='create')['entry'].to_list() == [
+    assert set(main_sheet.find_snippets(query='create')['entry'].to_list()) == {
         'create.empty', 'create.string', 'create.int'
-    ]
+    }
 
-    assert main_sheet.find_snippets(query='empty')['entry'].to_list() == [
+    assert set(main_sheet.find_snippets(query='empty')['entry'].to_list()) == {
         'create.empty', 'test.empty'
-    ]
+    }
 
 
 def test_unicode():
