@@ -1,0 +1,490 @@
+language = "python"
+parent = "python.polars"
+name = "series"
+title = "Polars Series"
+code = "import polars as pl"
+
+
+[create]
+section = "Create"
+description = "Create a new Series"
+
+
+[create.empty]
+section = "Create empty series"
+
+[create.empty.object]
+action = "Empty series (of object type)"
+code = "pl.Series()"
+
+[create.empty.bool]
+action = "Empty boolean series"
+code = "pl.Series(dtype=pl.Boolean)"
+
+[create.empty.category.undefined]
+action = "Empty categorical series without defined categories"
+code = "pl.Series(dtype=pl.Categorical)"
+
+[create.empty.category]
+action = "Empty enum series"
+code = "pl.Series(dtype=pl.Enum(['a', 'b', 'c']))"
+
+[create.empty.int]
+action = "Empty int series"
+code = "pl.Series(dtype=pl.Int64)"
+
+[create.empty.float]
+action = "Empty float series"
+code = "pl.Series(dtype=pl.Float64)"
+
+[create.empty.date]
+action = "Empty date series"
+code = "pl.Series(dtype=pl.Date)"
+
+[create.empty.datetime]
+action = "Empty datetime series"
+code = "pl.Series(dtype=pl.Datetime)"
+
+[create.empty.list]
+action = "Empty list series"
+code = "pl.Series(dtype=pl.List)"
+
+
+[create.constant]
+section = "Create series of constant values"
+
+[create.constant.na]
+action = "Series of length _n_ filled with nulls"
+code = "pl.Series([None] * n)"
+
+[create.constant.value]
+action = "Constant value _v_ of length _n_"
+code = "pl.Series([v] * n)"
+
+
+[test]
+section = "Test"
+
+[test.inherits]
+action = "Is series or subclass"
+code = "isinstance(x, pl.Series)"
+
+[test.is]
+action = "Is series and not subclass"
+code = "type(x) is pl.Series"
+
+[test.empty]
+action = "Empty"
+code = "x.is_empty()"
+
+[test.nempty]
+action = "Not empty"
+code = "not x.is_empty()"
+
+[test.length]
+action = "Has length _n_"
+code = "len(x) == n"
+
+[test.type.bool]
+action = "Is boolean series"
+code = "x.dtype == pl.Boolean"
+
+[test.type.categorical]
+action = "Is categorical series"
+code = "x.dtype == pl.Categorical"
+
+[test.type.enum]
+action = "Is enum series"
+code = "x.dtype == pl.Enum"
+
+[test.type.numeric]
+action = "Is numeric series"
+code = "x.dtype.is_numeric()"
+details = "For example, pl.Int8 or pl.Float64"
+
+[test.type.int]
+action = "Is integer series"
+code = "x.dtype.is_integer()"
+
+[test.type.uint]
+action = "Is unsigned integer series"
+code = "x.dtype.is_unsigned_integer()"
+
+[test.type.float]
+action = "Is float series"
+code = "x.dtype.is_float()"
+
+[test.type.date]
+action = "Is date series"
+code = "x.dtype == pl.Date"
+
+[test.type.datetime]
+action = "Is datetime64 series"
+code = "x.dtype == pl.Datetime"
+
+[test.type.str]
+action = "Is string series"
+code = "x.dtype == pl.String"
+
+[test.type.list]
+action = "Is list series"
+code = "x.dtype == pl.List"
+
+[test.type.nested]
+action = "Is nested series (struct or list)"
+code = "x.dtype.is_nested()"
+
+
+[test.duplicate.none]
+action = "No duplicate elements (all unique)"
+code = "x.is_unique().all()"
+
+[test.duplicate.any]
+action = "Any duplicate elements"
+code = "x.is_duplicated().any()"
+
+[test.contains.null]
+action = "Contains null"
+code = "x.has_nulls()"
+
+[test.contains.null.all]
+action = "Contains only nulls"
+code = "x.is_null().all()"
+
+[test.contains.null.none]
+action = "Contains no nulls"
+code = "not x.has_nulls()"
+
+[test.contains.'nan']
+action = "Contains NaN"
+code = "x.is_nan().any()"
+
+[test.contains.'nan'.none]
+action = "Contains no NaNs"
+code = "x.is_not_nan().all()"
+
+[test.contains.'inf']
+action = "Contains infinity"
+code = "x.is_infinite().any()"
+
+[test.contains.finite.all]
+action = "Contains only finite values"
+code = "x.is_finite().all()"
+
+[test.contains.value]
+action = "Contains value _v_, ignoring nulls"
+code = "v in x"
+
+[test.contains.values]
+action = "Contains any of the values _v1_, _v2_, ignoring nulls"
+code = "x.is_in([v1, v2]).any()"
+
+[test.missing.value]
+action = "Does not contain value _v_"
+code = "v not in x"
+
+
+[test.order.increasing]
+action = "Are elements in increasing order"
+code = "x.is_sorted()"
+details = "Presence of nulls can lead to unexpected behavior, as they need to come first."
+
+[test.order.decreasing]
+action = "Are elements in decreasing order"
+code = "x.is_sorted(descending=True)"
+details = "Presence of nulls can lead to unexpected behavior, as they need to come first."
+
+
+[test.bool]
+section = "Test boolean series"
+
+[test.bool.'true'.all]
+action = "All values are True"
+code = "x.all()"
+
+[test.bool.'false'.all]
+action = "All values are False"
+code = "not x.any()"
+
+
+[test.str]
+section = "Tests for string series"
+
+[test.str.contains]
+action = "Contains string _s_"
+code = "x.str.contains(s).any()"
+
+
+[extract]
+section = "Extract"
+
+[extract.length]
+action = "Number of elements"
+code = "len(x)"
+
+[extract.hash]
+action = "Hash"
+code = "hash(tuple(x))"
+
+[extract.dtype]
+action = "Data type (dtype)"
+code = "x.dtype"
+
+[extract.nunique]
+action = "Number of unique elements, ignoring nulls"
+code = "x.n_unique()"
+
+[extract.min]
+action = "Smallest value, ignoring nulls"
+code = "x.min()"
+
+[extract.max]
+action = "Greatest value, ignoring nulls"
+code = "x.max()"
+
+[extract.min.index]
+action = "Index of the smallest value, ignoring NAs"
+code = "x.arg_min()"
+
+[extract.max.index]
+action = "Index of the greatest value, ignoring NAs"
+code = "x.arg_max()"
+
+[extract.value.counts]
+action = "Count occurrence per value"
+code = "x.value_counts()"
+
+
+[extract.type]
+section = "Type-specific operations"
+
+
+[extract.type.enum]
+section = "Enum"
+
+
+[extract.type.cat]
+section = "Categorical"
+
+[extract.type.cat.categories]
+action = "Get categories"
+code = "x.cat.get_categories()"
+
+
+[extract.type.str]
+section = "String"
+
+
+[extract.type.list]
+section = "List"
+
+[extract.type.list.length]
+action = "Get length of each list element"
+code = "x.list.len()"
+
+[extract.type.list.item]
+action = "Get the _i_th item of each list element"
+code = "x.list[i]"
+
+
+[extract.type.struct]
+section = "Struct"
+
+
+[derive]
+section = "Derive"
+
+
+[derive.order]
+section = "Order"
+
+[derive.order.reverse]
+action = "Reverse"
+code = "x.reverse()"
+
+[derive.order.sort.asc]
+action = "Sort ascendingly"
+code = "x.sort()"
+details = "Nulls are placed first"
+
+[derive.order.sort.desc]
+action = "Sort descendingly"
+code = "x.sort(descending=True)"
+details = "Nulls are placed first"
+
+[derive.order.shuffle]
+action = "Shuffle"
+code = "x.shuffle()"
+
+
+[derive.transform]
+section = "Transform"
+
+[derive.transform.mask]
+section = "Mask"
+
+[derive.transform.mask.duplicate]
+action = "Duplicate mask"
+code = "x.is_duplicated()"
+
+[derive.transform.fill.null]
+action = "Fill null by value_v_"
+code = "x.fill_null(value=v)"
+
+[derive.transform.fill.'nan']
+action = "Fill NaN by value_v_"
+code = "x.fill_nan(value=v)"
+
+[derive.transform.replace.value.null]
+action = "Replace value _v_ by null"
+code = "x.replace(v, None)"
+
+[derive.transform.replace.value]
+action = "Replace value _v_ by _w_"
+code = "x.replace(v, w)"
+
+[derive.transform.map]
+action = "Map all values"
+code = """
+x = pl.Series([1, 2, 3])
+x.replace_strict([1, 2, 3], [10, -2, -3])
+"""
+
+[derive.transform.map.dict]
+action = "Map all values using a `dict`"
+code = """
+x = pl.Series([1, 2, 3])
+x.replace_strict({1: 10, 2: -2, 3: -3})
+"""
+
+
+[derive.transform.cast]
+section = "Cast to type"
+
+[derive.transform.cast.bool]
+action = "Cast to boolean"
+code = "x.cast(bool)"
+
+[derive.transform.cast.numeric]
+action = "Cast series to numeric dtype"
+code = "x.cast(float)"
+
+[derive.transform.cast.int]
+action = "Cast to integer"
+code = "x.cast(int)"
+
+[derive.transform.cast.float]
+action = "Cast to float"
+code = "x.cast(float)"
+
+[derive.transform.cast.str]
+action = "Cast to string"
+code = "x.cast(str)"
+
+[derive.transform.cast.cat]
+action = "Cast to categorical"
+code = "x.cast(str).cast(pl.Categorical)"
+
+[derive.transform.cast.enum]
+action = "Cast to enum"
+code = "x.cast(pl.Enum)"
+
+[derive.transform.cast.cat.int]
+action = "Cast categorical to integer codes"
+code = "x.to_physical()"
+
+[derive.transform.cast.enum.int]
+action = "Cast enum to integer codes"
+code = "x.to_physical()"
+
+
+[derive.grow]
+section = "Grow"
+
+
+[derive.shrink]
+section = "Shrink"
+
+[derive.shrink.head]
+action = "First _n_ elements"
+code = "x.head(n)"
+
+[derive.shrink.tail]
+action = "Last _n_ elements"
+code = "x.tail(n)"
+
+[derive.shrink.slice]
+action = "Slice"
+code = "x[a:b]"
+
+[derive.shrink.subset]
+action = "Select _n_ elements starting from index _i_"
+code = "x.slice(i, n)"
+
+[derive.shrink.indices]
+action = "Keep indices"
+code = "x.gather([1, 3])"
+
+[derive.shrink.indices.step]
+action = "Keep every _n_th element, starting from index _i_"
+code = "x.gather_every(n, i)"
+
+[derive.shrink.sample]
+action = "Sample _n_ elements"
+code = "x.sample(n)"
+
+[derive.shrink.null]
+action = "Drop null elements"
+code = "x.drop_nulls()"
+
+[derive.shrink.'nan']
+action = "Drop NaN elements"
+code = "x.drop_nans()"
+
+[derive.shrink.top]
+action = "Keep _n_ largest elements"
+code = "x.top_k(n)"
+
+[derive.shrink.bottom]
+action = "Keep _n_ smallest elements"
+code = "x.bottom_k(n)"
+
+[derive.shrink.duplicates]
+action = "Remove duplicates"
+code = "x.unique()"
+
+
+[derive.combine]
+section = "Combine"
+
+[derive.combine.concat]
+action = "Append another series"
+code = "x.append(y)"
+
+
+
+[convert]
+section = "Convert"
+
+[convert.list]
+action = "To list"
+code = "x.to_list()"
+
+[convert.list.2]
+code = "list(x)"
+
+[convert.numpy]
+action = "To numpy array"
+code = "x.to_numpy()"
+
+[convert.dataframe]
+action = "To Polars data frame with single column"
+code = "x.to_frame('col1')"
+
+[convert.str]
+action = "To instantiatable string representation"
+code = "x.to_init_repr()"
+
+[convert.dummy]
+action = "Dummy encoding of values (as data frame)"
+code = "x.to_dummies()"

@@ -71,9 +71,21 @@ code = "pl.read_csv('file.csv')"
 [test]
 section = "Test"
 
+[test.inherits]
+action = "Is `pl.DataFrame` or subclass"
+code = "isinstance(x, pl.DataFrame)"
+
+[test.is]
+action = "Is `pl.DataFrame` but not subclass"
+code = "type(x) is pl.DataFrame"
+
 [test.empty]
 action = "Empty (no rows)"
 code = "data.is_empty()"
+
+[test.nempty]
+action = "Not empty (has rows)"
+code = "not data.is_empty()"
 
 [test.equal]
 action = "Data frames are equal"
@@ -154,6 +166,10 @@ data.group_by('patient').agg(
 )['dupe'].any()
 """
 
+[test.cols.duplicates]
+action = "Duplicates across two or more columns"
+code = "data.select('col1', 'col2').is_duplicated().any()"
+
 [test.col.type]
 action = "Column is of type"
 code = "data.schema['col1'] == dtype"
@@ -179,8 +195,12 @@ action = "Column is standard integer (64-bit)"
 code = "data.schema['age'] == pl.Int64"
 
 [test.col.type.float]
-action = "Columns is float"
+action = "Column is float"
 code = "data.schema['age'].is_float()"
+
+[test.col.type.date]
+action = "Column is date"
+code = "data.schema['date'].dtype == pl.Date"
 
 [test.col.type.list]
 action = "Column is list type"
@@ -681,6 +701,13 @@ data.with_columns(
 )
 """
 details = "`alias()` can be called after `pl.col()`, may be more readable sometimes"
+
+[derive.grow.col.multi.dict.constant]
+action = "Add multiple constant columns based on a dict"
+code = """
+for k, v in dict.items():
+    data = data.with_columns(pl.lit(v).alias(k))
+"""
 
 
 [derive.grow.int]

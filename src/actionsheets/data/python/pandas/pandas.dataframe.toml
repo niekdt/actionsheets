@@ -447,6 +447,10 @@ code = "data.rename(str.lower, axis='columns')"
 [derive.grow]
 section = "Grow"
 
+[derive.grow.col.fill]
+action = "Append column _col_ with constant value _v_"
+code = "?"
+
 [derive.grow.col.append]
 action = "Append column _col_ from series _s_"
 code = "df.assign(col=s)"

@@ -1,0 +1,76 @@
+language = "python"
+parent = "python.polars"
+name = "types"
+title = "Polars Types"
+code = "import polars as pl"
+
+
+[enum]
+section = "Enum"
+
+
+[enum.create]
+section = "Create"
+
+[enum.create.define]
+action = "Define enum"
+code = "pl.Enum(['a', 'b', 'c'])"
+
+[enum.create.literal]
+action = "Create enum from Literal"
+code = """
+from typing import Literal
+Labels = Literal['a', 'b', 'c']
+pl.Enum(Labels.__args__)
+"""
+
+
+[enum.extract]
+section = "Extract"
+
+[enum.extract.categories]
+action = "Get the enum categories"
+code = "x.categories"
+
+
+[list]
+section = "List"
+description = "Variable-length list elements"
+
+[list.create]
+section = "Create"
+
+[list.create.undefined]
+action = "List with undefined inner elements type"
+code = "pl.List"
+
+[list.create.bool]
+action = "List of booleans"
+code = "pl.list(bool)"
+
+[list.create.int]
+action = "List of integers"
+code = "pl.list(int)"
+
+[list.create.float]
+action = "List of floats"
+code = "pl.list(float)"
+
+[list.create.string]
+action = "List of strings"
+code = "pl.list(str)"
+
+[list.test]
+section = "Test"
+
+[list.test.int]
+action = "Test if type is list of numeric elements"
+code = "x.inner.is_numeric()"
+
+
+[list.extract]
+section = "Extract"
+
+[list.extract.type]
+action = "Get inner elements type"
+code = "x.inner"
