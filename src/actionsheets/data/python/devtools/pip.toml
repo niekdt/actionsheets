@@ -64,6 +64,10 @@ code = "pip install ./downloads/SomeProject-1.0.4.tar.gz"
 action = "Install from Git repository"
 code = "pip install git+https://github.com/pypa/sampleproject.git"
 
+[add.git.dir]
+action = "Install from Git repository, with package located in the 'src' directory"
+code = "pip install git+https://github.com/pypa/sampleproject.git#subdirectory=src"
+
 [add.git.branch]
 action = "Install from Git repository on branch"
 code = "pip install git+https://github.com/pypa/sampleproject.git@main"
@@ -123,5 +127,3 @@ section = "Restore state"
 [restore.requirements]
 action = "Install packages from *requirements.txt*"
 code = "pip install -r requirements.txt"
-
-
