@@ -1,3 +1,7 @@
+[![Test](https://github.com/niekdt/actionsheets/actions/workflows/test.yml/badge.svg)](https://github.com/niekdt/actionsheets/actions/workflows/test.yml)
+[![pages](https://github.com/niekdt/actionsheets/actions/workflows/pages.yml/badge.svg)](https://github.com/niekdt/actionsheets/actions/workflows/pages.yml)
+
+
 # actionsheets
 
 **Actionsheets** is an open-source (hobby) project with a different take on cheatsheets. 
