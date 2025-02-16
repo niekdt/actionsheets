@@ -4,7 +4,7 @@ import os
 from mksheet import generate_all_sheets
 
 
-def on_serve(server, config, builder):
+def on_pre_build(config):
     print('== Actionsheets hook ==')
     print(f'CWD: {os.getcwd()}')
     print(config['docs_dir'])
