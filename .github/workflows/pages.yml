@@ -29,10 +29,6 @@ jobs:
         pip install poetry
         poetry install --with dev
 
-    - name: Build MkDocs site
-      run: |
-        poetry run mkdocs build --verbose
-
-    - name: Deploy to GitHub Pages
+    - name: Build and deploy to GitHub Pages
       run: |
         poetry run mkdocs gh-deploy --verbose
