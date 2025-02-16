@@ -31,4 +31,4 @@ jobs:
 
     - name: Build and deploy to GitHub Pages
       run: |
-        poetry run mkdocs gh-deploy --verbose
+        poetry run mkdocs gh-deploy --verbose --force
