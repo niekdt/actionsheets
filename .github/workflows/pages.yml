@@ -31,8 +31,8 @@ jobs:
 
     - name: Build MkDocs site
       run: |
-        poetry run mkdocs build
+        poetry run mkdocs build --verbose
 
     - name: Deploy to GitHub Pages
       run: |
-        poetry run mkdocs gh-deploy
+        poetry run mkdocs gh-deploy --verbose
