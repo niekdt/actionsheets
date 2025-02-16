@@ -22,6 +22,10 @@ code = "np.atleast_2d(x)"
 action = "Ensure at least 3D array"
 code = "np.atleast_3d(x)"
 
+[create.matrix.vectors.col]
+action = "Create 2D array from a list of vectors as columns"
+code = "np.column_stack([v1, v2])"
+
 
 [extract]
 section = "Extract"

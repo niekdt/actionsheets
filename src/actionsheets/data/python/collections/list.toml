@@ -484,6 +484,14 @@ import random
 random.choices(x, k=n)
 """
 
+[derive.shrink.remove.head]
+action = "Remove first _n_ elements"
+code = "x[n:]"
+
+[derive.shrink.remove.tail]
+action = "Remove last _n_ elements"
+code = "x[:-n]"
+
 [derive.shrink.indices]
 action = "List of elements from a list of indices"
 code = "[x[i] for i in indices]"
