@@ -17,6 +17,13 @@ reserved_keys = ('name', 'id', 'depth')
 
 class ActionsheetView:
     def __init__(self, info: dict, data: pl.DataFrame):
+        info.setdefault('description', '')
+        info.setdefault('details', '')
+        info.setdefault('code', '')
+        info.setdefault('keywords', [])
+        info.setdefault('partial', False)
+        info.setdefault('date', None)
+
         self.info = info
         self.data = data
 
@@ -28,10 +35,10 @@ class ActionsheetView:
         return self.snippets().height
 
     def entries(
-            self,
-            type: Literal['section', 'part', 'action'],
-            parent: str = '',
-            nested: bool = True
+        self,
+        type: Literal['section', 'part', 'action'],
+        parent: str = '',
+        nested: bool = True
     ) -> list[str]:
         """
         Get the IDs of all entries belonging to the given section
@@ -255,10 +262,10 @@ def _process_body(content: dict, name: str, id: str) -> pl.DataFrame:
 
 
 def _process_entries(
-        content: dict,
-        id: str,
-        parent_entry: dict,
-        parent_section: str
+    content: dict,
+    id: str,
+    parent_entry: dict,
+    parent_section: str
 ) -> pl.DataFrame:
     df = pl.DataFrame()
 
@@ -297,11 +304,11 @@ def _get_entries(content: dict) -> list[str]:
 
 
 def _process_entry(
-        data: dict,
-        name: str,
-        id: str,
-        parent_data: dict,
-        parent_entry: str
+    data: dict,
+    name: str,
+    id: str,
+    parent_data: dict,
+    parent_entry: str
 ) -> dict:
     for k in reserved_keys:
         assert k not in data, f'reserved field "{k}" used in entry {id}'

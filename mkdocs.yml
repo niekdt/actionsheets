@@ -1,0 +1,72 @@
+site_name: Actionsheets
+site_dir: site
+site_author: Niek Den Teuling
+site_description: >-
+  A large collection of searchable quick-reference code-snippet sheets defined in terms of a desired action and a code solution. Implemented as a Python package so different tools or front-ends can be built around the actionsheets.
+
+docs_dir: docs
+repo_name: niekdt/actionsheets
+repo_url: https://github.com/niekdt/actionsheets
+edit_uri: ""
+
+copyright: Copyright &copy; 2023 - 2025 Niek Den Teuling
+
+plugins:
+  - awesome-pages
+  - search
+
+extra_css:
+  - extra.css
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: teal
+    accent: teal
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    # - content.tabs.link
+    - content.tooltips
+    # - header.autohide
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.path
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+
+markdown_extensions:
+  - toc:
+      permalink: true
+      title: "<big>📌 Sections</big>"
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+    - Home:
+        - index.md
+        - structure.md
+        - contributing.md
+    - ...
+
+hooks:
+  - docs/mkdocs.py

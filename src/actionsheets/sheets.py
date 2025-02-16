@@ -1,4 +1,5 @@
 import warnings
+from functools import cache
 from importlib import resources
 from importlib.resources.abc import Traversable
 from typing import Iterator, Self
@@ -343,18 +344,13 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
     return snippets_data.select(pl.col(col_order), pl.exclude(col_order))
 
 
-_default_sheets: Actionsheets | None = None
-
-
+@cache
 def default_sheets() -> Actionsheets:
-    global _default_sheets
+    files = _gather_default_files()
+    sheets = parse_toml_files(files)
 
-    if _default_sheets is None:
-        files = _gather_default_files()
-        _default_sheets = parse_toml_files(files)
-
-    return _default_sheets
+    return sheets
 
 
 if __name__ == '__main__':
-    sheets = default_sheets()
+    result = default_sheets()
