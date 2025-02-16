@@ -7,6 +7,7 @@ description = """
 It is especially suitable for beginners to programming, amateurs/hobbyists, scientists, engineers.
 
 Pros:
+
 - **Easy to learn**
   - High-level
   - Dynamically typed
@@ -19,6 +20,7 @@ Pros:
   - Interoperable with many other languages
 
 Cons:
+
 - **Very slow**: About 50 times slower than C. This is not a deal-breaker though for a glue/scripting language, and for prototyping purposes.
 - **Low-quality packages**: There are almost no imposed requirements on packages and compability between packages: Expect compatibility issues, breaking functionality across package versions, unintuitive APIs, and lacking documentation.
 - **Non-standardized tooling**: despite the emphasis on the _Pythonic way_, there are hilariously many cases of competing tools, packages, and standards: see dependency management, repository structure, unit testing, to name a few.
@@ -27,6 +29,7 @@ Cons:
 - **No fluent interface**: No support for chaining function calls, which is a common use case in analysis scripts and data manipulation. This results in many data science libraries resorting to the builder pattern, which forces the use of implementing subclasses just to call another function.
 
 Short Python cheatsheets:
+
 - https://www.pythoncheatsheet.org/
 - https://quickref.me/python
 """

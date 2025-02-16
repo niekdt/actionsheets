@@ -7,6 +7,7 @@ Opinionated: `pandas.DataFrame` seems to be the MS Excel of the Python data proc
 Slow, write-once, inconsistent API, and many ways to achieve the same thing (the true pythonic way), but very handy for quick & dirty data manipulation and popular for that reason.
 
 Words of caution:
+
 - Needlessly high learning curve.
   - Inconsistent API, functions do many different things, and many functions to do the same thing (very pythonic).
   - Counterintuitive defaults (too many examples in 2 days of usage to even bother listing here).

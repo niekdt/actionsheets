@@ -6,6 +6,7 @@ name = "series"
 title = "Pandas Series"
 description = """
 Opinionated words of caution:
+
 - Types are (currently?) a mess, and autocasting does not make this any better.
 - Specify dtype when defining series to avoid surprises further down the pipeline.
 - Missing values are a complete mess: None/Null/NA/NaN are all used interchangeably, despite the existence of is.na and is.null implying otherwise.

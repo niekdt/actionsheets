@@ -9,6 +9,7 @@ Website: https://pola.rs/
 Docs: https://docs.pola.rs/
 
 Features:
+
 - Among the fastest data.frame engines with DuckDB, according to their [own benchmarks](https://www.pola.rs/benchmarks.html). Polars is significantly faster than pandas, and even beats R's excellent data.table package in some scenarios.
 - Consistent API (unlike, e.g., pandas)
 - Built-in query optimization, made even more powerful through lazy evaluation (see LazyFrame)

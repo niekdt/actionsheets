@@ -8,8 +8,9 @@ https://en.wikipedia.org/wiki/KornShell
 """
 details = """
 Notes:
-* Start script with: `#!/bin/ksh`
-* Enable executation for file by running `chmod u+x script.sh`
+
+- Start script with: `#!/bin/ksh`
+- Enable executation for file by running `chmod u+x script.sh`
 """
 
 [cli]

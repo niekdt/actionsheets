@@ -6,6 +6,7 @@ title = "List"
 description = "An ordered collection of elements"
 details = """
 Tips:
+
 * Lists can be efficiently used as a stack through `append()` (for push) and `pop()`.
 * Sorting seems to be broken for numeric lists containing NaN
 """

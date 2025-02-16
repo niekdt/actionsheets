@@ -4,17 +4,17 @@ name = "datatable"
 title = "datatable"
 description = "A very fast data.frame implementation"
 details = """
-* `.()` is a shortcut for list(), alternative is J()
-* `:=` operator assigns by reference
-* `(variable)` to refer to the column names stored in the variable
-* `get(...)` evaluates expression to column name
-* `%>%` pipe operator (magrittr package) to chain function calls in a more readable manner, e.g. dt[, mean(x), by=ID] %>% .[, mean(x)]. Calling functions without data argument is done by enclosing in a new block: dt %>% {table(.$Var)} %>% as.data.table
-* `%chin%` faster version of %in% for character vectors
-* `%between%` checks if value between range, e.g. a %between% c(1,9), or a %between% list(c(1,3), c(4,5)). Seems slow to use
-* `%inrange%` checks if value in range
-* `%like%` regular expression check
-* `mult='first'` argument provides a useful shortcut for dropping group columns
-* Perform merges prior to row subsetting to preserve the keys. Row subsetting followed by a merge drops the obsolete keys, for some reason.
+- `.()` is a shortcut for list(), alternative is J()
+- `:=` operator assigns by reference
+- `(variable)` to refer to the column names stored in the variable
+- `get(...)` evaluates expression to column name
+- `%>%` pipe operator (magrittr package) to chain function calls in a more readable manner, e.g. dt[, mean(x), by=ID] %>% .[, mean(x)]. Calling functions without data argument is done by enclosing in a new block: dt %>% {table(.$Var)} %>% as.data.table
+- `%chin%` faster version of %in% for character vectors
+- `%between%` checks if value between range, e.g. a %between% c(1,9), or a %between% list(c(1,3), c(4,5)). Seems slow to use
+- `%inrange%` checks if value in range
+- `%like%` regular expression check
+- `mult='first'` argument provides a useful shortcut for dropping group columns
+- Perform merges prior to row subsetting to preserve the keys. Row subsetting followed by a merge drops the obsolete keys, for some reason.
 """
 code = "library(data.table)"
 

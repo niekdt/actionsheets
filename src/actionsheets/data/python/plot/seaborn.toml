@@ -7,12 +7,14 @@ description = """
 It is great for rapidly creating standard yet pretty data visualizations.
 
 Pros:
+
 - Easy-to-use, high-level
 - Pretty statistical data visualizations by default
 - Theming and color palettes
 - Extendable or modifable with matplotlib code
 
 Cons:
+
 - Limited support for complex visualizations (in which case, consider matplotlib)
 
 To install, run:

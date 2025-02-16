@@ -6,6 +6,7 @@ description = """
 [R](https://www.r-project.org/) is an easy-to-learn high-level programming language especially tailored to data science applications.
 
 Pros:
+
 - **Easy to learn**
   - High-level
   - Dynamically typed
@@ -25,6 +26,7 @@ Pros:
 - **Good documention**: functions are generally well-documented and include code examples.
 
 Cons:
+
 - **Lack of proper namespaces**: you are guaranteed to stumble into import order conflicts or naming conflicts.
 - **Cryptic error messages**: R's standard error messages are very confusing. The inconsistent/unreadable stack trace does not help either.
 - **Confusing object-oriented systems**: there are at least [three systems](https://adv-r.hadley.nz/oo-tradeoffs.html) for implementing object-oriented programming to some degree ([S3](https://adv-r.hadley.nz/s3.html), [S4](https://adv-r.hadley.nz/s4.html), [R6](https://adv-r.hadley.nz/r6.html)). Enough said.
