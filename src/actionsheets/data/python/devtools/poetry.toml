@@ -23,9 +23,18 @@ code = "poetry init"
 [info]
 section = "Info"
 
-[info.pkg.list]
-action = "List available packages"
+[info.packages.list]
+action = "List installed packages"
 code = "poetry show"
+
+[info.pkg]
+action = "Get info about installed package"
+code = "poetry show $pkg"
+details = "Add `-v` for more info"
+
+[info.pkg.dir]
+action = "Get path to package"
+code = """poetry run python -c "import $pkg; print($pkg.__file__)"""
 
 
 [add]

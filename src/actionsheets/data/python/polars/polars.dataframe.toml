@@ -92,8 +92,11 @@ action = "Data frames are equal"
 code = "data.equals(data2)"
 
 [test.cols.null.any]
-action = "Any column contains null row"
+action = "Any column contains null"
 code = "any(col.has_nulls() for col in data)"
+
+[test.cols.null.any.2]
+code = "data.select(pl.all().is_null().any()).to_series().any()"
 
 [test.cols.null.all]
 action = "Any column is filled with nulls"
@@ -1109,9 +1112,17 @@ code = "data.write_csv('derp.csv')"
 action = "To Parquet file"
 code = "data.write_parquet('derp.parquet')"
 
+[convert.format.ipc]
+action = "To Arrow IPC or Feather"
+code = "data.write_ipc('file.arrow')"
+
 [convert.format.json]
 action = "To JSON"
 code = "?"
+
+[convert.clipboard]
+action = "Write to clipboard, in TSV format"
+code = "data.write_clipboard()"
 
 
 [show]

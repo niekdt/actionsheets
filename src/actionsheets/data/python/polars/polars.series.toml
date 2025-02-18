@@ -49,6 +49,10 @@ code = "pl.Series(dtype=pl.Datetime)"
 action = "Empty list series"
 code = "pl.Series(dtype=pl.List)"
 
+[create.empty.list.float]
+action = "Empty list of floats series"
+code = "pl.Series(dtype=pl.List(float))"
+
 
 [create.constant]
 section = "Create series of constant values"
@@ -60,6 +64,34 @@ code = "pl.Series([None] * n)"
 [create.constant.value]
 action = "Constant value _v_ of length _n_"
 code = "pl.Series([v] * n)"
+
+
+[create.list]
+section = "Create List series"
+
+[create.list.define.scalar]
+action = "Define scalar list series"
+code = "pl.Series([[1, 2, 3]])"
+
+[create.list.define]
+action = "Define list series with multiple list elements"
+code = "pl.Series([[1], [2, 3], [])"
+
+[create.list.list]
+action = "Create scalar list series from a list"
+code = """
+x = [1, 2, 3]
+pl.Series([x])
+"""
+
+[create.list.lists]
+action = "Create list series from a list of lists"
+code = """
+x = [
+    [1, 2], [], [3, 4, 5], [6]
+]
+pl.Series(x)
+"""
 
 
 [test]
