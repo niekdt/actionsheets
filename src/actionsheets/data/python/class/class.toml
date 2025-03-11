@@ -1,0 +1,36 @@
+language = "python"
+parent = "python"
+partial = true
+name = "class"
+title = "Classes"
+description = "Class mechanism and handling"
+url = "https://docs.python.org/3/tutorial/classes.html"
+
+
+[extract]
+section = "Extract"
+
+[extract._name]
+action = "Get class name as string"
+code = "cls.__name__"
+
+[extract.subclass]
+section = "Subclass(es)"
+
+[extract.subclass.all]
+action = "Get direct subclasses"
+code = "cls.__subclasses__()"
+
+[extract.subclass.find._name]
+action = "Find direct subclass by name _v_"
+code = """
+subclasses = [c for c in cls.__subclasses__() if c.__name__ == v]
+subclasses[0]
+"""
+
+[extract.subclass.find.all]
+action = "Find all non-abstract direct subclasses"
+code = """
+import inspect
+subclasses = [c for c in cls.__subclasses__() if not inspect.isabstract(c)]
+"""

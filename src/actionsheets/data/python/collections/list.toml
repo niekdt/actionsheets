@@ -458,6 +458,10 @@ source = "https://stackoverflow.com/a/10325689/22638740"
 action = "Append element"
 code = "x + [e]"
 
+[derive.grow.append.multi]
+action = "Append elements"
+code = "x + [e1, e2, e3]"
+
 [derive.grow.append.list]
 action = "Append a list"
 code = "x + y"
