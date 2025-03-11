@@ -260,12 +260,12 @@ def test_keywords(keywords: list[str], result: set[str]):
         keywords_str = '["' + '", "'.join(keywords) + '"]'
 
     sheet = parse_toml(header + f'keywords = {keywords_str}')
-    assert sheet.info['keywords'] == list(result)
+    assert set(sheet.info['keywords']) == result
 
 
 @pytest.mark.parametrize('field', set(entry_keys + reserved_keys))
 def test_reserved_field(field):
-    with pytest.raises((AssertionError, tomllib.TOMLDecodeError)) as e:
+    with pytest.raises((AssertionError, tomllib.TOMLDecodeError)) as e:  # noqa
         parse_toml(single_snippet_sheet + f'[create.{field}]\naction="To fail"\ncode="1 = 1"')
     print(f'Error type: {e.type}, Message: "{e.value}"')
 
