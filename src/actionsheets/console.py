@@ -92,7 +92,7 @@ def _render_section(view: ActionsheetView, section: str) -> RenderResult:
     )
     snippets_group = _render_section_snippets(view, section)
     yield Panel(
-        Group(md, snippets_group),
+        Group(md, snippets_group),  # noqa
         title=Text.assemble(
             ('' if info['parent_section'] == '' else f' {parent_path} >',
              f'black on {_header_color} bold'),
@@ -118,7 +118,7 @@ def _render_section_snippets(view: ActionsheetView, section: str) -> RenderResul
     if data.height:
         return _render_snippets(data)
     else:
-        return Group()
+        return Group()  # noqa
 
 
 def _render_snippets(data: pl.DataFrame) -> RenderResult:
@@ -149,7 +149,7 @@ def _render_snippets(data: pl.DataFrame) -> RenderResult:
             style='' if table.row_count % 2 == 0 else f'on {_bg_color2}'
         )
 
-    return table
+    return table  # noqa
 
 
 if __name__ == '__main__':

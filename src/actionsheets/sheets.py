@@ -118,13 +118,17 @@ class Actionsheets:
         terms = re.split(r'\s+|,|\.|\|', query)
         re_query = '|'.join(terms)
 
-        result = self.sheets_data.with_columns(
-            id_matches=pl.col('sheet').str.count_matches(re_query),
-            keyword_matches=pl.col('keywords').list.count_matches(re_query)
-        ).with_columns(
-            matches=pl.sum_horizontal('id_matches', 'keyword_matches')
-        ).filter(
-            pl.col('matches') > 0
+        result = (  # noqa
+            self.sheets_data.lazy().
+            with_columns(
+                id_matches=pl.col('sheet').str.count_matches(re_query),
+                keyword_matches=pl.col('keywords').list.count_matches(re_query)
+            ).
+            with_columns(
+                matches=pl.sum_horizontal('id_matches', 'keyword_matches')
+            ).
+            filter(pl.col('matches') > 0).
+            collect()
         )
 
         if result.height:
@@ -142,20 +146,23 @@ class Actionsheets:
         terms = re.split(r'\s+|,|\.|\|', query)
         search_pattern = '|'.join(terms)
 
-        result = self.snippets_data.filter(pl.col('type') == 'action').with_columns(
-            (
-                    pl.col('entry').str.count_matches(search_pattern) +
-                    pl.col('sheet').str.count_matches(search_pattern)
-            ).alias('matches')
-        ).filter(pl.col('matches') > 0)
-
-        filtered_data = (
-            result.sort('matches', descending=True).
+        result = (  # noqa
+            self.snippets_data.lazy().
+            filter(pl.col('type') == 'action').
+            with_columns(
+                (
+                        pl.col('entry').str.count_matches(search_pattern) +
+                        pl.col('sheet').str.count_matches(search_pattern)
+                ).alias('matches')
+            ).
+            filter(pl.col('matches') > 0).
+            sort('matches', descending=True).
             head(n=limit).
-            select(pl.exclude('matches'))
+            select(pl.exclude('matches')).
+            collect()
         )
 
-        return Actionsheets(self.sheets_data, filtered_data)
+        return Actionsheets(self.sheets_data, result)
 
 
 def _gather_default_files() -> list[str]:
@@ -191,8 +198,8 @@ def parse_toml_files(files: list[str]) -> Actionsheets:
 
 
 def _process_sheet_list(
-        sheet_info_list: list[dict],
-        sheet_data_list: list[pl.DataFrame]
+    sheet_info_list: list[dict],
+    sheet_data_list: list[pl.DataFrame]
 ) -> Actionsheets:
     sheets_data = _process_sheets(pl.DataFrame(sheet_info_list))
     snippets_data = _process_snippets(pl.concat(sheet_data_list, how='diagonal'))
@@ -215,10 +222,11 @@ def _process_sheets(sheets_data: pl.DataFrame) -> pl.DataFrame:
 
     # Generate IDs
     sheets_data = sheets_data.with_columns(
-        pl.when(pl.col('sheet_parent') == '').
-        then(pl.col('sheet_name')).
-        otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name')).
-        alias('sheet')
+        sheet=(
+            pl.when(pl.col('sheet_parent') == '').
+            then(pl.col('sheet_name')).
+            otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
+        )
     )
 
     # Check for missing parent topics
@@ -286,9 +294,10 @@ def _subprocess_sheets_order(sheets_data: pl.DataFrame) -> pl.DataFrame:
 
     return (
         sheets_data.
+        lazy().
         select(pl.exclude('after')).
         join(
-            df_resolved.select(pl.exclude(['sheet_name', 'sheet_parent'])),
+            df_resolved.select(pl.exclude(['sheet_name', 'sheet_parent'])).lazy(),
             on='sheet',
             how='left'
         ).
@@ -296,7 +305,8 @@ def _subprocess_sheets_order(sheets_data: pl.DataFrame) -> pl.DataFrame:
         with_columns(
             rank=pl.cum_count('_key').over('sheet_parent')
         ).
-        select(pl.exclude(['after', '_key']))
+        select(pl.exclude(['after', '_key'])).
+        collect()
     )
 
 
@@ -307,16 +317,17 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
         pl.col('details').fill_null('').str.strip_chars_end(),
         pl.col('description').fill_null('').str.strip_chars_end(),
         pl.col('entry').str.count_matches('.', literal=True).alias('depth'),
-        (
+        sheet=(
             pl.when(pl.col('sheet_parent') == '').
             then(pl.col('sheet_name')).
             otherwise(pl.col('sheet_parent') + '.' + pl.col('sheet_name'))
-        ).alias('sheet')
+        )
     )
 
     # check for code exceeding 80 chars
     long_snippets = (
         snippets_data.
+        lazy().
         select(
             pl.col('sheet'),
             pl.col('entry'),
@@ -327,7 +338,8 @@ def _process_snippets(snippets_data: pl.DataFrame) -> pl.DataFrame:
         filter(
             pl.col('code_lines').str.len_chars() > 80
         ).
-        select(pl.exclude('code_lines'))
+        select(pl.exclude('code_lines')).
+        collect()
     )
 
     if long_snippets.height > 0:
