@@ -280,6 +280,16 @@ code = "data.null_count()"
 action = "Number of unique values in a column"
 code = "data['col1'].n_unique()"
 
+[extract.cols.null.any.count.group]
+action = "Number of rows without any missing values across columns _a_, _b_ and _c_, by group"
+code = """
+data.group_by('subject').agg([
+    pl.all_horizontal(
+        pl.col(['a', 'b', 'c']).is_not_null()
+    ).sum()
+])
+"""
+
 [extract.row.count.unique.col.multi]
 action = "Number of unique rows across columns"
 code = "?"
