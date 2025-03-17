@@ -1,0 +1,4664 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A large collection of searchable quick-reference code-snippet sheets defined in terms of a desired action and a code solution. Implemented as a Python package so different tools or front-ends can be built around the actionsheets.">
+      
+      
+        <meta name="author" content="Niek Den Teuling">
+      
+      
+      
+        <link rel="prev" href="../dataframe/">
+      
+      
+        <link rel="next" href="../types/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+    
+    
+      
+        <title>Polars Series - Actionsheets</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#polars-series" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Actionsheets" class="md-header__button md-logo" aria-label="Actionsheets" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Actionsheets
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Polars Series
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/niekdt/actionsheets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    niekdt/actionsheets
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Python
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../r/" class="md-tabs__link">
+          
+  
+    
+  
+  R
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../shell/" class="md-tabs__link">
+          
+  
+    
+  
+  Shell
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../stan/" class="md-tabs__link">
+          
+  
+    
+  
+  Stan
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../test/" class="md-tabs__link">
+          
+  
+    
+  
+  Test
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Actionsheets" class="md-nav__button md-logo" aria-label="Actionsheets" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Actionsheets
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/niekdt/actionsheets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    niekdt/actionsheets
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../.." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../class/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Class
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Class
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../cli/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Cli
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cli
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../collections/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Collections
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Collections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../collections/dict/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Dict
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../collections/iter/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Iter
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../collections/list/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    List
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../collections/set/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Set
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../collections/tuple/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tuple
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../controlflow/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Controlflow
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Controlflow
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../devtools/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Devtools
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Devtools
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../devtools/pip/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pip
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../devtools/poetry/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Poetry
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../devtools/pytest/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pytest
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../filesystem/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Filesystem
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Filesystem
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../filesystem/path/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Path
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../numpy/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Numpy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_8" id="__nav_2_8_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            Numpy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/matrix/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Matrix
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/ndarray/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Ndarray
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/scalar/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Scalar
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/vector/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vector
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_9" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../output/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Output
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9" id="__nav_2_9_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            Output
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../output/logging/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Logging
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_10" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../package/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Package
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10">
+            <span class="md-nav__icon md-icon"></span>
+            Package
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_11" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../pandas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Pandas
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_11" id="__nav_2_11_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_11">
+            <span class="md-nav__icon md-icon"></span>
+            Pandas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../pandas/dataframe/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Dataframe
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../pandas/series/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Series
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_12" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../plot/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Plot
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_12" id="__nav_2_12_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_12">
+            <span class="md-nav__icon md-icon"></span>
+            Plot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../plot/seaborn/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Seaborn
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Polars
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_13" id="__nav_2_13_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_13_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_13">
+            <span class="md-nav__icon md-icon"></span>
+            Polars
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../dataframe/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Dataframe
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_13_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  <span class="md-ellipsis">
+    Series
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_13_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_13_3">
+            <span class="md-nav__icon md-icon"></span>
+            Series
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../types/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Types
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../scalars/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Scalars
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14" id="__nav_2_14_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            Scalars
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/date/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Date
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/datetime/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Datetime
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/float/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Float
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/int/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Int
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/str/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Str
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/time/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Time
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../r/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    R
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../shell/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../stan/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Stan
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../test/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Test
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="&lt;big&gt;📌 Sections&lt;/big&gt;">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      <big>📌 Sections</big>
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-empty-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create empty series
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-series-of-constant-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create series of constant values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-list-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create List series
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-boolean-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test boolean series
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests-for-string-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests for string series
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extract" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extract
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type-specific-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Type-specific operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Type-specific operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enum
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#categorical" class="md-nav__link">
+    <span class="md-ellipsis">
+      Categorical
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    <span class="md-ellipsis">
+      String
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      List
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#struct" class="md-nav__link">
+    <span class="md-ellipsis">
+      Struct
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#derive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Derive
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Derive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Order
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transform
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mask" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mask
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cast-to-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cast to type
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrink" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shrink
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combine
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- This file was autogenerated by Actionsheets. Do not modify! -->
+
+<h1 id="polars-series">Polars Series<a class="headerlink" href="#polars-series" title="Permanent link">&para;</a></h1>
+<p><strong>Code</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
+</code></pre></div></p>
+<h2 id="create">Create<a class="headerlink" href="#create" title="Permanent link">&para;</a></h2>
+<p>Create a new Series</p>
+<h3 id="create-empty-series">Create empty series<a class="headerlink" href="#create-empty-series" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Empty series (of object type)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty boolean series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">Boolean</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty enum series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">Enum</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty categorical series without defined categories
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">Categorical</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty int series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">Int64</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty float series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">Float64</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty date series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">Date</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty datetime series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">Datetime</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty list series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">List</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty list of floats series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="create-series-of-constant-values">Create series of constant values<a class="headerlink" href="#create-series-of-constant-values" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Series of length <em>n</em> filled with nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Constant value <em>v</em> of length <em>n</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">v</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="create-list-series">Create List series<a class="headerlink" href="#create-list-series" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Define list series with multiple list elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[])</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Define scalar list series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Create scalar list series from a list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">x</span><span class="p">])</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Create list series from a list of lists
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Is series or subclass
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is series and not subclass
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="n">pl</span><span class="o">.</span><span class="n">Series</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Not empty
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">is_empty</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Has length <em>n</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is boolean series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">Boolean</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is categorical series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">Categorical</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is enum series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">Enum</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is numeric series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">is_numeric</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td>For example, pl.Int8 or pl.Float64</td>
+</tr>
+<tr>
+<td>
+Is integer series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is unsigned integer series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">is_unsigned_integer</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is float series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">is_float</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is date series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">Date</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is datetime64 series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">Datetime</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is string series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">String</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is list series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">List</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is nested series (struct or list)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">is_nested</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+No duplicate elements (all unique)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_unique</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Any duplicate elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains null
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">has_nulls</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains only nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_null</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains no nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">has_nulls</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains NaN
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_nan</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains no NaNs
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_not_nan</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains infinity
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_infinite</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains only finite values
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_finite</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains value <em>v</em>, ignoring nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">v</span> <span class="ow">in</span> <span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains any of the values <em>v1</em>, <em>v2</em>, ignoring nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_in</span><span class="p">([</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Does not contain value <em>v</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Are elements in increasing order
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_sorted</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td>Presence of nulls can lead to unexpected behavior, as they need to come first.</td>
+</tr>
+<tr>
+<td>
+Are elements in decreasing order
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_sorted</span><span class="p">(</span><span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Presence of nulls can lead to unexpected behavior, as they need to come first.</td>
+</tr>
+</table>
+<h3 id="test-boolean-series">Test boolean series<a class="headerlink" href="#test-boolean-series" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+All values are True
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+All values are False
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="tests-for-string-series">Tests for string series<a class="headerlink" href="#tests-for-string-series" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Contains string <em>s</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="extract">Extract<a class="headerlink" href="#extract" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Number of elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Hash
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Data type (dtype)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Number of unique elements, ignoring nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">n_unique</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Smallest value, ignoring nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Index of the smallest value, ignoring NAs
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">arg_min</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Greatest value, ignoring nulls
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Index of the greatest value, ignoring NAs
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">arg_max</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Count occurrence per value
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="type-specific-operations">Type-specific operations<a class="headerlink" href="#type-specific-operations" title="Permanent link">&para;</a></h3>
+<h4 id="enum">Enum<a class="headerlink" href="#enum" title="Permanent link">&para;</a></h4>
+<h4 id="categorical">Categorical<a class="headerlink" href="#categorical" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Get categories
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">get_categories</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h4 id="string">String<a class="headerlink" href="#string" title="Permanent link">&para;</a></h4>
+<h4 id="list">List<a class="headerlink" href="#list" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Get length of each list element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Get the _i_th item of each list element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h4 id="struct">Struct<a class="headerlink" href="#struct" title="Permanent link">&para;</a></h4>
+<h2 id="derive">Derive<a class="headerlink" href="#derive" title="Permanent link">&para;</a></h2>
+<h3 id="order">Order<a class="headerlink" href="#order" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Reverse
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sort ascendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td>Nulls are placed first</td>
+</tr>
+<tr>
+<td>
+Sort descendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Nulls are placed first</td>
+</tr>
+<tr>
+<td>
+Shuffle
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="transform">Transform<a class="headerlink" href="#transform" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Fill null by value_v_
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">fill_null</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Fill NaN by value_v_
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">fill_nan</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Replace value <em>v</em> by <em>w</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Replace value <em>v</em> by null
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Map all values
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">replace_strict</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Map all values using a <code>dict</code>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">replace_strict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">})</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h4 id="mask">Mask<a class="headerlink" href="#mask" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Duplicate mask
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">is_duplicated</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h4 id="cast-to-type">Cast to type<a class="headerlink" href="#cast-to-type" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Cast to boolean
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast series to numeric dtype
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast to integer
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast to float
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast to string
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast to categorical
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Categorical</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast categorical to integer codes
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">to_physical</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast to enum
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Enum</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Cast enum to integer codes
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">to_physical</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="grow">Grow<a class="headerlink" href="#grow" title="Permanent link">&para;</a></h3>
+<h3 id="shrink">Shrink<a class="headerlink" href="#shrink" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+First <em>n</em> elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Last <em>n</em> elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Slice
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="n">a</span><span class="p">:</span><span class="n">b</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Select <em>n</em> elements starting from index <em>i</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Keep indices
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">gather</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Keep every <em>n_th element, starting from index _i</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">gather_every</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sample <em>n</em> elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Drop null elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">drop_nulls</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Drop NaN elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">drop_nans</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Keep <em>n</em> largest elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">top_k</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Keep <em>n</em> smallest elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">bottom_k</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove duplicates
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="combine">Combine<a class="headerlink" href="#combine" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Append another series
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="convert">Convert<a class="headerlink" href="#convert" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+To list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+To list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+To numpy array
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+To Polars data frame with single column
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="s1">&#39;col1&#39;</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+To instantiatable string representation
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">to_init_repr</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Dummy encoding of values (as data frame)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">to_dummies</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../dataframe/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Polars DataFrame">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Polars DataFrame
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../types/" class="md-footer__link md-footer__link--next" aria-label="Next: Polars Types">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Polars Types
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 - 2025 Niek Den Teuling
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.prune", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.path", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>

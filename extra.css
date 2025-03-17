@@ -1,0 +1,109 @@
+.md-nav {
+    padding-top: 5px;
+    line-height: 1.0;
+}
+
+.md-nav__list {
+    margin: 0px;
+    padding: 0px;
+}
+
+.md-nav--primary .md-nav__list {
+    padding: 0px;
+}
+
+.md-nav__link {
+    margin: 1px;
+}
+
+.md-grid {
+    max-width: initial;
+}
+
+.md-typeset {
+    line-height: 1.5;
+    overflow-wrap: break-word;
+}
+
+.md-typeset__table {
+    width: 100%;
+}
+
+.md-typeset__table > table > thead > tr {
+    background-color: transparent;
+}
+
+.md-typeset table:not([class]) {
+    display: table;
+}
+
+.md-typeset table:not([class]) th {
+    padding: 0px;
+    padding-left: 5px;
+    background-color: var(--md-code-bg-color);
+}
+
+.md-typeset table:not([class]) td {
+    padding: 2px;
+}
+
+.md-typeset .codehilitetable {
+    border: 1px solid var(--codeblock);
+}
+
+.th-action {
+    width: 40%;
+}
+
+.th-code {
+    width: 40%;
+}
+
+.th-details {
+    width: 20%;
+}
+
+.codehilite {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+}
+
+.codehilite pre, .codehilitetable .linenodiv pre {
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+
+
+.md-typeset pre {
+    line-height: 1.2;
+    margin: 0px;
+}
+
+.md-typeset pre code {
+    font-size: 1.0em;
+    padding: 0px;
+    position: relative;
+    padding-left: 24px;
+    background-color: transparent;
+}
+
+.md-clipboard {
+    position: absolute;
+    left: 0;
+    margin-left: 0px;
+    margin-top: -7px;
+    padding: 0px;
+}
+
+.md-typeset h1 {
+    font-weight: bold;
+    color: white;
+    margin: 0px;
+}
+
+.md-typeset h2 {
+    margin-top: 0px;
+    padding: 2px;
+    background-color: var(--md-primary-fg-color--dark);
+}
