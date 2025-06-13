@@ -32,6 +32,10 @@ code = "set(x)"
 action = "From iterable (consumes)"
 code = "set(x)"
 
+[create.sets]
+action = "Union from a collection of sets"
+code = "set().union(*x)"
+
 
 [test]
 section = "Test"
