@@ -1,0 +1,4715 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A large collection of searchable quick-reference code-snippet sheets defined in terms of a desired action and a code solution. Implemented as a Python package so different tools or front-ends can be built around the actionsheets.">
+      
+      
+        <meta name="author" content="Niek Den Teuling">
+      
+      
+      
+        <link rel="prev" href="../iter/">
+      
+      
+        <link rel="next" href="../set/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+    
+    
+      
+        <title>List - Actionsheets</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#list" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Actionsheets" class="md-header__button md-logo" aria-label="Actionsheets" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Actionsheets
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              List
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/niekdt/actionsheets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    niekdt/actionsheets
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Python
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../r/" class="md-tabs__link">
+          
+  
+    
+  
+  R
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../shell/" class="md-tabs__link">
+          
+  
+    
+  
+  Shell
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../stan/" class="md-tabs__link">
+          
+  
+    
+  
+  Stan
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../test/" class="md-tabs__link">
+          
+  
+    
+  
+  Test
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Actionsheets" class="md-nav__button md-logo" aria-label="Actionsheets" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Actionsheets
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/niekdt/actionsheets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    niekdt/actionsheets
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../.." class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../class/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Class
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Class
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../cli/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Cli
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Cli
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Collections
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Collections
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../dict/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Dict
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../iter/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Iter
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  <span class="md-ellipsis">
+    List
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            List
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../set/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Set
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../tuple/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Tuple
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../controlflow/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Controlflow
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Controlflow
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../devtools/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Devtools
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Devtools
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../devtools/pip/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pip
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../devtools/poetry/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Poetry
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../devtools/pytest/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Pytest
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../filesystem/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Filesystem
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Filesystem
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../filesystem/path/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Path
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../numpy/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Numpy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_8" id="__nav_2_8_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            Numpy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/matrix/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Matrix
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/ndarray/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Ndarray
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/scalar/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Scalar
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../numpy/vector/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Vector
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_9" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../output/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Output
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9" id="__nav_2_9_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            Output
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../output/logging/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Logging
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_10" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../package/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Package
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10">
+            <span class="md-nav__icon md-icon"></span>
+            Package
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_11" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../pandas/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Pandas
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_11" id="__nav_2_11_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_11">
+            <span class="md-nav__icon md-icon"></span>
+            Pandas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../pandas/dataframe/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Dataframe
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../pandas/series/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Series
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_12" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../plot/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Plot
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_12" id="__nav_2_12_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_12">
+            <span class="md-nav__icon md-icon"></span>
+            Plot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../plot/seaborn/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Seaborn
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_13" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../polars/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Polars
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_13" id="__nav_2_13_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_13">
+            <span class="md-nav__icon md-icon"></span>
+            Polars
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../polars/dataframe/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Dataframe
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../polars/series/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Series
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../polars/types/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Types
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_14" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../scalars/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Scalars
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_14" id="__nav_2_14_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            Scalars
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/date/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Date
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/datetime/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Datetime
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/float/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Float
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/int/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Int
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/str/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Str
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../scalars/time/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Time
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../r/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    R
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../shell/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Shell
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../stan/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Stan
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../../test/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Test
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="&lt;big&gt;📌 Sections&lt;/big&gt;">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      <big>📌 Sections</big>
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create list
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extract" class="md-nav__link">
+    <span class="md-ellipsis">
+      extract
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="extract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Aggregate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Update">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transform
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#order" class="md-nav__link">
+    <span class="md-ellipsis">
+      Order
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrink" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shrink
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#derive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Derive
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Derive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transform_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transform
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#order_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Order
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grow_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shrink_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shrink
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combine-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Combine lists
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iterate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Iterate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Convert
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<!-- This file was autogenerated by Actionsheets. Do not modify! -->
+
+<h1 id="list">List<a class="headerlink" href="#list" title="Permanent link">&para;</a></h1>
+<p>An ordered collection of elements</p>
+<p><strong>Details</strong>
+Tips:</p>
+<ul>
+<li>Lists can be efficiently used as a stack through <code>append()</code> (for push) and <code>pop()</code>.</li>
+<li>Sorting seems to be broken for numeric lists containing NaN</li>
+</ul>
+<h2 id="create-list">Create list<a class="headerlink" href="#create-list" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Empty list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+List with single element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="s1">&#39;hello&#39;</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Define with values
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Define with <em>n</em> repeated values <em>v</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+List of <em>n</em> increasing counts, starting from zero
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+List of increasing counts, starting from zero with step size <em>s</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+List of <em>n</em> decreasing counts to zero
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+List of <em>n</em> decreasing counts to zero, with step size <em>s</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+List of increasing integers between [<em>a</em>, <em>b</em>]
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+From tuple
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+From iterable
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Fully consumes the iterable.</td>
+</tr>
+<tr>
+<td>
+Lists from zipped list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ab</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">a2</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">ab</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sample <em>n</em> random integers between [ <em>a</em>, <em>b</em> ) with replacement
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Considerably faster than list comprehension</td>
+</tr>
+<tr>
+<td>
+Sample <em>n</em> random integers between [ <em>a</em>, <em>b</em> ) w/o replacement
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+From lists generated dynamically by iterating over a generating function <em>fun</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">fun</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">]</span>
+<span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Generate list of <em>r</em>-length permutation tuples from indices up to <em>b</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations_with_replacement</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">r</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td>Returns <code>[(0, 0), (0, 1), ..., (b - 1, b - 1)]</code></td>
+</tr>
+</table>
+<h2 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Is list or subclass
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Is list and not subclass
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Empty
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="ow">not</span> <span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Not empty
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Pairwise equal to another list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains <code>None</code>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="kc">None</span> <span class="ow">in</span> <span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains element <em>e</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">e</span> <span class="ow">in</span> <span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Contains elements <em>elems</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="p">(</span><span class="n">elems</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Does not contain element <em>e</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Elements are all of type <em>t</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>e.g., type <code>str</code></td>
+</tr>
+<tr>
+<td>
+All elements True
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">all</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Any element True
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">any</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Are elements sorted
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+No duplicate elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Has duplicate elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="extract">extract<a class="headerlink" href="#extract" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Number of elements (length)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Hash
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+First element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Last element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Random element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Number of occurrences of element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Index of element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Throws error if not found</td>
+</tr>
+<tr>
+<td>
+Index of element in slice [a,b]
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Throws error if not found</td>
+</tr>
+</table>
+<h3 id="aggregate">Aggregate<a class="headerlink" href="#aggregate" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Min
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Max
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sum
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Mean
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Faster than <code>fmean</code> and <code>mean</code> from <code>statistics</code></td>
+</tr>
+<tr>
+<td>
+Most frequent element (mode)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">statistics</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="update">Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<h3 id="transform">Transform<a class="headerlink" href="#transform" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Update element at index <em>i</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">e2</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Update slice with list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="order">Order<a class="headerlink" href="#order" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Reverse elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sort elements ascending
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sort elements descending
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sort on transformed elements, ascending
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="grow">Grow<a class="headerlink" href="#grow" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Append element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Append a list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">+=</span> <span class="n">y</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Append a list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Insert at index <em>i</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="shrink">Shrink<a class="headerlink" href="#shrink" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Clear
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Clear
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+</td>
+<td>Probably slower</td>
+</tr>
+<tr>
+<td>
+Remove at index <em>i</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="k">del</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove at index <em>i</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove slice
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="k">del</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove slice
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove element (first occurrence)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove all elements with value
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="err">?</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove last index and return the element (pop)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove at index <em>i</em> and return the element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="derive">Derive<a class="headerlink" href="#derive" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Shallow copy
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div>
+</td>
+<td>Fastest for large lists</td>
+</tr>
+<tr>
+<td>
+Shallow copy
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="o">*</span><span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td>Fastest for small lists</td>
+</tr>
+<tr>
+<td>
+Shallow copy
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[:]</span>
+</code></pre></div>
+</td>
+<td>Probably very slow</td>
+</tr>
+<tr>
+<td>
+Shallow copy
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Not sure what the difference to <code>.copy()</code> is</td>
+</tr>
+<tr>
+<td>
+Deep copy (don't preserve refs)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Constructs a new compound object and then, recursively, inserts copies into it of the objects found in the original.</td>
+</tr>
+</table>
+<h3 id="transform_1">Transform<a class="headerlink" href="#transform_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Transform via expression
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">e</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Map function
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">fun</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Map function
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td>Slow</td>
+</tr>
+<tr>
+<td>
+Elements to string
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Conditional update
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">e</span> <span class="k">if</span> <span class="n">e</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Ternary map
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">e</span> <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">10</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Nested ternary map
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">e</span> <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">10</span> <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">5</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td>Good luck reading this</td>
+</tr>
+<tr>
+<td>
+Rank ascendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td>Uses scipy package</td>
+</tr>
+<tr>
+<td>
+Sort-index ascendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td>Uses numpy package</td>
+</tr>
+<tr>
+<td>
+Sort-index ascendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">sorted</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sort-index ascendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+</code></pre></div>
+</td>
+<td>Tedious</td>
+</tr>
+</table>
+<h3 id="order_1">Order<a class="headerlink" href="#order_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Reverse
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">reversed</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Sort ascendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Elements must be sortable!</td>
+</tr>
+<tr>
+<td>
+Sort descendingly
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>Elements must be sortable!</td>
+</tr>
+<tr>
+<td>
+Sort by reference order list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ref_order</span><span class="p">,</span> <span class="n">x</span><span class="p">))]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Naturally sort string elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">natsort</span><span class="w"> </span><span class="kn">import</span> <span class="n">natsorted</span>
+<span class="n">natsorted</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>E.g., sort as ['abc1', 'abc2', 'abc10']</td>
+</tr>
+<tr>
+<td>
+Shuffle elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="grow_1">Grow<a class="headerlink" href="#grow_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Replicate list <em>n</em> times
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">*</span> <span class="n">n</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Replicate to ensure length <em>n</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">cycle</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">cycle</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">n</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Append element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">+</span> <span class="p">[</span><span class="n">e</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Append elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">+</span> <span class="p">[</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">e3</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Append a list
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="shrink_1">Shrink<a class="headerlink" href="#shrink_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Slice
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+First <em>n</em> elements (head)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Last <em>n</em> elements (tail)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="n">n</span><span class="p">:]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Select <em>n</em> elements at random
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove first <em>n</em> elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Remove last <em>n</em> elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="n">n</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+List of elements from a list of indices
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Filter on condition
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Filter on predicate function
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h3 id="combine-lists">Combine lists<a class="headerlink" href="#combine-lists" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Concatenate lists
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="iterate">Iterate<a class="headerlink" href="#iterate" title="Permanent link">&para;</a></h2>
+<p>Iterate over the elements of the list</p>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Loop over elements
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Loop over elements and index
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Loop over elements and index, starting from index <em>s</em>
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Loop over multiple lists
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Loop over multiple lists, with index
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Iterate over a list of lists for each nested element
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+<h2 id="convert">Convert<a class="headerlink" href="#convert" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th class="th-action">Action</th>
+<th class="th-code">Code</th>
+<th class="th-details">Details</th>
+</tr>
+</thead>
+<tr>
+<td>
+Multiple assignment
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">x</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Tuple
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Set
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+To dict (from keys and values)
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+<tr>
+<td>
+Flatten a list of lists
+</td>
+<td>
+<div class="highlight"><pre><span></span><code><span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</code></pre></div>
+</td>
+<td></td>
+</tr>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../iter/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Iterators">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Iterators
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../set/" class="md-footer__link md-footer__link--next" aria-label="Next: Set">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Set
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 - 2025 Niek Den Teuling
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.prune", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.path", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
